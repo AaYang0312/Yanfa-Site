@@ -1,0 +1,78 @@
+---
+import Base from '../../layouts/Base.astro';
+import Crumbs from '../../components/Crumbs.astro';
+import Catalog from '../../components/Catalog.astro';
+import ItemCard from '../../components/ItemCard.astro';
+import ProductImage from '../../components/ProductImage.astro';
+import {
+  products,
+  toolProducts,
+  categories,
+  categoryBySlug,
+  nailTypes,
+  allSceneTags,
+  nailOf,
+  scenesOf,
+  searchTextOf,
+} from '../../data/catalog';
+import { productNote } from '../../data/site';
+
+const groups = [
+  { name: 'type', label: '类型', options: categories.map((item) => ({ value: item.slug, label: `${item.name}（${products.filter((product) => product.category === item.slug).length}）` })) },
+  { name: 'scene', label: '适用场景', options: allSceneTags.map((tag) => ({ value: tag, label: tag })) },
+  { name: 'nail', label: '钉子类型', options: nailTypes.map((item) => ({ value: item.slug, label: item.name })) },
+];
+const typeNames = Object.fromEntries(categories.map((item) => [item.slug, item.name]));
+
+function linesFor(product: (typeof products)[number]) {
+  const category = categoryBySlug(product.category);
+  if (product.category === 'nails') {
+    const gun = categories.find((item) => item.nail === product.nail);
+    return [{ label: '配套', value: gun?.name ?? '' }];
+  }
+  if (product.category === 'other') return [{ label: '说明', value: product.summary ?? '' }];
+  return [
+    { label: '系列', value: product.series ?? category.hint },
+    { label: '枪钉', value: product.fastener?.replace(/\n/g, ' ') || '取钉作业，无需装钉' },
+  ];
+}
+---
+
+<Base title="产品中心" description={`元发 ${toolProducts.length} 款在售工具型号，按类型、适用场景和钉子类型选型。查看产品实图、功能特点、适用枪钉与使用说明。`}>
+  <div class="wrap">
+    <div class="crumbs-row"><Crumbs items={[{ label: '产品中心' }]} /></div>
+    <p class="catalog-intro">{toolProducts.length} 款在售工具，覆盖木工装修、家具制造、包装与回收。按工序选型，查看产品实图与适配枪钉。</p>
+    <button class="btn" type="button" data-guide-open>帮我选工具</button>
+    <Catalog title="产品中心" groups={groups} typeNames={typeNames}>
+      {products.map((product) => {
+        const category = categoryBySlug(product.category);
+        const nail = nailOf(product);
+        return (
+          <ItemCard
+            href={`/products/${product.slug}/`}
+            model={product.name}
+            subtitle={product.summary}
+            badge={product.blower ? '打钉 + 吹尘' : product.longNose ? '加长枪嘴' : undefined}
+            lines={linesFor(product)}
+            data={{
+              type: product.category,
+              scene: scenesOf(product).join(' '),
+              nail: nail ?? '',
+              search: searchTextOf(product),
+            }}
+          >
+            <ProductImage product={product} />
+          </ItemCard>
+        );
+      })}
+      <p slot="after" class="note">{productNote}</p>
+    </Catalog>
+  </div>
+</Base>
+
+<style>
+  .crumbs-row {
+    padding-top: 28px;
+  }
+  .catalog-intro { margin: -8px 0 36px; max-width: 780px; color: var(--text); }
+</style>

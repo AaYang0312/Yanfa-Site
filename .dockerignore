@@ -1,0 +1,17 @@
+.git
+.agent-runs
+.work
+node_modules
+admin/node_modules
+admin/dist
+dist
+.astro
+admin/.astro
+data
+.env
+.env.*
+*.log
+tasks
+seed
+reports
+docs

@@ -1,0 +1,9 @@
+# Dependency notices
+
+`inventory.json` binds npm packages and Go modules to the committed lock hashes and records each collected LICENSE/COPYING/NOTICE file by SHA-256. Texts are retained verbatim; identical texts share one file. `supplements.json` records upstream license files omitted from published package archives and their retrieval URLs/hashes.
+
+The installed native sharp/libvips packages' published README and exact `versions.json` are preserved in the supplements. They enumerate libvips and its third-party libraries, their licenses and upstream source locations. GPLv3/LGPLv3 and MPL2 full texts accompany them. These native libraries remain dynamically loaded shared objects in `template/node_modules`; recipients may replace/relink them. Matching libvips build recipes and dependency sources are available from https://github.com/lovell/sharp-libvips/tree/v1.2.4 and the versioned upstream projects identified by that recipe and the preserved versions list. Do not remove these files when redistributing the runtime.
+
+The Node and Debian base-image notices remain in their official image distribution. Go runtime licensing remains under its BSD-style license. CloudWeGo Eino/Eino extensions' Apache-2.0 license and any published NOTICE files are included in the inventory/supplements. Aisle UI attribution and the fixed upstream commit are documented in [docs/aisle-provenance.md](../../docs/aisle-provenance.md); its full MIT copyright and license are retained in [licenses/aisle-MIT.txt](../aisle-MIT.txt).
+
+Regenerate installed dependency notices using `GO_BIN=<locked Go executable> node deploy/collect-licenses.mjs`; package versions and checksums must continue to match the locks. Upstream supplementary files are reviewed inputs, not runtime network fetches. Full operating-system package license files are retained by the application image's package installation.

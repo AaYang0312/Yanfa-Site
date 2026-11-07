@@ -1,0 +1,428 @@
+{
+  "schema_version": 1,
+  "release_id": "test_catalog",
+  "workspace_revision": 1,
+  "categories": [
+    {
+      "id": "straight",
+      "name": "直钉枪",
+      "lines": "F30 系列 5 款 / T50 系列 3 款",
+      "hint": "F30 / T50 系列",
+      "scene": "家装木工专用",
+      "use": "打单根直排钉",
+      "color": "#8f0026",
+      "sort_order": 0,
+      "nail": "brad",
+      "scene_ids": [
+        "home-woodworking"
+      ]
+    },
+    {
+      "id": "steel",
+      "name": "钢排钉枪",
+      "lines": "ST64 系列 3 款 / ST38 系列 1 款",
+      "hint": "ST64 / ST38 系列",
+      "scene": "装修吊顶、打边龙骨",
+      "use": "打硬质钢排钉",
+      "color": "#1c3350",
+      "sort_order": 1,
+      "nail": "steel-nail",
+      "scene_ids": [
+        "ceiling-framing"
+      ]
+    },
+    {
+      "id": "staple",
+      "name": "码钉枪",
+      "lines": "N 系列 2 款 / K 系列 3 款 / J 系列 3 款 / P、G 各 1 款",
+      "hint": "N / K / J / P / G 系列",
+      "scene": "打木包装箱、沙发架，木方拼接、挂网等",
+      "use": "打 U 型码钉",
+      "color": "#5d6b78",
+      "sort_order": 2,
+      "nail": "staple",
+      "scene_ids": [
+        "packaging-pallets",
+        "furniture-timber"
+      ]
+    },
+    {
+      "id": "pin",
+      "name": "蚊钉枪",
+      "lines": "P625G / P635G 共 2 款",
+      "hint": "P625G / P635G",
+      "scene": "不同板材的钉合",
+      "use": "打无头蚊钉",
+      "color": "#9aa4ad",
+      "sort_order": 3,
+      "nail": "pin",
+      "scene_ids": [
+        "panel-fastening"
+      ]
+    },
+    {
+      "id": "coil",
+      "name": "卷钉枪",
+      "lines": "CN 系列 4 款",
+      "hint": "CN 系列",
+      "scene": "连续高速打钉，生产木托盘、木包装箱等",
+      "use": "打专用卷钉",
+      "color": "#8f0026",
+      "sort_order": 4,
+      "nail": "coil-nail",
+      "scene_ids": [
+        "packaging-pallets"
+      ]
+    },
+    {
+      "id": "remover",
+      "name": "取钉枪",
+      "lines": "退钉枪 3 款 / 退螺丝枪 1 款 / 拔钉枪 2 款",
+      "hint": "退钉 / 退螺丝 / 拔钉",
+      "scene": "取钉子、退螺丝，废旧品回收",
+      "use": "拆卸钉子或螺丝，回收材料",
+      "color": "#5d6b78",
+      "sort_order": 5,
+      "nail": null,
+      "scene_ids": [
+        "nail-removal"
+      ]
+    },
+    {
+      "id": "insulation",
+      "name": "保温枪",
+      "lines": "BW 系列 2 款 / DBW 系列 2 款",
+      "hint": "BW / DBW 系列",
+      "scene": "墙面隔热层施工专用",
+      "use": "打保温钉",
+      "color": "#1c3350",
+      "sort_order": 6,
+      "nail": "insulation-nail",
+      "scene_ids": [
+        "wall-insulation"
+      ]
+    },
+    {
+      "id": "gas",
+      "name": "气动瓦斯枪",
+      "lines": "SR 系列 2 款",
+      "hint": "SR 系列",
+      "scene": "木工装修打钉、水电工打卡座",
+      "use": "打瓦斯钉",
+      "color": "#8f0026",
+      "sort_order": 7,
+      "nail": "gas-nail",
+      "scene_ids": [
+        "home-woodworking",
+        "ceiling-framing",
+        "electrical-plumbing"
+      ]
+    },
+    {
+      "id": "nails",
+      "name": "枪钉",
+      "lines": "直排钉 / 钢排钉 / U 型码钉 / 蚊钉等全系列",
+      "hint": "直排 / 钢排 / 码钉 / 蚊钉",
+      "scene": "与元发钉枪配套使用",
+      "use": "各类钉枪配套枪钉",
+      "color": "#5d6b78",
+      "sort_order": 8,
+      "nail": null,
+      "scene_ids": []
+    },
+    {
+      "id": "other",
+      "name": "其他",
+      "lines": "锂电工具 / 气动风批 / 气动工具各类配件",
+      "hint": "锂电 / 风批 / 配件",
+      "scene": "锂电与气动工具，以及钉枪维修配件",
+      "use": "配套工具与配件",
+      "color": "#9aa4ad",
+      "sort_order": 9,
+      "nail": null,
+      "scene_ids": []
+    }
+  ],
+  "scenes": [
+    {
+      "id": "home-woodworking",
+      "name": "家装木工"
+    },
+    {
+      "id": "ceiling-framing",
+      "name": "吊顶龙骨"
+    },
+    {
+      "id": "packaging-pallets",
+      "name": "包装托盘"
+    },
+    {
+      "id": "furniture-timber",
+      "name": "家具木方"
+    },
+    {
+      "id": "panel-fastening",
+      "name": "板材钉合"
+    },
+    {
+      "id": "nail-removal",
+      "name": "退钉回收"
+    },
+    {
+      "id": "wall-insulation",
+      "name": "墙面保温"
+    },
+    {
+      "id": "electrical-plumbing",
+      "name": "水电安装"
+    },
+    {
+      "id": "wall-mesh",
+      "name": "墙面挂网"
+    },
+    {
+      "id": "upholstery-rattan",
+      "name": "软包藤艺"
+    }
+  ],
+  "nail_types": [
+    {
+      "id": "brad",
+      "name": "直排钉"
+    },
+    {
+      "id": "steel-nail",
+      "name": "钢排钉"
+    },
+    {
+      "id": "staple",
+      "name": "U 型码钉"
+    },
+    {
+      "id": "pin",
+      "name": "蚊钉"
+    },
+    {
+      "id": "coil-nail",
+      "name": "卷钉"
+    },
+    {
+      "id": "insulation-nail",
+      "name": "保温钉"
+    },
+    {
+      "id": "gas-nail",
+      "name": "瓦斯钉"
+    }
+  ],
+  "legacy_series": [
+    {
+      "id": "s_example",
+      "slug": "example-series",
+      "name": "Example series",
+      "product_ids": [
+        "p_example"
+      ]
+    }
+  ],
+  "products": [
+    {
+      "id": "p_example",
+      "slug": "example-tool",
+      "kind": "tool",
+      "name": "Example tool",
+      "model": "EX-1",
+      "category_id": "straight",
+      "series": "F30系列",
+      "legacy_series_ids": [
+        "s_example"
+      ],
+      "summary": "Fixture summary",
+      "applications": [
+        "Fixture application"
+      ],
+      "features": [],
+      "notes": [],
+      "scene_ids": [
+        "panel-fastening"
+      ],
+      "nail_type": "brad",
+      "fastener_text": "F直排钉\n（F10～F30）",
+      "long_nose": false,
+      "blower": false,
+      "images": [
+        {
+          "media_id": "m_d0e8f18970166ff92a32a4a2ad62e3045110a1d9fc50961e8a4b6471974a94d0",
+          "sha256": "d0e8f18970166ff92a32a4a2ad62e3045110a1d9fc50961e8a4b6471974a94d0",
+          "format": "png",
+          "bytes": 545394,
+          "width": 1086,
+          "height": 1294,
+          "path": "f30m-detail-2.png",
+          "label": "产品资料2",
+          "description": "F30M 加长枪嘴直钉枪，图中标注枪嘴、排气盖、扳柄、压铸一体机身和气管接头。"
+        },
+        {
+          "media_id": "m_24cec06c63823f1174a39c36941ebde0f53124a0f2d709edef2af5904ae57e03",
+          "sha256": "24cec06c63823f1174a39c36941ebde0f53124a0f2d709edef2af5904ae57e03",
+          "format": "png",
+          "bytes": 278665,
+          "width": 1090,
+          "height": 1672,
+          "path": "f30m-detail-3.png",
+          "label": "产品资料3",
+          "description": "F30M 规格表：使用 F 直排钉，使用气压 4–7 kgf/cm²，产品净重 1.1 kg，外形尺寸 240 × 60 × 213 mm，钉子长度 10–30 mm，钉子线径 1.26 mm，钉槽容量 100 枚，使用接管 6 mm。打钉规格示意标出 10、15、20、25、30 mm 五档钉长及 1.26 mm 线径。"
+        }
+      ],
+      "cover_media_id": "m_d0e8f18970166ff92a32a4a2ad62e3045110a1d9fc50961e8a4b6471974a94d0",
+      "visibility": "listed",
+      "sort_order": 2,
+      "guide_profile": {
+        "scene_ids": [],
+        "materials": [],
+        "substrates": [],
+        "excluded_materials": [],
+        "excluded_substrates": [],
+        "power_source": null,
+        "nail_type": null,
+        "fastener_length_mm": null,
+        "load_bearing": null,
+        "long_nose": null,
+        "blower": null,
+        "limitations": [],
+        "consultation_notes": [],
+        "required_requirements": [],
+        "sources": [],
+        "reviews": []
+      },
+      "purchase_options": [],
+      "version": 1,
+      "updated_at": "2026-11-06T06:20:08.645Z"
+    },
+    {
+      "id": "p_hidden",
+      "slug": "hidden-draft",
+      "kind": "tool",
+      "name": "",
+      "model": "",
+      "category_id": "straight",
+      "series": "F30系列",
+      "legacy_series_ids": [],
+      "summary": "Fixture summary",
+      "applications": [
+        "Fixture application"
+      ],
+      "features": [],
+      "notes": [],
+      "scene_ids": [
+        "panel-fastening"
+      ],
+      "nail_type": "brad",
+      "fastener_text": "F直排钉\n（F10～F30）",
+      "long_nose": false,
+      "blower": false,
+      "images": [],
+      "cover_media_id": null,
+      "visibility": "unlisted",
+      "sort_order": 0,
+      "guide_profile": {
+        "scene_ids": [],
+        "materials": [],
+        "substrates": [],
+        "excluded_materials": [],
+        "excluded_substrates": [],
+        "power_source": null,
+        "nail_type": null,
+        "fastener_length_mm": null,
+        "load_bearing": null,
+        "long_nose": null,
+        "blower": null,
+        "limitations": [],
+        "consultation_notes": [],
+        "required_requirements": [],
+        "sources": [],
+        "reviews": []
+      },
+      "purchase_options": [],
+      "version": 1,
+      "updated_at": "2026-11-06T06:20:08.645Z"
+    },
+    {
+      "id": "p_entry",
+      "slug": "example-entry",
+      "kind": "entry",
+      "name": "Example entry",
+      "model": "ENTRY-1",
+      "category_id": "straight",
+      "series": "F30系列",
+      "legacy_series_ids": [],
+      "summary": "Fixture summary",
+      "applications": [
+        "Fixture application"
+      ],
+      "features": [],
+      "notes": [],
+      "scene_ids": [
+        "panel-fastening"
+      ],
+      "nail_type": "brad",
+      "fastener_text": "F直排钉\n（F10～F30）",
+      "long_nose": false,
+      "blower": false,
+      "images": [
+        {
+          "media_id": "m_d0e8f18970166ff92a32a4a2ad62e3045110a1d9fc50961e8a4b6471974a94d0",
+          "sha256": "d0e8f18970166ff92a32a4a2ad62e3045110a1d9fc50961e8a4b6471974a94d0",
+          "format": "png",
+          "bytes": 545394,
+          "width": 1086,
+          "height": 1294,
+          "path": "f30m-detail-2.png",
+          "label": "产品资料2",
+          "description": "F30M 加长枪嘴直钉枪，图中标注枪嘴、排气盖、扳柄、压铸一体机身和气管接头。"
+        },
+        {
+          "media_id": "m_24cec06c63823f1174a39c36941ebde0f53124a0f2d709edef2af5904ae57e03",
+          "sha256": "24cec06c63823f1174a39c36941ebde0f53124a0f2d709edef2af5904ae57e03",
+          "format": "png",
+          "bytes": 278665,
+          "width": 1090,
+          "height": 1672,
+          "path": "f30m-detail-3.png",
+          "label": "产品资料3",
+          "description": "F30M 规格表：使用 F 直排钉，使用气压 4–7 kgf/cm²，产品净重 1.1 kg，外形尺寸 240 × 60 × 213 mm，钉子长度 10–30 mm，钉子线径 1.26 mm，钉槽容量 100 枚，使用接管 6 mm。打钉规格示意标出 10、15、20、25、30 mm 五档钉长及 1.26 mm 线径。"
+        }
+      ],
+      "cover_media_id": "m_d0e8f18970166ff92a32a4a2ad62e3045110a1d9fc50961e8a4b6471974a94d0",
+      "visibility": "listed",
+      "sort_order": 1,
+      "guide_profile": {
+        "scene_ids": [],
+        "materials": [],
+        "substrates": [],
+        "excluded_materials": [],
+        "excluded_substrates": [],
+        "power_source": null,
+        "nail_type": null,
+        "fastener_length_mm": null,
+        "load_bearing": null,
+        "long_nose": null,
+        "blower": null,
+        "limitations": [],
+        "consultation_notes": [],
+        "required_requirements": [],
+        "sources": [],
+        "reviews": []
+      },
+      "purchase_options": [],
+      "version": 1,
+      "updated_at": "2026-11-06T06:20:08.645Z"
+    }
+  ],
+  "previously_published_routes": [
+    {
+      "product_id": "p_removed",
+      "slug": "removed-tool"
+    }
+  ]
+}

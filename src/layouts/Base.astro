@@ -1,0 +1,58 @@
+---
+import '@fontsource/jost/300.css';
+import '@fontsource/jost/400.css';
+import '@fontsource/jost/500.css';
+import '@fontsource/jost/600.css';
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import ContactStrip from '../components/ContactStrip.astro';
+import { site, telHref } from '../data/site';
+import { releaseId } from '../data/catalog';
+import GuideWidget from '../components/guide/chat-widget';
+
+interface Props {
+  title?: string;
+  description?: string;
+  contactStrip?: boolean;
+  bodyClass?: string;
+  robots?: string;
+  contextProductId?: string;
+}
+
+const { title, description = site.description, contactStrip = true, bodyClass, robots, contextProductId } = Astro.props;
+const fullTitle = title ? `${title} | ${site.name}` : `${site.name} | ${site.tagline}`;
+const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="release-id" content={releaseId} />
+    {robots && <meta name="robots" content={robots} />}
+    {canonical && <link rel="canonical" href={canonical} />}
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta name="theme-color" content="#8f0026" />
+  </head>
+  <body id="top" class={bodyClass}>
+    <a class="skip" href="#main">跳到正文</a>
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <slot name="guide" />
+    <GuideWidget client:load releaseId={releaseId} contextProductId={contextProductId} contactHref={telHref()} />
+    {contactStrip && <ContactStrip />}
+    <Footer />
+    <script>
+      import '../scripts/site.js';
+    </script>
+  </body>
+</html>

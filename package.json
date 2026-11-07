@@ -1,0 +1,45 @@
+{
+  "name": "yuanfa-official",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "元发工具官网（静态站）",
+  "scripts": {
+    "dev": "astro dev --host 127.0.0.1 --port 4330",
+    "build": "astro build",
+    "preview": "astro preview --host 127.0.0.1 --port 4330",
+    "test": "node --experimental-strip-types --test tests/*.test.mjs",
+    "audit": "node scripts/audit-build.mjs",
+    "qa": "node scripts/qa.mjs",
+    "contracts:generate": "node scripts/generate-contracts.mjs",
+    "test:contracts": "node --test tests/contracts/*.test.mjs",
+    "site:config": "node scripts/export-site-config.mjs",
+    "seed:export": "node --experimental-strip-types scripts/export-initial-catalog.mjs",
+    "build:admin": "astro build --root admin",
+    "dev:admin": "astro dev --root admin"
+  },
+  "engines": {
+    "node": "22.23.4",
+    "npm": "10.9.9"
+  },
+  "dependencies": {
+    "@fontsource/jost": "5.3.0",
+    "astro": "5.18.2",
+    "@astrojs/react": "4.4.2",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "@ai-sdk/react": "4.0.167",
+    "ai": "7.0.163",
+    "ajv": "8.20.0",
+    "ajv-formats": "3.0.1"
+  },
+  "packageManager": "npm@10.9.9",
+  "devDependencies": {
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "json-schema-to-typescript": "16.0.0",
+    "playwright-core": "1.65.0",
+    "yaml": "2.9.1",
+    "typescript": "7.0.2"
+  }
+}

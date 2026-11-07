@@ -1,0 +1,24 @@
+---
+import Crumbs from './Crumbs.astro';
+
+interface Props {
+  title: string;
+  lead?: string;
+  text?: string;
+  crumbs?: { label: string; href?: string }[];
+}
+
+const { title, lead, text, crumbs = [{ label: title }] } = Astro.props;
+const single = !text;
+---
+
+<section class:list={['page-head', { 'page-head--single': single }]}>
+  <div class="wrap">
+    <Crumbs items={crumbs} />
+    <div class="page-head__grid">
+      <h1>{title}</h1>
+      {lead && <p class="page-head__lead">{lead}</p>}
+      {text && <p class="page-head__text">{text}</p>}
+    </div>
+  </div>
+</section>

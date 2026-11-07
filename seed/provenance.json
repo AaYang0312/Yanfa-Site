@@ -1,0 +1,1145 @@
+{
+  "schema_version": 1,
+  "frozen_at": "2026-11-07T13:35:21.044Z",
+  "source_row_semantics": "Synthetic public item index; not a row number in any private source document.",
+  "archives": [
+    {
+      "id": "legacy_catalog",
+      "source_path": "seed/provenance/legacy-catalog.ts",
+      "archive_path": "seed/provenance/legacy-catalog.ts",
+      "source_sha256": "e420797a833b9ed3567b0d15a321225724b72190ca2d5a1d470c888a3e3bc227",
+      "archive_sha256": "e420797a833b9ed3567b0d15a321225724b72190ca2d5a1d470c888a3e3bc227",
+      "differences": []
+    },
+    {
+      "id": "product_source",
+      "source_path": "seed/provenance/product-source.json",
+      "archive_path": "seed/provenance/product-source.json",
+      "source_sha256": "f5e6e054c6c4b1ae10b667ec970873c1e98afb60f4b9df875105970355038313",
+      "archive_sha256": "f5e6e054c6c4b1ae10b667ec970873c1e98afb60f4b9df875105970355038313",
+      "differences": []
+    }
+  ],
+  "purpose": "One-time, read-only initialization; never a runtime fallback or editing source.",
+  "text_digest_encoding": "SHA256 of UTF-8 JSON.stringify(value), without trailing newline",
+  "media_root": "src/assets/products",
+  "outputs": {
+    "initial-catalog.json": "991ae45c3fd728a0e6d0a2563b955d3de1a508574add43e71880f401a3532843",
+    "media-manifest.json": "2aa122f805937e061db5be1fe5b1841c92fd48ebc506974b2cfe53c0e4faeaf6"
+  },
+  "products": [
+    {
+      "product_id": "p_f30m",
+      "slug": "f30m",
+      "source_row": 1,
+      "source_archive_id": "product_source",
+      "source_json_pointer": "/models/0",
+      "source_row_sha256": "666fd4f7e5fb8e6c076c5f565d1843a8066736d1ac383d6167b67d41481bc15a",
+      "display_sha256": "a960506a38fd7f855e8fbb5660238321302ea3ec11f143b8bf4f37029d559094",
+      "images": [
+        {
+          "product_id": "p_f30m",
+          "file": "f30m-detail-2.png",
+          "role": "detail",
+          "source": "/media/d0e8f18970166ff92a32a4a2ad62e3045110a1d9fc50961e8a4b6471974a94d0.png",
+          "sha256": "d0e8f18970166ff92a32a4a2ad62e3045110a1d9fc50961e8a4b6471974a94d0",
+          "source_index": 0,
+          "display_index": 0
+        },
+        {
+          "product_id": "p_f30m",
+          "file": "f30m-detail-3.png",
+          "role": "detail",
+          "source": "/media/24cec06c63823f1174a39c36941ebde0f53124a0f2d709edef2af5904ae57e03.png",
+          "sha256": "24cec06c63823f1174a39c36941ebde0f53124a0f2d709edef2af5904ae57e03",
+          "source_index": 1,
+          "display_index": 1
+        },
+        {
+          "product_id": "p_f30m",
+          "file": "f30m-main-1.jpg",
+          "role": "main",
+          "source": "/media/379cbf7e6703c5fb6c6f9bcdc8ef2ae6b8b03884408714be93466ab2d7084934.jpg",
+          "sha256": "379cbf7e6703c5fb6c6f9bcdc8ef2ae6b8b03884408714be93466ab2d7084934",
+          "source_index": 2,
+          "display_index": 2
+        }
+      ]
+    },
+    {
+      "product_id": "p_f30a",
+      "slug": "f30a",
+      "source_row": 2,
+      "source_archive_id": "product_source",
+      "source_json_pointer": "/models/1",
+      "source_row_sha256": "18d4482f24952f346eced8b562791774c6f5bb143bcd4be302387ba6ad073a93",
+      "display_sha256": "fcf58278fabaa699e42da17445e5b7939deb30d4637bc085c8912f10fb1ca71e",
+      "images": [
+        {
+          "product_id": "p_f30a",
+          "file": "f30a-detail-2.jpg",
+          "role": "detail",
+          "source": "/media/aae5be6f9c38b2f6c5658de26675625ea3a7eb2ffcc2e74ad9b4b00a2a7004b6.jpg",
+          "sha256": "aae5be6f9c38b2f6c5658de26675625ea3a7eb2ffcc2e74ad9b4b00a2a7004b6",
+          "source_index": 0,
+          "display_index": 0
+        },
+        {
+          "product_id": "p_f30a",
+          "file": "f30a-main-1.png",
+          "role": "main",
+          "source": "/media/d293fa45175c6a2791353d5f9a4565f5f014ae77894946b881d45c6d3259803c.png",
+          "sha256": "d293fa45175c6a2791353d5f9a4565f5f014ae77894946b881d45c6d3259803c",
+          "source_index": 1,
+          "display_index": 1
+        }
+      ]
+    },
+    {
+      "product_id": "p_f30g",
+      "slug": "f30g",
+      "source_row": 3,
+      "source_archive_id": "product_source",
+      "source_json_pointer": "/models/2",
+      "source_row_sha256": "1c6560b87970dbbaea5b2d94ab07bb0c0735e37528e1eb94890a2a77470501c9",
+      "display_sha256": "cf9fd9e093cb2562ceeb37e8b43ea2ba64ae041928f3ad0044158b023d393fc7",
+      "images": [
+        {
+          "product_id": "p_f30g",
+          "file": "f30g-detail-2.jpg",
+          "role": "detail",
+          "source": "/media/14d21615397430a4e0d4abe866d9fba28ace21dbf2098cc4340a00fb3d72da7f.jpg",
+          "sha256": "14d21615397430a4e0d4abe866d9fba28ace21dbf2098cc4340a00fb3d72da7f",
+          "source_index": 0,
+          "display_index": 0
+        },
+        {
+          "product_id": "p_f30g",
+          "file": "f30g-main-1.jpg",
+          "role": "main",
+          "source": "/media/557c234d3fc006c219429c3edd0710978e83d8eaa4e276f34f04c8387c61dd73.jpg",
+          "sha256": "557c234d3fc006c219429c3edd0710978e83d8eaa4e276f34f04c8387c61dd73",
+          "source_index": 1,
+          "display_index": 1
+        }
+      ]
+    },
+    {
+      "product_id": "p_f30c",
+      "slug": "f30c",
+      "source_row": 4,
+      "source_archive_id": "product_source",
+      "source_json_pointer": "/models/3",
+      "source_row_sha256": "a2e2504dbca2c2f35b767548601da197e67178dc2166003b00b5463f6bbc38ff",
+      "display_sha256": "bf5747d0329837c53a68fd296fb2a8cb3a9fed8acb0a9d66bb6336ee556739df",
+      "images": [
+        {
+          "product_id": "p_f30c",
+          "file": "f30c-detail-2.jpg",
+          "role": "detail",
+          "source": "/media/b3393685c243cb43f15fd1632d8fd5f1a4f2501efa50cd517ee8967c8ee8349d.jpg",
+          "sha256": "b3393685c243cb43f15fd1632d8fd5f1a4f2501efa50cd517ee8967c8ee8349d",
+          "source_index": 0,
+          "display_index": 0
+        },
+        {
+          "product_id": "p_f30c",
+          "file": "f30c-main-1.jpg",
+          "role": "main",
+          "source": "/media/d167a4ca93db9874de05657173885897f4d87b51ca42ec8d778ba57aca7261b0.jpg",
+          "sha256": "d167a4ca93db9874de05657173885897f4d87b51ca42ec8d778ba57aca7261b0",
+          "source_index": 1,
+          "display_index": 1
+        }
+      ]
+    },
+    {
+      "product_id": "p_f30cl",
+      "slug": "f30cl",
+      "source_row": 5,
+      "source_archive_id": "product_source",
+      "source_json_pointer": "/models/4",
+      "source_row_sha256": "d23e0696308eccf9641009284c1869d715c6f58c1e3efdc568b032e998c8731e",
+      "display_sha256": "c497798e4e32eaf3d42fb1bed17360fcfbb19ff50e836ee3bbdf9c37db5bbd07",
+      "images": [
+        {
+          "product_id": "p_f30cl",
+          "file": "f30cl-detail-2.jpg",
+          "role": "detail",
+          "source": "/media/2b36bd2701956d216704c02affcfccf4dc179d1ca1e33748bc254ae5929e6c77.jpg",
+          "sha256": "2b36bd2701956d216704c02affcfccf4dc179d1ca1e33748bc254ae5929e6c77",
+          "source_index": 0,
+          "display_index": 0
+        },
+        {
+          "product_id": "p_f30cl",
+          "file": "f30cl-main-1.jpg",
+          "role": "main",
+          "source": "/media/99602ad080a3033bbe763859691eef3dca14904d6868197f2cda77aab801b8f7.jpg",
+          "sha256": "99602ad080a3033bbe763859691eef3dca14904d6868197f2cda77aab801b8f7",
+          "source_index": 1,
+          "display_index": 1
+        }
+      ]
+    },
+    {
+      "product_id": "p_t50l",
+      "slug": "t50l",
+      "source_row": 6,
+      "source_archive_id": "product_source",
+      "source_json_pointer": "/models/5",
+      "source_row_sha256": "c65c9ba67ed6dd84072942e108cbf7bb88c40808b70a96332d81576122b36b0e",
+      "display_sha256": "eb13d037e54cef082db97ea6d8740623d524602b4e56c986feb3176fc35b01b5",
+      "images": [
+        {
+          "product_id": "p_t50l",
+          "file": "t50l-detail-2.png",
+          "role": "detail",
+          "source": "/media/50cc6c22b1b6537ab92fcfd8642eaf1a0d2ef60cff2ce47dbab034f69f04aed8.png",
+          "sha256": "50cc6c22b1b6537ab92fcfd8642eaf1a0d2ef60cff2ce47dbab034f69f04aed8",
+          "source_index": 0,
+          "display_index": 0
+        },
+        {
+          "product_id": "p_t50l",
+          "file": "t50l-main-1.jpg",
+          "role": "main",
+          "source": "/media/7d70ac8b08c2de474b49fd88cf35810dcd6854b0ce6003ebb65270a30be6ec05.jpg",
+          "sha256": "7d70ac8b08c2de474b49fd88cf35810dcd6854b0ce6003ebb65270a30be6ec05",
+          "source_index": 1,
+          "display_index": 1
+        }
+      ]
+    },
+    {
+      "product_id": "p_t50sa",
+      "slug": "t50sa",
+      "source_row": 7,
+      "source_archive_id": "product_source",
+      "source_json_pointer": "/models/6",
+      "source_row_sha256": "6aa9879757776e086cacdd3c7b1f3fd30aa06672aa9029f96f3106ac7b46695f",
+      "display_sha256": "948be66b1d8627412dea859bc9fd87fc695a577a80146491c11105fbed811c5d",
+      "images": [
+        {
+          "product_id": "p_t50sa",
+          "file": "t50sa-detail-2.jpg",
+          "role": "detail",
+          "source": "/media/3a0f35a41f66a8b7d5959055222ea97a46ad424b4e036791b25d44227d1fe015.jpg",
+          "sha256": "3a0f35a41f66a8b7d5959055222ea97a46ad424b4e036791b25d44227d1fe015",
+          "source_index": 0,
+          "display_index": 0
+        },
+        {
+          "product_id": "p_t50sa",
+          "file": "t50sa-main-1.jpg",
+          "role": "main",
+          "source": "/media/beddeec1dcbb2a00512ebeef7dafb7845692cf923537ef380b8ebd5dee48436b.jpg",
+          "sha256": "beddeec1dcbb2a00512ebeef7dafb7845692cf923537ef380b8ebd5dee48436b",
+          "source_index": 1,
+          "display_index": 1
+        }
+      ]
+    },
+    {
+      "product_id": "p_t50g",
+      "slug": "t50g",
+      "source_row": 8,
+      "source_archive_id": "product_source",
+      "source_json_pointer": "/models/7",
+      "source_row_sha256": "19a3a809b40c6fa5c7be4eb24972332ad2e41276ebf8dc1f3c97e62db1ac5afc",
+      "display_sha256": "88f617328e2eb6c9b58dbf9298e5bcf0dbbd3f1471a55c0bba45edf04e45bf36",
+      "images": [
+        {
+          "product_id": "p_t50g",
+          "file": "t50g-detail-2.jpg",
+          "role": "detail",
+          "source": "/media/04c2c2d6542208a0d056770e361237b9e02681a8aed82418885db722181130cd.jpg",
+          "sha256": "04c2c2d6542208a0d056770e361237b9e02681a8aed82418885db722181130cd",
+          "source_index": 0,
+          "display_index": 0
+        },
+        {
+          "product_id": "p_t50g",
+          "file": "t50g-main-1.jpg",
+          "role": "main",
+          "source": "/media/b976477c8b302e06c519eda04990f37899a3557b9fd63260204b8d33fb750abe.jpg",
+          "sha256": "b976477c8b302e06c519eda04990f37899a3557b9fd63260204b8d33fb750abe",
+          "source_index": 1,
+          "display_index": 1
+        }
+      ]
+    },
+    {
+      "product_id": "p_st64ml",
+      "slug": "st64ml",
+      "source_row": 9,
+      "source_archive_id": "product_source",
+      "source_json_pointer": "/models/8",
+      "source_row_sha256": "2f72f63d16081ef184a8e1a5a2a18d2ef4ecf35c91a3e1b16d03dbd0c51abc64",
+      "display_sha256": "0b4ef416f01b025e22e596f7f6bb8d8eeb744aecc387e708c22adf8833de605c",
+      "images": [
+        {
+          "product_id": "p_st64ml",
+          "file": "st64ml-detail-2.jpg",
+          "role": "detail",
+          "source": "/media/c96f035da72669412d5e8124805b46be3d34958d65121c644ddfef9c4ccd3d6f.jpg",
+          "sha256": "c96f035da72669412d5e8124805b46be3d34958d65121c644ddfef9c4ccd3d6f",
+          "source_index": 0,
+          "display_index": 0
+        },
+        {
+          "product_id": "p_st64ml",
+          "file": "st64ml-main-1.jpg",
+          "role": "main",
+          "source": "/media/b12e1df48db02d721bc9ac190deb6f3aaf9195fc14736f7742c3776c455f4978.jpg",
+          "sha256": "b12e1df48db02d721bc9ac190deb6f3aaf9195fc14736f7742c3776c455f4978",
+          "source_index": 1,
+          "display_index": 1
+        }
+      ]
+    },
+    {
+      "product_id": "p_st64gl",
+      "slug": "st64gl",
+      "source_row": 10,
+      "source_archive_id": "product_source",
+      "source_json_pointer": "/models/9",
+      "source_row_sha256": "c0b2c54b289ff2b110277370776eddf0fb656f23426a03e07f90cd3de9421605",
+      "display_sha256": "a711774a2727dbd85ffd5663802be3b97f4979b9b1083825ac631719005cc4be",
+      "images": [
+        {
+          "product_id": "p_st64gl",
+          "file": "st64gl-detail-2.jpg",
+          "role": "detail",
+          "source": "/media/97796d237d2c56341c1367a6ec5ef04db696be42c2de430a4545a7e257ab3250.jpg",
+          "sha256": "97796d237d2c56341c1367a6ec5ef04db696be42c2de430a4545a7e257ab3250",
+          "source_index": 0,
+          "display_index": 0
+        },
+        {
+          "product_id": "p_st64gl",
+          "file": "st64gl-main-1.jpg",
+          "role": "main",
+          "source": "/media/ff5ed12ac10289697c93e1d9be9e563f36e85b5fd31c6ba925a62b85fced24ba.jpg",
+          "sha256": "ff5ed12ac10289697c93e1d9be9e563f36e85b5fd31c6ba925a62b85fced24ba",
+          "source_index": 1,
+          "display_index": 1
+        }
+      ]
+    },
+    {
+      "product_id": "p_st64g",
+      "slug": "st64g",
+      "source_row": 11,
+      "source_archive_id": "product_source",
+      "source_json_pointer": "/models/10",
+      "source_row_sha256": "cc198546a493ce2c2fb423d84cfa89dc0dd7a1548d5fcadedc3c2705291f2375",
+      "display_sha256": "272972a970736af0d4be4ee1dff060156067b220a746dd4915ad99778a707d01",
+      "images": [
+        {
+          "product_id": "p_st64g",
+          "file": "st64g-detail-2.png",
+          "role": "detail",
+          "source": "/media/8e9115d2936bf02a896d2279e5890745fb6d5074fa78db78f14a7979d0d2a511.png",
+          "sha256": "8e9115d2936bf02a896d2279e5890745fb6d5074fa78db78f14a7979d0d2a511",
+          "source_index": 0,
+          "display_index": 0
+        },
+        {
+          "product_id": "p_st64g",
+          "file": "st64g-main-1.png",
+          "role": "main",
+          "source": "/media/84c5d1fa89a002534d89fa2d72e4a3a462816b73c6d410fd6d5c6734f58b5ed1.png",
+          "sha256": "84c5d1fa89a002534d89fa2d72e4a3a462816b73c6d410fd6d5c6734f58b5ed1",
+          "source_index": 1,
+          "display_index": 1
+        }
+      ]
+    },
+    {
+      "product_id": "p_st38lg",
+      "slug": "st38lg",
+      "source_row": 12,
+      "source_archive_id": "product_source",
+      "source_json_pointer": "/models/11",
+      "source_row_sha256": "f82283c1d73608747f7d165a726f0d40842870ec1e1975318825783135bcc03b",
+      "display_sha256": "389742bd688813e4a3442bf1e2e80d4fc05ba4fad08680ad36ef3c777fb674d3",
+      "images": [
+        {
+          "product_id": "p_st38lg",
+          "file": "st38lg-detail-2.jpg",
+          "role": "detail",
+          "source": "/media/6d336edd0a78ccf0574b0e1cbd03f58d1a175e04c5f935a6def0b8fc312b365b.jpg",
+          "sha256": "6d336edd0a78ccf0574b0e1cbd03f58d1a175e04c5f935a6def0b8fc312b365b",
+          "source_index": 0,
+          "display_index": 0
+        },
+        {
+          "product_id": "p_st38lg",
+          "file": "st38lg-main-1.jpg",
+          "role": "main",
+          "source": "/media/a386d6b8bc05e831090fdbabeca621397b0751f1c6ffe4e8d09c8dae1d270a16.jpg",
+          "sha256": "a386d6b8bc05e831090fdbabeca621397b0751f1c6ffe4e8d09c8dae1d270a16",
+          "source_index": 1,
+          "display_index": 1
+        }
+      ]
+    },
+    {
+      "product_id": "p_n851g",
+      "slug": "n851g",
+      "source_row": 13,
+      "source_archive_id": "product_source",
+      "source_json_pointer": "/models/12",
+      "source_row_sha256": "7328cb3bd0d624d730a636bde9900c98c05326d6e7fbfd874e494598005af5e3",
+      "display_sha256": "4f5dafe762f6476d8d676ff8fb4033659b8144ff1406c9eb9235dadd141d1bdf",
+      "images": [
+        {
+          "product_id": "p_n851g",
+          "file": "n851g-detail-2.png",
+          "role": "detail",
+          "source": "/media/55cb9bfff048d63f0007fe6e19e9c3af4857e4f37284d7ff9b19bb919bc14aa1.png",
+          "sha256": "55cb9bfff048d63f0007fe6e19e9c3af4857e4f37284d7ff9b19bb919bc14aa1",
+          "source_index": 0,
+          "display_index": 0
+        },
+        {
+          "product_id": "p_n851g",
+          "file": "n851g-main-1.png",
+          "role": "main",
+          "source": "/media/6e160fe3b06f5d55e5f549d54619b05a979000d33307f1bfb36ef0a2d209ace1.png",
+          "sha256": "6e160fe3b06f5d55e5f549d54619b05a979000d33307f1bfb36ef0a2d209ace1",
+          "source_index": 1,
+          "display_index": 1
+        }
+      ]
+    },
+    {
+      "product_id": "p_n838g",
+      "slug": "n838g",
+      "source_row": 14,
+      "source_archive_id": "product_source",
+      "source_json_pointer": "/models/13",
+      "source_row_sha256": "9443e720d6747e5ab975ee134996c542949aef7b375c27030a44e4188fbc1d0d",
+      "display_sha256": "78767192425ffb4ebea17ca9fa4280b7d8edab274efbb5e68660889a1329450d",
+      "images": [
+        {
+          "product_id": "p_n838g",
+          "file": "n838g-detail-1.png",
+          "role": "detail",
+          "source": "/media/f4b88622a70358e4575cbf4bccc1275c0f0def4e32d82764d98cd859315be6eb.png",
+          "sha256": "f4b88622a70358e4575cbf4bccc1275c0f0def4e32d82764d98cd859315be6eb",
+          "source_index": 0,
+          "display_index": 0
+        }
+      ]
+    },
+    {
+      "product_id": "p_425k",
+      "slug": "425k",
+      "source_row": 15,
+      "source_archive_id": "product_source",
+      "source_json_pointer": "/models/14",
+      "source_row_sha256": "67e73464e3063fe952870a8fc90e5f928cd34cb5deb1fe03663214892763eddf",
+      "display_sha256": "c3c64c926739ab5977d0f5f3e111237ec1aa38e2b2fee732a0b67c7aaf18a046",
+      "images": [
+        {
+          "product_id": "p_425k",
+          "file": "425k-detail-2.jpg",
+          "role": "detail",
+          "source": "/media/89cb541ed4f6342b0bbec2a8bd78ae76e5b0164b90edba5d640aa8043a01943a.jpg",
+          "sha256": "89cb541ed4f6342b0bbec2a8bd78ae76e5b0164b90edba5d640aa8043a01943a",
+          "source_index": 0,
+          "display_index": 0
+        },
+        {
+          "product_id": "p_425k",
+          "file": "425k-main-1.jpg",
+          "role": "main",
+          "source": "/media/14d7809ee039607bd51e2576b023869acb25eb67d2972c59e0a9ce95f27dd080.jpg",
+          "sha256": "14d7809ee039607bd51e2576b023869acb25eb67d2972c59e0a9ce95f27dd080",
+          "source_index": 1,
+          "display_index": 1
+        }
+      ]
+    },
+    {
+      "product_id": "p_416kg",
+      "slug": "416kg",
+      "source_row": 16,
+      "source_archive_id": "product_source",
+      "source_json_pointer": "/models/15",
+      "source_row_sha256": "083283de48d495b131d718ac86a572e5b60d8b9ea1bf51afe051e5ca892978ab",
+      "display_sha256": "6fb5dcb26d29952b90b6f47daa5290095c606c3c34e13ab94c07ce0d0810f686",
+      "images": [
+        {
+          "product_id": "p_416kg",
+          "file": "416kg-detail-1.png",
+          "role": "detail",
+          "source": "/media/cc8ceda196a56ffef8a0d0b64e50d13395e90bbee967e9fb3edeb3faa6a36dd2.png",
+          "sha256": "cc8ceda196a56ffef8a0d0b64e50d13395e90bbee967e9fb3edeb3faa6a36dd2",
+          "source_index": 0,
+          "display_index": 0
+        }
+      ]
+    },
+    {
+      "product_id": "p_440kg",
+      "slug": "440kg",
+      "source_row": 17,
+      "source_archive_id": "product_source",
+      "source_json_pointer": "/models/16",
+      "source_row_sha256": "c8801814b68b34b41e236d7547e3229f7c459c327946641d8ccd2460a03709fc",
+      "display_sha256": "9949a34e7761bbf4df0eca424f4ac7aa677e2b87595f43bb3e209b7f02f50a66",
+      "images": [
+        {
+          "product_id": "p_440kg",
+          "file": "440kg-detail-2.jpg",
+          "role": "detail",
+          "source": "/media/02e521d734acb8119cc38b61c6c2cd2c9f1e92f8bec93055cf8df95adfbb5058.jpg",
+          "sha256": "02e521d734acb8119cc38b61c6c2cd2c9f1e92f8bec93055cf8df95adfbb5058",
+          "source_index": 0,
+          "display_index": 0
+        },
+        {
+          "product_id": "p_440kg",
+          "file": "440kg-main-1.jpg",
+          "role": "main",
+          "source": "/media/bd5de0e0caa43a0e4e90dabcf527ae40858b8a8cbf54efeb1eda4b9d55724540.jpg",
+          "sha256": "bd5de0e0caa43a0e4e90dabcf527ae40858b8a8cbf54efeb1eda4b9d55724540",
+          "source_index": 1,
+          "display_index": 1
+        }
+      ]
+    },
+    {
+      "product_id": "p_422jg",
+      "slug": "422jg",
+      "source_row": 18,
+      "source_archive_id": "product_source",
+      "source_json_pointer": "/models/17",
+      "source_row_sha256": "ba7f41dc1904e21e12d3018d4b8a07219932b9f80001f0d564b7d1f5b64fffcb",
+      "display_sha256": "eb88f03cf99dba1e7284991bf899644588303235a763d8a9a992e620b4a4b613",
+      "images": [
+        {
+          "product_id": "p_422jg",
+          "file": "422jg-detail-2.jpg",
+          "role": "detail",
+          "source": "/media/ae1b2d8ed40cd1ddc2dc5b2f743dc57b09eaf5617df4f6314bf348d3c1e5b6ce.jpg",
+          "sha256": "ae1b2d8ed40cd1ddc2dc5b2f743dc57b09eaf5617df4f6314bf348d3c1e5b6ce",
+          "source_index": 0,
+          "display_index": 0
+        },
+        {
+          "product_id": "p_422jg",
+          "file": "422jg-main-1.jpg",
+          "role": "main",
+          "source": "/media/62448a9390ff9b9c765b62c4c0050e956fe2478a9b58ca55a00e96047005779a.jpg",
+          "sha256": "62448a9390ff9b9c765b62c4c0050e956fe2478a9b58ca55a00e96047005779a",
+          "source_index": 1,
+          "display_index": 1
+        }
+      ]
+    },
+    {
+      "product_id": "p_1013jg",
+      "slug": "1013jg",
+      "source_row": 19,
+      "source_archive_id": "product_source",
+      "source_json_pointer": "/models/18",
+      "source_row_sha256": "40620da9e0e15372311a39a1cec5b7d04d969be81a2b598cc25dc256dd983ce6",
+      "display_sha256": "9d521a0d1b3c933acb6dfb60a17b121ca7a4b308407e5838a787b98bd02175f7",
+      "images": [
+        {
+          "product_id": "p_1013jg",
+          "file": "1013jg-detail-2.jpg",
+          "role": "detail",
+          "source": "/media/cf95d64665963de6693f384a37da9a7ebe094e3393b88902f785c0f70a1cb94d.jpg",
+          "sha256": "cf95d64665963de6693f384a37da9a7ebe094e3393b88902f785c0f70a1cb94d",
+          "source_index": 0,
+          "display_index": 0
+        },
+        {
+          "product_id": "p_1013jg",
+          "file": "1013jg-main-1.jpg",
+          "role": "main",
+          "source": "/media/af2923bed50368ca22052767b26deac1c1eefbef023f82edba9d3ec344021ae3.jpg",
+          "sha256": "af2923bed50368ca22052767b26deac1c1eefbef023f82edba9d3ec344021ae3",
+          "source_index": 1,
+          "display_index": 1
+        }
+      ]
+    },
+    {
+      "product_id": "p_1022jg",
+      "slug": "1022jg",
+      "source_row": 20,
+      "source_archive_id": "product_source",
+      "source_json_pointer": "/models/19",
+      "source_row_sha256": "b21bdb56d1c7832a0e96dd2ad024d017dfd8b45bdfacf0c81e963b9e54ec8b81",
+      "display_sha256": "7788cead97f4637e0ec2aeb719b92d6081ecb849bc3ec6c1285e9d64f27cb4e8",
+      "images": [
+        {
+          "product_id": "p_1022jg",
+          "file": "1022jg-detail-1.png",
+          "role": "detail",
+          "source": "/media/35c71d418f24da7415cfba3d2c1f669d06b29e06bc98c6882a8e5ff28798d750.png",
+          "sha256": "35c71d418f24da7415cfba3d2c1f669d06b29e06bc98c6882a8e5ff28798d750",
+          "source_index": 0,
+          "display_index": 0
+        }
+      ]
+    },
+    {
+      "product_id": "p_gw838",
+      "slug": "gw838",
+      "source_row": 21,
+      "source_archive_id": "product_source",
+      "source_json_pointer": "/models/20",
+      "source_row_sha256": "2268c1c3ce369861ea378e86ffeb9fbbcb7f643a6e5a36873f88b4322ca230c2",
+      "display_sha256": "d1e74ff717a56c857d69a21c4eea1d3cc555564bf4c858d555d51f9228626e09",
+      "images": [
+        {
+          "product_id": "p_gw838",
+          "file": "gw838-detail-2.jpg",
+          "role": "detail",
+          "source": "/media/417f6269dfb5f797e4f10f9b9a12dfcbd53a04b0930e80e46a0b4a210effb8e2.jpg",
+          "sha256": "417f6269dfb5f797e4f10f9b9a12dfcbd53a04b0930e80e46a0b4a210effb8e2",
+          "source_index": 0,
+          "display_index": 0
+        },
+        {
+          "product_id": "p_gw838",
+          "file": "gw838-main-1.jpg",
+          "role": "main",
+          "source": "/media/cb9b67eb580cb5acc7a251c4833c9de1ed35d01003baf27deee4d152be50aa01.jpg",
+          "sha256": "cb9b67eb580cb5acc7a251c4833c9de1ed35d01003baf27deee4d152be50aa01",
+          "source_index": 1,
+          "display_index": 1
+        }
+      ]
+    },
+    {
+      "product_id": "p_pw2638",
+      "slug": "pw2638",
+      "source_row": 22,
+      "source_archive_id": "product_source",
+      "source_json_pointer": "/models/21",
+      "source_row_sha256": "997d2900f074b7a7ce369a6137ec4aad6b395af1babbca767347b6f52dbc17d1",
+      "display_sha256": "56e9279c395640c175443cea1dc5d50db61dc7d172cf75b6add35e68fe1769d9",
+      "images": [
+        {
+          "product_id": "p_pw2638",
+          "file": "pw2638-detail-2.jpg",
+          "role": "detail",
+          "source": "/media/7fbb6a60822160ce8368b0900e0b3d5aaf0c0e43fd3569036d079147a6a4518f.jpg",
+          "sha256": "7fbb6a60822160ce8368b0900e0b3d5aaf0c0e43fd3569036d079147a6a4518f",
+          "source_index": 0,
+          "display_index": 0
+        },
+        {
+          "product_id": "p_pw2638",
+          "file": "pw2638-main-1.jpg",
+          "role": "main",
+          "source": "/media/1a174246932b457069dae1a91f68dc3a3310f8246922dd5aa19eb5815d511057.jpg",
+          "sha256": "1a174246932b457069dae1a91f68dc3a3310f8246922dd5aa19eb5815d511057",
+          "source_index": 1,
+          "display_index": 1
+        }
+      ]
+    },
+    {
+      "product_id": "p_p625g",
+      "slug": "p625g",
+      "source_row": 23,
+      "source_archive_id": "product_source",
+      "source_json_pointer": "/models/22",
+      "source_row_sha256": "0ed0afecdcb3a84cdbf4ee1b8db7acd76b68e3d4504906ba1042b935d9e8021f",
+      "display_sha256": "561663cd92f9abb1e67784eba9bbfaac44ee45a08d673818fff5bd8e00016000",
+      "images": [
+        {
+          "product_id": "p_p625g",
+          "file": "p625g-detail-2.png",
+          "role": "detail",
+          "source": "/media/4389863a3b9a52da7dc17e18ae0216b0fa65fcf767be7a1f17b2b82b585d052c.png",
+          "sha256": "4389863a3b9a52da7dc17e18ae0216b0fa65fcf767be7a1f17b2b82b585d052c",
+          "source_index": 0,
+          "display_index": 0
+        },
+        {
+          "product_id": "p_p625g",
+          "file": "p625g-main-1.jpg",
+          "role": "main",
+          "source": "/media/9db2a7eba8da8a58c1331e02ef4e1ea0588de031135956aa297e6735646025db.jpg",
+          "sha256": "9db2a7eba8da8a58c1331e02ef4e1ea0588de031135956aa297e6735646025db",
+          "source_index": 1,
+          "display_index": 1
+        }
+      ]
+    },
+    {
+      "product_id": "p_p635g",
+      "slug": "p635g",
+      "source_row": 24,
+      "source_archive_id": "product_source",
+      "source_json_pointer": "/models/23",
+      "source_row_sha256": "bd90311a5b3832c276ae81002214db10f9dd9357b299e43c8c5000cf7be06c45",
+      "display_sha256": "cbcd1a82c0ecb0383f4ac251c5275d824c2148c137077d5300c17a5b566ecc4f",
+      "images": [
+        {
+          "product_id": "p_p635g",
+          "file": "p635g-detail-1.png",
+          "role": "detail",
+          "source": "/media/346c836a9429d3550692ecf275f9512e4c716f1ba2c4348f6e85ac8fc8aa88a3.png",
+          "sha256": "346c836a9429d3550692ecf275f9512e4c716f1ba2c4348f6e85ac8fc8aa88a3",
+          "source_index": 0,
+          "display_index": 0
+        }
+      ]
+    },
+    {
+      "product_id": "p_cn55",
+      "slug": "cn55",
+      "source_row": 25,
+      "source_archive_id": "product_source",
+      "source_json_pointer": "/models/24",
+      "source_row_sha256": "32bfcf8bb3ac3653c57db91c009d8e910524487a021fe5e8cbd90c2a6420a55a",
+      "display_sha256": "b742028dcb9e9c22a7cdb3fd599ffe0cdcb6a2d99b0a57664c77b8848447d43c",
+      "images": [
+        {
+          "product_id": "p_cn55",
+          "file": "cn55-detail-2.png",
+          "role": "detail",
+          "source": "/media/73af6278825515396eb88350fcc48a5f6a35ecf730df334bc0a99ecb3d3bb828.png",
+          "sha256": "73af6278825515396eb88350fcc48a5f6a35ecf730df334bc0a99ecb3d3bb828",
+          "source_index": 0,
+          "display_index": 0
+        },
+        {
+          "product_id": "p_cn55",
+          "file": "cn55-main-1.jpg",
+          "role": "main",
+          "source": "/media/02fe0932fa4aa3891d418b829b0990cb5913784dfaef9f3646701b4cb5e3e591.jpg",
+          "sha256": "02fe0932fa4aa3891d418b829b0990cb5913784dfaef9f3646701b4cb5e3e591",
+          "source_index": 1,
+          "display_index": 1
+        }
+      ]
+    },
+    {
+      "product_id": "p_cn70",
+      "slug": "cn70",
+      "source_row": 26,
+      "source_archive_id": "product_source",
+      "source_json_pointer": "/models/25",
+      "source_row_sha256": "3033ec71b6bbd13a84662ec1a5a3a7704f1eea060919186c8749339fdc5a0342",
+      "display_sha256": "49095a9f00626d47dfc66269cc15ad8e95474a2175118484b742c900f853c132",
+      "images": [
+        {
+          "product_id": "p_cn70",
+          "file": "cn70-detail-1.png",
+          "role": "detail",
+          "source": "/media/9f5fa46b8946faf5a63ac2d5cd6db01391a9ed229863762f27f0cc491adda118.png",
+          "sha256": "9f5fa46b8946faf5a63ac2d5cd6db01391a9ed229863762f27f0cc491adda118",
+          "source_index": 0,
+          "display_index": 0
+        }
+      ]
+    },
+    {
+      "product_id": "p_cn80",
+      "slug": "cn80",
+      "source_row": 27,
+      "source_archive_id": "product_source",
+      "source_json_pointer": "/models/26",
+      "source_row_sha256": "84f54fa3a990142a319998a5229c86c1cf5a116628998eabc6555181af799955",
+      "display_sha256": "486d3aa95be56fd5058849745ced32ff8515e051d437eec54608db7899301053",
+      "images": [
+        {
+          "product_id": "p_cn80",
+          "file": "cn80-detail-1.png",
+          "role": "detail",
+          "source": "/media/77d3d683b2f252b30650a542e67f5899a6ce48c5e3b003c5230f75c13171b6ae.png",
+          "sha256": "77d3d683b2f252b30650a542e67f5899a6ce48c5e3b003c5230f75c13171b6ae",
+          "source_index": 0,
+          "display_index": 0
+        }
+      ]
+    },
+    {
+      "product_id": "p_cn90",
+      "slug": "cn90",
+      "source_row": 28,
+      "source_archive_id": "product_source",
+      "source_json_pointer": "/models/27",
+      "source_row_sha256": "aa5eed8c7d47f40b65bf9cb314968b714e21c55a258b605fd14299dd100e0857",
+      "display_sha256": "30e7e5d3443254e75c71a2de4fd318fc9623b3f3661f8bda4f279307d3e87df0",
+      "images": [
+        {
+          "product_id": "p_cn90",
+          "file": "cn90-detail-1.png",
+          "role": "detail",
+          "source": "/media/2cea0f8143baecdfed38c8b78d50cc90d98a66a32103f477c571b3c1d7daca4c.png",
+          "sha256": "2cea0f8143baecdfed38c8b78d50cc90d98a66a32103f477c571b3c1d7daca4c",
+          "source_index": 0,
+          "display_index": 0
+        }
+      ]
+    },
+    {
+      "product_id": "p_t50scg",
+      "slug": "t50scg",
+      "source_row": 29,
+      "source_archive_id": "product_source",
+      "source_json_pointer": "/models/28",
+      "source_row_sha256": "7c6c8a324d015fea66c5f85790339e70f09f2a8906705b02a3ceeb1fd76cbefa",
+      "display_sha256": "773e50391ab66847ee46518729a558a15600f525c2cc055479be81f98ffa9b7c",
+      "images": [
+        {
+          "product_id": "p_t50scg",
+          "file": "t50scg-detail-2.png",
+          "role": "detail",
+          "source": "/media/7ffb9255bd60283d9f19d11337370607c835a7782a1aa669351545ce58d09faa.png",
+          "sha256": "7ffb9255bd60283d9f19d11337370607c835a7782a1aa669351545ce58d09faa",
+          "source_index": 0,
+          "display_index": 0
+        },
+        {
+          "product_id": "p_t50scg",
+          "file": "t50scg-main-1.png",
+          "role": "main",
+          "source": "/media/be0c0cdfb3bf2cfef58fd42ede917a2c9a246920cf14215817e5e61205da2d1b.png",
+          "sha256": "be0c0cdfb3bf2cfef58fd42ede917a2c9a246920cf14215817e5e61205da2d1b",
+          "source_index": 1,
+          "display_index": 1
+        }
+      ]
+    },
+    {
+      "product_id": "p_np55g",
+      "slug": "np55g",
+      "source_row": 30,
+      "source_archive_id": "product_source",
+      "source_json_pointer": "/models/29",
+      "source_row_sha256": "6e0948a59b5cb7a742ee26798f016ccb60d02f80792577f67cc7bac64b054eef",
+      "display_sha256": "a52b0edcc46e0e50ae4545ec27ee805f349ba2fff405559898ea8c70724bef64",
+      "images": [
+        {
+          "product_id": "p_np55g",
+          "file": "np55g-detail-1.png",
+          "role": "detail",
+          "source": "/media/ea6d7412eb70710fc69f504c3ce25fce94366a3950eeafc886767d627d6c08d8.png",
+          "sha256": "ea6d7412eb70710fc69f504c3ce25fce94366a3950eeafc886767d627d6c08d8",
+          "source_index": 0,
+          "display_index": 0
+        }
+      ]
+    },
+    {
+      "product_id": "p_np70g",
+      "slug": "np70g",
+      "source_row": 31,
+      "source_archive_id": "product_source",
+      "source_json_pointer": "/models/30",
+      "source_row_sha256": "766f1cea00ca6a6c7df192d2aa1216cba5a19a4991a752ac1a93d9a422f0fe3d",
+      "display_sha256": "2072ecf6404994eabcd421c92d2c896c5b69e55fd1a79007c889b7cfb9b160c5",
+      "images": [
+        {
+          "product_id": "p_np70g",
+          "file": "np70g-detail-1.png",
+          "role": "detail",
+          "source": "/media/a65ab914542a805d658467aed16cfa4f37248c609ff26201dd75d3497e1e9030.png",
+          "sha256": "a65ab914542a805d658467aed16cfa4f37248c609ff26201dd75d3497e1e9030",
+          "source_index": 0,
+          "display_index": 0
+        }
+      ]
+    },
+    {
+      "product_id": "p_np90g",
+      "slug": "np90g",
+      "source_row": 32,
+      "source_archive_id": "product_source",
+      "source_json_pointer": "/models/31",
+      "source_row_sha256": "d5b7228fa39843effdeaf62ec918d258b26e8ca05acf8b9bdfd3485846c0ae7d",
+      "display_sha256": "25dadab44985c2a53faa0dedbf9f70e429ceeca1f6e0b91f3e7d4b87c64815d5",
+      "images": [
+        {
+          "product_id": "p_np90g",
+          "file": "np90g-detail-1.png",
+          "role": "detail",
+          "source": "/media/88b6f5a2305f7e31deb4e8839298655361835062ff11861c51152715779bcab0.png",
+          "sha256": "88b6f5a2305f7e31deb4e8839298655361835062ff11861c51152715779bcab0",
+          "source_index": 0,
+          "display_index": 0
+        }
+      ]
+    },
+    {
+      "product_id": "p_bd70",
+      "slug": "bd70",
+      "source_row": 33,
+      "source_archive_id": "product_source",
+      "source_json_pointer": "/models/32",
+      "source_row_sha256": "ad6b41d94801e5fff1e91693c4e27f44691fea940bb24e2cafa92aefdfe5663b",
+      "display_sha256": "9fe944ac61b4c65617a6c2c19cc3836caca2bdc69d420898b8f1242d1cb67bbb",
+      "images": [
+        {
+          "product_id": "p_bd70",
+          "file": "bd70-detail-2.jpg",
+          "role": "detail",
+          "source": "/media/ae67e52bb37808f991fd1c20fbd87fa73bb54b957f1e7eccb13fc8afa11ee737.jpg",
+          "sha256": "ae67e52bb37808f991fd1c20fbd87fa73bb54b957f1e7eccb13fc8afa11ee737",
+          "source_index": 0,
+          "display_index": 0
+        },
+        {
+          "product_id": "p_bd70",
+          "file": "bd70-main-1.jpg",
+          "role": "main",
+          "source": "/media/47ed1aec29be389697b0be746dd2ba1e29495db525aafdbe68d7c5989e616163.jpg",
+          "sha256": "47ed1aec29be389697b0be746dd2ba1e29495db525aafdbe68d7c5989e616163",
+          "source_index": 1,
+          "display_index": 1
+        }
+      ]
+    },
+    {
+      "product_id": "p_bd70g",
+      "slug": "bd70g",
+      "source_row": 34,
+      "source_archive_id": "product_source",
+      "source_json_pointer": "/models/33",
+      "source_row_sha256": "2b2ec09eaeb097273cf77ca9faceb43253954b574c131b2e913c1574a438ee6c",
+      "display_sha256": "428e2f8d655007f7d2673165189beb5e5703d1d5061ad173e3a22024efa65e99",
+      "images": [
+        {
+          "product_id": "p_bd70g",
+          "file": "bd70g-detail-2.png",
+          "role": "detail",
+          "source": "/media/d8666075787a665702df77ea42d1305fe6fd46a0d7ab17e52d39f4ebeea97d9f.png",
+          "sha256": "d8666075787a665702df77ea42d1305fe6fd46a0d7ab17e52d39f4ebeea97d9f",
+          "source_index": 0,
+          "display_index": 0
+        },
+        {
+          "product_id": "p_bd70g",
+          "file": "bd70g-main-1.jpg",
+          "role": "main",
+          "source": "/media/fdd1311dd846b47cc3d9f89ddf050db19259ac2069201d4dbec9b92e1e9ac857.jpg",
+          "sha256": "fdd1311dd846b47cc3d9f89ddf050db19259ac2069201d4dbec9b92e1e9ac857",
+          "source_index": 1,
+          "display_index": 1
+        }
+      ]
+    },
+    {
+      "product_id": "p_bw120g",
+      "slug": "bw120g",
+      "source_row": 35,
+      "source_archive_id": "product_source",
+      "source_json_pointer": "/models/34",
+      "source_row_sha256": "9b8230863b7f667f4cdcf51f64eef973176446d9eded3e5c0ebffe1da20c44e9",
+      "display_sha256": "3ce5f61437020bff572f27d092f3c7e6a456818c1f7283f4dd5f8ec4f802b86e",
+      "images": [
+        {
+          "product_id": "p_bw120g",
+          "file": "bw120g-detail-1.png",
+          "role": "detail",
+          "source": "/media/0f735f01260922ceb50665b75984ba84861247443c62772e225ed67da133ea42.png",
+          "sha256": "0f735f01260922ceb50665b75984ba84861247443c62772e225ed67da133ea42",
+          "source_index": 0,
+          "display_index": 0
+        }
+      ]
+    },
+    {
+      "product_id": "p_bw160g",
+      "slug": "bw160g",
+      "source_row": 36,
+      "source_archive_id": "product_source",
+      "source_json_pointer": "/models/35",
+      "source_row_sha256": "484e29ae7ba3aafdd3c6b45e66c59f861e0b48122351194dba23b0e55eb04d60",
+      "display_sha256": "e7345308177d8b27bc2640601c920f07733f6428c7e31a7afc8ccab4c3fd87fb",
+      "images": [
+        {
+          "product_id": "p_bw160g",
+          "file": "bw160g-detail-1.png",
+          "role": "detail",
+          "source": "/media/c82bc03084fae66c816ffa6aef9d131a44a72d0b7040862581ae5dcb4700775d.png",
+          "sha256": "c82bc03084fae66c816ffa6aef9d131a44a72d0b7040862581ae5dcb4700775d",
+          "source_index": 0,
+          "display_index": 0
+        }
+      ]
+    },
+    {
+      "product_id": "p_dbw150",
+      "slug": "dbw150",
+      "source_row": 37,
+      "source_archive_id": "product_source",
+      "source_json_pointer": "/models/36",
+      "source_row_sha256": "dd312b54b04a4c152de85f115b986553c72d2e5fd378ed3897c35244b2dd5138",
+      "display_sha256": "8ada37c8dc391eb3d09780b5661169bafaa9c9c1e86e0ae19a94ac56069f1a1d",
+      "images": [
+        {
+          "product_id": "p_dbw150",
+          "file": "dbw150-detail-1.png",
+          "role": "detail",
+          "source": "/media/b58534df3464607fa51dad07c56e3b3aa353bab08d6c265d3ae4c50c53ac1130.png",
+          "sha256": "b58534df3464607fa51dad07c56e3b3aa353bab08d6c265d3ae4c50c53ac1130",
+          "source_index": 0,
+          "display_index": 0
+        }
+      ]
+    },
+    {
+      "product_id": "p_dbw200",
+      "slug": "dbw200",
+      "source_row": 38,
+      "source_archive_id": "product_source",
+      "source_json_pointer": "/models/37",
+      "source_row_sha256": "d25b7eff747144c5998c1a1c2b141f97c7a1d8b2d37bb030460fb1d9f5716074",
+      "display_sha256": "7c1ee1fc21f1aa2bd56d7877722081a54a79ec9496e404a18635aa7edef5bdf7",
+      "images": [
+        {
+          "product_id": "p_dbw200",
+          "file": "dbw200-detail-1.png",
+          "role": "detail",
+          "source": "/media/05c0fafcc770b7edddb9da23de8c943b182da51ad4130233f9d1fabc41395832.png",
+          "sha256": "05c0fafcc770b7edddb9da23de8c943b182da51ad4130233f9d1fabc41395832",
+          "source_index": 0,
+          "display_index": 0
+        }
+      ]
+    },
+    {
+      "product_id": "p_sr40a",
+      "slug": "sr40a",
+      "source_row": 39,
+      "source_archive_id": "product_source",
+      "source_json_pointer": "/models/38",
+      "source_row_sha256": "46da9237317174d1526bc32b73dde2a064341e0ea153d08e65f9c3242e778f48",
+      "display_sha256": "b5a3702f999571bba2bca8490414a2027a2c990ece7bfaaf2a27cba51a39c1bc",
+      "images": [
+        {
+          "product_id": "p_sr40a",
+          "file": "sr40a-detail-2.jpg",
+          "role": "detail",
+          "source": "/media/cd8fdfc86f983e787632727188b707af74ae3c1980b45f1f91804bfe1f94a66e.jpg",
+          "sha256": "cd8fdfc86f983e787632727188b707af74ae3c1980b45f1f91804bfe1f94a66e",
+          "source_index": 0,
+          "display_index": 0
+        },
+        {
+          "product_id": "p_sr40a",
+          "file": "sr40a-main-1.jpg",
+          "role": "main",
+          "source": "/media/d9d7dbb69b5e42e28352e05d98f7365fb3c74744f390fe123cbd36fffbc9b744.jpg",
+          "sha256": "d9d7dbb69b5e42e28352e05d98f7365fb3c74744f390fe123cbd36fffbc9b744",
+          "source_index": 1,
+          "display_index": 1
+        }
+      ]
+    },
+    {
+      "product_id": "p_sr40b",
+      "slug": "sr40b",
+      "source_row": 40,
+      "source_archive_id": "product_source",
+      "source_json_pointer": "/models/39",
+      "source_row_sha256": "2472f99d6d4de659d838f6395634c4115445988e7f3ee985d810fa860b644a3e",
+      "display_sha256": "ebfb66cee786587b62359450ef5cbaf6e2ca2e68c159536040f6ae612462fc29",
+      "images": [
+        {
+          "product_id": "p_sr40b",
+          "file": "sr40b-detail-2.png",
+          "role": "detail",
+          "source": "/media/8e8b16cafc6184184112f51288dff442afbd9701a1d186c74befd5a93b3d686b.png",
+          "sha256": "8e8b16cafc6184184112f51288dff442afbd9701a1d186c74befd5a93b3d686b",
+          "source_index": 0,
+          "display_index": 0
+        },
+        {
+          "product_id": "p_sr40b",
+          "file": "sr40b-main-1.jpg",
+          "role": "main",
+          "source": "/media/ca4011f499e81630088f60680ab9d193c74af3e34eb6a3ad19c46d62187eea65.jpg",
+          "sha256": "ca4011f499e81630088f60680ab9d193c74af3e34eb6a3ad19c46d62187eea65",
+          "source_index": 1,
+          "display_index": 1
+        }
+      ]
+    },
+    {
+      "product_id": "p_nail-brad",
+      "slug": "nail-brad",
+      "source_row": null,
+      "source_archive_id": "legacy_catalog",
+      "source_json_pointer": null,
+      "source_row_sha256": null,
+      "display_sha256": "cd36e3e619b2b9531e6b15d9f7815aab9463cbd3f41729f589c79e80339a2992",
+      "images": []
+    },
+    {
+      "product_id": "p_nail-steel",
+      "slug": "nail-steel",
+      "source_row": null,
+      "source_archive_id": "legacy_catalog",
+      "source_json_pointer": null,
+      "source_row_sha256": null,
+      "display_sha256": "a41a32525df175f85692a99c5b20679bc0507a4c1ad6e9e84c76b98950f163a0",
+      "images": []
+    },
+    {
+      "product_id": "p_nail-staple",
+      "slug": "nail-staple",
+      "source_row": null,
+      "source_archive_id": "legacy_catalog",
+      "source_json_pointer": null,
+      "source_row_sha256": null,
+      "display_sha256": "23dd06c0346365f075a0986f42bc92491d1c97f70020f5750acd77b28a22610a",
+      "images": []
+    },
+    {
+      "product_id": "p_nail-pin",
+      "slug": "nail-pin",
+      "source_row": null,
+      "source_archive_id": "legacy_catalog",
+      "source_json_pointer": null,
+      "source_row_sha256": null,
+      "display_sha256": "70344bc5269f55a8e4f54214deef49e7d96d0acde4b66434ef2abc20b80ac99a",
+      "images": []
+    },
+    {
+      "product_id": "p_lithium",
+      "slug": "lithium",
+      "source_row": null,
+      "source_archive_id": "legacy_catalog",
+      "source_json_pointer": null,
+      "source_row_sha256": null,
+      "display_sha256": "ae9a7913dee912a20ff3564ae0431ecfe42ca7b5f28660b4bed30229b63a3d41",
+      "images": []
+    },
+    {
+      "product_id": "p_air-screwdriver",
+      "slug": "air-screwdriver",
+      "source_row": null,
+      "source_archive_id": "legacy_catalog",
+      "source_json_pointer": null,
+      "source_row_sha256": null,
+      "display_sha256": "b5e8a16310a4943e0484d7776b6c6758e98a1623cc4ed8b0ad36a49f2657df3c",
+      "images": []
+    },
+    {
+      "product_id": "p_parts",
+      "slug": "parts",
+      "source_row": null,
+      "source_archive_id": "legacy_catalog",
+      "source_json_pointer": null,
+      "source_row_sha256": null,
+      "display_sha256": "5c6130cda4141ade54b93944e18e1914b19b5e86fbc02f534fa84982c4a3daa7",
+      "images": []
+    }
+  ]
+}

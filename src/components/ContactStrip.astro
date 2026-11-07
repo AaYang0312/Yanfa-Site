@@ -1,0 +1,45 @@
+---
+import { site, show, telHref } from '../data/site';
+---
+
+<section class="contact-strip" aria-label="联系我们">
+  <div class="wrap contact-strip__inner">
+    <p>
+      选型、报价或合作？<br />
+      致电 {site.phone.trim() ? <a href={telHref()}>{site.phone}</a> : show(site.phone)}
+    </p>
+    <a class="btn" href={telHref()}>拨打电话</a>
+  </div>
+</section>
+
+<style>
+  .contact-strip {
+    padding: 64px 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .contact-strip__inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 120px;
+  }
+
+  .contact-strip p {
+    margin: 0;
+    color: var(--ink);
+    line-height: 1.6;
+  }
+
+  .contact-strip a:not(.btn) {
+    text-decoration: none;
+  }
+
+  @media (max-width: 640px) {
+    .contact-strip__inner {
+      flex-direction: column;
+      gap: 24px;
+      text-align: center;
+    }
+  }
+</style>

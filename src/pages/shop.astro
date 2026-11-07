@@ -1,0 +1,99 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import { shops, pendingShops } from '../data/site';
+---
+
+<Base title="网上商城" description="元发官方网上店铺：淘宝直销店、淘宝专营店、天猫旗舰店、天猫严选旗舰店、京东专营店。">
+  <PageHead
+    title="网上商城"
+    lead="元发官方店铺，在线选购钉枪、枪钉与配件。"
+    text="各型号的参数、价格与库存，以店铺详情页为准。购买后请保留订单记录，作为 6 个月整机质保的凭证。"
+  />
+
+  <section class="section section--paper">
+    <div class="wrap">
+      <ul class="shops">
+        {shops.map((shop) => (
+          <li>
+            <a href={shop.url} target="_blank" rel="noopener noreferrer">
+              <span class="shops__platform">{shop.platform}</span>
+              <strong>{shop.name}</strong>
+              <span class="shops__go">
+                进入店铺
+                <svg viewBox="0 0 10 10" aria-hidden="true"><path d="M3 1.5 6.5 5 3 8.5" fill="none" stroke="currentColor" stroke-width="1.4" /></svg>
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <p class="note">{pendingShops.join('、')}的链接整理中，需要时可先电话咨询。</p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .shops {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .shops a {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    height: 100%;
+    padding: 32px 28px;
+    background: #fff;
+    border-top: 3px solid var(--wine);
+    color: var(--ink);
+    text-decoration: none;
+    transition: box-shadow 0.2s;
+  }
+
+  .shops a:hover {
+    box-shadow: 0 12px 30px rgb(0 0 0 / 0.08);
+  }
+
+  .shops__platform {
+    color: var(--muted);
+    font-size: 13px;
+    letter-spacing: 0.12em;
+  }
+
+  .shops strong {
+    margin-bottom: 18px;
+    font-size: 22px;
+    font-weight: 500;
+  }
+
+  .shops__go {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: auto;
+    color: var(--wine);
+    font-size: 14px;
+  }
+
+  .shops__go svg {
+    width: 10px;
+    height: 10px;
+  }
+
+  @media (max-width: 960px) {
+    .shops {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .shops {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

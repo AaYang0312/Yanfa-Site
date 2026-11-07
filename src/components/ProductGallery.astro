@@ -1,0 +1,100 @@
+---
+import ProductImage from './ProductImage.astro';
+import { imagesOf, type Product } from '../data/catalog';
+
+interface Props { product: Product }
+const { product } = Astro.props;
+const images = imagesOf(product);
+---
+
+<div class="gallery" data-gallery>
+  <div class="gallery__stage">
+    {images.map((image, index) => (
+      <figure class="gallery__panel" data-gallery-panel data-media-id={image.media_id} hidden={index !== 0} id={`photo-${index}`}>
+        <a
+          href={`/media/${image.file}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`查看 ${product.name} ${image.label}原图（新窗口）`}
+        >
+          <ProductImage
+            product={product}
+            image={image}
+            sizes="(max-width: 960px) 90vw, 50vw"
+            priority={index === 0}
+            descriptionId={image.description ? `photo-description-${index}` : undefined}
+          />
+          <span class="gallery__enlarge">查看原图 <span aria-hidden="true">↗</span></span>
+        </a>
+        {image.description ? (
+          <figcaption class="gallery__description">
+            <details>
+              <summary>图片文字说明</summary>
+              <p id={`photo-description-${index}`}>{image.description}</p>
+            </details>
+          </figcaption>
+        ) : <figcaption class="sr-only">{product.name} {image.label}</figcaption>}
+      </figure>
+    ))}
+  </div>
+  {images.length > 1 && (
+    <div class="gallery__thumbs" aria-label="选择产品图片">
+      {images.map((image, index) => (
+        <button
+          class="gallery__thumb"
+          type="button"
+          data-gallery-thumb
+          data-index={index}
+          aria-pressed={index === 0 ? 'true' : 'false'}
+          aria-controls={`photo-${index}`}
+          aria-label={`显示${image.label}`}
+        >
+          <ProductImage product={product} image={image} thumbnail sizes="72px" />
+        </button>
+      ))}
+    </div>
+  )}
+  <p class="gallery__hint">产品实图与规格资料 · 点击图片可查看完整原图</p>
+</div>
+
+<style>
+  .gallery { min-width: 0; }
+  .gallery__stage { border-top: 3px solid var(--wine); background: #f1f2f3; }
+  .gallery__panel { margin: 0; padding: 20px; }
+  .gallery__panel[hidden] { display: none; }
+  .gallery__panel a {
+    position: relative;
+    display: block;
+    height: clamp(360px, 42vw, 580px);
+    color: var(--ink);
+    background: #fff;
+  }
+  .gallery__enlarge {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    padding: 5px 12px;
+    border: 1px solid var(--line);
+    background: rgb(255 255 255 / 0.95);
+    font-size: 12px;
+  }
+  .gallery__thumbs { display: flex; gap: 10px; margin-top: 12px; overflow-x: auto; }
+  .gallery__thumb {
+    width: 76px;
+    height: 82px;
+    flex: none;
+    padding: 5px;
+    border: 1px solid var(--line);
+    background: #fff;
+    cursor: pointer;
+  }
+  .gallery__thumb[aria-pressed='true'] { border: 2px solid var(--wine); padding: 4px; }
+  .gallery__hint { margin: 10px 0 0; color: var(--muted); font-size: 12px; }
+  .gallery__description { margin-top: 12px; color: var(--ink); font-size: 13px; }
+  .gallery__description summary { cursor: pointer; color: var(--navy); }
+  .gallery__description p { margin: 10px 0 0; overflow-wrap: anywhere; }
+  @media (max-width: 560px) {
+    .gallery__panel { padding: 12px; }
+    .gallery__panel a { height: 380px; }
+  }
+</style>

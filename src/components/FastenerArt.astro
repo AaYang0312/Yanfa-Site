@@ -1,0 +1,91 @@
+---
+import type { FastenerType } from '../data/catalog';
+
+interface Props {
+  type: FastenerType;
+  label?: string;
+}
+
+const { type, label = '紧固件示意图' } = Astro.props;
+const uid = `fa-${type}-${Math.random().toString(36).slice(2, 8)}`;
+const strip = Array.from({ length: 16 }, (_, i) => i);
+const rows = [0, 1, 2];
+---
+
+<svg class="fastener-art" viewBox="0 0 600 450" role="img" aria-label={label} xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id={`${uid}-steel`} x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#6d767d"></stop>
+      <stop offset=".45" stop-color="#eef1f3"></stop>
+      <stop offset="1" stop-color="#7d868c"></stop>
+    </linearGradient>
+    <linearGradient id={`${uid}-copper`} x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#7a4b2a"></stop>
+      <stop offset=".45" stop-color="#e2b58a"></stop>
+      <stop offset="1" stop-color="#8a5a35"></stop>
+    </linearGradient>
+    <filter id={`${uid}-shadow`} x="-20%" y="-20%" width="140%" height="160%">
+      <feDropShadow dx="0" dy="14" stdDeviation="12" flood-color="#000" flood-opacity=".22"></feDropShadow>
+    </filter>
+  </defs>
+
+  {type === 'coil-nail' ? (
+    <g filter={`url(#${uid}-shadow)`} transform="translate(300 225)">
+      {Array.from({ length: 7 }, (_, ring) => (
+        <circle r={150 - ring * 17} fill="none" stroke={`url(#${uid}-steel)`} stroke-width="11" opacity={1 - ring * 0.07}></circle>
+      ))}
+      {Array.from({ length: 40 }, (_, i) => (
+        <circle
+          cx={150 * Math.cos((i * 9 * Math.PI) / 180)}
+          cy={150 * Math.sin((i * 9 * Math.PI) / 180)}
+          r="6"
+          fill="#d9dee1"
+          stroke="#7d868c"
+        ></circle>
+      ))}
+      <circle r="38" fill="#1c2128"></circle>
+      <circle r="16" fill="#0e131b"></circle>
+    </g>
+  ) : type === 'staple' ? (
+    <g filter={`url(#${uid}-shadow)`}>
+      {rows.map((row) => (
+        <g transform={`translate(${70 + row * 40} ${120 + row * 80}) skewX(-18)`}>
+          <rect width="380" height="16" fill={row === 1 ? `url(#${uid}-copper)` : `url(#${uid}-steel)`}></rect>
+          <rect y="16" width="14" height="70" fill="#9aa3a9"></rect>
+          <rect x="366" y="16" width="14" height="70" fill="#9aa3a9"></rect>
+          {strip.map((i) => (
+            <line x1={i * 24 + 6} y1="0" x2={i * 24 + 6} y2="16" stroke="#5b646a" stroke-width="1"></line>
+          ))}
+        </g>
+      ))}
+    </g>
+  ) : (
+    <g filter={`url(#${uid}-shadow)`}>
+      {rows.map((row) => {
+        const thick = type === 'steel-nail' ? 9 : type === 'pin' ? 3 : 5;
+        const head = type === 'pin' ? 0 : type === 'steel-nail' ? 14 : 8;
+        const height = type === 'steel-nail' ? 190 : type === 'pin' ? 120 : 160;
+        return (
+          <g transform={`translate(${60 + row * 50} ${70 + row * 40})`}>
+            {strip.map((i) => (
+              <g transform={`translate(${i * (thick + 15)} 0)`}>
+                {head > 0 && <rect x={-(head - thick) / 2} y="0" width={head} height="5" fill="#c9cfd3"></rect>}
+                <rect y="4" width={thick} height={height} fill={row === 1 && type !== 'steel-nail' ? `url(#${uid}-copper)` : `url(#${uid}-steel)`}></rect>
+                <path d={`M0 ${height + 4}h${thick}l-${thick / 2} 12Z`} fill="#8a9399"></path>
+              </g>
+            ))}
+            <rect x="-6" y={height * 0.35} width={16 * (thick + 15) - 4} height="8" fill="#b8a77a" opacity=".55"></rect>
+          </g>
+        );
+      })}
+    </g>
+  )}
+</svg>
+
+<style>
+  .fastener-art {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+</style>

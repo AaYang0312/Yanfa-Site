@@ -1,0 +1,17 @@
+{
+  "purpose": "本地隔离规则夹具，非客户产品事实或实际商城验收。",
+  "requirements": {"scene_ids":["home-woodworking"],"material":"木材","substrate":"木方","nail_type":"brad","fastener_length_mm":20,"air_supply":null,"load_bearing":false,"long_nose":false,"blower":false},
+  "profile": {
+    "scene_ids":["home-woodworking"],"materials":["木材"],"substrates":["木方"],
+    "excluded_materials":["钢板"],"excluded_substrates":["混凝土"],"power_source":"pneumatic",
+    "nail_type":"brad","fastener_length_mm":{"min":10,"max":30},"load_bearing":false,"long_nose":true,"blower":false,
+    "limitations":["仅为隔离规则夹具。"],"consultation_notes":[],
+    "required_requirements":["material","substrate","nail_type","fastener_length_mm"],"sources":[]
+  },
+  "reviewed_fields":["scene_ids","materials","substrates","excluded_materials","excluded_substrates","power_source","nail_type","fastener_length_mm","load_bearing","long_nose","blower","limitations","required_requirements"],
+  "options":[
+    {"id":null,"platform":"隔离测试","store_name":"规则店 A","url":"https://item.example.test/product/t11-a","match_scope":"exact_model","sku_hint":"","enabled":true},
+    {"id":null,"platform":"隔离测试","store_name":"规则店 B","url":"https://item.example.test/product/t11-variants","match_scope":"listing_with_variants","sku_hint":"进入商城后选择 F30M（隔离规则夹具）","enabled":true},
+    {"id":null,"platform":"隔离测试","store_name":"停用规则店","url":"https://item.example.test/product/t11-disabled","match_scope":"exact_model","sku_hint":"","enabled":false}
+  ]
+}

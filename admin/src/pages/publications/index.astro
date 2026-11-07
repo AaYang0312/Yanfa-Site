@@ -1,0 +1,12 @@
+---
+import Admin from '../../layouts/Admin.astro';
+---
+<Admin title="发布与历史回退">
+  <p>候选构建和待确认意图不会改变官网。只有执行成功才显示实际生效版本、完成时间与官网链接。</p>
+  <div class="actions"><a class="button primary" href="/admin/candidates/">生成完整工作区候选</a><button id="refresh-publications" type="button">刷新发布记录</button></div>
+  <p id="active-publication" class="notice" aria-live="polite">正在读取线上版本…</p>
+  <p class="notice">回退只切换公开版本，工作区草稿仍在。回退后再次发布，必须重新生成并审阅完整工作区候选。</p>
+  <form class="card" action="/admin/publication-requests/"><label>发布意图 ID<input name="id" required autocomplete="off" /></label><button type="submit">打开审阅与结果</button></form>
+  <div id="publications"></div><button id="more-publications" type="button" hidden>加载更早记录</button>
+  <script>import { mountPublications } from '../../lib/publication'; mountPublications();</script>
+</Admin>

@@ -1,0 +1,914 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://yuanfa.example/schemas/catalog-snapshot.schema.json",
+  "title": "CatalogSnapshot",
+  "$ref": "#/$defs/CatalogSnapshot",
+  "$defs": {
+    "Category": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "product.schema.json#/$defs/CategoryID"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "sort_order": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "lines": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 500
+        },
+        "hint": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 500
+        },
+        "scene": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 500
+        },
+        "use": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 500
+        },
+        "nail": {
+          "anyOf": [
+            {
+              "$ref": "product.schema.json#/$defs/NailType"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scene_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "product.schema.json#/$defs/SceneID"
+          },
+          "maxItems": 10,
+          "uniqueItems": true
+        },
+        "color": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 40
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "sort_order",
+        "lines",
+        "hint",
+        "scene",
+        "use",
+        "nail",
+        "scene_ids",
+        "color"
+      ]
+    },
+    "Scene": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "product.schema.json#/$defs/SceneID"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ]
+    },
+    "NailTypeEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "product.schema.json#/$defs/NailType"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ]
+    },
+    "LegacySeries": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "slug": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "maxLength": 80
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "product_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 120,
+            "pattern": "^[A-Za-z0-9_-]+$"
+          },
+          "maxItems": 10000,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "id",
+        "slug",
+        "name",
+        "product_ids"
+      ]
+    },
+    "PublishedRoute": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "product_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "slug": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "maxLength": 80
+        }
+      },
+      "required": [
+        "product_id",
+        "slug"
+      ]
+    },
+    "MediaRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "media_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "jpeg",
+            "png",
+            "webp"
+          ]
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10485760
+        },
+        "width": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 12000
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 12000
+        },
+        "original_filename": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 255
+        },
+        "uploaded_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "Z$"
+        },
+        "preview_url": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        }
+      },
+      "required": [
+        "media_id",
+        "sha256",
+        "format",
+        "bytes",
+        "width",
+        "height",
+        "original_filename",
+        "uploaded_at",
+        "preview_url"
+      ],
+      "x-max-pixels": 40000000
+    },
+    "SnapshotMedia": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "media_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "jpeg",
+            "png",
+            "webp"
+          ]
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10485760
+        },
+        "width": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 12000
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 12000
+        },
+        "path": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-][A-Za-z0-9_./-]*$",
+          "x-safe-relative-path": true
+        }
+      },
+      "required": [
+        "media_id",
+        "sha256",
+        "format",
+        "bytes",
+        "width",
+        "height",
+        "path"
+      ],
+      "x-max-pixels": 40000000
+    },
+    "CatalogSnapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": 1,
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        "release_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "workspace_revision": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "categories": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Category"
+          },
+          "maxItems": 10,
+          "minItems": 10,
+          "x-unique-by": "id"
+        },
+        "scenes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Scene"
+          },
+          "maxItems": 10,
+          "minItems": 10,
+          "x-unique-by": "id"
+        },
+        "nail_types": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/NailTypeEntry"
+          },
+          "maxItems": 7,
+          "minItems": 7,
+          "x-unique-by": "id"
+        },
+        "legacy_series": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/LegacySeries"
+          },
+          "maxItems": 1000,
+          "x-unique-by": "id"
+        },
+        "products": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SnapshotProduct"
+          },
+          "maxItems": 10000,
+          "x-unique-by": "id"
+        },
+        "previously_published_routes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PublishedRoute"
+          },
+          "maxItems": 100000,
+          "x-unique-by": "slug"
+        }
+      },
+      "required": [
+        "schema_version",
+        "release_id",
+        "workspace_revision",
+        "categories",
+        "scenes",
+        "nail_types",
+        "legacy_series",
+        "products",
+        "previously_published_routes"
+      ],
+      "x-catalog-references": true
+    },
+    "ManifestResource": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-][A-Za-z0-9_./-]*$",
+          "x-safe-relative-path": true
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "path",
+        "sha256",
+        "bytes"
+      ]
+    },
+    "Manifest": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "type": "integer",
+          "const": 1,
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        "candidate_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "workspace_revision": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "code_version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "snapshot_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "routes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_-][A-Za-z0-9_./-]*$",
+            "x-safe-relative-path": true
+          },
+          "maxItems": 100000,
+          "uniqueItems": true
+        },
+        "resources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ManifestResource"
+          },
+          "maxItems": 1000000,
+          "x-unique-by": "path"
+        }
+      },
+      "required": [
+        "schema_version",
+        "candidate_id",
+        "workspace_revision",
+        "code_version",
+        "snapshot_sha256",
+        "routes",
+        "resources"
+      ]
+    },
+    "ActiveRelease": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "type": "integer",
+          "const": 1,
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        "release_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "snapshot_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "activated_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "Z$"
+        },
+        "successful_release_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 120,
+            "pattern": "^[A-Za-z0-9_-]+$"
+          },
+          "maxItems": 100000,
+          "uniqueItems": true
+        },
+        "previously_published_routes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PublishedRoute"
+          },
+          "maxItems": 100000
+        }
+      },
+      "required": [
+        "schema_version",
+        "release_id",
+        "snapshot_sha256",
+        "operation_id",
+        "activated_at",
+        "successful_release_ids",
+        "previously_published_routes"
+      ],
+      "x-active-membership": true
+    },
+    "SnapshotProductImage": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "media_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 120
+        },
+        "description": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 1000
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "jpeg",
+            "png",
+            "webp"
+          ]
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10485760
+        },
+        "width": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 12000
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 12000
+        },
+        "path": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-][A-Za-z0-9_./-]*$",
+          "x-safe-relative-path": true
+        }
+      },
+      "required": [
+        "media_id",
+        "label",
+        "description",
+        "sha256",
+        "format",
+        "bytes",
+        "width",
+        "height",
+        "path"
+      ],
+      "x-max-pixels": 40000000
+    },
+    "SnapshotProduct": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "slug": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "maxLength": 80
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "tool",
+            "consumable",
+            "entry"
+          ]
+        },
+        "name": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 120
+        },
+        "model": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 80
+        },
+        "category_id": {
+          "$ref": "product.schema.json#/$defs/CategoryID"
+        },
+        "series": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 120
+        },
+        "legacy_series_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 120,
+            "pattern": "^[A-Za-z0-9_-]+$"
+          },
+          "maxItems": 100,
+          "uniqueItems": true
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 500
+        },
+        "applications": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 0,
+            "maxLength": 1000
+          },
+          "maxItems": 30
+        },
+        "features": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 0,
+            "maxLength": 1000
+          },
+          "maxItems": 30
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 0,
+            "maxLength": 1000
+          },
+          "maxItems": 30
+        },
+        "scene_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "product.schema.json#/$defs/SceneID"
+          },
+          "maxItems": 10,
+          "uniqueItems": true
+        },
+        "nail_type": {
+          "anyOf": [
+            {
+              "$ref": "product.schema.json#/$defs/NailType"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "fastener_text": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 1000
+        },
+        "long_nose": {
+          "type": "boolean"
+        },
+        "blower": {
+          "type": "boolean"
+        },
+        "images": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SnapshotProductImage"
+          },
+          "maxItems": 12,
+          "x-unique-by": "media_id"
+        },
+        "cover_media_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 120,
+              "pattern": "^[A-Za-z0-9_-]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "visibility": {
+          "type": "string",
+          "enum": [
+            "listed",
+            "unlisted"
+          ]
+        },
+        "sort_order": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "guide_profile": {
+          "$ref": "product.schema.json#/$defs/GuideProfile"
+        },
+        "purchase_options": {
+          "type": "array",
+          "items": {
+            "$ref": "product.schema.json#/$defs/PurchaseOption"
+          },
+          "maxItems": 100,
+          "x-unique-by": "id"
+        },
+        "version": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "Z$"
+        }
+      },
+      "required": [
+        "id",
+        "slug",
+        "kind",
+        "name",
+        "model",
+        "category_id",
+        "series",
+        "legacy_series_ids",
+        "summary",
+        "applications",
+        "features",
+        "notes",
+        "scene_ids",
+        "nail_type",
+        "fastener_text",
+        "long_nose",
+        "blower",
+        "images",
+        "cover_media_id",
+        "visibility",
+        "sort_order",
+        "guide_profile",
+        "purchase_options",
+        "version",
+        "updated_at"
+      ],
+      "x-cover-membership": true
+    },
+    "PublishedSnapshotProduct": {
+      "$ref": "#/$defs/SnapshotProduct",
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "visibility": {
+                "const": "listed"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 120,
+                "pattern": "[^\\x09-\\x0d\\x20\\x85\\xa0  -     　]"
+              },
+              "purchase_options": {
+                "type": "array",
+                "items": {
+                  "allOf": [
+                    {
+                      "if": {
+                        "properties": {
+                          "match_scope": {
+                            "const": "listing_with_variants"
+                          }
+                        }
+                      },
+                      "then": {
+                        "properties": {
+                          "sku_hint": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 500,
+                            "pattern": "[^\\x09-\\x0d\\x20\\x85\\xa0  -     　]"
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "properties": {
+                    "platform": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 120
+                    },
+                    "store_name": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 120
+                    },
+                    "url": {
+                      "type": "string",
+                      "format": "uri",
+                      "pattern": "^https://[^/@\\s]+(?:[/?#]|$)"
+                    }
+                  }
+                }
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "kind": {
+                      "const": "tool"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "model": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 80,
+                      "pattern": "[^\\x09-\\x0d\\x20\\x85\\xa0  -     　]"
+                    },
+                    "summary": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 500,
+                      "pattern": "[^\\x09-\\x0d\\x20\\x85\\xa0  -     　]"
+                    },
+                    "applications": {
+                      "$ref": "product.schema.json#/$defs/PublishedToolApplications"
+                    },
+                    "images": {
+                      "type": "array",
+                      "minItems": 1
+                    },
+                    "cover_media_id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 120,
+                      "pattern": "^[A-Za-z0-9_-]+$"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "PublishableSnapshot": {
+      "$ref": "#/$defs/CatalogSnapshot",
+      "allOf": [
+        {
+          "properties": {
+            "products": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/PublishedSnapshotProduct"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

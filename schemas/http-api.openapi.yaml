@@ -1,0 +1,5661 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "元发内容平台共享HTTP契约",
+    "version": "1.0.0"
+  },
+  "jsonSchemaDialect": "https://json-schema.org/draft/2020-12/schema",
+  "servers": [
+    {
+      "url": "/"
+    }
+  ],
+  "x-schema-version": 1,
+  "x-admin-json-max-bytes": 262144,
+  "x-deployment-fields": [
+    "SITE_URL",
+    "DATA_DIR",
+    "HTTP_ADDR",
+    "TRUSTED_PROXIES",
+    "MODEL_PROVIDER",
+    "MODEL_BASE_URL",
+    "MODEL_MODEL",
+    "MODEL_API_KEY",
+    "PURCHASE_ALLOWED_HOSTS",
+    "TEMPLATE_DIR",
+    "ADMIN_STATIC_DIR",
+    "SITE_CONFIG_PATH"
+  ],
+  "paths": {
+    "/api/admin/login": {
+      "post": {
+        "operationId": "post__api_admin_login",
+        "summary": "/api/admin/login",
+        "security": [],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/SessionResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "412": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "428": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-cache-control": "no-store",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "admin.schema.json#/$defs/LoginInput"
+              }
+            }
+          }
+        },
+        "description": "校验精确同源 Origin；12小时 Secure/HttpOnly/SameSite=Strict Cookie；仅loopback开发允许非Secure。登录不要求已有CSRF。"
+      }
+    },
+    "/api/admin/logout": {
+      "post": {
+        "operationId": "post__api_admin_logout",
+        "summary": "/api/admin/logout",
+        "security": [
+          {
+            "AdminSession": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uri"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "完成，无正文"
+          },
+          "400": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "412": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "428": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-cache-control": "no-store",
+        "x-authorization": "仅浏览器管理员会话；Bearer MCP Token 不授权管理 HTTP",
+        "description": "撤销会话并清除预览Cookie"
+      }
+    },
+    "/api/admin/session": {
+      "get": {
+        "operationId": "get__api_admin_session",
+        "summary": "/api/admin/session",
+        "security": [
+          {
+            "AdminSession": []
+          }
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/SessionResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "412": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "428": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-cache-control": "no-store"
+      }
+    },
+    "/api/admin/products": {
+      "get": {
+        "operationId": "get__api_admin_products",
+        "summary": "/api/admin/products",
+        "security": [
+          {
+            "AdminSession": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "admin.schema.json#/$defs/AdminProductQuery/properties/q"
+            },
+            "description": "按共享源属性校验；x-trim 在校验前按 Unicode White_Space 去首尾空白；JSON 数字必须有限，整数必须处于源 schema 的无损范围。"
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "admin.schema.json#/$defs/AdminProductQuery/properties/category"
+            },
+            "description": "按共享源属性校验；x-trim 在校验前按 Unicode White_Space 去首尾空白；JSON 数字必须有限，整数必须处于源 schema 的无损范围。"
+          },
+          {
+            "name": "visibility",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "admin.schema.json#/$defs/AdminProductQuery/properties/visibility"
+            },
+            "description": "按共享源属性校验；x-trim 在校验前按 Unicode White_Space 去首尾空白；JSON 数字必须有限，整数必须处于源 schema 的无损范围。"
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "admin.schema.json#/$defs/AdminProductQuery/properties/cursor"
+            },
+            "description": "按共享源属性校验；x-trim 在校验前按 Unicode White_Space 去首尾空白；JSON 数字必须有限，整数必须处于源 schema 的无损范围。"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "admin.schema.json#/$defs/AdminProductQuery/properties/limit"
+            },
+            "description": "按共享源属性校验；x-trim 在校验前按 Unicode White_Space 去首尾空白；JSON 数字必须有限，整数必须处于源 schema 的无损范围。"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/AdminProductList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "412": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "428": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-cache-control": "no-store",
+        "x-normalization": "与 contract.Decode / validateContract 相同：先执行源 x-trim，再使用引用的同一属性约束；数字按有限 IEEE-754 值及源整数范围验证。"
+      },
+      "post": {
+        "operationId": "post__api_admin_products",
+        "summary": "/api/admin/products",
+        "security": [
+          {
+            "AdminSession": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uri"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "product.schema.json#/$defs/ProductEnvelope"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "412": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "428": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-cache-control": "no-store",
+        "x-authorization": "仅浏览器管理员会话；Bearer MCP Token 不授权管理 HTTP",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "product.schema.json#/$defs/ProductCreate"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/products/{id}": {
+      "get": {
+        "operationId": "get__api_admin_products__id_",
+        "summary": "/api/admin/products/{id}",
+        "security": [
+          {
+            "AdminSession": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 120,
+              "pattern": "^[A-Za-z0-9_-]+$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "product.schema.json#/$defs/ProductEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "ETag": {
+                "required": true,
+                "schema": {
+                  "type": "string"
+                },
+                "description": "强ETag：\"产品version\""
+              }
+            }
+          },
+          "400": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "412": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "428": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-cache-control": "no-store"
+      },
+      "put": {
+        "operationId": "put__api_admin_products__id_",
+        "summary": "/api/admin/products/{id}",
+        "security": [
+          {
+            "AdminSession": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 120,
+              "pattern": "^[A-Za-z0-9_-]+$"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uri"
+            }
+          },
+          {
+            "name": "If-Match",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^\"[1-9][0-9]*\"$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "product.schema.json#/$defs/ProductEnvelope"
+                }
+              }
+            },
+            "headers": {
+              "ETag": {
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "412": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "428": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-cache-control": "no-store",
+        "x-authorization": "仅浏览器管理员会话；Bearer MCP Token 不授权管理 HTTP",
+        "x-version-preconditions": "缺失428；旧版本412；不自动重试",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "product.schema.json#/$defs/ProductEdit"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "delete__api_admin_products__id_",
+        "summary": "/api/admin/products/{id}",
+        "security": [
+          {
+            "AdminSession": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 120,
+              "pattern": "^[A-Za-z0-9_-]+$"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uri"
+            }
+          },
+          {
+            "name": "If-Match",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^\"[1-9][0-9]*\"$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/DeletionResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "412": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "428": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-cache-control": "no-store",
+        "x-authorization": "仅浏览器管理员会话；Bearer MCP Token 不授权管理 HTTP",
+        "x-version-preconditions": "缺失428；旧版本412；不自动重试",
+        "description": "仅删除从未公开草稿；保留slug归属。已公开409。"
+      }
+    },
+    "/api/admin/products/{id}/guide-review": {
+      "post": {
+        "operationId": "post__api_admin_products__id__guide_review",
+        "summary": "/api/admin/products/{id}/guide-review",
+        "security": [
+          {
+            "AdminSession": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 120,
+              "pattern": "^[A-Za-z0-9_-]+$"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uri"
+            }
+          },
+          {
+            "name": "If-Match",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^\"[1-9][0-9]*\"$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "product.schema.json#/$defs/ProductEnvelope"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "412": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "428": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-cache-control": "no-store",
+        "x-authorization": "仅浏览器管理员会话；Bearer MCP Token 不授权管理 HTTP",
+        "x-version-preconditions": "缺失428；旧版本412；不自动重试",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "product.schema.json#/$defs/GuideReviewInput"
+              }
+            }
+          }
+        },
+        "description": "仅管理员；审核版本、事实及来源摘要必须仍一致；审核人与时间由服务端生成。"
+      }
+    },
+    "/api/admin/media": {
+      "get": {
+        "operationId": "get__api_admin_media",
+        "summary": "/api/admin/media",
+        "security": [
+          {
+            "AdminSession": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "after",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "admin.schema.json#/$defs/MediaQuery/properties/after"
+            },
+            "description": "按共享源属性校验；x-trim 在校验前按 Unicode White_Space 去首尾空白；JSON 数字必须有限，整数必须处于源 schema 的无损范围。"
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "admin.schema.json#/$defs/MediaQuery/properties/cursor"
+            },
+            "description": "按共享源属性校验；x-trim 在校验前按 Unicode White_Space 去首尾空白；JSON 数字必须有限，整数必须处于源 schema 的无损范围。"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "admin.schema.json#/$defs/MediaQuery/properties/limit"
+            },
+            "description": "按共享源属性校验；x-trim 在校验前按 Unicode White_Space 去首尾空白；JSON 数字必须有限，整数必须处于源 schema 的无损范围。"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/MediaList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "412": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "428": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-cache-control": "no-store",
+        "x-normalization": "与 contract.Decode / validateContract 相同：先执行源 x-trim，再使用引用的同一属性约束；数字按有限 IEEE-754 值及源整数范围验证。"
+      },
+      "post": {
+        "operationId": "post__api_admin_media",
+        "summary": "/api/admin/media",
+        "security": [
+          {
+            "AdminSession": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uri"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "catalog-snapshot.schema.json#/$defs/MediaRecord"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "412": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "428": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-cache-control": "no-store",
+        "x-authorization": "仅浏览器管理员会话；Bearer MCP Token 不授权管理 HTTP",
+        "description": "单图10MiB、40MP、12000px；真实JPEG/PNG/静态WebP；拒绝动画/SVG/解码失败，SHA去重；上传未引用不涨workspace revision。",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                },
+                "required": [
+                  "file"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/media/{id}/file": {
+      "get": {
+        "operationId": "get__api_admin_media__id__file",
+        "summary": "/api/admin/media/{id}/file",
+        "security": [
+          {
+            "AdminSession": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 120,
+              "pattern": "^[A-Za-z0-9_-]+$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "会话保护私有图片；不暴露磁盘路径",
+            "content": {
+              "image/jpeg": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "image/png": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "image/webp": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "412": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "428": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-cache-control": "no-store"
+      }
+    },
+    "/api/admin/media/{id}": {
+      "delete": {
+        "operationId": "delete__api_admin_media__id_",
+        "summary": "/api/admin/media/{id}",
+        "security": [
+          {
+            "AdminSession": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 120,
+              "pattern": "^[A-Za-z0-9_-]+$"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uri"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "完成，无正文"
+          },
+          "400": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "412": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "428": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-cache-control": "no-store",
+        "x-authorization": "仅浏览器管理员会话；Bearer MCP Token 不授权管理 HTTP",
+        "description": "任何workspace/candidate/成功版本引用均409"
+      }
+    },
+    "/api/admin/candidates": {
+      "post": {
+        "operationId": "post__api_admin_candidates",
+        "summary": "/api/admin/candidates",
+        "security": [
+          {
+            "AdminSession": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uri"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/Candidate"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "412": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "428": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-cache-control": "no-store",
+        "x-authorization": "仅浏览器管理员会话；Bearer MCP Token 不授权管理 HTTP",
+        "x-idempotency": "身份+接口+key；24h同请求复用同资源；不同请求409",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "admin.schema.json#/$defs/CandidateInput"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/candidates/{id}": {
+      "get": {
+        "operationId": "get__api_admin_candidates__id_",
+        "summary": "/api/admin/candidates/{id}",
+        "security": [
+          {
+            "AdminSession": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 120,
+              "pattern": "^[A-Za-z0-9_-]+$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/Candidate"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "412": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "428": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-cache-control": "no-store"
+      }
+    },
+    "/api/admin/preview-session": {
+      "post": {
+        "operationId": "post__api_admin_preview_session",
+        "summary": "/api/admin/preview-session",
+        "security": [
+          {
+            "AdminSession": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uri"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/PreviewSession"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "412": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "428": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-cache-control": "no-store",
+        "x-authorization": "仅浏览器管理员会话；Bearer MCP Token 不授权管理 HTTP",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "admin.schema.json#/$defs/PreviewInput"
+              }
+            }
+          }
+        },
+        "description": "仅ready候选；绑定有效管理员的HttpOnly Cookie；private,no-store,noindex，普通访客不可访问候选。"
+      },
+      "delete": {
+        "operationId": "delete__api_admin_preview_session",
+        "summary": "/api/admin/preview-session",
+        "security": [
+          {
+            "AdminSession": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uri"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "完成，无正文"
+          },
+          "400": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "412": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "428": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-cache-control": "no-store",
+        "x-authorization": "仅浏览器管理员会话；Bearer MCP Token 不授权管理 HTTP"
+      }
+    },
+    "/api/admin/publications": {
+      "get": {
+        "operationId": "get__api_admin_publications",
+        "summary": "/api/admin/publications",
+        "security": [
+          {
+            "AdminSession": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 4096
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/PublicationList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "412": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "428": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-cache-control": "no-store"
+      }
+    },
+    "/api/admin/publication-requests": {
+      "post": {
+        "operationId": "post__api_admin_publication_requests",
+        "summary": "/api/admin/publication-requests",
+        "security": [
+          {
+            "AdminSession": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uri"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/PublicationRequest"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "412": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "428": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-cache-control": "no-store",
+        "x-authorization": "仅浏览器管理员会话；Bearer MCP Token 不授权管理 HTTP",
+        "x-idempotency": "身份+接口+key；24h同请求复用同资源；不同请求409",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "admin.schema.json#/$defs/PublicationInput"
+              }
+            }
+          }
+        },
+        "description": "仅创建24h意图；不激活。publish/rollback互斥目标。"
+      }
+    },
+    "/api/admin/publication-requests/{id}": {
+      "get": {
+        "operationId": "get__api_admin_publication_requests__id_",
+        "summary": "/api/admin/publication-requests/{id}",
+        "security": [
+          {
+            "AdminSession": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 120,
+              "pattern": "^[A-Za-z0-9_-]+$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/PublicationRequest"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "412": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "428": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-cache-control": "no-store"
+      }
+    },
+    "/api/admin/publication-requests/{id}/confirm": {
+      "post": {
+        "operationId": "post__api_admin_publication_requests__id__confirm",
+        "summary": "/api/admin/publication-requests/{id}/confirm",
+        "security": [
+          {
+            "AdminSession": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 120,
+              "pattern": "^[A-Za-z0-9_-]+$"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uri"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/PublicationRequest"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "412": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "428": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-cache-control": "no-store",
+        "x-authorization": "仅浏览器管理员会话；Bearer MCP Token 不授权管理 HTTP",
+        "x-idempotency": "身份+接口+key；24h同请求复用同资源；不同请求409",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "admin.schema.json#/$defs/ConfirmationInput"
+              }
+            }
+          }
+        },
+        "description": "仅浏览器管理员；确认及激活前均复核摘要、ready、workspace、active及资源；过期/变化409，绝不改发目标。"
+      }
+    },
+    "/api/admin/publication-requests/{id}/cancel": {
+      "post": {
+        "operationId": "post__api_admin_publication_requests__id__cancel",
+        "summary": "/api/admin/publication-requests/{id}/cancel",
+        "security": [
+          {
+            "AdminSession": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 120,
+              "pattern": "^[A-Za-z0-9_-]+$"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uri"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/PublicationRequest"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "412": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "428": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-cache-control": "no-store",
+        "x-authorization": "仅浏览器管理员会话；Bearer MCP Token 不授权管理 HTTP",
+        "description": "仅awaiting_confirmation可取消，其他状态409"
+      }
+    },
+    "/api/admin/mcp-tokens": {
+      "get": {
+        "operationId": "get__api_admin_mcp_tokens",
+        "summary": "/api/admin/mcp-tokens",
+        "security": [
+          {
+            "AdminSession": []
+          }
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/TokenList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "412": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "428": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-cache-control": "no-store"
+      },
+      "post": {
+        "operationId": "post__api_admin_mcp_tokens",
+        "summary": "/api/admin/mcp-tokens",
+        "security": [
+          {
+            "AdminSession": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uri"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/TokenIssued"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "412": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "428": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-cache-control": "no-store",
+        "x-authorization": "仅浏览器管理员会话；Bearer MCP Token 不授权管理 HTTP",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "admin.schema.json#/$defs/TokenInput"
+              }
+            }
+          }
+        },
+        "description": "secret仅本次返回；库中只存哈希。"
+      }
+    },
+    "/api/admin/mcp-tokens/{id}": {
+      "delete": {
+        "operationId": "delete__api_admin_mcp_tokens__id_",
+        "summary": "/api/admin/mcp-tokens/{id}",
+        "security": [
+          {
+            "AdminSession": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 120,
+              "pattern": "^[A-Za-z0-9_-]+$"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uri"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "完成，无正文"
+          },
+          "400": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "412": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "428": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-cache-control": "no-store",
+        "x-authorization": "仅浏览器管理员会话；Bearer MCP Token 不授权管理 HTTP",
+        "description": "撤销后每次MCP调用立即拒绝，含既有连接"
+      }
+    },
+    "/api/catalog/release": {
+      "get": {
+        "operationId": "get__api_catalog_release",
+        "summary": "/api/catalog/release",
+        "security": [],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "public-catalog.schema.json#/$defs/ReleaseResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "412": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "428": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-cache-control": "no-store"
+      }
+    },
+    "/api/catalog/products": {
+      "get": {
+        "operationId": "get__api_catalog_products",
+        "summary": "/api/catalog/products",
+        "security": [],
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "public-catalog.schema.json#/$defs/CatalogQuery/properties/q"
+            },
+            "description": "按共享源属性校验；x-trim 在校验前按 Unicode White_Space 去首尾空白；JSON 数字必须有限，整数必须处于源 schema 的无损范围。"
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "public-catalog.schema.json#/$defs/CatalogQuery/properties/category"
+            },
+            "description": "按共享源属性校验；x-trim 在校验前按 Unicode White_Space 去首尾空白；JSON 数字必须有限，整数必须处于源 schema 的无损范围。"
+          },
+          {
+            "name": "scene",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "public-catalog.schema.json#/$defs/CatalogQuery/properties/scene"
+            },
+            "description": "按共享源属性校验；x-trim 在校验前按 Unicode White_Space 去首尾空白；JSON 数字必须有限，整数必须处于源 schema 的无损范围。"
+          },
+          {
+            "name": "nail_type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "public-catalog.schema.json#/$defs/CatalogQuery/properties/nail_type"
+            },
+            "description": "按共享源属性校验；x-trim 在校验前按 Unicode White_Space 去首尾空白；JSON 数字必须有限，整数必须处于源 schema 的无损范围。"
+          },
+          {
+            "name": "material",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "public-catalog.schema.json#/$defs/CatalogQuery/properties/material"
+            },
+            "description": "按共享源属性校验；x-trim 在校验前按 Unicode White_Space 去首尾空白；JSON 数字必须有限，整数必须处于源 schema 的无损范围。"
+          },
+          {
+            "name": "power_source",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "public-catalog.schema.json#/$defs/CatalogQuery/properties/power_source"
+            },
+            "description": "按共享源属性校验；x-trim 在校验前按 Unicode White_Space 去首尾空白；JSON 数字必须有限，整数必须处于源 schema 的无损范围。"
+          },
+          {
+            "name": "fastener_length_mm",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "public-catalog.schema.json#/$defs/CatalogQuery/properties/fastener_length_mm"
+            },
+            "description": "按共享源属性校验；x-trim 在校验前按 Unicode White_Space 去首尾空白；JSON 数字必须有限，整数必须处于源 schema 的无损范围。"
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "public-catalog.schema.json#/$defs/CatalogQuery/properties/cursor"
+            },
+            "description": "按共享源属性校验；x-trim 在校验前按 Unicode White_Space 去首尾空白；JSON 数字必须有限，整数必须处于源 schema 的无损范围。"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "public-catalog.schema.json#/$defs/CatalogQuery/properties/limit"
+            },
+            "description": "按共享源属性校验；x-trim 在校验前按 Unicode White_Space 去首尾空白；JSON 数字必须有限，整数必须处于源 schema 的无损范围。"
+          },
+          {
+            "name": "release_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "public-catalog.schema.json#/$defs/CatalogQuery/properties/release_id"
+            },
+            "description": "按共享源属性校验；x-trim 在校验前按 Unicode White_Space 去首尾空白；JSON 数字必须有限，整数必须处于源 schema 的无损范围。"
+          },
+          {
+            "name": "include_unknown",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "public-catalog.schema.json#/$defs/CatalogQuery/properties/include_unknown"
+            },
+            "description": "按共享源属性校验；x-trim 在校验前按 Unicode White_Space 去首尾空白；JSON 数字必须有限，整数必须处于源 schema 的无损范围。"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "public-catalog.schema.json#/$defs/ProductList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "412": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "428": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-cache-control": "no-store",
+        "description": "只读active上架投影；默认20/max100。cursor绑定release及规范化查询，改变条件409。硬条件只用审核事实；unknown默认排除；include_unknown不放过冲突。管理员/preview Cookie不扩大范围。",
+        "x-normalization": "与 contract.Decode / validateContract 相同：先执行源 x-trim，再使用引用的同一属性约束；数字按有限 IEEE-754 值及源整数范围验证。"
+      }
+    },
+    "/api/catalog/products/{id}": {
+      "get": {
+        "operationId": "get__api_catalog_products__id_",
+        "summary": "/api/catalog/products/{id}",
+        "security": [],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 120,
+              "pattern": "^[A-Za-z0-9_-]+$"
+            }
+          },
+          {
+            "name": "release_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 120,
+              "pattern": "^[A-Za-z0-9_-]+$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "public-catalog.schema.json#/$defs/ProductDetail"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "412": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "428": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-cache-control": "no-store",
+        "description": "下架/未公开/未知404；旧release409 CATALOG_CHANGED。"
+      }
+    },
+    "/api/catalog/export": {
+      "get": {
+        "operationId": "get__api_catalog_export",
+        "summary": "/api/catalog/export",
+        "security": [],
+        "parameters": [
+          {
+            "name": "release_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 120,
+              "pattern": "^[A-Za-z0-9_-]+$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "public-catalog.schema.json#/$defs/PublicExport"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "412": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "428": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-cache-control": "no-store",
+        "description": "同一已发布句柄完整公开投影；不能直出私有catalog.json。"
+      }
+    },
+    "/api/catalog/products/{id}/purchase-options": {
+      "get": {
+        "operationId": "get__api_catalog_products__id__purchase_options",
+        "summary": "/api/catalog/products/{id}/purchase-options",
+        "security": [],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 120,
+              "pattern": "^[A-Za-z0-9_-]+$"
+            }
+          },
+          {
+            "name": "release_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 120,
+              "pattern": "^[A-Za-z0-9_-]+$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "public-catalog.schema.json#/$defs/PurchaseOptionsResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "412": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "428": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-cache-control": "no-store"
+      }
+    },
+    "/api/guide/messages": {
+      "post": {
+        "operationId": "post__api_guide_messages",
+        "summary": "/api/guide/messages",
+        "security": [],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "application/json",
+                "text/event-stream"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "guide.schema.json#/$defs/GuideResult"
+                }
+              },
+              "text/event-stream": {
+                "schema": {
+                  "type": "string"
+                },
+                "x-event-order": [
+                  "start(messageId)",
+                  "text-start(id)",
+                  "text-delta(id,delta)",
+                  "text-end(id)",
+                  "data-guide-result(data:GuideResult) exactly once",
+                  "finish",
+                  "[DONE]"
+                ]
+              }
+            },
+            "headers": {
+              "x-vercel-ai-ui-message-stream": {
+                "schema": {
+                  "const": "v1",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "412": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "428": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "模型/导购不可用；仍提供筛选及电话",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "guide.schema.json#/$defs/GuideResult"
+                }
+              }
+            }
+          }
+        },
+        "x-cache-control": "no-store",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "guide.schema.json#/$defs/GuideRequest"
+              }
+            }
+          }
+        },
+        "description": "选择始终JSON、零模型。咨询可Accept:text/event-stream；20s/8轮/IP10每分钟/模型并发4，无自动重试。BeginResponse短读锁核release后开始；开流前真实409/422/429错误JSON，模型不可用503 GuideResult。不得提前200。JSON与SSE data-guide-result使用同一GuideResult：conflicts必填，no_match为1–100条服务端确定性说明，每条Unicode空白trim后1–1000字符，其他状态显式[]；no_match保持question=null、selection=null、recommendations=[]，无购买。",
+        "x-stream-commit": "完成data+finish+DONE且无error/abort/EOF缺口后，复核/api/catalog/release，原子提交。开流后错误仅sanitized error并终止，不finish。UTF8/多行用JSON编码。"
+      }
+    },
+    "/go/products/{id}/{option_id}": {
+      "get": {
+        "operationId": "get__go_products__id___option_id_",
+        "summary": "/go/products/{id}/{option_id}",
+        "security": [],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 120,
+              "pattern": "^[A-Za-z0-9_-]+$"
+            }
+          },
+          {
+            "name": "option_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 120,
+              "pattern": "^[A-Za-z0-9_-]+$"
+            }
+          },
+          {
+            "name": "release_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 120,
+              "pattern": "^[A-Za-z0-9_-]+$"
+            }
+          }
+        ],
+        "responses": {
+          "303": {
+            "description": "完成，无正文",
+            "headers": {
+              "Location": {
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "商品/渠道不可用",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "目录变化，请重新选择",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "412": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "428": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-cache-control": "no-store",
+        "description": "仅接受ID及release；URL解析验证HTTPS、无userinfo、精确PURCHASE_ALLOWED_HOSTS、拒短链/redirector；服务端查归属/启用/上市；短读锁开始303。旧release409可读HTML；下架/撤销404说明电话。不抓取外站，不换型号或店铺。"
+      }
+    },
+    "/mcp": {
+      "get": {
+        "operationId": "get__mcp",
+        "summary": "/mcp",
+        "security": [
+          {
+            "MCPBearer": []
+          }
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "官方SDK协商后的JSON或SSE"
+          },
+          "202": {
+            "description": "SDK接受通知"
+          },
+          "400": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "协商协议/无会话模式不允许的方法"
+          }
+        },
+        "x-cache-control": "no-store",
+        "description": "官方Go SDK stateless Streamable HTTP协商；Bearer每次校验有效期/撤销；有Origin则精确白名单，无Origin仍需Bearer。11工具；isError+结构化业务码，不提供confirm/review/token工具。"
+      },
+      "post": {
+        "operationId": "post__mcp",
+        "summary": "/mcp",
+        "security": [
+          {
+            "MCPBearer": []
+          }
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "官方SDK协商后的JSON或SSE"
+          },
+          "202": {
+            "description": "SDK接受通知"
+          },
+          "400": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "协商协议/无会话模式不允许的方法"
+          }
+        },
+        "x-cache-control": "no-store",
+        "description": "官方Go SDK stateless Streamable HTTP协商；Bearer每次校验有效期/撤销；有Origin则精确白名单，无Origin仍需Bearer。11工具；isError+结构化业务码，不提供confirm/review/token工具。"
+      }
+    },
+    "/health/live": {
+      "get": {
+        "operationId": "get__health_live",
+        "summary": "/health/live",
+        "security": [],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/HealthLive"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "412": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "428": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-cache-control": "no-store"
+      }
+    },
+    "/health/ready": {
+      "get": {
+        "operationId": "get__health_ready",
+        "summary": "/health/ready",
+        "security": [],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/HealthReady"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "412": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "428": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "统一业务错误；无密钥、私有路径或模型内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "数据库/active产物未就绪；模型未配置不阻断网站ready",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "admin.schema.json#/$defs/HealthReady"
+                }
+              }
+            }
+          }
+        },
+        "x-cache-control": "no-store"
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "AdminSession": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "yuanfa_session"
+      },
+      "MCPBearer": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  }
+}

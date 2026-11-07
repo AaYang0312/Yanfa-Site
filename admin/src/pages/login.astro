@@ -1,0 +1,23 @@
+---
+import Admin from '../layouts/Admin.astro';
+---
+<Admin title="管理员登录" login>
+  <form id="login" class="card login-panel"><label>用户名<input name="username" required autocomplete="username" maxlength="120" /></label><label>密码<input name="password" type="password" required autocomplete="current-password" /></label><button class="primary" type="submit">登录</button><p class="muted">管理账号由服务器初始化命令设置。</p></form>
+  <script>
+    import { api, showError } from '../lib/api';
+    import type { SessionResponse } from '../../../src/generated/contracts';
+    const form = document.querySelector<HTMLFormElement>('#login')!;
+    form.addEventListener('submit', async event => {
+      event.preventDefault(); const submit = form.querySelector('button')!; submit.disabled = true;
+      const data = new FormData(form);
+      try {
+        await api<SessionResponse>('/api/admin/login', { method: 'POST', body: JSON.stringify({ username: data.get('username'), password: data.get('password') }) });
+        form.reset();
+        const next = new URLSearchParams(location.search).get('next');
+        const target = next ? new URL(next, location.origin) : null;
+        location.assign(target?.origin === location.origin && target.pathname.startsWith('/admin/') && target.pathname !== '/admin/login/' ? target.href : '/admin/');
+      } catch (error) { (form.elements.namedItem('password') as HTMLInputElement).value = ''; showError(error); }
+      finally { submit.disabled = false; }
+    });
+  </script>
+</Admin>

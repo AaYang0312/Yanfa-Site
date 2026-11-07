@@ -1,0 +1,823 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://yuanfa.example/schemas/guide.schema.json",
+  "title": "GuideRequest",
+  "$ref": "#/$defs/GuideRequest",
+  "$defs": {
+    "GuideRequirements": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "scene_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "product.schema.json#/$defs/SceneID"
+          },
+          "maxItems": 10,
+          "uniqueItems": true
+        },
+        "material": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100,
+              "x-trim": true
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "substrate": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100,
+              "x-trim": true
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "nail_type": {
+          "anyOf": [
+            {
+              "$ref": "product.schema.json#/$defs/NailType"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "fastener_length_mm": {
+          "anyOf": [
+            {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "maximum": 1.7976931348623157e+308
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "air_supply": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "load_bearing": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "long_nose": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "blower": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "scene_ids",
+        "material",
+        "substrate",
+        "nail_type",
+        "fastener_length_mm",
+        "air_supply",
+        "load_bearing",
+        "long_nose",
+        "blower"
+      ]
+    },
+    "GuideMessage": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "role": {
+          "type": "string",
+          "enum": [
+            "user",
+            "assistant"
+          ]
+        },
+        "content": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 16000
+        }
+      },
+      "required": [
+        "role",
+        "content"
+      ]
+    },
+    "ConsultRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "release_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000,
+          "pattern": "[^\\x09-\\x0d\\x20\\x85\\xa0  -     　]"
+        },
+        "messages": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/GuideMessage"
+          },
+          "maxItems": 12
+        },
+        "requirements": {
+          "$ref": "#/$defs/GuideRequirements"
+        },
+        "context_product_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        }
+      },
+      "required": [
+        "release_id",
+        "message"
+      ],
+      "x-history-max-length": 16000
+    },
+    "SelectionRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "release_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "selected_product_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "requirements": {
+          "$ref": "#/$defs/GuideRequirements"
+        }
+      },
+      "required": [
+        "release_id",
+        "selected_product_id",
+        "requirements"
+      ]
+    },
+    "GuideRequest": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/ConsultRequest"
+        },
+        {
+          "$ref": "#/$defs/SelectionRequest"
+        }
+      ]
+    },
+    "GuideModelProposal": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "intent": {
+          "type": "string",
+          "enum": [
+            "consult",
+            "select"
+          ]
+        },
+        "requirements": {
+          "$ref": "#/$defs/GuideRequirements"
+        },
+        "candidate_product_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 120,
+            "pattern": "^[A-Za-z0-9_-]+$"
+          },
+          "maxItems": 100,
+          "uniqueItems": true
+        },
+        "selected_product_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 120,
+              "pattern": "^[A-Za-z0-9_-]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "selection_reference": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2000
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "intent",
+        "requirements",
+        "candidate_product_ids",
+        "selected_product_id",
+        "selection_reference"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "intent": {
+                "const": "consult"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "selected_product_id": {
+                "type": "null"
+              },
+              "selection_reference": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "selected_product_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 120,
+                "pattern": "^[A-Za-z0-9_-]+$"
+              },
+              "selection_reference": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2000,
+                "pattern": "[^\\x09-\\x0d\\x20\\x85\\xa0  -     　]"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "GuideQuestion": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "field": {
+          "anyOf": [
+            {
+              "$ref": "product.schema.json#/$defs/RequirementField"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1000
+        },
+        "options": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          },
+          "maxItems": 20
+        }
+      },
+      "required": [
+        "field",
+        "text",
+        "options"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "field": {
+                "type": "null"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "text": {
+                "const": "请点击要选择的商品卡片"
+              },
+              "options": {
+                "maxItems": 0
+              }
+            }
+          }
+        }
+      ]
+    },
+    "GuideRecommendation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "product_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "model": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 80
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "detail_url": {
+          "type": "string",
+          "pattern": "^/products/[a-z0-9-]+/$"
+        },
+        "image": {
+          "anyOf": [
+            {
+              "$ref": "public-catalog.schema.json#/$defs/PublicImage"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "match_level": {
+          "type": "string",
+          "enum": [
+            "matched",
+            "needs_confirmation"
+          ]
+        },
+        "matched_facts": {
+          "type": "array",
+          "items": {
+            "$ref": "public-catalog.schema.json#/$defs/MatchedFact"
+          },
+          "maxItems": 100
+        },
+        "missing_fields": {
+          "type": "array",
+          "items": {
+            "$ref": "public-catalog.schema.json#/$defs/MissingField"
+          },
+          "maxItems": 100,
+          "uniqueItems": true
+        },
+        "confirmation_notes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000
+          },
+          "maxItems": 100
+        }
+      },
+      "required": [
+        "product_id",
+        "model",
+        "name",
+        "detail_url",
+        "image",
+        "match_level",
+        "matched_facts",
+        "missing_fields",
+        "confirmation_notes"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "match_level": {
+                "const": "matched"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "missing_fields": {
+                "maxItems": 0
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "missing_fields": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "GuideSelection": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "product_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "model": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 80
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "detail_url": {
+          "type": "string",
+          "pattern": "^/products/[a-z0-9-]+/$"
+        },
+        "image": {
+          "anyOf": [
+            {
+              "$ref": "public-catalog.schema.json#/$defs/PublicImage"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "match_level": {
+          "type": "string",
+          "enum": [
+            "matched",
+            "needs_confirmation"
+          ]
+        },
+        "matched_facts": {
+          "type": "array",
+          "items": {
+            "$ref": "public-catalog.schema.json#/$defs/MatchedFact"
+          },
+          "maxItems": 100
+        },
+        "missing_fields": {
+          "type": "array",
+          "items": {
+            "$ref": "public-catalog.schema.json#/$defs/MissingField"
+          },
+          "maxItems": 100,
+          "uniqueItems": true
+        },
+        "confirmation_notes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000
+          },
+          "maxItems": 100
+        },
+        "purchase_options": {
+          "type": "array",
+          "items": {
+            "$ref": "public-catalog.schema.json#/$defs/PublicPurchaseOption"
+          },
+          "maxItems": 100
+        },
+        "purchase_status": {
+          "type": "string",
+          "enum": [
+            "available",
+            "unavailable"
+          ]
+        }
+      },
+      "required": [
+        "product_id",
+        "model",
+        "name",
+        "detail_url",
+        "image",
+        "match_level",
+        "matched_facts",
+        "missing_fields",
+        "confirmation_notes",
+        "purchase_options",
+        "purchase_status"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "purchase_status": {
+                "const": "available"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "purchase_options": {
+                "minItems": 1
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "purchase_options": {
+                "maxItems": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "match_level": {
+                "const": "matched"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "missing_fields": {
+                "maxItems": 0
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "missing_fields": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "GuideResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "release_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "clarifying",
+            "recommendations",
+            "selected",
+            "no_match",
+            "unavailable"
+          ]
+        },
+        "confirmed_requirements": {
+          "$ref": "#/$defs/GuideRequirements"
+        },
+        "conflicts": {
+          "description": "服务端确定性冲突说明；no_match 为1–100项，其他状态为空数组。",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000,
+            "x-trim": true
+          },
+          "maxItems": 100
+        },
+        "question": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/GuideQuestion"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "recommendations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/GuideRecommendation"
+          },
+          "maxItems": 3
+        },
+        "selection": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/GuideSelection"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "missing_fields": {
+          "type": "array",
+          "items": {
+            "$ref": "public-catalog.schema.json#/$defs/MissingField"
+          },
+          "maxItems": 100,
+          "uniqueItems": true
+        },
+        "contact_href": {
+          "type": "string",
+          "pattern": "^tel:[+0-9]+$"
+        }
+      },
+      "required": [
+        "release_id",
+        "state",
+        "confirmed_requirements",
+        "conflicts",
+        "question",
+        "recommendations",
+        "selection",
+        "missing_fields",
+        "contact_href"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "selected"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "selection": {
+                "$ref": "#/$defs/GuideSelection"
+              },
+              "recommendations": {
+                "maxItems": 0
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "selection": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "recommendations"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "recommendations": {
+                "minItems": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "enum": [
+                  "no_match",
+                  "unavailable"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "recommendations": {
+                "maxItems": 0
+              },
+              "question": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "no_match"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "conflicts": {
+                "minItems": 1
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "conflicts": {
+                "maxItems": 0
+              }
+            }
+          }
+        }
+      ],
+      "x-selection-missing-fields": true
+    },
+    "SiteConfig": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "type": "integer",
+          "const": 1,
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "phone": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "contact_href": {
+          "type": "string",
+          "pattern": "^tel:[+0-9]+$"
+        }
+      },
+      "required": [
+        "schema_version",
+        "name",
+        "phone",
+        "contact_href"
+      ]
+    }
+  }
+}

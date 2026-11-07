@@ -1,0 +1,33 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import { site } from '../data/site';
+---
+
+<Base title="隐私政策" description={`${site.name}官网隐私政策。`}>
+  <PageHead title="隐私政策" lead="本站的浏览、电话联系与第三方链接说明。" />
+  <section class="section section--paper">
+    <div class="wrap prose privacy">
+      <h2>网站浏览</h2>
+      <p>本站提供产品与公司信息展示，不设在线询价或留言表单。本站未接入广告追踪或第三方统计脚本。</p>
+      <h2>电话联系</h2>
+      <p>点击电话号码或拨号按钮会调用你设备上的拨号功能。产品选型、报价与合作需求通过电话沟通，无需在本站填写个人资料。</p>
+      <h2>第三方链接</h2>
+      <p>网上商城等外部链接会跳转至相应平台，你在该平台提供的信息按该平台的隐私政策处理。</p>
+      <h2>联系</h2>
+      <p>如有相关疑问，请通过联系页中的电话与我们联系。</p>
+      <p class="note">本政策会随网站功能调整而更新，以本页最新版本为准。</p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .privacy {
+    max-width: 820px;
+    color: var(--ink);
+  }
+
+  .privacy h2:first-child {
+    margin-top: 0;
+  }
+</style>

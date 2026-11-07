@@ -1,0 +1,26 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/ppt/logo.png';
+import { site } from '../data/site';
+---
+
+<a class="logo" href="/" aria-label={`${site.name} 首页`}>
+  <Image src={logo} alt={`${site.brand} ${site.brandEn}`} height={40} densities={[1, 2]} loading="eager" />
+</a>
+
+<style>
+  .logo {
+    display: inline-flex;
+    align-items: center;
+  }
+  .logo img {
+    display: block;
+    width: auto;
+    height: 40px;
+  }
+  @media (max-width: 960px) {
+    .logo img {
+      height: 34px;
+    }
+  }
+</style>

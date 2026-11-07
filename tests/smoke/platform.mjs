@@ -1,0 +1,161 @@
+// V14 ordinary production: isolated data, real admin writes/reviews/build/preview,
+// browser confirmation, public consumers and deterministic model-free selection.
+import assert from 'node:assert/strict';
+import { mkdir, readFile, writeFile, copyFile } from 'node:fs/promises';
+import { resolve, join } from 'node:path';
+import { parseArgs } from 'node:util';
+import { randomBytes } from 'node:crypto';
+import sharp from 'sharp';
+import { client, editable, passwordFile, hash, live } from './publication.mjs';
+import { decodeContract } from '../../src/generated/validate-contract.mjs';
+import { launchBrowser, shot, readable, saveReport } from '../integration/platform/browser.mjs';
+
+const { values } = parseArgs({ options: { base: { type: 'string' }, out: { type: 'string' } } });
+assert.ok(values.base && values.out, '--base and --out required');
+const base = values.base, out = resolve(values.out);
+assert.equal(new URL(base).hostname, '127.0.0.1');
+await mkdir(out, { recursive: true, mode: 0o700 });
+const report = { success: false, cwd: process.cwd(), argv: process.argv, checks: [], http: [], screenshots: [], page_errors: [], scope: 'Real ordinary Go; synthetic locally reviewed product facts and .test channels only. No customer model, commerce, WorkBuddy, proxy or deployment acceptance.' };
+const password = await passwordFile(), api = client(base, password, report);
+const fixture = JSON.parse(await readFile('tests/fixtures/guide/selection.json', 'utf8'));
+const suffix = randomBytes(6).toString('hex');
+let browser;
+const pass = async (name, fn) => { await fn(); report.checks.push(name); console.log('PASS ' + name); await saveReport(out, report); };
+try {
+  await live(base); await api.login();
+  await api.expect('/', { anonymous: true }, 503, 'empty active state');
+  const health = (await api.expect('/health/ready', { anonymous: true }, 503, 'no release yet')).json;
+  report.initial_health = health;
+  const baseline = await api.waitCandidate((await api.freeze()).id);
+  assert.equal(baseline.state, 'ready', JSON.stringify(baseline.error)); await api.publish(baseline);
+  const before = (await api.expect('/api/catalog/export', { anonymous: true }, 200, 'baseline public export')).json;
+  report.baseline_release_id = baseline.id;
+  browser = await launchBrowser();
+  const context = await browser.newContext({ viewport: { width: 390, height: 844 } });
+  const page = await context.newPage(); page.setDefaultTimeout(30000);
+  page.on('pageerror', e => report.page_errors.push(e.message));
+  page.on('dialog', d => d.accept());
+  let product;
+  await pass('P01 mobile keyboard creates incomplete draft and resumes it; anonymous access denied', async () => {
+    await page.goto(base + '/admin/login/');
+    await page.getByLabel('用户名', { exact: true }).fill('admin');
+    await page.getByLabel('密码', { exact: true }).fill(password);
+    await Promise.all([page.waitForURL(base + '/admin/'), page.getByRole('button', { name: '登录', exact: true }).click()]);
+    await page.getByRole('link', { name: '产品', exact: true }).click();
+    await page.getByRole('link', { name: '新建草稿', exact: true }).click();
+    await page.getByLabel('固定路径 slug', { exact: true }).fill('v14-' + suffix);
+    const response = page.waitForResponse(r => new URL(r.url()).pathname === '/api/admin/products' && r.request().method() === 'POST');
+    await page.getByRole('button', { name: '保存草稿', exact: true }).focus(); await page.keyboard.press('Enter');
+    const created = await response; assert.equal(created.status(), 201); product = (await created.json()).product;
+    await page.reload(); await page.getByLabel('固定路径 slug', { exact: true }).waitFor();
+    assert.equal(await page.getByLabel('固定路径 slug', { exact: true }).inputValue(), product.slug);
+    await api.expect('/products/' + product.slug + '/', { anonymous: true }, 404, 'incomplete draft not public');
+    await shot(page, out, 'admin-draft-390.png', report); await readable(page);
+  });
+  const upload = async bytes => { const form = new FormData(); form.append('file', new Blob([bytes]), 'v14.png'); return (await api.expect('/api/admin/media', { method: 'POST', raw: form }, 201, 'upload isolated image')).json; };
+  const bytes = await sharp({ create: { width: 360, height: 240, channels: 3, background: '#' + suffix.slice(0, 6) } }).png().toBuffer();
+  const secondBytes = await sharp({ create: { width: 240, height: 360, channels: 3, background: '#' + suffix.slice(6) } }).png().toBuffer();
+  const image = await upload(bytes), secondImage = await upload(secondBytes);
+  await api.expect('/api/admin/media/' + image.media_id + '/file', { anonymous: true }, 401, 'private image requires session');
+  await api.expect('/media/' + image.sha256 + '.png', { anonymous: true }, 404, 'unpublished image not public');
+  await pass('P02 real management edits complete new product, image order, series and reviewed facts', async () => {
+    const seed = (await api.expect('/api/admin/products/p_f30m', {}, 200, 'read template product')).json.product;
+    const edit = editable(seed); edit.name = 'V14 隔离联验工具'; edit.model = 'V14-' + suffix;
+    edit.summary = 'V14 本地合成选型夹具；不作为客户事实。'; edit.visibility = 'listed'; edit.legacy_series_ids = ['s_f30'];
+    edit.images = [{ media_id: secondImage.media_id, label: '纵向夹具图', description: '编辑顺序第一' }, { media_id: image.media_id, label: '横向夹具封面', description: '显式封面优先' }];
+    edit.cover_media_id = image.media_id; edit.guide_profile = structuredClone(fixture.profile);
+    edit.guide_profile.sources = [{ id: 'v14_source', kind: 'product_text', reference: '/summary', sha256: hash(JSON.stringify(edit.summary)), public_label: 'V14 隔离规则来源', public_url: null }];
+    edit.purchase_options = structuredClone(fixture.options);
+    product = (await api.expect('/api/admin/products/' + product.id, { method: 'PUT', headers: { 'If-Match': '"' + product.version + '"' }, body: edit }, 200, 'complete product through management API')).json.product;
+    const facts = fixture.reviewed_fields.map(field => ({ field, fact_sha256: hash(JSON.stringify(product.guide_profile[field])), source_sha256s: [product.guide_profile.sources[0].sha256] }));
+    product = (await api.expect('/api/admin/products/' + product.id + '/guide-review', { method: 'POST', headers: { 'If-Match': '"' + product.version + '"' }, body: { version: product.version, facts } }, 200, 'review exact local fixture')).json.product;
+    assert.deepEqual(new Set(product.guide_profile.reviews.map(r => r.field)), new Set(fixture.reviewed_fields));
+    const unchanged = (await api.expect('/api/catalog/export', { anonymous: true }, 200, 'draft saves do not publish')).json;
+    assert.deepEqual(unchanged.products, before.products);
+    await page.goto(base + '/admin/products/edit/?id=' + product.id);
+    await page.getByLabel('型号', { exact: true }).waitFor();
+    assert.equal(await page.getByLabel('型号', { exact: true }).inputValue(), product.model);
+    await page.setViewportSize({ width: 320, height: 844 }); await readable(page);
+    await shot(page, out, 'admin-reviewed-320.png', report);
+  });
+  const candidate = await api.waitCandidate((await api.freeze()).id);
+  assert.equal(candidate.state, 'ready', JSON.stringify(candidate.error));
+  await pass('P10 actual protected preview includes new gallery; anonymous remains on baseline; exit restores active', async () => {
+    await api.expect('/api/admin/preview-session', { method: 'POST', body: { candidate_id: candidate.id } }, 200, 'bind preview');
+    await context.addCookies([...api.cookies()].map(([name, value]) => ({ name, value, url: base, httpOnly: true, sameSite: 'Strict' })));
+    await page.goto(base + '/products/' + product.slug + '/'); await page.locator('#yuanfa-preview').waitFor();
+    assert.equal(await page.locator('meta[name=release-id]').getAttribute('content'), candidate.id);
+    await page.locator('[data-gallery-panel]:not([hidden]) img').evaluate(async img => img.decode());
+    await shot(page, out, 'preview-320.png', report);
+    await api.expect('/products/' + product.slug + '/', { anonymous: true }, 404, 'anonymous candidate excluded');
+    await api.expect('/media/' + image.sha256 + '.png', { anonymous: true }, 404, 'anonymous candidate media excluded');
+    await page.locator('#yuanfa-preview-exit').click(); await page.waitForURL(base + '/');
+    assert.equal(await page.locator('meta[name=release-id]').getAttribute('content'), baseline.id);
+    await api.expect('/api/admin/preview-session', { method: 'DELETE' }, 200, 'clear helper preview');
+  });
+  await pass('O01 mobile review and keyboard confirmation activate specified candidate', async () => {
+    await page.goto(new URL(candidate.review_url, base).href);
+    await page.locator('#candidate-meta').filter({ hasText: candidate.id }).waitFor();
+    await readable(page); await shot(page, out, 'candidate-320.png', report);
+    const requested = page.waitForResponse(r => r.request().method() === 'POST' && new URL(r.url()).pathname === '/api/admin/publication-requests');
+    await page.locator('#request-publish').focus(); await page.keyboard.press('Enter');
+    const response = await requested; assert.equal(response.status(), 201);
+    await page.waitForURL(url => url.pathname === '/admin/publication-requests/' && Boolean(url.searchParams.get('id')));
+    const intent = (await api.expect('/api/admin/publication-requests/' + new URL(page.url()).searchParams.get('id'), {}, 200, 'read navigated publication intent')).json;
+    await page.locator('#request-meta').filter({ hasText: intent.id }).waitFor();
+    await page.setViewportSize({ width: 390, height: 844 });
+    const check = page.getByLabel('我已审阅以上完整差异、受影响页面、图片和购买渠道，确认指定目标及版本', { exact: true });
+    await check.focus(); await page.keyboard.press('Space'); assert.equal(await check.isChecked(), true);
+    await shot(page, out, 'confirmation-390.png', report);
+    const confirmed = page.waitForResponse(r => r.request().method() === 'POST' && new URL(r.url()).pathname.endsWith('/' + intent.id + '/confirm'));
+    await page.locator('#confirm-publication').focus(); await page.keyboard.press('Enter'); assert.equal((await confirmed).status(), 202);
+    const done = await api.waitRequest(intent.id); assert.equal(done.state, 'succeeded'); assert.equal(done.result_release_id, candidate.id);
+    report.publication = done;
+  });
+  await pass('P02/P13 published export, list, search, filter, detail, series and counts share real release', async () => {
+    const current = (await api.expect('/api/catalog/export', { anonymous: true }, 200, 'new public export')).json;
+    assert.equal(current.release_id, candidate.id);
+    assert.deepEqual(new Set(current.products.map(p => p.product_id)), new Set([...before.products.map(p => p.product_id), product.id]));
+    for (const query of ['q=' + product.model, 'category=' + product.category_id, 'scene=home-woodworking']) {
+      const list = (await api.expect('/api/catalog/products?limit=100&release_id=' + candidate.id + '&' + query, { anonymous: true }, 200, 'public filtered consumer')).json;
+      assert.equal(list.release_id, candidate.id); assert.ok(list.items.some(p => p.product_id === product.id));
+    }
+    const detail = (await api.expect('/api/catalog/products/' + product.id + '?release_id=' + candidate.id, { anonymous: true }, 200, 'public detail')).json;
+    assert.equal(detail.release_id, candidate.id); assert.equal(detail.product.model, product.model); report.public_product = detail.product;
+    const publicContext = await browser.newContext({ viewport: { width: 390, height: 844 } }); const publicPage = await publicContext.newPage(); publicPage.on('pageerror', e => report.page_errors.push(e.message));
+    await publicPage.goto(base + '/products/');
+    assert.equal(await publicPage.locator('[data-card]').count(), current.products.length);
+    await publicPage.getByLabel('搜索型号、系列或功能', { exact: true }).fill(product.model);
+    await publicPage.waitForFunction(id => { const cards = [...document.querySelectorAll('[data-card]:not([hidden])')]; return cards.length === 1 && cards[0].querySelector('a').getAttribute('href').includes(id); }, product.slug);
+    await shot(publicPage, out, 'catalog-390.png', report);
+    await publicPage.goto(base + '/products/f30/'); assert.ok(await publicPage.locator('a[href="/products/' + product.slug + '/"]').count());
+    await publicPage.goto(base + '/products/' + product.slug + '/');
+    assert.equal(await publicPage.locator('meta[name=release-id]').getAttribute('content'), candidate.id);
+    assert.equal(await publicPage.locator('[data-gallery-panel]:not([hidden])').getAttribute('data-media-id'), image.media_id);
+    await publicPage.locator('[data-gallery-thumb]').nth(1).click(); assert.equal(await publicPage.locator('[data-gallery-panel]:not([hidden])').getAttribute('data-media-id'), secondImage.media_id);
+    await publicPage.keyboard.press('ArrowLeft'); assert.equal(await publicPage.locator('[data-gallery-panel]:not([hidden])').getAttribute('data-media-id'), image.media_id);
+    await publicPage.locator('[data-gallery-panel]:not([hidden]) img').evaluate(async img => img.decode());
+    await readable(publicPage); await shot(publicPage, out, 'published-gallery-390.png', report);
+    await publicContext.close(); report.public_count = current.products.length;
+  });
+  await pass('G12/G13 ordinary JSON selection preserves nine fields, unknown air gap and rejects explicit conflict', async () => {
+    const select = async requirements => {
+      const r = await api.expect('/api/guide/messages', { method: 'POST', anonymous: true, headers: { Accept: 'application/json' }, body: { release_id: candidate.id, selected_product_id: product.id, requirements } }, 200, 'model-free JSON selection');
+      return decodeContract('guide.schema.json#/$defs/GuideResult', r.bytes.toString());
+    };
+    const selected = await select(fixture.requirements);
+    assert.equal(selected.state, 'selected'); assert.deepEqual(selected.confirmed_requirements, fixture.requirements);
+    assert.equal(selected.selection.match_level, 'needs_confirmation'); assert.deepEqual(selected.missing_fields, ['air_supply']); assert.deepEqual(selected.selection.missing_fields, selected.missing_fields);
+    assert.equal(selected.selection.purchase_status, 'available'); assert.deepEqual(selected.selection.purchase_options, report.public_product.purchase_options);
+    const rejected = await select({ ...fixture.requirements, air_supply: false }); assert.equal(rejected.state, 'no_match'); assert.equal(rejected.selection, null); assert.ok(rejected.conflicts.length);
+    const unavailable = await api.expect('/api/guide/messages', { method: 'POST', anonymous: true, headers: { Accept: 'text/event-stream' }, body: { release_id: candidate.id, message: '普通生产实例未配置客户模型' } }, 503, 'ordinary Go consultation unavailable');
+    assert.equal(unavailable.json.state, 'unavailable');
+    report.selection = selected; report.conflicting_selection = rejected;
+  });
+  const source = join(process.env.DATA_DIR, 'artifacts', candidate.id, 'catalog.json');
+  await copyFile(source, join(out, 'catalog.json')); await copyFile(join(process.env.DATA_DIR, 'artifacts', candidate.id, 'manifest.json'), join(out, 'manifest.json'));
+  report.snapshot_path = join(out, 'catalog.json'); report.source_snapshot_path = source; report.snapshot_sha256 = hash(await readFile(source));
+  assert.equal(report.snapshot_sha256, candidate.snapshot_sha256); report.release_id = candidate.id; report.product_id = product.id;
+  assert.deepEqual(report.page_errors, []); report.success = true;
+} catch (error) { report.error = error.stack; throw error; }
+finally { try { await browser?.close(); } finally { await saveReport(out, report); } }

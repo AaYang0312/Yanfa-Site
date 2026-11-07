@@ -1,0 +1,21 @@
+---
+import Admin from '../../layouts/Admin.astro';
+---
+<Admin title="候选版本">
+  <p class="notice">本次发布包含整个工作区，包括其他产品、图片、上下架、选型资料和购买渠道的已保存修改。候选冻结后不可编辑。</p>
+  <section class="card" aria-labelledby="freeze-title">
+    <h2 id="freeze-title">冻结完整工作区</h2>
+    <p id="freeze-baseline">正在读取工作区和线上版本…</p>
+    <div class="actions"><button id="refresh-workspace" type="button">重新读取工作区版本</button><button id="freeze-workspace" type="button" class="primary" disabled>生成完整工作区候选</button></div>
+    <p class="muted">构建不改变官网。构建期间继续编辑会使本候选过期；失败后可重新生成。</p>
+  </section>
+  <form id="candidate-open" class="card"><label>候选 ID<input name="id" required autocomplete="off" /></label><button type="submit">查看候选</button></form>
+  <section id="candidate-detail" hidden aria-labelledby="candidate-title">
+    <div class="card"><h2 id="candidate-title">候选构建与审阅</h2><dl id="candidate-meta" class="publication-meta"></dl><p id="candidate-state" role="status" aria-live="polite"></p><p id="candidate-error" class="notice error" hidden></p><p id="candidate-stale" class="notice error" hidden></p>
+      <div class="actions"><button id="refresh-candidate" type="button">刷新候选状态</button><button id="preview-candidate" type="button" disabled>进入同源预览</button><button id="request-publish" type="button" class="primary" disabled>创建发布意图并审阅</button></div>
+      <p>预览仅当前浏览器可见，也影响本浏览器的其他官网标签页。预览中隐藏访客导购，退出或注销恢复线上；后台不受预览影响。</p>
+    </div>
+    <div id="candidate-diff"></div>
+  </section>
+  <script>import { mountCandidate } from '../../lib/publication'; mountCandidate();</script>
+</Admin>

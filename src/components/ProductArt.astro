@@ -1,0 +1,35 @@
+---
+import NailGun from './NailGun.astro';
+import FastenerArt from './FastenerArt.astro';
+import type { CategorySlug, FastenerType, NailType } from '../data/catalog';
+
+interface Props {
+  category: CategorySlug;
+  nail?: NailType;
+  label?: string;
+}
+
+const { category, nail, label } = Astro.props;
+
+const guns: Record<string, { variant: 'straight' | 'steel' | 'staple' | 'coil' | 'finish' | 'parts'; accent?: string }> = {
+  straight: { variant: 'straight' },
+  steel: { variant: 'steel', accent: '#1c3350' },
+  staple: { variant: 'staple' },
+  pin: { variant: 'finish' },
+  coil: { variant: 'coil' },
+  remover: { variant: 'straight', accent: '#5d6b78' },
+  insulation: { variant: 'steel', accent: '#5d6b78' },
+  gas: { variant: 'coil', accent: '#1c3350' },
+  other: { variant: 'parts' },
+};
+
+const fastenerTypes: FastenerType[] = ['brad', 'steel-nail', 'staple', 'coil-nail', 'pin'];
+const fastener = fastenerTypes.includes(nail as FastenerType) ? (nail as FastenerType) : 'brad';
+const gun = guns[category];
+---
+
+{category === 'nails' ? (
+  <FastenerArt type={fastener} label={label} />
+) : (
+  <NailGun variant={gun.variant} accent={gun.accent} label={label} />
+)}

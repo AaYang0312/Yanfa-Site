@@ -1,0 +1,224 @@
+---
+interface Props {
+  variant?: 'straight' | 'steel' | 'staple' | 'coil' | 'finish' | 'parts';
+  accent?: string;
+  label?: string;
+  class?: string;
+}
+
+const {
+  variant = 'straight',
+  accent = '#8f0026',
+  label = '元发气动钉枪示意图',
+  class: className = '',
+} = Astro.props;
+
+const uid = `ng-${variant}-${Math.random().toString(36).slice(2, 8)}`;
+const isCoil = variant === 'coil';
+const isParts = variant === 'parts';
+---
+
+<svg
+  class:list={['nail-gun', `nail-gun--${variant}`, className]}
+  viewBox="0 0 900 620"
+  fill="none"
+  role="img"
+  aria-label={label}
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <defs>
+    <linearGradient id={`${uid}-body`} x1="190" y1="150" x2="500" y2="430" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#485156"></stop>
+      <stop offset=".38" stop-color="#252c30"></stop>
+      <stop offset="1" stop-color="#0c1012"></stop>
+    </linearGradient>
+    <linearGradient id={`${uid}-body2`} x1="270" y1="200" x2="470" y2="330" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#3a4348"></stop>
+      <stop offset="1" stop-color="#13181b"></stop>
+    </linearGradient>
+    <linearGradient id={`${uid}-dark`} x1="280" y1="340" x2="540" y2="460" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#31393d"></stop>
+      <stop offset=".55" stop-color="#14191b"></stop>
+      <stop offset="1" stop-color="#090c0d"></stop>
+    </linearGradient>
+    <linearGradient id={`${uid}-metal`} x1="500" y1="285" x2="600" y2="430" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#e7ecef"></stop>
+      <stop offset=".45" stop-color="#9ba5aa"></stop>
+      <stop offset="1" stop-color="#4b555a"></stop>
+    </linearGradient>
+    <linearGradient id={`${uid}-accent`} x1="170" y1="150" x2="470" y2="205" gradientUnits="userSpaceOnUse">
+      <stop stop-color={accent}></stop>
+      <stop offset=".55" stop-color={accent} stop-opacity=".92"></stop>
+      <stop offset="1" stop-color={accent} stop-opacity=".62"></stop>
+    </linearGradient>
+    <linearGradient id={`${uid}-grip`} x1="240" y1="330" x2="300" y2="515" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#242b2f"></stop>
+      <stop offset="1" stop-color="#0c0f10"></stop>
+    </linearGradient>
+    <filter id={`${uid}-shadow`} x="-20%" y="-20%" width="140%" height="160%">
+      <feDropShadow dx="0" dy="20" stdDeviation="18" flood-color="#000" flood-opacity=".32"></feDropShadow>
+    </filter>
+    <filter id={`${uid}-blur`} x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="18"></feGaussianBlur>
+    </filter>
+    <radialGradient id={`${uid}-glow`} cx="0" cy="0" r="1" gradientTransform="translate(450 320) rotate(90) scale(300 380)" gradientUnits="userSpaceOnUse">
+      <stop stop-color={accent} stop-opacity=".16"></stop>
+      <stop offset="1" stop-color={accent} stop-opacity="0"></stop>
+    </radialGradient>
+    <clipPath id={`${uid}-bodyclip`}>
+      <path d="M138 179H473C526 179 548 202 557 254C560 284 527 300 456 321H284L204 286C151 265 142 222 138 179Z"></path>
+    </clipPath>
+  </defs>
+
+  <ellipse cx="445" cy="556" rx="300" ry="30" fill="#000" opacity=".18" filter={`url(#${uid}-blur)`}></ellipse>
+  <circle cx="460" cy="320" r="292" fill={`url(#${uid}-glow)`}></circle>
+
+  {isParts ? (
+    <g filter={`url(#${uid}-shadow)`}>
+      <g transform="rotate(-20 450 320)">
+        <rect x="190" y="214" width="430" height="44" rx="22" fill={`url(#${uid}-metal)`}></rect>
+        <rect x="212" y="224" width="386" height="8" rx="4" fill="#fff" opacity=".35"></rect>
+        <rect x="490" y="208" width="46" height="56" rx="12" fill={`url(#${uid}-body)`}></rect>
+        <rect x="498" y="216" width="30" height="40" rx="7" fill={accent} opacity=".9"></rect>
+        <rect x="248" y="306" width="360" height="34" rx="17" fill={`url(#${uid}-dark)`}></rect>
+        <rect x="268" y="315" width="300" height="6" rx="3" fill="#fff" opacity=".22"></rect>
+        <circle cx="638" cy="323" r="18" fill={`url(#${uid}-metal)`}></circle>
+        <circle cx="638" cy="323" r="7" fill="#151a1c"></circle>
+        <rect x="300" y="390" width="270" height="26" rx="13" fill={`url(#${uid}-metal)`}></rect>
+        <rect x="330" y="402" width="210" height="4" rx="2" fill="#fff" opacity=".4"></rect>
+        <circle cx="255" cy="403" r="34" fill={`url(#${uid}-body2)`}></circle>
+        <circle cx="255" cy="403" r="20" fill="none" stroke={accent} stroke-width="7"></circle>
+        <circle cx="255" cy="403" r="8" fill="#07090a"></circle>
+        <circle cx="610" cy="438" r="30" fill={`url(#${uid}-body)`}></circle>
+        <circle cx="610" cy="438" r="17" fill="none" stroke="#838f95" stroke-width="4" opacity=".7"></circle>
+        <path d="M620 465 664 508" stroke={`url(#${uid}-metal)`} stroke-width="14" stroke-linecap="round"></path>
+        <path d="M175 440 230 475" stroke="#69757b" stroke-width="7" stroke-linecap="round" opacity=".6"></path>
+      </g>
+      <g transform="translate(575 425) rotate(-18)">
+        <rect width="112" height="38" rx="8" fill={accent}></rect>
+        <text x="18" y="25" fill="#fff" font-family="Arial, sans-serif" font-size="15" font-weight="700" letter-spacing=".5">YANFA</text>
+      </g>
+    </g>
+  ) : (
+    <g
+      filter={`url(#${uid}-shadow)`}
+      transform={variant === 'finish' ? 'translate(36 8) scale(.94)' : variant === 'steel' ? 'translate(-6 6) scale(1.01)' : undefined}
+    >
+      <g transform="rotate(-7 450 320)">
+        {isCoil ? (
+          <g>
+            <path d="M286 388 490 356 552 377 543 407 320 447 256 414Z" fill={`url(#${uid}-dark)`}></path>
+            <path d="M300 397 486 370 525 386 516 400 314 430 280 411Z" fill="#6b767b" opacity=".28"></path>
+            <circle cx="427" cy="449" r="105" fill={`url(#${uid}-dark)`}></circle>
+            <circle cx="427" cy="449" r="99" fill="none" stroke={accent} stroke-width="10"></circle>
+            <circle cx="427" cy="449" r="78" fill="#0b0f10" stroke="#495358" stroke-width="2"></circle>
+            <circle cx="427" cy="449" r="62" fill="none" stroke="#7d898f" stroke-width="2" opacity=".35" stroke-dasharray="4 9"></circle>
+            <circle cx="427" cy="449" r="34" fill={`url(#${uid}-body2)`}></circle>
+            <circle cx="427" cy="449" r="13" fill="#060809"></circle>
+            <path d="M487 379 530 366 548 390 501 410Z" fill={`url(#${uid}-body)`}></path>
+            <path d="M462 402 516 393" stroke={accent} stroke-width="6" stroke-linecap="round" opacity=".9"></path>
+            {[0, 60, 120, 180, 240, 300].map((deg) => (
+              <circle
+                cx={427 + 88 * Math.cos((deg * Math.PI) / 180)}
+                cy={449 + 88 * Math.sin((deg * Math.PI) / 180)}
+                r="3.5"
+                fill="#d8dfe1"
+                opacity=".45"
+              ></circle>
+            ))}
+          </g>
+        ) : (
+          <g>
+            <path d="M258 391 525 350 557 382 540 424 274 466 238 432Z" fill={`url(#${uid}-dark)`}></path>
+            <path d="M268 401 521 362 540 384 527 405 276 445 250 425Z" fill="#98a3a8" opacity=".2"></path>
+            <path d="M263 390 529 349 537 364 268 408Z" fill={`url(#${uid}-accent)`}></path>
+            <path d="M287 409 510 378" stroke="#e9eff1" stroke-width="2" opacity=".22"></path>
+            {[0, 1, 2, 3, 4, 5, 6, 7].map((i) => (
+              <path
+                d={`M${300 + i * 27} ${400 - i * 4}v-12l8-1v12Z`}
+                fill={i % 2 === 0 ? '#d9e0e3' : '#9ca8ad'}
+                opacity=".5"
+              ></path>
+            ))}
+            <path d="M523 353 553 382" stroke="#0a0d0e" stroke-width="3" opacity=".5"></path>
+            {variant === 'staple' && (
+              <g>
+                <rect x="330" y="364" width="130" height="5" rx="2.5" fill="#dbe2e5" opacity=".55" transform="rotate(-7 395 366)"></rect>
+                <rect x="350" y="422" width="92" height="4" rx="2" fill="#000" opacity=".4" transform="rotate(-7 396 424)"></rect>
+              </g>
+            )}
+          </g>
+        )}
+
+        <path
+          d="M223 287 294 316 305 456C308 500 289 514 272 516L235 527C209 532 197 520 197 510L211 345C213 311 214 298 223 287Z"
+          fill={`url(#${uid}-body)`}
+        ></path>
+        <path
+          d="M213 336 286 361 297 465C298 486 285 496 276 497L246 506C231 509 221 499 221 491L213 336Z"
+          fill={`url(#${uid}-grip)`}
+        ></path>
+        <path d="M222 352 281 372M226 382 286 401M230 412 290 431M234 442 293 461" stroke="#525d62" stroke-width="2" opacity=".38"></path>
+        <path d="M279 311 305 322 300 352" stroke="#0a0d0e" stroke-width="4" opacity=".5"></path>
+        <path d="M292 318C318 326 334 335 337 349C341 369 325 386 303 392" stroke={`url(#${uid}-metal)`} stroke-width="9" stroke-linecap="round"></path>
+        <path d="M300 344C312 341 317 348 315 358" stroke="#0c1012" stroke-width="6" stroke-linecap="round"></path>
+        <path d="M306 320C346 330 353 355 346 376C340 398 321 408 305 411" stroke="#1b2124" stroke-width="13" stroke-linecap="round" opacity=".8"></path>
+
+        <path
+          d="M138 179H473C526 179 548 202 557 254C560 284 527 300 456 321H284L204 286C151 265 142 222 138 179Z"
+          fill={`url(#${uid}-body)`}
+        ></path>
+        <path
+          d="M164 154H451C469 154 480 165 491 188H151L157 165C159 157 160 154 164 154Z"
+          fill={`url(#${uid}-accent)`}
+        ></path>
+        <path d="M165 161H447C457 161 464 167 471 178H158L162 165C163 162 164 161 165 161Z" fill="#fff" opacity=".19"></path>
+        <path d="M151 188H491" stroke="#080b0c" stroke-width="3" opacity=".65"></path>
+        <path d="M108 184C108 168 118 158 136 158H170V290H136C118 290 108 280 108 264V184Z" fill={`url(#${uid}-body)`}></path>
+        <path d="M117 173H125V276H117Z" fill="#07090a" opacity=".45" rx="4"></path>
+        <circle cx="148" cy="177" r="4.5" fill="#090c0d" opacity=".7"></circle>
+        <circle cx="148" cy="270" r="4.5" fill="#090c0d" opacity=".7"></circle>
+
+        <g clip-path={`url(#${uid}-bodyclip)`}>
+          <path d="M181 184H454C507 184 526 203 536 232" stroke="#eaf0f2" stroke-width="5" stroke-linecap="round" opacity=".13"></path>
+          <path d="M330 185V310M350 186V300" stroke="#060809" stroke-width="2" opacity=".35"></path>
+          <path d="M365 234H435M365 245H421M365 256H435" stroke="#080b0c" stroke-width="5" opacity=".35"></path>
+          <path d="M218 286 300 316" stroke="#eaf0f2" stroke-width="2" opacity=".13"></path>
+          <text x="270" y="225" fill="#eef2f4" opacity=".42" font-family="Arial Narrow, Arial, sans-serif" font-size="18" font-weight="700" letter-spacing="6">YANFA</text>
+          <text x="271" y="242" fill="#eef2f4" opacity=".2" font-family="Arial, sans-serif" font-size="8" font-weight="600" letter-spacing="3.4">PNEUMATIC TOOLS</text>
+          <circle cx="440" cy="264" r="3.5" fill="#050708" opacity=".8"></circle>
+          <circle cx="440" cy="286" r="3.5" fill="#050708" opacity=".8"></circle>
+        </g>
+
+        <path d="M505 216 555 229 566 297 542 319 500 304Z" fill={`url(#${uid}-body2)`}></path>
+        <path d="M506 220 546 231 554 290 539 306 508 295Z" fill="#000" opacity=".14"></path>
+        <path
+          d="M534 297H577C588 297 591 305 591 314V401C591 414 583 421 571 421H548C536 421 529 414 529 401V316C529 304 528 297 534 297Z"
+          fill={`url(#${uid}-dark)`}
+        ></path>
+        <path d="M542 316H579V348H542Z" fill={`url(#${uid}-accent)`}></path>
+        <path d="M542 316H579V323H542Z" fill="#fff" opacity=".16"></path>
+        <circle cx="560" cy="396" r="13" fill="#050708"></circle>
+        <circle cx="560" cy="396" r="7" fill="#1a2022"></circle>
+        <path d="M544 370H577" stroke="#eaf0f2" stroke-width="2" opacity=".15"></path>
+        <path d="M519 281 540 289" stroke="#eaf0f2" stroke-width="2" opacity=".2"></path>
+
+        <path d="M235 512 267 503 279 532 245 543Z" fill={`url(#${uid}-metal)`}></path>
+        <path d="M248 509 260 505 264 518 251 522Z" fill={accent} opacity=".9"></path>
+        <path d="M240 536 274 525" stroke="#080a0b" stroke-width="5" stroke-linecap="round" opacity=".7"></path>
+
+        <circle cx="307" cy="315" r="4" fill="#050708"></circle>
+        <circle cx="456" cy="313" r="4" fill="#050708"></circle>
+      </g>
+    </g>
+  )}
+</svg>
+
+<style>
+  .nail-gun {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+</style>

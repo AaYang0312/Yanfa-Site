@@ -1,0 +1,2611 @@
+[
+  {
+    "name": "revision accepts 0",
+    "schema": "admin.schema.json#/$defs/CandidateInput",
+    "raw": "{\"expected_workspace_revision\":0}",
+    "valid": true,
+    "fields": [],
+    "expected": {
+      "expected_workspace_revision": 0
+    }
+  },
+  {
+    "name": "revision accepts 1.0",
+    "schema": "admin.schema.json#/$defs/CandidateInput",
+    "raw": "{\"expected_workspace_revision\":1.0}",
+    "valid": true,
+    "fields": [],
+    "expected": {
+      "expected_workspace_revision": 1
+    }
+  },
+  {
+    "name": "revision accepts 1e0",
+    "schema": "admin.schema.json#/$defs/CandidateInput",
+    "raw": "{\"expected_workspace_revision\":1e0}",
+    "valid": true,
+    "fields": [],
+    "expected": {
+      "expected_workspace_revision": 1
+    }
+  },
+  {
+    "name": "revision accepts 9007199254740991",
+    "schema": "admin.schema.json#/$defs/CandidateInput",
+    "raw": "{\"expected_workspace_revision\":9007199254740991}",
+    "valid": true,
+    "fields": [],
+    "expected": {
+      "expected_workspace_revision": 9007199254740991
+    }
+  },
+  {
+    "name": "revision rejects -1",
+    "schema": "admin.schema.json#/$defs/CandidateInput",
+    "raw": "{\"expected_workspace_revision\":-1}",
+    "valid": false,
+    "fields": [
+      "expected_workspace_revision"
+    ]
+  },
+  {
+    "name": "revision rejects 1.5",
+    "schema": "admin.schema.json#/$defs/CandidateInput",
+    "raw": "{\"expected_workspace_revision\":1.5}",
+    "valid": false,
+    "fields": [
+      "expected_workspace_revision"
+    ]
+  },
+  {
+    "name": "revision rejects 9007199254740992",
+    "schema": "admin.schema.json#/$defs/CandidateInput",
+    "raw": "{\"expected_workspace_revision\":9007199254740992}",
+    "valid": false,
+    "fields": [
+      "expected_workspace_revision"
+    ]
+  },
+  {
+    "name": "revision rejects 9007199254740993",
+    "schema": "admin.schema.json#/$defs/CandidateInput",
+    "raw": "{\"expected_workspace_revision\":9007199254740993}",
+    "valid": false,
+    "fields": [
+      "expected_workspace_revision"
+    ]
+  },
+  {
+    "name": "revision rejects 1e309",
+    "schema": "admin.schema.json#/$defs/CandidateInput",
+    "raw": "{\"expected_workspace_revision\":1e309}",
+    "valid": false,
+    "fields": [
+      "expected_workspace_revision"
+    ]
+  },
+  {
+    "name": "revision rejects -1e309",
+    "schema": "admin.schema.json#/$defs/CandidateInput",
+    "raw": "{\"expected_workspace_revision\":-1e309}",
+    "valid": false,
+    "fields": [
+      "expected_workspace_revision"
+    ]
+  },
+  {
+    "name": "typed length preserves 5e-324",
+    "schema": "guide.schema.json#/$defs/GuideRequirements",
+    "raw": "{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":5e-324,\"air_supply\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null}",
+    "valid": true,
+    "fields": [],
+    "expected": {
+      "scene_ids": [],
+      "material": null,
+      "substrate": null,
+      "nail_type": null,
+      "fastener_length_mm": 5e-324,
+      "air_supply": null,
+      "load_bearing": null,
+      "long_nose": null,
+      "blower": null
+    }
+  },
+  {
+    "name": "typed length preserves 1.5",
+    "schema": "guide.schema.json#/$defs/GuideRequirements",
+    "raw": "{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":1.5,\"air_supply\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null}",
+    "valid": true,
+    "fields": [],
+    "expected": {
+      "scene_ids": [],
+      "material": null,
+      "substrate": null,
+      "nail_type": null,
+      "fastener_length_mm": 1.5,
+      "air_supply": null,
+      "load_bearing": null,
+      "long_nose": null,
+      "blower": null
+    }
+  },
+  {
+    "name": "typed length preserves null",
+    "schema": "guide.schema.json#/$defs/GuideRequirements",
+    "raw": "{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null}",
+    "valid": true,
+    "fields": [],
+    "expected": {
+      "scene_ids": [],
+      "material": null,
+      "substrate": null,
+      "nail_type": null,
+      "fastener_length_mm": null,
+      "air_supply": null,
+      "load_bearing": null,
+      "long_nose": null,
+      "blower": null
+    }
+  },
+  {
+    "name": "typed length rejects 1e-999",
+    "schema": "guide.schema.json#/$defs/GuideRequirements",
+    "raw": "{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":1e-999,\"air_supply\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null}",
+    "valid": false,
+    "fields": [
+      "fastener_length_mm"
+    ]
+  },
+  {
+    "name": "typed length rejects 0",
+    "schema": "guide.schema.json#/$defs/GuideRequirements",
+    "raw": "{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":0,\"air_supply\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null}",
+    "valid": false,
+    "fields": [
+      "fastener_length_mm"
+    ]
+  },
+  {
+    "name": "typed length rejects 1e309",
+    "schema": "guide.schema.json#/$defs/GuideRequirements",
+    "raw": "{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":1e309,\"air_supply\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null}",
+    "valid": false,
+    "fields": [
+      "fastener_length_mm"
+    ]
+  },
+  {
+    "name": "nested range rejects underflow",
+    "schema": "product.schema.json#/$defs/ProductCreate",
+    "raw": "{\"slug\":\"sample\",\"kind\":\"tool\",\"name\":\"\",\"model\":\"\",\"category_id\":\"straight\",\"series\":\"\",\"legacy_series_ids\":[],\"summary\":\"\",\"applications\":[],\"features\":[],\"notes\":[],\"scene_ids\":[],\"nail_type\":null,\"fastener_text\":\"\",\"long_nose\":false,\"blower\":false,\"images\":[],\"cover_media_id\":null,\"visibility\":\"unlisted\",\"sort_order\":0,\"guide_profile\":{\"scene_ids\":[],\"materials\":[],\"substrates\":[],\"excluded_materials\":[],\"excluded_substrates\":[],\"power_source\":null,\"nail_type\":null,\"fastener_length_mm\":{\"min\":1e-999,\"max\":1.5},\"load_bearing\":null,\"long_nose\":null,\"blower\":null,\"limitations\":[],\"consultation_notes\":[],\"required_requirements\":[],\"sources\":[]},\"purchase_options\":[]}",
+    "valid": false,
+    "fields": [
+      "guide_profile.fastener_length_mm.min"
+    ]
+  },
+  {
+    "name": "nested range preserves minimum positive",
+    "schema": "product.schema.json#/$defs/ProductCreate",
+    "raw": "{\"slug\":\"sample\",\"kind\":\"tool\",\"name\":\"\",\"model\":\"\",\"category_id\":\"straight\",\"series\":\"\",\"legacy_series_ids\":[],\"summary\":\"\",\"applications\":[],\"features\":[],\"notes\":[],\"scene_ids\":[],\"nail_type\":null,\"fastener_text\":\"\",\"long_nose\":false,\"blower\":false,\"images\":[],\"cover_media_id\":null,\"visibility\":\"unlisted\",\"sort_order\":0,\"guide_profile\":{\"scene_ids\":[],\"materials\":[],\"substrates\":[],\"excluded_materials\":[],\"excluded_substrates\":[],\"power_source\":null,\"nail_type\":null,\"fastener_length_mm\":{\"min\":5e-324,\"max\":1.5},\"load_bearing\":null,\"long_nose\":null,\"blower\":null,\"limitations\":[],\"consultation_notes\":[],\"required_requirements\":[],\"sources\":[]},\"purchase_options\":[]}",
+    "valid": true,
+    "fields": [],
+    "expected": {
+      "slug": "sample",
+      "kind": "tool",
+      "name": "",
+      "model": "",
+      "category_id": "straight",
+      "series": "",
+      "legacy_series_ids": [],
+      "summary": "",
+      "applications": [],
+      "features": [],
+      "notes": [],
+      "scene_ids": [],
+      "nail_type": null,
+      "fastener_text": "",
+      "long_nose": false,
+      "blower": false,
+      "images": [],
+      "cover_media_id": null,
+      "visibility": "unlisted",
+      "sort_order": 0,
+      "guide_profile": {
+        "scene_ids": [],
+        "materials": [],
+        "substrates": [],
+        "excluded_materials": [],
+        "excluded_substrates": [],
+        "power_source": null,
+        "nail_type": null,
+        "fastener_length_mm": {
+          "min": 5e-324,
+          "max": 1.5
+        },
+        "load_bearing": null,
+        "long_nose": null,
+        "blower": null,
+        "limitations": [],
+        "consultation_notes": [],
+        "required_requirements": [],
+        "sources": []
+      },
+      "purchase_options": []
+    }
+  },
+  {
+    "name": "sort order rejects unsafe integer",
+    "schema": "product.schema.json#/$defs/ProductCreate",
+    "raw": "{\"slug\":\"sample\",\"kind\":\"tool\",\"name\":\"\",\"model\":\"\",\"category_id\":\"straight\",\"series\":\"\",\"legacy_series_ids\":[],\"summary\":\"\",\"applications\":[],\"features\":[],\"notes\":[],\"scene_ids\":[],\"nail_type\":null,\"fastener_text\":\"\",\"long_nose\":false,\"blower\":false,\"images\":[],\"cover_media_id\":null,\"visibility\":\"unlisted\",\"sort_order\":9007199254740993,\"guide_profile\":{\"scene_ids\":[],\"materials\":[],\"substrates\":[],\"excluded_materials\":[],\"excluded_substrates\":[],\"power_source\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null,\"limitations\":[],\"consultation_notes\":[],\"required_requirements\":[],\"sources\":[]},\"purchase_options\":[]}",
+    "valid": false,
+    "fields": [
+      "sort_order"
+    ]
+  },
+  {
+    "name": "publish product applications [\"\"]",
+    "schema": "product.schema.json#/$defs/PublishedProduct",
+    "raw": "{\"id\":\"sample\",\"slug\":\"sample\",\"kind\":\"tool\",\"name\":\"工具\",\"model\":\"TEST\",\"category_id\":\"straight\",\"series\":\"\",\"legacy_series_ids\":[],\"summary\":\"真实用途说明\",\"applications\":[\"\"],\"features\":[],\"notes\":[],\"scene_ids\":[],\"nail_type\":null,\"fastener_text\":\"\",\"long_nose\":false,\"blower\":false,\"images\":[{\"media_id\":\"m_test\",\"label\":\"图片\",\"description\":\"\"}],\"cover_media_id\":\"m_test\",\"visibility\":\"listed\",\"sort_order\":0,\"guide_profile\":{\"scene_ids\":[],\"materials\":[],\"substrates\":[],\"excluded_materials\":[],\"excluded_substrates\":[],\"power_source\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null,\"limitations\":[],\"consultation_notes\":[],\"required_requirements\":[],\"sources\":[],\"reviews\":[]},\"purchase_options\":[],\"version\":1,\"updated_at\":\"2026-11-06T00:00:00Z\"}",
+    "valid": false,
+    "fields": [
+      "applications"
+    ]
+  },
+  {
+    "name": "draft product applications [\"\"]",
+    "schema": "product.schema.json#/$defs/ProductDocument",
+    "raw": "{\"id\":\"sample\",\"slug\":\"sample\",\"kind\":\"tool\",\"name\":\"工具\",\"model\":\"TEST\",\"category_id\":\"straight\",\"series\":\"\",\"legacy_series_ids\":[],\"summary\":\"真实用途说明\",\"applications\":[\"\"],\"features\":[],\"notes\":[],\"scene_ids\":[],\"nail_type\":null,\"fastener_text\":\"\",\"long_nose\":false,\"blower\":false,\"images\":[{\"media_id\":\"m_test\",\"label\":\"图片\",\"description\":\"\"}],\"cover_media_id\":\"m_test\",\"visibility\":\"listed\",\"sort_order\":0,\"guide_profile\":{\"scene_ids\":[],\"materials\":[],\"substrates\":[],\"excluded_materials\":[],\"excluded_substrates\":[],\"power_source\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null,\"limitations\":[],\"consultation_notes\":[],\"required_requirements\":[],\"sources\":[],\"reviews\":[]},\"purchase_options\":[],\"version\":1,\"updated_at\":\"2026-11-06T00:00:00Z\"}",
+    "valid": true,
+    "fields": [],
+    "expected": {
+      "id": "sample",
+      "slug": "sample",
+      "kind": "tool",
+      "name": "工具",
+      "model": "TEST",
+      "category_id": "straight",
+      "series": "",
+      "legacy_series_ids": [],
+      "summary": "真实用途说明",
+      "applications": [
+        ""
+      ],
+      "features": [],
+      "notes": [],
+      "scene_ids": [],
+      "nail_type": null,
+      "fastener_text": "",
+      "long_nose": false,
+      "blower": false,
+      "images": [
+        {
+          "media_id": "m_test",
+          "label": "图片",
+          "description": ""
+        }
+      ],
+      "cover_media_id": "m_test",
+      "visibility": "listed",
+      "sort_order": 0,
+      "guide_profile": {
+        "scene_ids": [],
+        "materials": [],
+        "substrates": [],
+        "excluded_materials": [],
+        "excluded_substrates": [],
+        "power_source": null,
+        "nail_type": null,
+        "fastener_length_mm": null,
+        "load_bearing": null,
+        "long_nose": null,
+        "blower": null,
+        "limitations": [],
+        "consultation_notes": [],
+        "required_requirements": [],
+        "sources": [],
+        "reviews": []
+      },
+      "purchase_options": [],
+      "version": 1,
+      "updated_at": "2026-11-06T00:00:00Z"
+    }
+  },
+  {
+    "name": "complete snapshot applications [\"\"]",
+    "schema": "catalog-snapshot.schema.json#/$defs/PublishableSnapshot",
+    "raw": "{\"schema_version\":1,\"release_id\":\"r_test\",\"workspace_revision\":0,\"categories\":[{\"id\":\"straight\",\"name\":\"sample\",\"sort_order\":0,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"steel\",\"name\":\"sample\",\"sort_order\":1,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"staple\",\"name\":\"sample\",\"sort_order\":2,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"pin\",\"name\":\"sample\",\"sort_order\":3,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"coil\",\"name\":\"sample\",\"sort_order\":4,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"remover\",\"name\":\"sample\",\"sort_order\":5,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"insulation\",\"name\":\"sample\",\"sort_order\":6,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"gas\",\"name\":\"sample\",\"sort_order\":7,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"nails\",\"name\":\"sample\",\"sort_order\":8,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"other\",\"name\":\"sample\",\"sort_order\":9,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"}],\"scenes\":[{\"id\":\"home-woodworking\",\"name\":\"home-woodworking\"},{\"id\":\"ceiling-framing\",\"name\":\"ceiling-framing\"},{\"id\":\"packaging-pallets\",\"name\":\"packaging-pallets\"},{\"id\":\"furniture-timber\",\"name\":\"furniture-timber\"},{\"id\":\"panel-fastening\",\"name\":\"panel-fastening\"},{\"id\":\"nail-removal\",\"name\":\"nail-removal\"},{\"id\":\"wall-insulation\",\"name\":\"wall-insulation\"},{\"id\":\"electrical-plumbing\",\"name\":\"electrical-plumbing\"},{\"id\":\"wall-mesh\",\"name\":\"wall-mesh\"},{\"id\":\"upholstery-rattan\",\"name\":\"upholstery-rattan\"}],\"nail_types\":[{\"id\":\"brad\",\"name\":\"brad\"},{\"id\":\"steel-nail\",\"name\":\"steel-nail\"},{\"id\":\"staple\",\"name\":\"staple\"},{\"id\":\"coil-nail\",\"name\":\"coil-nail\"},{\"id\":\"pin\",\"name\":\"pin\"},{\"id\":\"insulation-nail\",\"name\":\"insulation-nail\"},{\"id\":\"gas-nail\",\"name\":\"gas-nail\"}],\"legacy_series\":[],\"products\":[{\"id\":\"sample\",\"slug\":\"sample\",\"kind\":\"tool\",\"name\":\"工具\",\"model\":\"TEST\",\"category_id\":\"straight\",\"series\":\"\",\"legacy_series_ids\":[],\"summary\":\"真实用途说明\",\"applications\":[\"\"],\"features\":[],\"notes\":[],\"scene_ids\":[],\"nail_type\":null,\"fastener_text\":\"\",\"long_nose\":false,\"blower\":false,\"images\":[{\"media_id\":\"m_test\",\"label\":\"图片\",\"description\":\"\",\"sha256\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"format\":\"webp\",\"bytes\":10,\"width\":100,\"height\":50,\"path\":\"media/test.webp\"}],\"cover_media_id\":\"m_test\",\"visibility\":\"listed\",\"sort_order\":0,\"guide_profile\":{\"scene_ids\":[],\"materials\":[],\"substrates\":[],\"excluded_materials\":[],\"excluded_substrates\":[],\"power_source\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null,\"limitations\":[],\"consultation_notes\":[],\"required_requirements\":[],\"sources\":[],\"reviews\":[]},\"purchase_options\":[],\"version\":1,\"updated_at\":\"2026-11-06T00:00:00Z\"}],\"previously_published_routes\":[]}",
+    "valid": false,
+    "fields": [
+      "products.0.applications"
+    ]
+  },
+  {
+    "name": "publish product applications [\"　\\t\"]",
+    "schema": "product.schema.json#/$defs/PublishedProduct",
+    "raw": "{\"id\":\"sample\",\"slug\":\"sample\",\"kind\":\"tool\",\"name\":\"工具\",\"model\":\"TEST\",\"category_id\":\"straight\",\"series\":\"\",\"legacy_series_ids\":[],\"summary\":\"真实用途说明\",\"applications\":[\"　\\t\"],\"features\":[],\"notes\":[],\"scene_ids\":[],\"nail_type\":null,\"fastener_text\":\"\",\"long_nose\":false,\"blower\":false,\"images\":[{\"media_id\":\"m_test\",\"label\":\"图片\",\"description\":\"\"}],\"cover_media_id\":\"m_test\",\"visibility\":\"listed\",\"sort_order\":0,\"guide_profile\":{\"scene_ids\":[],\"materials\":[],\"substrates\":[],\"excluded_materials\":[],\"excluded_substrates\":[],\"power_source\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null,\"limitations\":[],\"consultation_notes\":[],\"required_requirements\":[],\"sources\":[],\"reviews\":[]},\"purchase_options\":[],\"version\":1,\"updated_at\":\"2026-11-06T00:00:00Z\"}",
+    "valid": false,
+    "fields": [
+      "applications"
+    ]
+  },
+  {
+    "name": "draft product applications [\"　\\t\"]",
+    "schema": "product.schema.json#/$defs/ProductDocument",
+    "raw": "{\"id\":\"sample\",\"slug\":\"sample\",\"kind\":\"tool\",\"name\":\"工具\",\"model\":\"TEST\",\"category_id\":\"straight\",\"series\":\"\",\"legacy_series_ids\":[],\"summary\":\"真实用途说明\",\"applications\":[\"　\\t\"],\"features\":[],\"notes\":[],\"scene_ids\":[],\"nail_type\":null,\"fastener_text\":\"\",\"long_nose\":false,\"blower\":false,\"images\":[{\"media_id\":\"m_test\",\"label\":\"图片\",\"description\":\"\"}],\"cover_media_id\":\"m_test\",\"visibility\":\"listed\",\"sort_order\":0,\"guide_profile\":{\"scene_ids\":[],\"materials\":[],\"substrates\":[],\"excluded_materials\":[],\"excluded_substrates\":[],\"power_source\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null,\"limitations\":[],\"consultation_notes\":[],\"required_requirements\":[],\"sources\":[],\"reviews\":[]},\"purchase_options\":[],\"version\":1,\"updated_at\":\"2026-11-06T00:00:00Z\"}",
+    "valid": true,
+    "fields": [],
+    "expected": {
+      "id": "sample",
+      "slug": "sample",
+      "kind": "tool",
+      "name": "工具",
+      "model": "TEST",
+      "category_id": "straight",
+      "series": "",
+      "legacy_series_ids": [],
+      "summary": "真实用途说明",
+      "applications": [
+        "　\t"
+      ],
+      "features": [],
+      "notes": [],
+      "scene_ids": [],
+      "nail_type": null,
+      "fastener_text": "",
+      "long_nose": false,
+      "blower": false,
+      "images": [
+        {
+          "media_id": "m_test",
+          "label": "图片",
+          "description": ""
+        }
+      ],
+      "cover_media_id": "m_test",
+      "visibility": "listed",
+      "sort_order": 0,
+      "guide_profile": {
+        "scene_ids": [],
+        "materials": [],
+        "substrates": [],
+        "excluded_materials": [],
+        "excluded_substrates": [],
+        "power_source": null,
+        "nail_type": null,
+        "fastener_length_mm": null,
+        "load_bearing": null,
+        "long_nose": null,
+        "blower": null,
+        "limitations": [],
+        "consultation_notes": [],
+        "required_requirements": [],
+        "sources": [],
+        "reviews": []
+      },
+      "purchase_options": [],
+      "version": 1,
+      "updated_at": "2026-11-06T00:00:00Z"
+    }
+  },
+  {
+    "name": "complete snapshot applications [\"　\\t\"]",
+    "schema": "catalog-snapshot.schema.json#/$defs/PublishableSnapshot",
+    "raw": "{\"schema_version\":1,\"release_id\":\"r_test\",\"workspace_revision\":0,\"categories\":[{\"id\":\"straight\",\"name\":\"sample\",\"sort_order\":0,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"steel\",\"name\":\"sample\",\"sort_order\":1,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"staple\",\"name\":\"sample\",\"sort_order\":2,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"pin\",\"name\":\"sample\",\"sort_order\":3,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"coil\",\"name\":\"sample\",\"sort_order\":4,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"remover\",\"name\":\"sample\",\"sort_order\":5,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"insulation\",\"name\":\"sample\",\"sort_order\":6,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"gas\",\"name\":\"sample\",\"sort_order\":7,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"nails\",\"name\":\"sample\",\"sort_order\":8,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"other\",\"name\":\"sample\",\"sort_order\":9,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"}],\"scenes\":[{\"id\":\"home-woodworking\",\"name\":\"home-woodworking\"},{\"id\":\"ceiling-framing\",\"name\":\"ceiling-framing\"},{\"id\":\"packaging-pallets\",\"name\":\"packaging-pallets\"},{\"id\":\"furniture-timber\",\"name\":\"furniture-timber\"},{\"id\":\"panel-fastening\",\"name\":\"panel-fastening\"},{\"id\":\"nail-removal\",\"name\":\"nail-removal\"},{\"id\":\"wall-insulation\",\"name\":\"wall-insulation\"},{\"id\":\"electrical-plumbing\",\"name\":\"electrical-plumbing\"},{\"id\":\"wall-mesh\",\"name\":\"wall-mesh\"},{\"id\":\"upholstery-rattan\",\"name\":\"upholstery-rattan\"}],\"nail_types\":[{\"id\":\"brad\",\"name\":\"brad\"},{\"id\":\"steel-nail\",\"name\":\"steel-nail\"},{\"id\":\"staple\",\"name\":\"staple\"},{\"id\":\"coil-nail\",\"name\":\"coil-nail\"},{\"id\":\"pin\",\"name\":\"pin\"},{\"id\":\"insulation-nail\",\"name\":\"insulation-nail\"},{\"id\":\"gas-nail\",\"name\":\"gas-nail\"}],\"legacy_series\":[],\"products\":[{\"id\":\"sample\",\"slug\":\"sample\",\"kind\":\"tool\",\"name\":\"工具\",\"model\":\"TEST\",\"category_id\":\"straight\",\"series\":\"\",\"legacy_series_ids\":[],\"summary\":\"真实用途说明\",\"applications\":[\"　\\t\"],\"features\":[],\"notes\":[],\"scene_ids\":[],\"nail_type\":null,\"fastener_text\":\"\",\"long_nose\":false,\"blower\":false,\"images\":[{\"media_id\":\"m_test\",\"label\":\"图片\",\"description\":\"\",\"sha256\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"format\":\"webp\",\"bytes\":10,\"width\":100,\"height\":50,\"path\":\"media/test.webp\"}],\"cover_media_id\":\"m_test\",\"visibility\":\"listed\",\"sort_order\":0,\"guide_profile\":{\"scene_ids\":[],\"materials\":[],\"substrates\":[],\"excluded_materials\":[],\"excluded_substrates\":[],\"power_source\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null,\"limitations\":[],\"consultation_notes\":[],\"required_requirements\":[],\"sources\":[],\"reviews\":[]},\"purchase_options\":[],\"version\":1,\"updated_at\":\"2026-11-06T00:00:00Z\"}],\"previously_published_routes\":[]}",
+    "valid": false,
+    "fields": [
+      "products.0.applications"
+    ]
+  },
+  {
+    "name": "publish product applications [\"  \"]",
+    "schema": "product.schema.json#/$defs/PublishedProduct",
+    "raw": "{\"id\":\"sample\",\"slug\":\"sample\",\"kind\":\"tool\",\"name\":\"工具\",\"model\":\"TEST\",\"category_id\":\"straight\",\"series\":\"\",\"legacy_series_ids\":[],\"summary\":\"真实用途说明\",\"applications\":[\"  \"],\"features\":[],\"notes\":[],\"scene_ids\":[],\"nail_type\":null,\"fastener_text\":\"\",\"long_nose\":false,\"blower\":false,\"images\":[{\"media_id\":\"m_test\",\"label\":\"图片\",\"description\":\"\"}],\"cover_media_id\":\"m_test\",\"visibility\":\"listed\",\"sort_order\":0,\"guide_profile\":{\"scene_ids\":[],\"materials\":[],\"substrates\":[],\"excluded_materials\":[],\"excluded_substrates\":[],\"power_source\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null,\"limitations\":[],\"consultation_notes\":[],\"required_requirements\":[],\"sources\":[],\"reviews\":[]},\"purchase_options\":[],\"version\":1,\"updated_at\":\"2026-11-06T00:00:00Z\"}",
+    "valid": false,
+    "fields": [
+      "applications"
+    ]
+  },
+  {
+    "name": "draft product applications [\"  \"]",
+    "schema": "product.schema.json#/$defs/ProductDocument",
+    "raw": "{\"id\":\"sample\",\"slug\":\"sample\",\"kind\":\"tool\",\"name\":\"工具\",\"model\":\"TEST\",\"category_id\":\"straight\",\"series\":\"\",\"legacy_series_ids\":[],\"summary\":\"真实用途说明\",\"applications\":[\"  \"],\"features\":[],\"notes\":[],\"scene_ids\":[],\"nail_type\":null,\"fastener_text\":\"\",\"long_nose\":false,\"blower\":false,\"images\":[{\"media_id\":\"m_test\",\"label\":\"图片\",\"description\":\"\"}],\"cover_media_id\":\"m_test\",\"visibility\":\"listed\",\"sort_order\":0,\"guide_profile\":{\"scene_ids\":[],\"materials\":[],\"substrates\":[],\"excluded_materials\":[],\"excluded_substrates\":[],\"power_source\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null,\"limitations\":[],\"consultation_notes\":[],\"required_requirements\":[],\"sources\":[],\"reviews\":[]},\"purchase_options\":[],\"version\":1,\"updated_at\":\"2026-11-06T00:00:00Z\"}",
+    "valid": true,
+    "fields": [],
+    "expected": {
+      "id": "sample",
+      "slug": "sample",
+      "kind": "tool",
+      "name": "工具",
+      "model": "TEST",
+      "category_id": "straight",
+      "series": "",
+      "legacy_series_ids": [],
+      "summary": "真实用途说明",
+      "applications": [
+        "  "
+      ],
+      "features": [],
+      "notes": [],
+      "scene_ids": [],
+      "nail_type": null,
+      "fastener_text": "",
+      "long_nose": false,
+      "blower": false,
+      "images": [
+        {
+          "media_id": "m_test",
+          "label": "图片",
+          "description": ""
+        }
+      ],
+      "cover_media_id": "m_test",
+      "visibility": "listed",
+      "sort_order": 0,
+      "guide_profile": {
+        "scene_ids": [],
+        "materials": [],
+        "substrates": [],
+        "excluded_materials": [],
+        "excluded_substrates": [],
+        "power_source": null,
+        "nail_type": null,
+        "fastener_length_mm": null,
+        "load_bearing": null,
+        "long_nose": null,
+        "blower": null,
+        "limitations": [],
+        "consultation_notes": [],
+        "required_requirements": [],
+        "sources": [],
+        "reviews": []
+      },
+      "purchase_options": [],
+      "version": 1,
+      "updated_at": "2026-11-06T00:00:00Z"
+    }
+  },
+  {
+    "name": "complete snapshot applications [\"  \"]",
+    "schema": "catalog-snapshot.schema.json#/$defs/PublishableSnapshot",
+    "raw": "{\"schema_version\":1,\"release_id\":\"r_test\",\"workspace_revision\":0,\"categories\":[{\"id\":\"straight\",\"name\":\"sample\",\"sort_order\":0,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"steel\",\"name\":\"sample\",\"sort_order\":1,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"staple\",\"name\":\"sample\",\"sort_order\":2,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"pin\",\"name\":\"sample\",\"sort_order\":3,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"coil\",\"name\":\"sample\",\"sort_order\":4,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"remover\",\"name\":\"sample\",\"sort_order\":5,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"insulation\",\"name\":\"sample\",\"sort_order\":6,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"gas\",\"name\":\"sample\",\"sort_order\":7,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"nails\",\"name\":\"sample\",\"sort_order\":8,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"other\",\"name\":\"sample\",\"sort_order\":9,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"}],\"scenes\":[{\"id\":\"home-woodworking\",\"name\":\"home-woodworking\"},{\"id\":\"ceiling-framing\",\"name\":\"ceiling-framing\"},{\"id\":\"packaging-pallets\",\"name\":\"packaging-pallets\"},{\"id\":\"furniture-timber\",\"name\":\"furniture-timber\"},{\"id\":\"panel-fastening\",\"name\":\"panel-fastening\"},{\"id\":\"nail-removal\",\"name\":\"nail-removal\"},{\"id\":\"wall-insulation\",\"name\":\"wall-insulation\"},{\"id\":\"electrical-plumbing\",\"name\":\"electrical-plumbing\"},{\"id\":\"wall-mesh\",\"name\":\"wall-mesh\"},{\"id\":\"upholstery-rattan\",\"name\":\"upholstery-rattan\"}],\"nail_types\":[{\"id\":\"brad\",\"name\":\"brad\"},{\"id\":\"steel-nail\",\"name\":\"steel-nail\"},{\"id\":\"staple\",\"name\":\"staple\"},{\"id\":\"coil-nail\",\"name\":\"coil-nail\"},{\"id\":\"pin\",\"name\":\"pin\"},{\"id\":\"insulation-nail\",\"name\":\"insulation-nail\"},{\"id\":\"gas-nail\",\"name\":\"gas-nail\"}],\"legacy_series\":[],\"products\":[{\"id\":\"sample\",\"slug\":\"sample\",\"kind\":\"tool\",\"name\":\"工具\",\"model\":\"TEST\",\"category_id\":\"straight\",\"series\":\"\",\"legacy_series_ids\":[],\"summary\":\"真实用途说明\",\"applications\":[\"  \"],\"features\":[],\"notes\":[],\"scene_ids\":[],\"nail_type\":null,\"fastener_text\":\"\",\"long_nose\":false,\"blower\":false,\"images\":[{\"media_id\":\"m_test\",\"label\":\"图片\",\"description\":\"\",\"sha256\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"format\":\"webp\",\"bytes\":10,\"width\":100,\"height\":50,\"path\":\"media/test.webp\"}],\"cover_media_id\":\"m_test\",\"visibility\":\"listed\",\"sort_order\":0,\"guide_profile\":{\"scene_ids\":[],\"materials\":[],\"substrates\":[],\"excluded_materials\":[],\"excluded_substrates\":[],\"power_source\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null,\"limitations\":[],\"consultation_notes\":[],\"required_requirements\":[],\"sources\":[],\"reviews\":[]},\"purchase_options\":[],\"version\":1,\"updated_at\":\"2026-11-06T00:00:00Z\"}],\"previously_published_routes\":[]}",
+    "valid": false,
+    "fields": [
+      "products.0.applications"
+    ]
+  },
+  {
+    "name": "publish product applications [\"\",\"　\",\"钉合\"]",
+    "schema": "product.schema.json#/$defs/PublishedProduct",
+    "raw": "{\"id\":\"sample\",\"slug\":\"sample\",\"kind\":\"tool\",\"name\":\"工具\",\"model\":\"TEST\",\"category_id\":\"straight\",\"series\":\"\",\"legacy_series_ids\":[],\"summary\":\"真实用途说明\",\"applications\":[\"\",\"　\",\"钉合\"],\"features\":[],\"notes\":[],\"scene_ids\":[],\"nail_type\":null,\"fastener_text\":\"\",\"long_nose\":false,\"blower\":false,\"images\":[{\"media_id\":\"m_test\",\"label\":\"图片\",\"description\":\"\"}],\"cover_media_id\":\"m_test\",\"visibility\":\"listed\",\"sort_order\":0,\"guide_profile\":{\"scene_ids\":[],\"materials\":[],\"substrates\":[],\"excluded_materials\":[],\"excluded_substrates\":[],\"power_source\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null,\"limitations\":[],\"consultation_notes\":[],\"required_requirements\":[],\"sources\":[],\"reviews\":[]},\"purchase_options\":[],\"version\":1,\"updated_at\":\"2026-11-06T00:00:00Z\"}",
+    "valid": true,
+    "fields": [
+      "applications"
+    ],
+    "expected": {
+      "id": "sample",
+      "slug": "sample",
+      "kind": "tool",
+      "name": "工具",
+      "model": "TEST",
+      "category_id": "straight",
+      "series": "",
+      "legacy_series_ids": [],
+      "summary": "真实用途说明",
+      "applications": [
+        "",
+        "　",
+        "钉合"
+      ],
+      "features": [],
+      "notes": [],
+      "scene_ids": [],
+      "nail_type": null,
+      "fastener_text": "",
+      "long_nose": false,
+      "blower": false,
+      "images": [
+        {
+          "media_id": "m_test",
+          "label": "图片",
+          "description": ""
+        }
+      ],
+      "cover_media_id": "m_test",
+      "visibility": "listed",
+      "sort_order": 0,
+      "guide_profile": {
+        "scene_ids": [],
+        "materials": [],
+        "substrates": [],
+        "excluded_materials": [],
+        "excluded_substrates": [],
+        "power_source": null,
+        "nail_type": null,
+        "fastener_length_mm": null,
+        "load_bearing": null,
+        "long_nose": null,
+        "blower": null,
+        "limitations": [],
+        "consultation_notes": [],
+        "required_requirements": [],
+        "sources": [],
+        "reviews": []
+      },
+      "purchase_options": [],
+      "version": 1,
+      "updated_at": "2026-11-06T00:00:00Z"
+    }
+  },
+  {
+    "name": "draft product applications [\"\",\"　\",\"钉合\"]",
+    "schema": "product.schema.json#/$defs/ProductDocument",
+    "raw": "{\"id\":\"sample\",\"slug\":\"sample\",\"kind\":\"tool\",\"name\":\"工具\",\"model\":\"TEST\",\"category_id\":\"straight\",\"series\":\"\",\"legacy_series_ids\":[],\"summary\":\"真实用途说明\",\"applications\":[\"\",\"　\",\"钉合\"],\"features\":[],\"notes\":[],\"scene_ids\":[],\"nail_type\":null,\"fastener_text\":\"\",\"long_nose\":false,\"blower\":false,\"images\":[{\"media_id\":\"m_test\",\"label\":\"图片\",\"description\":\"\"}],\"cover_media_id\":\"m_test\",\"visibility\":\"listed\",\"sort_order\":0,\"guide_profile\":{\"scene_ids\":[],\"materials\":[],\"substrates\":[],\"excluded_materials\":[],\"excluded_substrates\":[],\"power_source\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null,\"limitations\":[],\"consultation_notes\":[],\"required_requirements\":[],\"sources\":[],\"reviews\":[]},\"purchase_options\":[],\"version\":1,\"updated_at\":\"2026-11-06T00:00:00Z\"}",
+    "valid": true,
+    "fields": [],
+    "expected": {
+      "id": "sample",
+      "slug": "sample",
+      "kind": "tool",
+      "name": "工具",
+      "model": "TEST",
+      "category_id": "straight",
+      "series": "",
+      "legacy_series_ids": [],
+      "summary": "真实用途说明",
+      "applications": [
+        "",
+        "　",
+        "钉合"
+      ],
+      "features": [],
+      "notes": [],
+      "scene_ids": [],
+      "nail_type": null,
+      "fastener_text": "",
+      "long_nose": false,
+      "blower": false,
+      "images": [
+        {
+          "media_id": "m_test",
+          "label": "图片",
+          "description": ""
+        }
+      ],
+      "cover_media_id": "m_test",
+      "visibility": "listed",
+      "sort_order": 0,
+      "guide_profile": {
+        "scene_ids": [],
+        "materials": [],
+        "substrates": [],
+        "excluded_materials": [],
+        "excluded_substrates": [],
+        "power_source": null,
+        "nail_type": null,
+        "fastener_length_mm": null,
+        "load_bearing": null,
+        "long_nose": null,
+        "blower": null,
+        "limitations": [],
+        "consultation_notes": [],
+        "required_requirements": [],
+        "sources": [],
+        "reviews": []
+      },
+      "purchase_options": [],
+      "version": 1,
+      "updated_at": "2026-11-06T00:00:00Z"
+    }
+  },
+  {
+    "name": "complete snapshot applications [\"\",\"　\",\"钉合\"]",
+    "schema": "catalog-snapshot.schema.json#/$defs/PublishableSnapshot",
+    "raw": "{\"schema_version\":1,\"release_id\":\"r_test\",\"workspace_revision\":0,\"categories\":[{\"id\":\"straight\",\"name\":\"sample\",\"sort_order\":0,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"steel\",\"name\":\"sample\",\"sort_order\":1,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"staple\",\"name\":\"sample\",\"sort_order\":2,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"pin\",\"name\":\"sample\",\"sort_order\":3,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"coil\",\"name\":\"sample\",\"sort_order\":4,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"remover\",\"name\":\"sample\",\"sort_order\":5,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"insulation\",\"name\":\"sample\",\"sort_order\":6,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"gas\",\"name\":\"sample\",\"sort_order\":7,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"nails\",\"name\":\"sample\",\"sort_order\":8,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"other\",\"name\":\"sample\",\"sort_order\":9,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"}],\"scenes\":[{\"id\":\"home-woodworking\",\"name\":\"home-woodworking\"},{\"id\":\"ceiling-framing\",\"name\":\"ceiling-framing\"},{\"id\":\"packaging-pallets\",\"name\":\"packaging-pallets\"},{\"id\":\"furniture-timber\",\"name\":\"furniture-timber\"},{\"id\":\"panel-fastening\",\"name\":\"panel-fastening\"},{\"id\":\"nail-removal\",\"name\":\"nail-removal\"},{\"id\":\"wall-insulation\",\"name\":\"wall-insulation\"},{\"id\":\"electrical-plumbing\",\"name\":\"electrical-plumbing\"},{\"id\":\"wall-mesh\",\"name\":\"wall-mesh\"},{\"id\":\"upholstery-rattan\",\"name\":\"upholstery-rattan\"}],\"nail_types\":[{\"id\":\"brad\",\"name\":\"brad\"},{\"id\":\"steel-nail\",\"name\":\"steel-nail\"},{\"id\":\"staple\",\"name\":\"staple\"},{\"id\":\"coil-nail\",\"name\":\"coil-nail\"},{\"id\":\"pin\",\"name\":\"pin\"},{\"id\":\"insulation-nail\",\"name\":\"insulation-nail\"},{\"id\":\"gas-nail\",\"name\":\"gas-nail\"}],\"legacy_series\":[],\"products\":[{\"id\":\"sample\",\"slug\":\"sample\",\"kind\":\"tool\",\"name\":\"工具\",\"model\":\"TEST\",\"category_id\":\"straight\",\"series\":\"\",\"legacy_series_ids\":[],\"summary\":\"真实用途说明\",\"applications\":[\"\",\"　\",\"钉合\"],\"features\":[],\"notes\":[],\"scene_ids\":[],\"nail_type\":null,\"fastener_text\":\"\",\"long_nose\":false,\"blower\":false,\"images\":[{\"media_id\":\"m_test\",\"label\":\"图片\",\"description\":\"\",\"sha256\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"format\":\"webp\",\"bytes\":10,\"width\":100,\"height\":50,\"path\":\"media/test.webp\"}],\"cover_media_id\":\"m_test\",\"visibility\":\"listed\",\"sort_order\":0,\"guide_profile\":{\"scene_ids\":[],\"materials\":[],\"substrates\":[],\"excluded_materials\":[],\"excluded_substrates\":[],\"power_source\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null,\"limitations\":[],\"consultation_notes\":[],\"required_requirements\":[],\"sources\":[],\"reviews\":[]},\"purchase_options\":[],\"version\":1,\"updated_at\":\"2026-11-06T00:00:00Z\"}],\"previously_published_routes\":[]}",
+    "valid": true,
+    "fields": [
+      "products.0.applications"
+    ],
+    "expected": {
+      "schema_version": 1,
+      "release_id": "r_test",
+      "workspace_revision": 0,
+      "categories": [
+        {
+          "id": "straight",
+          "name": "sample",
+          "sort_order": 0,
+          "lines": "",
+          "hint": "",
+          "scene": "",
+          "use": "",
+          "nail": null,
+          "scene_ids": [],
+          "color": ""
+        },
+        {
+          "id": "steel",
+          "name": "sample",
+          "sort_order": 1,
+          "lines": "",
+          "hint": "",
+          "scene": "",
+          "use": "",
+          "nail": null,
+          "scene_ids": [],
+          "color": ""
+        },
+        {
+          "id": "staple",
+          "name": "sample",
+          "sort_order": 2,
+          "lines": "",
+          "hint": "",
+          "scene": "",
+          "use": "",
+          "nail": null,
+          "scene_ids": [],
+          "color": ""
+        },
+        {
+          "id": "pin",
+          "name": "sample",
+          "sort_order": 3,
+          "lines": "",
+          "hint": "",
+          "scene": "",
+          "use": "",
+          "nail": null,
+          "scene_ids": [],
+          "color": ""
+        },
+        {
+          "id": "coil",
+          "name": "sample",
+          "sort_order": 4,
+          "lines": "",
+          "hint": "",
+          "scene": "",
+          "use": "",
+          "nail": null,
+          "scene_ids": [],
+          "color": ""
+        },
+        {
+          "id": "remover",
+          "name": "sample",
+          "sort_order": 5,
+          "lines": "",
+          "hint": "",
+          "scene": "",
+          "use": "",
+          "nail": null,
+          "scene_ids": [],
+          "color": ""
+        },
+        {
+          "id": "insulation",
+          "name": "sample",
+          "sort_order": 6,
+          "lines": "",
+          "hint": "",
+          "scene": "",
+          "use": "",
+          "nail": null,
+          "scene_ids": [],
+          "color": ""
+        },
+        {
+          "id": "gas",
+          "name": "sample",
+          "sort_order": 7,
+          "lines": "",
+          "hint": "",
+          "scene": "",
+          "use": "",
+          "nail": null,
+          "scene_ids": [],
+          "color": ""
+        },
+        {
+          "id": "nails",
+          "name": "sample",
+          "sort_order": 8,
+          "lines": "",
+          "hint": "",
+          "scene": "",
+          "use": "",
+          "nail": null,
+          "scene_ids": [],
+          "color": ""
+        },
+        {
+          "id": "other",
+          "name": "sample",
+          "sort_order": 9,
+          "lines": "",
+          "hint": "",
+          "scene": "",
+          "use": "",
+          "nail": null,
+          "scene_ids": [],
+          "color": ""
+        }
+      ],
+      "scenes": [
+        {
+          "id": "home-woodworking",
+          "name": "home-woodworking"
+        },
+        {
+          "id": "ceiling-framing",
+          "name": "ceiling-framing"
+        },
+        {
+          "id": "packaging-pallets",
+          "name": "packaging-pallets"
+        },
+        {
+          "id": "furniture-timber",
+          "name": "furniture-timber"
+        },
+        {
+          "id": "panel-fastening",
+          "name": "panel-fastening"
+        },
+        {
+          "id": "nail-removal",
+          "name": "nail-removal"
+        },
+        {
+          "id": "wall-insulation",
+          "name": "wall-insulation"
+        },
+        {
+          "id": "electrical-plumbing",
+          "name": "electrical-plumbing"
+        },
+        {
+          "id": "wall-mesh",
+          "name": "wall-mesh"
+        },
+        {
+          "id": "upholstery-rattan",
+          "name": "upholstery-rattan"
+        }
+      ],
+      "nail_types": [
+        {
+          "id": "brad",
+          "name": "brad"
+        },
+        {
+          "id": "steel-nail",
+          "name": "steel-nail"
+        },
+        {
+          "id": "staple",
+          "name": "staple"
+        },
+        {
+          "id": "coil-nail",
+          "name": "coil-nail"
+        },
+        {
+          "id": "pin",
+          "name": "pin"
+        },
+        {
+          "id": "insulation-nail",
+          "name": "insulation-nail"
+        },
+        {
+          "id": "gas-nail",
+          "name": "gas-nail"
+        }
+      ],
+      "legacy_series": [],
+      "products": [
+        {
+          "id": "sample",
+          "slug": "sample",
+          "kind": "tool",
+          "name": "工具",
+          "model": "TEST",
+          "category_id": "straight",
+          "series": "",
+          "legacy_series_ids": [],
+          "summary": "真实用途说明",
+          "applications": [
+            "",
+            "　",
+            "钉合"
+          ],
+          "features": [],
+          "notes": [],
+          "scene_ids": [],
+          "nail_type": null,
+          "fastener_text": "",
+          "long_nose": false,
+          "blower": false,
+          "images": [
+            {
+              "media_id": "m_test",
+              "label": "图片",
+              "description": "",
+              "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "format": "webp",
+              "bytes": 10,
+              "width": 100,
+              "height": 50,
+              "path": "media/test.webp"
+            }
+          ],
+          "cover_media_id": "m_test",
+          "visibility": "listed",
+          "sort_order": 0,
+          "guide_profile": {
+            "scene_ids": [],
+            "materials": [],
+            "substrates": [],
+            "excluded_materials": [],
+            "excluded_substrates": [],
+            "power_source": null,
+            "nail_type": null,
+            "fastener_length_mm": null,
+            "load_bearing": null,
+            "long_nose": null,
+            "blower": null,
+            "limitations": [],
+            "consultation_notes": [],
+            "required_requirements": [],
+            "sources": [],
+            "reviews": []
+          },
+          "purchase_options": [],
+          "version": 1,
+          "updated_at": "2026-11-06T00:00:00Z"
+        }
+      ],
+      "previously_published_routes": []
+    }
+  },
+  {
+    "name": "MCP search uses query",
+    "schema": "mcp-tools.schema.json#/$defs/MCPSearchProductsInput",
+    "raw": "{\"query\":\"F30M\"}",
+    "valid": true,
+    "fields": [],
+    "expected": {
+      "query": "F30M"
+    }
+  },
+  {
+    "name": "MCP search rejects old q",
+    "schema": "mcp-tools.schema.json#/$defs/MCPSearchProductsInput",
+    "raw": "{\"q\":\"F30M\"}",
+    "valid": false,
+    "fields": [
+      "q"
+    ]
+  },
+  {
+    "name": "HTTP search keeps q",
+    "schema": "admin.schema.json#/$defs/AdminProductQuery",
+    "raw": "{\"q\":\"F30M\"}",
+    "valid": true,
+    "fields": [],
+    "expected": {
+      "q": "F30M"
+    }
+  },
+  {
+    "name": "HTTP search rejects MCP query",
+    "schema": "admin.schema.json#/$defs/AdminProductQuery",
+    "raw": "{\"query\":\"F30M\"}",
+    "valid": false,
+    "fields": [
+      "query"
+    ]
+  },
+  {
+    "name": "complete linked F30 snapshot through CatalogSnapshot",
+    "schema": "catalog-snapshot.schema.json#/$defs/CatalogSnapshot",
+    "raw": "{\"schema_version\":1,\"release_id\":\"r_test\",\"workspace_revision\":0,\"categories\":[{\"id\":\"straight\",\"name\":\"sample\",\"sort_order\":0,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"steel\",\"name\":\"sample\",\"sort_order\":1,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"staple\",\"name\":\"sample\",\"sort_order\":2,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"pin\",\"name\":\"sample\",\"sort_order\":3,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"coil\",\"name\":\"sample\",\"sort_order\":4,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"remover\",\"name\":\"sample\",\"sort_order\":5,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"insulation\",\"name\":\"sample\",\"sort_order\":6,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"gas\",\"name\":\"sample\",\"sort_order\":7,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"nails\",\"name\":\"sample\",\"sort_order\":8,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"other\",\"name\":\"sample\",\"sort_order\":9,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"}],\"scenes\":[{\"id\":\"home-woodworking\",\"name\":\"home-woodworking\"},{\"id\":\"ceiling-framing\",\"name\":\"ceiling-framing\"},{\"id\":\"packaging-pallets\",\"name\":\"packaging-pallets\"},{\"id\":\"furniture-timber\",\"name\":\"furniture-timber\"},{\"id\":\"panel-fastening\",\"name\":\"panel-fastening\"},{\"id\":\"nail-removal\",\"name\":\"nail-removal\"},{\"id\":\"wall-insulation\",\"name\":\"wall-insulation\"},{\"id\":\"electrical-plumbing\",\"name\":\"electrical-plumbing\"},{\"id\":\"wall-mesh\",\"name\":\"wall-mesh\"},{\"id\":\"upholstery-rattan\",\"name\":\"upholstery-rattan\"}],\"nail_types\":[{\"id\":\"brad\",\"name\":\"brad\"},{\"id\":\"steel-nail\",\"name\":\"steel-nail\"},{\"id\":\"staple\",\"name\":\"staple\"},{\"id\":\"coil-nail\",\"name\":\"coil-nail\"},{\"id\":\"pin\",\"name\":\"pin\"},{\"id\":\"insulation-nail\",\"name\":\"insulation-nail\"},{\"id\":\"gas-nail\",\"name\":\"gas-nail\"}],\"legacy_series\":[{\"id\":\"s_f30\",\"slug\":\"f30\",\"name\":\"F30 系列\",\"product_ids\":[\"sample\"]}],\"products\":[{\"id\":\"sample\",\"slug\":\"f30m\",\"kind\":\"tool\",\"name\":\"工具\",\"model\":\"F30M\",\"category_id\":\"straight\",\"series\":\"\",\"legacy_series_ids\":[\"s_f30\"],\"summary\":\"真实用途说明\",\"applications\":[\"\",\"　\",\"钉合\"],\"features\":[],\"notes\":[],\"scene_ids\":[],\"nail_type\":null,\"fastener_text\":\"\",\"long_nose\":false,\"blower\":false,\"images\":[{\"media_id\":\"m_test\",\"label\":\"图片\",\"description\":\"\",\"sha256\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"format\":\"webp\",\"bytes\":10,\"width\":100,\"height\":50,\"path\":\"media/test.webp\"}],\"cover_media_id\":\"m_test\",\"visibility\":\"listed\",\"sort_order\":0,\"guide_profile\":{\"scene_ids\":[],\"materials\":[],\"substrates\":[],\"excluded_materials\":[],\"excluded_substrates\":[],\"power_source\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null,\"limitations\":[],\"consultation_notes\":[],\"required_requirements\":[],\"sources\":[],\"reviews\":[]},\"purchase_options\":[],\"version\":1,\"updated_at\":\"2026-11-06T00:00:00Z\"}],\"previously_published_routes\":[]}",
+    "valid": true,
+    "fields": [],
+    "expected": {
+      "schema_version": 1,
+      "release_id": "r_test",
+      "workspace_revision": 0,
+      "categories": [
+        {
+          "id": "straight",
+          "name": "sample",
+          "sort_order": 0,
+          "lines": "",
+          "hint": "",
+          "scene": "",
+          "use": "",
+          "nail": null,
+          "scene_ids": [],
+          "color": ""
+        },
+        {
+          "id": "steel",
+          "name": "sample",
+          "sort_order": 1,
+          "lines": "",
+          "hint": "",
+          "scene": "",
+          "use": "",
+          "nail": null,
+          "scene_ids": [],
+          "color": ""
+        },
+        {
+          "id": "staple",
+          "name": "sample",
+          "sort_order": 2,
+          "lines": "",
+          "hint": "",
+          "scene": "",
+          "use": "",
+          "nail": null,
+          "scene_ids": [],
+          "color": ""
+        },
+        {
+          "id": "pin",
+          "name": "sample",
+          "sort_order": 3,
+          "lines": "",
+          "hint": "",
+          "scene": "",
+          "use": "",
+          "nail": null,
+          "scene_ids": [],
+          "color": ""
+        },
+        {
+          "id": "coil",
+          "name": "sample",
+          "sort_order": 4,
+          "lines": "",
+          "hint": "",
+          "scene": "",
+          "use": "",
+          "nail": null,
+          "scene_ids": [],
+          "color": ""
+        },
+        {
+          "id": "remover",
+          "name": "sample",
+          "sort_order": 5,
+          "lines": "",
+          "hint": "",
+          "scene": "",
+          "use": "",
+          "nail": null,
+          "scene_ids": [],
+          "color": ""
+        },
+        {
+          "id": "insulation",
+          "name": "sample",
+          "sort_order": 6,
+          "lines": "",
+          "hint": "",
+          "scene": "",
+          "use": "",
+          "nail": null,
+          "scene_ids": [],
+          "color": ""
+        },
+        {
+          "id": "gas",
+          "name": "sample",
+          "sort_order": 7,
+          "lines": "",
+          "hint": "",
+          "scene": "",
+          "use": "",
+          "nail": null,
+          "scene_ids": [],
+          "color": ""
+        },
+        {
+          "id": "nails",
+          "name": "sample",
+          "sort_order": 8,
+          "lines": "",
+          "hint": "",
+          "scene": "",
+          "use": "",
+          "nail": null,
+          "scene_ids": [],
+          "color": ""
+        },
+        {
+          "id": "other",
+          "name": "sample",
+          "sort_order": 9,
+          "lines": "",
+          "hint": "",
+          "scene": "",
+          "use": "",
+          "nail": null,
+          "scene_ids": [],
+          "color": ""
+        }
+      ],
+      "scenes": [
+        {
+          "id": "home-woodworking",
+          "name": "home-woodworking"
+        },
+        {
+          "id": "ceiling-framing",
+          "name": "ceiling-framing"
+        },
+        {
+          "id": "packaging-pallets",
+          "name": "packaging-pallets"
+        },
+        {
+          "id": "furniture-timber",
+          "name": "furniture-timber"
+        },
+        {
+          "id": "panel-fastening",
+          "name": "panel-fastening"
+        },
+        {
+          "id": "nail-removal",
+          "name": "nail-removal"
+        },
+        {
+          "id": "wall-insulation",
+          "name": "wall-insulation"
+        },
+        {
+          "id": "electrical-plumbing",
+          "name": "electrical-plumbing"
+        },
+        {
+          "id": "wall-mesh",
+          "name": "wall-mesh"
+        },
+        {
+          "id": "upholstery-rattan",
+          "name": "upholstery-rattan"
+        }
+      ],
+      "nail_types": [
+        {
+          "id": "brad",
+          "name": "brad"
+        },
+        {
+          "id": "steel-nail",
+          "name": "steel-nail"
+        },
+        {
+          "id": "staple",
+          "name": "staple"
+        },
+        {
+          "id": "coil-nail",
+          "name": "coil-nail"
+        },
+        {
+          "id": "pin",
+          "name": "pin"
+        },
+        {
+          "id": "insulation-nail",
+          "name": "insulation-nail"
+        },
+        {
+          "id": "gas-nail",
+          "name": "gas-nail"
+        }
+      ],
+      "legacy_series": [
+        {
+          "id": "s_f30",
+          "slug": "f30",
+          "name": "F30 系列",
+          "product_ids": [
+            "sample"
+          ]
+        }
+      ],
+      "products": [
+        {
+          "id": "sample",
+          "slug": "f30m",
+          "kind": "tool",
+          "name": "工具",
+          "model": "F30M",
+          "category_id": "straight",
+          "series": "",
+          "legacy_series_ids": [
+            "s_f30"
+          ],
+          "summary": "真实用途说明",
+          "applications": [
+            "",
+            "　",
+            "钉合"
+          ],
+          "features": [],
+          "notes": [],
+          "scene_ids": [],
+          "nail_type": null,
+          "fastener_text": "",
+          "long_nose": false,
+          "blower": false,
+          "images": [
+            {
+              "media_id": "m_test",
+              "label": "图片",
+              "description": "",
+              "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "format": "webp",
+              "bytes": 10,
+              "width": 100,
+              "height": 50,
+              "path": "media/test.webp"
+            }
+          ],
+          "cover_media_id": "m_test",
+          "visibility": "listed",
+          "sort_order": 0,
+          "guide_profile": {
+            "scene_ids": [],
+            "materials": [],
+            "substrates": [],
+            "excluded_materials": [],
+            "excluded_substrates": [],
+            "power_source": null,
+            "nail_type": null,
+            "fastener_length_mm": null,
+            "load_bearing": null,
+            "long_nose": null,
+            "blower": null,
+            "limitations": [],
+            "consultation_notes": [],
+            "required_requirements": [],
+            "sources": [],
+            "reviews": []
+          },
+          "purchase_options": [],
+          "version": 1,
+          "updated_at": "2026-11-06T00:00:00Z"
+        }
+      ],
+      "previously_published_routes": []
+    }
+  },
+  {
+    "name": "complete linked F30 snapshot through PublishableSnapshot",
+    "schema": "catalog-snapshot.schema.json#/$defs/PublishableSnapshot",
+    "raw": "{\"schema_version\":1,\"release_id\":\"r_test\",\"workspace_revision\":0,\"categories\":[{\"id\":\"straight\",\"name\":\"sample\",\"sort_order\":0,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"steel\",\"name\":\"sample\",\"sort_order\":1,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"staple\",\"name\":\"sample\",\"sort_order\":2,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"pin\",\"name\":\"sample\",\"sort_order\":3,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"coil\",\"name\":\"sample\",\"sort_order\":4,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"remover\",\"name\":\"sample\",\"sort_order\":5,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"insulation\",\"name\":\"sample\",\"sort_order\":6,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"gas\",\"name\":\"sample\",\"sort_order\":7,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"nails\",\"name\":\"sample\",\"sort_order\":8,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"other\",\"name\":\"sample\",\"sort_order\":9,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"}],\"scenes\":[{\"id\":\"home-woodworking\",\"name\":\"home-woodworking\"},{\"id\":\"ceiling-framing\",\"name\":\"ceiling-framing\"},{\"id\":\"packaging-pallets\",\"name\":\"packaging-pallets\"},{\"id\":\"furniture-timber\",\"name\":\"furniture-timber\"},{\"id\":\"panel-fastening\",\"name\":\"panel-fastening\"},{\"id\":\"nail-removal\",\"name\":\"nail-removal\"},{\"id\":\"wall-insulation\",\"name\":\"wall-insulation\"},{\"id\":\"electrical-plumbing\",\"name\":\"electrical-plumbing\"},{\"id\":\"wall-mesh\",\"name\":\"wall-mesh\"},{\"id\":\"upholstery-rattan\",\"name\":\"upholstery-rattan\"}],\"nail_types\":[{\"id\":\"brad\",\"name\":\"brad\"},{\"id\":\"steel-nail\",\"name\":\"steel-nail\"},{\"id\":\"staple\",\"name\":\"staple\"},{\"id\":\"coil-nail\",\"name\":\"coil-nail\"},{\"id\":\"pin\",\"name\":\"pin\"},{\"id\":\"insulation-nail\",\"name\":\"insulation-nail\"},{\"id\":\"gas-nail\",\"name\":\"gas-nail\"}],\"legacy_series\":[{\"id\":\"s_f30\",\"slug\":\"f30\",\"name\":\"F30 系列\",\"product_ids\":[\"sample\"]}],\"products\":[{\"id\":\"sample\",\"slug\":\"f30m\",\"kind\":\"tool\",\"name\":\"工具\",\"model\":\"F30M\",\"category_id\":\"straight\",\"series\":\"\",\"legacy_series_ids\":[\"s_f30\"],\"summary\":\"真实用途说明\",\"applications\":[\"\",\"　\",\"钉合\"],\"features\":[],\"notes\":[],\"scene_ids\":[],\"nail_type\":null,\"fastener_text\":\"\",\"long_nose\":false,\"blower\":false,\"images\":[{\"media_id\":\"m_test\",\"label\":\"图片\",\"description\":\"\",\"sha256\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"format\":\"webp\",\"bytes\":10,\"width\":100,\"height\":50,\"path\":\"media/test.webp\"}],\"cover_media_id\":\"m_test\",\"visibility\":\"listed\",\"sort_order\":0,\"guide_profile\":{\"scene_ids\":[],\"materials\":[],\"substrates\":[],\"excluded_materials\":[],\"excluded_substrates\":[],\"power_source\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null,\"limitations\":[],\"consultation_notes\":[],\"required_requirements\":[],\"sources\":[],\"reviews\":[]},\"purchase_options\":[],\"version\":1,\"updated_at\":\"2026-11-06T00:00:00Z\"}],\"previously_published_routes\":[]}",
+    "valid": true,
+    "fields": [],
+    "expected": {
+      "schema_version": 1,
+      "release_id": "r_test",
+      "workspace_revision": 0,
+      "categories": [
+        {
+          "id": "straight",
+          "name": "sample",
+          "sort_order": 0,
+          "lines": "",
+          "hint": "",
+          "scene": "",
+          "use": "",
+          "nail": null,
+          "scene_ids": [],
+          "color": ""
+        },
+        {
+          "id": "steel",
+          "name": "sample",
+          "sort_order": 1,
+          "lines": "",
+          "hint": "",
+          "scene": "",
+          "use": "",
+          "nail": null,
+          "scene_ids": [],
+          "color": ""
+        },
+        {
+          "id": "staple",
+          "name": "sample",
+          "sort_order": 2,
+          "lines": "",
+          "hint": "",
+          "scene": "",
+          "use": "",
+          "nail": null,
+          "scene_ids": [],
+          "color": ""
+        },
+        {
+          "id": "pin",
+          "name": "sample",
+          "sort_order": 3,
+          "lines": "",
+          "hint": "",
+          "scene": "",
+          "use": "",
+          "nail": null,
+          "scene_ids": [],
+          "color": ""
+        },
+        {
+          "id": "coil",
+          "name": "sample",
+          "sort_order": 4,
+          "lines": "",
+          "hint": "",
+          "scene": "",
+          "use": "",
+          "nail": null,
+          "scene_ids": [],
+          "color": ""
+        },
+        {
+          "id": "remover",
+          "name": "sample",
+          "sort_order": 5,
+          "lines": "",
+          "hint": "",
+          "scene": "",
+          "use": "",
+          "nail": null,
+          "scene_ids": [],
+          "color": ""
+        },
+        {
+          "id": "insulation",
+          "name": "sample",
+          "sort_order": 6,
+          "lines": "",
+          "hint": "",
+          "scene": "",
+          "use": "",
+          "nail": null,
+          "scene_ids": [],
+          "color": ""
+        },
+        {
+          "id": "gas",
+          "name": "sample",
+          "sort_order": 7,
+          "lines": "",
+          "hint": "",
+          "scene": "",
+          "use": "",
+          "nail": null,
+          "scene_ids": [],
+          "color": ""
+        },
+        {
+          "id": "nails",
+          "name": "sample",
+          "sort_order": 8,
+          "lines": "",
+          "hint": "",
+          "scene": "",
+          "use": "",
+          "nail": null,
+          "scene_ids": [],
+          "color": ""
+        },
+        {
+          "id": "other",
+          "name": "sample",
+          "sort_order": 9,
+          "lines": "",
+          "hint": "",
+          "scene": "",
+          "use": "",
+          "nail": null,
+          "scene_ids": [],
+          "color": ""
+        }
+      ],
+      "scenes": [
+        {
+          "id": "home-woodworking",
+          "name": "home-woodworking"
+        },
+        {
+          "id": "ceiling-framing",
+          "name": "ceiling-framing"
+        },
+        {
+          "id": "packaging-pallets",
+          "name": "packaging-pallets"
+        },
+        {
+          "id": "furniture-timber",
+          "name": "furniture-timber"
+        },
+        {
+          "id": "panel-fastening",
+          "name": "panel-fastening"
+        },
+        {
+          "id": "nail-removal",
+          "name": "nail-removal"
+        },
+        {
+          "id": "wall-insulation",
+          "name": "wall-insulation"
+        },
+        {
+          "id": "electrical-plumbing",
+          "name": "electrical-plumbing"
+        },
+        {
+          "id": "wall-mesh",
+          "name": "wall-mesh"
+        },
+        {
+          "id": "upholstery-rattan",
+          "name": "upholstery-rattan"
+        }
+      ],
+      "nail_types": [
+        {
+          "id": "brad",
+          "name": "brad"
+        },
+        {
+          "id": "steel-nail",
+          "name": "steel-nail"
+        },
+        {
+          "id": "staple",
+          "name": "staple"
+        },
+        {
+          "id": "coil-nail",
+          "name": "coil-nail"
+        },
+        {
+          "id": "pin",
+          "name": "pin"
+        },
+        {
+          "id": "insulation-nail",
+          "name": "insulation-nail"
+        },
+        {
+          "id": "gas-nail",
+          "name": "gas-nail"
+        }
+      ],
+      "legacy_series": [
+        {
+          "id": "s_f30",
+          "slug": "f30",
+          "name": "F30 系列",
+          "product_ids": [
+            "sample"
+          ]
+        }
+      ],
+      "products": [
+        {
+          "id": "sample",
+          "slug": "f30m",
+          "kind": "tool",
+          "name": "工具",
+          "model": "F30M",
+          "category_id": "straight",
+          "series": "",
+          "legacy_series_ids": [
+            "s_f30"
+          ],
+          "summary": "真实用途说明",
+          "applications": [
+            "",
+            "　",
+            "钉合"
+          ],
+          "features": [],
+          "notes": [],
+          "scene_ids": [],
+          "nail_type": null,
+          "fastener_text": "",
+          "long_nose": false,
+          "blower": false,
+          "images": [
+            {
+              "media_id": "m_test",
+              "label": "图片",
+              "description": "",
+              "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "format": "webp",
+              "bytes": 10,
+              "width": 100,
+              "height": 50,
+              "path": "media/test.webp"
+            }
+          ],
+          "cover_media_id": "m_test",
+          "visibility": "listed",
+          "sort_order": 0,
+          "guide_profile": {
+            "scene_ids": [],
+            "materials": [],
+            "substrates": [],
+            "excluded_materials": [],
+            "excluded_substrates": [],
+            "power_source": null,
+            "nail_type": null,
+            "fastener_length_mm": null,
+            "load_bearing": null,
+            "long_nose": null,
+            "blower": null,
+            "limitations": [],
+            "consultation_notes": [],
+            "required_requirements": [],
+            "sources": [],
+            "reviews": []
+          },
+          "purchase_options": [],
+          "version": 1,
+          "updated_at": "2026-11-06T00:00:00Z"
+        }
+      ],
+      "previously_published_routes": []
+    }
+  },
+  {
+    "name": "F30 product cannot take series slug through CatalogSnapshot",
+    "schema": "catalog-snapshot.schema.json#/$defs/CatalogSnapshot",
+    "raw": "{\"schema_version\":1,\"release_id\":\"r_test\",\"workspace_revision\":0,\"categories\":[{\"id\":\"straight\",\"name\":\"sample\",\"sort_order\":0,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"steel\",\"name\":\"sample\",\"sort_order\":1,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"staple\",\"name\":\"sample\",\"sort_order\":2,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"pin\",\"name\":\"sample\",\"sort_order\":3,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"coil\",\"name\":\"sample\",\"sort_order\":4,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"remover\",\"name\":\"sample\",\"sort_order\":5,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"insulation\",\"name\":\"sample\",\"sort_order\":6,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"gas\",\"name\":\"sample\",\"sort_order\":7,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"nails\",\"name\":\"sample\",\"sort_order\":8,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"other\",\"name\":\"sample\",\"sort_order\":9,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"}],\"scenes\":[{\"id\":\"home-woodworking\",\"name\":\"home-woodworking\"},{\"id\":\"ceiling-framing\",\"name\":\"ceiling-framing\"},{\"id\":\"packaging-pallets\",\"name\":\"packaging-pallets\"},{\"id\":\"furniture-timber\",\"name\":\"furniture-timber\"},{\"id\":\"panel-fastening\",\"name\":\"panel-fastening\"},{\"id\":\"nail-removal\",\"name\":\"nail-removal\"},{\"id\":\"wall-insulation\",\"name\":\"wall-insulation\"},{\"id\":\"electrical-plumbing\",\"name\":\"electrical-plumbing\"},{\"id\":\"wall-mesh\",\"name\":\"wall-mesh\"},{\"id\":\"upholstery-rattan\",\"name\":\"upholstery-rattan\"}],\"nail_types\":[{\"id\":\"brad\",\"name\":\"brad\"},{\"id\":\"steel-nail\",\"name\":\"steel-nail\"},{\"id\":\"staple\",\"name\":\"staple\"},{\"id\":\"coil-nail\",\"name\":\"coil-nail\"},{\"id\":\"pin\",\"name\":\"pin\"},{\"id\":\"insulation-nail\",\"name\":\"insulation-nail\"},{\"id\":\"gas-nail\",\"name\":\"gas-nail\"}],\"legacy_series\":[{\"id\":\"s_f30\",\"slug\":\"f30\",\"name\":\"F30 系列\",\"product_ids\":[\"sample\"]}],\"products\":[{\"id\":\"sample\",\"slug\":\"f30\",\"kind\":\"tool\",\"name\":\"工具\",\"model\":\"F30M\",\"category_id\":\"straight\",\"series\":\"\",\"legacy_series_ids\":[\"s_f30\"],\"summary\":\"真实用途说明\",\"applications\":[\"\",\"　\",\"钉合\"],\"features\":[],\"notes\":[],\"scene_ids\":[],\"nail_type\":null,\"fastener_text\":\"\",\"long_nose\":false,\"blower\":false,\"images\":[{\"media_id\":\"m_test\",\"label\":\"图片\",\"description\":\"\",\"sha256\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"format\":\"webp\",\"bytes\":10,\"width\":100,\"height\":50,\"path\":\"media/test.webp\"}],\"cover_media_id\":\"m_test\",\"visibility\":\"listed\",\"sort_order\":0,\"guide_profile\":{\"scene_ids\":[],\"materials\":[],\"substrates\":[],\"excluded_materials\":[],\"excluded_substrates\":[],\"power_source\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null,\"limitations\":[],\"consultation_notes\":[],\"required_requirements\":[],\"sources\":[],\"reviews\":[]},\"purchase_options\":[],\"version\":1,\"updated_at\":\"2026-11-06T00:00:00Z\"}],\"previously_published_routes\":[]}",
+    "valid": false,
+    "fields": [
+      "products.0.slug"
+    ]
+  },
+  {
+    "name": "F30 product cannot take series slug through PublishableSnapshot",
+    "schema": "catalog-snapshot.schema.json#/$defs/PublishableSnapshot",
+    "raw": "{\"schema_version\":1,\"release_id\":\"r_test\",\"workspace_revision\":0,\"categories\":[{\"id\":\"straight\",\"name\":\"sample\",\"sort_order\":0,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"steel\",\"name\":\"sample\",\"sort_order\":1,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"staple\",\"name\":\"sample\",\"sort_order\":2,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"pin\",\"name\":\"sample\",\"sort_order\":3,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"coil\",\"name\":\"sample\",\"sort_order\":4,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"remover\",\"name\":\"sample\",\"sort_order\":5,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"insulation\",\"name\":\"sample\",\"sort_order\":6,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"gas\",\"name\":\"sample\",\"sort_order\":7,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"nails\",\"name\":\"sample\",\"sort_order\":8,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"other\",\"name\":\"sample\",\"sort_order\":9,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"}],\"scenes\":[{\"id\":\"home-woodworking\",\"name\":\"home-woodworking\"},{\"id\":\"ceiling-framing\",\"name\":\"ceiling-framing\"},{\"id\":\"packaging-pallets\",\"name\":\"packaging-pallets\"},{\"id\":\"furniture-timber\",\"name\":\"furniture-timber\"},{\"id\":\"panel-fastening\",\"name\":\"panel-fastening\"},{\"id\":\"nail-removal\",\"name\":\"nail-removal\"},{\"id\":\"wall-insulation\",\"name\":\"wall-insulation\"},{\"id\":\"electrical-plumbing\",\"name\":\"electrical-plumbing\"},{\"id\":\"wall-mesh\",\"name\":\"wall-mesh\"},{\"id\":\"upholstery-rattan\",\"name\":\"upholstery-rattan\"}],\"nail_types\":[{\"id\":\"brad\",\"name\":\"brad\"},{\"id\":\"steel-nail\",\"name\":\"steel-nail\"},{\"id\":\"staple\",\"name\":\"staple\"},{\"id\":\"coil-nail\",\"name\":\"coil-nail\"},{\"id\":\"pin\",\"name\":\"pin\"},{\"id\":\"insulation-nail\",\"name\":\"insulation-nail\"},{\"id\":\"gas-nail\",\"name\":\"gas-nail\"}],\"legacy_series\":[{\"id\":\"s_f30\",\"slug\":\"f30\",\"name\":\"F30 系列\",\"product_ids\":[\"sample\"]}],\"products\":[{\"id\":\"sample\",\"slug\":\"f30\",\"kind\":\"tool\",\"name\":\"工具\",\"model\":\"F30M\",\"category_id\":\"straight\",\"series\":\"\",\"legacy_series_ids\":[\"s_f30\"],\"summary\":\"真实用途说明\",\"applications\":[\"\",\"　\",\"钉合\"],\"features\":[],\"notes\":[],\"scene_ids\":[],\"nail_type\":null,\"fastener_text\":\"\",\"long_nose\":false,\"blower\":false,\"images\":[{\"media_id\":\"m_test\",\"label\":\"图片\",\"description\":\"\",\"sha256\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"format\":\"webp\",\"bytes\":10,\"width\":100,\"height\":50,\"path\":\"media/test.webp\"}],\"cover_media_id\":\"m_test\",\"visibility\":\"listed\",\"sort_order\":0,\"guide_profile\":{\"scene_ids\":[],\"materials\":[],\"substrates\":[],\"excluded_materials\":[],\"excluded_substrates\":[],\"power_source\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null,\"limitations\":[],\"consultation_notes\":[],\"required_requirements\":[],\"sources\":[],\"reviews\":[]},\"purchase_options\":[],\"version\":1,\"updated_at\":\"2026-11-06T00:00:00Z\"}],\"previously_published_routes\":[]}",
+    "valid": false,
+    "fields": [
+      "products.0.slug"
+    ]
+  },
+  {
+    "name": "series rejects missing product through CatalogSnapshot",
+    "schema": "catalog-snapshot.schema.json#/$defs/CatalogSnapshot",
+    "raw": "{\"schema_version\":1,\"release_id\":\"r_test\",\"workspace_revision\":0,\"categories\":[{\"id\":\"straight\",\"name\":\"sample\",\"sort_order\":0,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"steel\",\"name\":\"sample\",\"sort_order\":1,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"staple\",\"name\":\"sample\",\"sort_order\":2,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"pin\",\"name\":\"sample\",\"sort_order\":3,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"coil\",\"name\":\"sample\",\"sort_order\":4,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"remover\",\"name\":\"sample\",\"sort_order\":5,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"insulation\",\"name\":\"sample\",\"sort_order\":6,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"gas\",\"name\":\"sample\",\"sort_order\":7,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"nails\",\"name\":\"sample\",\"sort_order\":8,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"other\",\"name\":\"sample\",\"sort_order\":9,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"}],\"scenes\":[{\"id\":\"home-woodworking\",\"name\":\"home-woodworking\"},{\"id\":\"ceiling-framing\",\"name\":\"ceiling-framing\"},{\"id\":\"packaging-pallets\",\"name\":\"packaging-pallets\"},{\"id\":\"furniture-timber\",\"name\":\"furniture-timber\"},{\"id\":\"panel-fastening\",\"name\":\"panel-fastening\"},{\"id\":\"nail-removal\",\"name\":\"nail-removal\"},{\"id\":\"wall-insulation\",\"name\":\"wall-insulation\"},{\"id\":\"electrical-plumbing\",\"name\":\"electrical-plumbing\"},{\"id\":\"wall-mesh\",\"name\":\"wall-mesh\"},{\"id\":\"upholstery-rattan\",\"name\":\"upholstery-rattan\"}],\"nail_types\":[{\"id\":\"brad\",\"name\":\"brad\"},{\"id\":\"steel-nail\",\"name\":\"steel-nail\"},{\"id\":\"staple\",\"name\":\"staple\"},{\"id\":\"coil-nail\",\"name\":\"coil-nail\"},{\"id\":\"pin\",\"name\":\"pin\"},{\"id\":\"insulation-nail\",\"name\":\"insulation-nail\"},{\"id\":\"gas-nail\",\"name\":\"gas-nail\"}],\"legacy_series\":[{\"id\":\"s_f30\",\"slug\":\"f30\",\"name\":\"F30 系列\",\"product_ids\":[\"sample\",\"p_missing\"]}],\"products\":[{\"id\":\"sample\",\"slug\":\"f30m\",\"kind\":\"tool\",\"name\":\"工具\",\"model\":\"F30M\",\"category_id\":\"straight\",\"series\":\"\",\"legacy_series_ids\":[\"s_f30\"],\"summary\":\"真实用途说明\",\"applications\":[\"\",\"　\",\"钉合\"],\"features\":[],\"notes\":[],\"scene_ids\":[],\"nail_type\":null,\"fastener_text\":\"\",\"long_nose\":false,\"blower\":false,\"images\":[{\"media_id\":\"m_test\",\"label\":\"图片\",\"description\":\"\",\"sha256\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"format\":\"webp\",\"bytes\":10,\"width\":100,\"height\":50,\"path\":\"media/test.webp\"}],\"cover_media_id\":\"m_test\",\"visibility\":\"listed\",\"sort_order\":0,\"guide_profile\":{\"scene_ids\":[],\"materials\":[],\"substrates\":[],\"excluded_materials\":[],\"excluded_substrates\":[],\"power_source\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null,\"limitations\":[],\"consultation_notes\":[],\"required_requirements\":[],\"sources\":[],\"reviews\":[]},\"purchase_options\":[],\"version\":1,\"updated_at\":\"2026-11-06T00:00:00Z\"}],\"previously_published_routes\":[]}",
+    "valid": false,
+    "fields": [
+      "legacy_series.0.product_ids"
+    ]
+  },
+  {
+    "name": "series rejects missing product through PublishableSnapshot",
+    "schema": "catalog-snapshot.schema.json#/$defs/PublishableSnapshot",
+    "raw": "{\"schema_version\":1,\"release_id\":\"r_test\",\"workspace_revision\":0,\"categories\":[{\"id\":\"straight\",\"name\":\"sample\",\"sort_order\":0,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"steel\",\"name\":\"sample\",\"sort_order\":1,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"staple\",\"name\":\"sample\",\"sort_order\":2,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"pin\",\"name\":\"sample\",\"sort_order\":3,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"coil\",\"name\":\"sample\",\"sort_order\":4,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"remover\",\"name\":\"sample\",\"sort_order\":5,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"insulation\",\"name\":\"sample\",\"sort_order\":6,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"gas\",\"name\":\"sample\",\"sort_order\":7,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"nails\",\"name\":\"sample\",\"sort_order\":8,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"other\",\"name\":\"sample\",\"sort_order\":9,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"}],\"scenes\":[{\"id\":\"home-woodworking\",\"name\":\"home-woodworking\"},{\"id\":\"ceiling-framing\",\"name\":\"ceiling-framing\"},{\"id\":\"packaging-pallets\",\"name\":\"packaging-pallets\"},{\"id\":\"furniture-timber\",\"name\":\"furniture-timber\"},{\"id\":\"panel-fastening\",\"name\":\"panel-fastening\"},{\"id\":\"nail-removal\",\"name\":\"nail-removal\"},{\"id\":\"wall-insulation\",\"name\":\"wall-insulation\"},{\"id\":\"electrical-plumbing\",\"name\":\"electrical-plumbing\"},{\"id\":\"wall-mesh\",\"name\":\"wall-mesh\"},{\"id\":\"upholstery-rattan\",\"name\":\"upholstery-rattan\"}],\"nail_types\":[{\"id\":\"brad\",\"name\":\"brad\"},{\"id\":\"steel-nail\",\"name\":\"steel-nail\"},{\"id\":\"staple\",\"name\":\"staple\"},{\"id\":\"coil-nail\",\"name\":\"coil-nail\"},{\"id\":\"pin\",\"name\":\"pin\"},{\"id\":\"insulation-nail\",\"name\":\"insulation-nail\"},{\"id\":\"gas-nail\",\"name\":\"gas-nail\"}],\"legacy_series\":[{\"id\":\"s_f30\",\"slug\":\"f30\",\"name\":\"F30 系列\",\"product_ids\":[\"sample\",\"p_missing\"]}],\"products\":[{\"id\":\"sample\",\"slug\":\"f30m\",\"kind\":\"tool\",\"name\":\"工具\",\"model\":\"F30M\",\"category_id\":\"straight\",\"series\":\"\",\"legacy_series_ids\":[\"s_f30\"],\"summary\":\"真实用途说明\",\"applications\":[\"\",\"　\",\"钉合\"],\"features\":[],\"notes\":[],\"scene_ids\":[],\"nail_type\":null,\"fastener_text\":\"\",\"long_nose\":false,\"blower\":false,\"images\":[{\"media_id\":\"m_test\",\"label\":\"图片\",\"description\":\"\",\"sha256\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"format\":\"webp\",\"bytes\":10,\"width\":100,\"height\":50,\"path\":\"media/test.webp\"}],\"cover_media_id\":\"m_test\",\"visibility\":\"listed\",\"sort_order\":0,\"guide_profile\":{\"scene_ids\":[],\"materials\":[],\"substrates\":[],\"excluded_materials\":[],\"excluded_substrates\":[],\"power_source\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null,\"limitations\":[],\"consultation_notes\":[],\"required_requirements\":[],\"sources\":[],\"reviews\":[]},\"purchase_options\":[],\"version\":1,\"updated_at\":\"2026-11-06T00:00:00Z\"}],\"previously_published_routes\":[]}",
+    "valid": false,
+    "fields": [
+      "legacy_series.0.product_ids"
+    ]
+  },
+  {
+    "name": "product rejects missing series through CatalogSnapshot",
+    "schema": "catalog-snapshot.schema.json#/$defs/CatalogSnapshot",
+    "raw": "{\"schema_version\":1,\"release_id\":\"r_test\",\"workspace_revision\":0,\"categories\":[{\"id\":\"straight\",\"name\":\"sample\",\"sort_order\":0,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"steel\",\"name\":\"sample\",\"sort_order\":1,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"staple\",\"name\":\"sample\",\"sort_order\":2,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"pin\",\"name\":\"sample\",\"sort_order\":3,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"coil\",\"name\":\"sample\",\"sort_order\":4,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"remover\",\"name\":\"sample\",\"sort_order\":5,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"insulation\",\"name\":\"sample\",\"sort_order\":6,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"gas\",\"name\":\"sample\",\"sort_order\":7,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"nails\",\"name\":\"sample\",\"sort_order\":8,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"other\",\"name\":\"sample\",\"sort_order\":9,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"}],\"scenes\":[{\"id\":\"home-woodworking\",\"name\":\"home-woodworking\"},{\"id\":\"ceiling-framing\",\"name\":\"ceiling-framing\"},{\"id\":\"packaging-pallets\",\"name\":\"packaging-pallets\"},{\"id\":\"furniture-timber\",\"name\":\"furniture-timber\"},{\"id\":\"panel-fastening\",\"name\":\"panel-fastening\"},{\"id\":\"nail-removal\",\"name\":\"nail-removal\"},{\"id\":\"wall-insulation\",\"name\":\"wall-insulation\"},{\"id\":\"electrical-plumbing\",\"name\":\"electrical-plumbing\"},{\"id\":\"wall-mesh\",\"name\":\"wall-mesh\"},{\"id\":\"upholstery-rattan\",\"name\":\"upholstery-rattan\"}],\"nail_types\":[{\"id\":\"brad\",\"name\":\"brad\"},{\"id\":\"steel-nail\",\"name\":\"steel-nail\"},{\"id\":\"staple\",\"name\":\"staple\"},{\"id\":\"coil-nail\",\"name\":\"coil-nail\"},{\"id\":\"pin\",\"name\":\"pin\"},{\"id\":\"insulation-nail\",\"name\":\"insulation-nail\"},{\"id\":\"gas-nail\",\"name\":\"gas-nail\"}],\"legacy_series\":[{\"id\":\"s_f30\",\"slug\":\"f30\",\"name\":\"F30 系列\",\"product_ids\":[\"sample\"]}],\"products\":[{\"id\":\"sample\",\"slug\":\"f30m\",\"kind\":\"tool\",\"name\":\"工具\",\"model\":\"F30M\",\"category_id\":\"straight\",\"series\":\"\",\"legacy_series_ids\":[\"s_f30\",\"s_missing\"],\"summary\":\"真实用途说明\",\"applications\":[\"\",\"　\",\"钉合\"],\"features\":[],\"notes\":[],\"scene_ids\":[],\"nail_type\":null,\"fastener_text\":\"\",\"long_nose\":false,\"blower\":false,\"images\":[{\"media_id\":\"m_test\",\"label\":\"图片\",\"description\":\"\",\"sha256\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"format\":\"webp\",\"bytes\":10,\"width\":100,\"height\":50,\"path\":\"media/test.webp\"}],\"cover_media_id\":\"m_test\",\"visibility\":\"listed\",\"sort_order\":0,\"guide_profile\":{\"scene_ids\":[],\"materials\":[],\"substrates\":[],\"excluded_materials\":[],\"excluded_substrates\":[],\"power_source\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null,\"limitations\":[],\"consultation_notes\":[],\"required_requirements\":[],\"sources\":[],\"reviews\":[]},\"purchase_options\":[],\"version\":1,\"updated_at\":\"2026-11-06T00:00:00Z\"}],\"previously_published_routes\":[]}",
+    "valid": false,
+    "fields": [
+      "products.0.legacy_series_ids"
+    ]
+  },
+  {
+    "name": "product rejects missing series through PublishableSnapshot",
+    "schema": "catalog-snapshot.schema.json#/$defs/PublishableSnapshot",
+    "raw": "{\"schema_version\":1,\"release_id\":\"r_test\",\"workspace_revision\":0,\"categories\":[{\"id\":\"straight\",\"name\":\"sample\",\"sort_order\":0,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"steel\",\"name\":\"sample\",\"sort_order\":1,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"staple\",\"name\":\"sample\",\"sort_order\":2,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"pin\",\"name\":\"sample\",\"sort_order\":3,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"coil\",\"name\":\"sample\",\"sort_order\":4,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"remover\",\"name\":\"sample\",\"sort_order\":5,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"insulation\",\"name\":\"sample\",\"sort_order\":6,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"gas\",\"name\":\"sample\",\"sort_order\":7,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"nails\",\"name\":\"sample\",\"sort_order\":8,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"other\",\"name\":\"sample\",\"sort_order\":9,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"}],\"scenes\":[{\"id\":\"home-woodworking\",\"name\":\"home-woodworking\"},{\"id\":\"ceiling-framing\",\"name\":\"ceiling-framing\"},{\"id\":\"packaging-pallets\",\"name\":\"packaging-pallets\"},{\"id\":\"furniture-timber\",\"name\":\"furniture-timber\"},{\"id\":\"panel-fastening\",\"name\":\"panel-fastening\"},{\"id\":\"nail-removal\",\"name\":\"nail-removal\"},{\"id\":\"wall-insulation\",\"name\":\"wall-insulation\"},{\"id\":\"electrical-plumbing\",\"name\":\"electrical-plumbing\"},{\"id\":\"wall-mesh\",\"name\":\"wall-mesh\"},{\"id\":\"upholstery-rattan\",\"name\":\"upholstery-rattan\"}],\"nail_types\":[{\"id\":\"brad\",\"name\":\"brad\"},{\"id\":\"steel-nail\",\"name\":\"steel-nail\"},{\"id\":\"staple\",\"name\":\"staple\"},{\"id\":\"coil-nail\",\"name\":\"coil-nail\"},{\"id\":\"pin\",\"name\":\"pin\"},{\"id\":\"insulation-nail\",\"name\":\"insulation-nail\"},{\"id\":\"gas-nail\",\"name\":\"gas-nail\"}],\"legacy_series\":[{\"id\":\"s_f30\",\"slug\":\"f30\",\"name\":\"F30 系列\",\"product_ids\":[\"sample\"]}],\"products\":[{\"id\":\"sample\",\"slug\":\"f30m\",\"kind\":\"tool\",\"name\":\"工具\",\"model\":\"F30M\",\"category_id\":\"straight\",\"series\":\"\",\"legacy_series_ids\":[\"s_f30\",\"s_missing\"],\"summary\":\"真实用途说明\",\"applications\":[\"\",\"　\",\"钉合\"],\"features\":[],\"notes\":[],\"scene_ids\":[],\"nail_type\":null,\"fastener_text\":\"\",\"long_nose\":false,\"blower\":false,\"images\":[{\"media_id\":\"m_test\",\"label\":\"图片\",\"description\":\"\",\"sha256\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"format\":\"webp\",\"bytes\":10,\"width\":100,\"height\":50,\"path\":\"media/test.webp\"}],\"cover_media_id\":\"m_test\",\"visibility\":\"listed\",\"sort_order\":0,\"guide_profile\":{\"scene_ids\":[],\"materials\":[],\"substrates\":[],\"excluded_materials\":[],\"excluded_substrates\":[],\"power_source\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null,\"limitations\":[],\"consultation_notes\":[],\"required_requirements\":[],\"sources\":[],\"reviews\":[]},\"purchase_options\":[],\"version\":1,\"updated_at\":\"2026-11-06T00:00:00Z\"}],\"previously_published_routes\":[]}",
+    "valid": false,
+    "fields": [
+      "products.0.legacy_series_ids"
+    ]
+  },
+  {
+    "name": "series membership must be reciprocal through CatalogSnapshot",
+    "schema": "catalog-snapshot.schema.json#/$defs/CatalogSnapshot",
+    "raw": "{\"schema_version\":1,\"release_id\":\"r_test\",\"workspace_revision\":0,\"categories\":[{\"id\":\"straight\",\"name\":\"sample\",\"sort_order\":0,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"steel\",\"name\":\"sample\",\"sort_order\":1,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"staple\",\"name\":\"sample\",\"sort_order\":2,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"pin\",\"name\":\"sample\",\"sort_order\":3,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"coil\",\"name\":\"sample\",\"sort_order\":4,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"remover\",\"name\":\"sample\",\"sort_order\":5,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"insulation\",\"name\":\"sample\",\"sort_order\":6,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"gas\",\"name\":\"sample\",\"sort_order\":7,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"nails\",\"name\":\"sample\",\"sort_order\":8,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"other\",\"name\":\"sample\",\"sort_order\":9,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"}],\"scenes\":[{\"id\":\"home-woodworking\",\"name\":\"home-woodworking\"},{\"id\":\"ceiling-framing\",\"name\":\"ceiling-framing\"},{\"id\":\"packaging-pallets\",\"name\":\"packaging-pallets\"},{\"id\":\"furniture-timber\",\"name\":\"furniture-timber\"},{\"id\":\"panel-fastening\",\"name\":\"panel-fastening\"},{\"id\":\"nail-removal\",\"name\":\"nail-removal\"},{\"id\":\"wall-insulation\",\"name\":\"wall-insulation\"},{\"id\":\"electrical-plumbing\",\"name\":\"electrical-plumbing\"},{\"id\":\"wall-mesh\",\"name\":\"wall-mesh\"},{\"id\":\"upholstery-rattan\",\"name\":\"upholstery-rattan\"}],\"nail_types\":[{\"id\":\"brad\",\"name\":\"brad\"},{\"id\":\"steel-nail\",\"name\":\"steel-nail\"},{\"id\":\"staple\",\"name\":\"staple\"},{\"id\":\"coil-nail\",\"name\":\"coil-nail\"},{\"id\":\"pin\",\"name\":\"pin\"},{\"id\":\"insulation-nail\",\"name\":\"insulation-nail\"},{\"id\":\"gas-nail\",\"name\":\"gas-nail\"}],\"legacy_series\":[{\"id\":\"s_f30\",\"slug\":\"f30\",\"name\":\"F30 系列\",\"product_ids\":[]}],\"products\":[{\"id\":\"sample\",\"slug\":\"f30m\",\"kind\":\"tool\",\"name\":\"工具\",\"model\":\"F30M\",\"category_id\":\"straight\",\"series\":\"\",\"legacy_series_ids\":[\"s_f30\"],\"summary\":\"真实用途说明\",\"applications\":[\"\",\"　\",\"钉合\"],\"features\":[],\"notes\":[],\"scene_ids\":[],\"nail_type\":null,\"fastener_text\":\"\",\"long_nose\":false,\"blower\":false,\"images\":[{\"media_id\":\"m_test\",\"label\":\"图片\",\"description\":\"\",\"sha256\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"format\":\"webp\",\"bytes\":10,\"width\":100,\"height\":50,\"path\":\"media/test.webp\"}],\"cover_media_id\":\"m_test\",\"visibility\":\"listed\",\"sort_order\":0,\"guide_profile\":{\"scene_ids\":[],\"materials\":[],\"substrates\":[],\"excluded_materials\":[],\"excluded_substrates\":[],\"power_source\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null,\"limitations\":[],\"consultation_notes\":[],\"required_requirements\":[],\"sources\":[],\"reviews\":[]},\"purchase_options\":[],\"version\":1,\"updated_at\":\"2026-11-06T00:00:00Z\"}],\"previously_published_routes\":[]}",
+    "valid": false,
+    "fields": [
+      "products.0.legacy_series_ids"
+    ]
+  },
+  {
+    "name": "series membership must be reciprocal through PublishableSnapshot",
+    "schema": "catalog-snapshot.schema.json#/$defs/PublishableSnapshot",
+    "raw": "{\"schema_version\":1,\"release_id\":\"r_test\",\"workspace_revision\":0,\"categories\":[{\"id\":\"straight\",\"name\":\"sample\",\"sort_order\":0,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"steel\",\"name\":\"sample\",\"sort_order\":1,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"staple\",\"name\":\"sample\",\"sort_order\":2,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"pin\",\"name\":\"sample\",\"sort_order\":3,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"coil\",\"name\":\"sample\",\"sort_order\":4,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"remover\",\"name\":\"sample\",\"sort_order\":5,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"insulation\",\"name\":\"sample\",\"sort_order\":6,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"gas\",\"name\":\"sample\",\"sort_order\":7,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"nails\",\"name\":\"sample\",\"sort_order\":8,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"other\",\"name\":\"sample\",\"sort_order\":9,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"}],\"scenes\":[{\"id\":\"home-woodworking\",\"name\":\"home-woodworking\"},{\"id\":\"ceiling-framing\",\"name\":\"ceiling-framing\"},{\"id\":\"packaging-pallets\",\"name\":\"packaging-pallets\"},{\"id\":\"furniture-timber\",\"name\":\"furniture-timber\"},{\"id\":\"panel-fastening\",\"name\":\"panel-fastening\"},{\"id\":\"nail-removal\",\"name\":\"nail-removal\"},{\"id\":\"wall-insulation\",\"name\":\"wall-insulation\"},{\"id\":\"electrical-plumbing\",\"name\":\"electrical-plumbing\"},{\"id\":\"wall-mesh\",\"name\":\"wall-mesh\"},{\"id\":\"upholstery-rattan\",\"name\":\"upholstery-rattan\"}],\"nail_types\":[{\"id\":\"brad\",\"name\":\"brad\"},{\"id\":\"steel-nail\",\"name\":\"steel-nail\"},{\"id\":\"staple\",\"name\":\"staple\"},{\"id\":\"coil-nail\",\"name\":\"coil-nail\"},{\"id\":\"pin\",\"name\":\"pin\"},{\"id\":\"insulation-nail\",\"name\":\"insulation-nail\"},{\"id\":\"gas-nail\",\"name\":\"gas-nail\"}],\"legacy_series\":[{\"id\":\"s_f30\",\"slug\":\"f30\",\"name\":\"F30 系列\",\"product_ids\":[]}],\"products\":[{\"id\":\"sample\",\"slug\":\"f30m\",\"kind\":\"tool\",\"name\":\"工具\",\"model\":\"F30M\",\"category_id\":\"straight\",\"series\":\"\",\"legacy_series_ids\":[\"s_f30\"],\"summary\":\"真实用途说明\",\"applications\":[\"\",\"　\",\"钉合\"],\"features\":[],\"notes\":[],\"scene_ids\":[],\"nail_type\":null,\"fastener_text\":\"\",\"long_nose\":false,\"blower\":false,\"images\":[{\"media_id\":\"m_test\",\"label\":\"图片\",\"description\":\"\",\"sha256\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"format\":\"webp\",\"bytes\":10,\"width\":100,\"height\":50,\"path\":\"media/test.webp\"}],\"cover_media_id\":\"m_test\",\"visibility\":\"listed\",\"sort_order\":0,\"guide_profile\":{\"scene_ids\":[],\"materials\":[],\"substrates\":[],\"excluded_materials\":[],\"excluded_substrates\":[],\"power_source\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null,\"limitations\":[],\"consultation_notes\":[],\"required_requirements\":[],\"sources\":[],\"reviews\":[]},\"purchase_options\":[],\"version\":1,\"updated_at\":\"2026-11-06T00:00:00Z\"}],\"previously_published_routes\":[]}",
+    "valid": false,
+    "fields": [
+      "products.0.legacy_series_ids"
+    ]
+  },
+  {
+    "name": "published snapshot cover belongs to images",
+    "schema": "catalog-snapshot.schema.json#/$defs/PublishableSnapshot",
+    "raw": "{\"schema_version\":1,\"release_id\":\"r_test\",\"workspace_revision\":0,\"categories\":[{\"id\":\"straight\",\"name\":\"sample\",\"sort_order\":0,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"steel\",\"name\":\"sample\",\"sort_order\":1,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"staple\",\"name\":\"sample\",\"sort_order\":2,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"pin\",\"name\":\"sample\",\"sort_order\":3,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"coil\",\"name\":\"sample\",\"sort_order\":4,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"remover\",\"name\":\"sample\",\"sort_order\":5,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"insulation\",\"name\":\"sample\",\"sort_order\":6,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"gas\",\"name\":\"sample\",\"sort_order\":7,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"nails\",\"name\":\"sample\",\"sort_order\":8,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"other\",\"name\":\"sample\",\"sort_order\":9,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"}],\"scenes\":[{\"id\":\"home-woodworking\",\"name\":\"home-woodworking\"},{\"id\":\"ceiling-framing\",\"name\":\"ceiling-framing\"},{\"id\":\"packaging-pallets\",\"name\":\"packaging-pallets\"},{\"id\":\"furniture-timber\",\"name\":\"furniture-timber\"},{\"id\":\"panel-fastening\",\"name\":\"panel-fastening\"},{\"id\":\"nail-removal\",\"name\":\"nail-removal\"},{\"id\":\"wall-insulation\",\"name\":\"wall-insulation\"},{\"id\":\"electrical-plumbing\",\"name\":\"electrical-plumbing\"},{\"id\":\"wall-mesh\",\"name\":\"wall-mesh\"},{\"id\":\"upholstery-rattan\",\"name\":\"upholstery-rattan\"}],\"nail_types\":[{\"id\":\"brad\",\"name\":\"brad\"},{\"id\":\"steel-nail\",\"name\":\"steel-nail\"},{\"id\":\"staple\",\"name\":\"staple\"},{\"id\":\"coil-nail\",\"name\":\"coil-nail\"},{\"id\":\"pin\",\"name\":\"pin\"},{\"id\":\"insulation-nail\",\"name\":\"insulation-nail\"},{\"id\":\"gas-nail\",\"name\":\"gas-nail\"}],\"legacy_series\":[{\"id\":\"s_f30\",\"slug\":\"f30\",\"name\":\"F30 系列\",\"product_ids\":[\"sample\"]}],\"products\":[{\"id\":\"sample\",\"slug\":\"f30m\",\"kind\":\"tool\",\"name\":\"工具\",\"model\":\"F30M\",\"category_id\":\"straight\",\"series\":\"\",\"legacy_series_ids\":[\"s_f30\"],\"summary\":\"真实用途说明\",\"applications\":[\"\",\"　\",\"钉合\"],\"features\":[],\"notes\":[],\"scene_ids\":[],\"nail_type\":null,\"fastener_text\":\"\",\"long_nose\":false,\"blower\":false,\"images\":[{\"media_id\":\"m_test\",\"label\":\"图片\",\"description\":\"\",\"sha256\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"format\":\"webp\",\"bytes\":10,\"width\":100,\"height\":50,\"path\":\"media/test.webp\"}],\"cover_media_id\":\"m_missing\",\"visibility\":\"listed\",\"sort_order\":0,\"guide_profile\":{\"scene_ids\":[],\"materials\":[],\"substrates\":[],\"excluded_materials\":[],\"excluded_substrates\":[],\"power_source\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null,\"limitations\":[],\"consultation_notes\":[],\"required_requirements\":[],\"sources\":[],\"reviews\":[]},\"purchase_options\":[],\"version\":1,\"updated_at\":\"2026-11-06T00:00:00Z\"}],\"previously_published_routes\":[]}",
+    "valid": false,
+    "fields": [
+      "products.0.cover_media_id"
+    ]
+  },
+  {
+    "name": "published snapshot range remains ordered",
+    "schema": "catalog-snapshot.schema.json#/$defs/PublishableSnapshot",
+    "raw": "{\"schema_version\":1,\"release_id\":\"r_test\",\"workspace_revision\":0,\"categories\":[{\"id\":\"straight\",\"name\":\"sample\",\"sort_order\":0,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"steel\",\"name\":\"sample\",\"sort_order\":1,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"staple\",\"name\":\"sample\",\"sort_order\":2,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"pin\",\"name\":\"sample\",\"sort_order\":3,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"coil\",\"name\":\"sample\",\"sort_order\":4,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"remover\",\"name\":\"sample\",\"sort_order\":5,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"insulation\",\"name\":\"sample\",\"sort_order\":6,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"gas\",\"name\":\"sample\",\"sort_order\":7,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"nails\",\"name\":\"sample\",\"sort_order\":8,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"other\",\"name\":\"sample\",\"sort_order\":9,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"}],\"scenes\":[{\"id\":\"home-woodworking\",\"name\":\"home-woodworking\"},{\"id\":\"ceiling-framing\",\"name\":\"ceiling-framing\"},{\"id\":\"packaging-pallets\",\"name\":\"packaging-pallets\"},{\"id\":\"furniture-timber\",\"name\":\"furniture-timber\"},{\"id\":\"panel-fastening\",\"name\":\"panel-fastening\"},{\"id\":\"nail-removal\",\"name\":\"nail-removal\"},{\"id\":\"wall-insulation\",\"name\":\"wall-insulation\"},{\"id\":\"electrical-plumbing\",\"name\":\"electrical-plumbing\"},{\"id\":\"wall-mesh\",\"name\":\"wall-mesh\"},{\"id\":\"upholstery-rattan\",\"name\":\"upholstery-rattan\"}],\"nail_types\":[{\"id\":\"brad\",\"name\":\"brad\"},{\"id\":\"steel-nail\",\"name\":\"steel-nail\"},{\"id\":\"staple\",\"name\":\"staple\"},{\"id\":\"coil-nail\",\"name\":\"coil-nail\"},{\"id\":\"pin\",\"name\":\"pin\"},{\"id\":\"insulation-nail\",\"name\":\"insulation-nail\"},{\"id\":\"gas-nail\",\"name\":\"gas-nail\"}],\"legacy_series\":[{\"id\":\"s_f30\",\"slug\":\"f30\",\"name\":\"F30 系列\",\"product_ids\":[\"sample\"]}],\"products\":[{\"id\":\"sample\",\"slug\":\"f30m\",\"kind\":\"tool\",\"name\":\"工具\",\"model\":\"F30M\",\"category_id\":\"straight\",\"series\":\"\",\"legacy_series_ids\":[\"s_f30\"],\"summary\":\"真实用途说明\",\"applications\":[\"\",\"　\",\"钉合\"],\"features\":[],\"notes\":[],\"scene_ids\":[],\"nail_type\":null,\"fastener_text\":\"\",\"long_nose\":false,\"blower\":false,\"images\":[{\"media_id\":\"m_test\",\"label\":\"图片\",\"description\":\"\",\"sha256\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"format\":\"webp\",\"bytes\":10,\"width\":100,\"height\":50,\"path\":\"media/test.webp\"}],\"cover_media_id\":\"m_test\",\"visibility\":\"listed\",\"sort_order\":0,\"guide_profile\":{\"scene_ids\":[],\"materials\":[],\"substrates\":[],\"excluded_materials\":[],\"excluded_substrates\":[],\"power_source\":null,\"nail_type\":null,\"fastener_length_mm\":{\"min\":32,\"max\":18},\"load_bearing\":null,\"long_nose\":null,\"blower\":null,\"limitations\":[],\"consultation_notes\":[],\"required_requirements\":[],\"sources\":[],\"reviews\":[]},\"purchase_options\":[],\"version\":1,\"updated_at\":\"2026-11-06T00:00:00Z\"}],\"previously_published_routes\":[]}",
+    "valid": false,
+    "fields": [
+      "products.0.guide_profile.fastener_length_mm.max"
+    ]
+  },
+  {
+    "name": "published snapshot media path remains relative",
+    "schema": "catalog-snapshot.schema.json#/$defs/PublishableSnapshot",
+    "raw": "{\"schema_version\":1,\"release_id\":\"r_test\",\"workspace_revision\":0,\"categories\":[{\"id\":\"straight\",\"name\":\"sample\",\"sort_order\":0,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"steel\",\"name\":\"sample\",\"sort_order\":1,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"staple\",\"name\":\"sample\",\"sort_order\":2,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"pin\",\"name\":\"sample\",\"sort_order\":3,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"coil\",\"name\":\"sample\",\"sort_order\":4,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"remover\",\"name\":\"sample\",\"sort_order\":5,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"insulation\",\"name\":\"sample\",\"sort_order\":6,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"gas\",\"name\":\"sample\",\"sort_order\":7,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"nails\",\"name\":\"sample\",\"sort_order\":8,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"other\",\"name\":\"sample\",\"sort_order\":9,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"}],\"scenes\":[{\"id\":\"home-woodworking\",\"name\":\"home-woodworking\"},{\"id\":\"ceiling-framing\",\"name\":\"ceiling-framing\"},{\"id\":\"packaging-pallets\",\"name\":\"packaging-pallets\"},{\"id\":\"furniture-timber\",\"name\":\"furniture-timber\"},{\"id\":\"panel-fastening\",\"name\":\"panel-fastening\"},{\"id\":\"nail-removal\",\"name\":\"nail-removal\"},{\"id\":\"wall-insulation\",\"name\":\"wall-insulation\"},{\"id\":\"electrical-plumbing\",\"name\":\"electrical-plumbing\"},{\"id\":\"wall-mesh\",\"name\":\"wall-mesh\"},{\"id\":\"upholstery-rattan\",\"name\":\"upholstery-rattan\"}],\"nail_types\":[{\"id\":\"brad\",\"name\":\"brad\"},{\"id\":\"steel-nail\",\"name\":\"steel-nail\"},{\"id\":\"staple\",\"name\":\"staple\"},{\"id\":\"coil-nail\",\"name\":\"coil-nail\"},{\"id\":\"pin\",\"name\":\"pin\"},{\"id\":\"insulation-nail\",\"name\":\"insulation-nail\"},{\"id\":\"gas-nail\",\"name\":\"gas-nail\"}],\"legacy_series\":[{\"id\":\"s_f30\",\"slug\":\"f30\",\"name\":\"F30 系列\",\"product_ids\":[\"sample\"]}],\"products\":[{\"id\":\"sample\",\"slug\":\"f30m\",\"kind\":\"tool\",\"name\":\"工具\",\"model\":\"F30M\",\"category_id\":\"straight\",\"series\":\"\",\"legacy_series_ids\":[\"s_f30\"],\"summary\":\"真实用途说明\",\"applications\":[\"\",\"　\",\"钉合\"],\"features\":[],\"notes\":[],\"scene_ids\":[],\"nail_type\":null,\"fastener_text\":\"\",\"long_nose\":false,\"blower\":false,\"images\":[{\"media_id\":\"m_test\",\"label\":\"图片\",\"description\":\"\",\"sha256\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"format\":\"webp\",\"bytes\":10,\"width\":100,\"height\":50,\"path\":\"media/../test.webp\"}],\"cover_media_id\":\"m_test\",\"visibility\":\"listed\",\"sort_order\":0,\"guide_profile\":{\"scene_ids\":[],\"materials\":[],\"substrates\":[],\"excluded_materials\":[],\"excluded_substrates\":[],\"power_source\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null,\"limitations\":[],\"consultation_notes\":[],\"required_requirements\":[],\"sources\":[],\"reviews\":[]},\"purchase_options\":[],\"version\":1,\"updated_at\":\"2026-11-06T00:00:00Z\"}],\"previously_published_routes\":[]}",
+    "valid": false,
+    "fields": [
+      "products.0.images.0.path"
+    ]
+  },
+  {
+    "name": "publish wrapper keeps local allOf applications constraint",
+    "schema": "catalog-snapshot.schema.json#/$defs/PublishableSnapshot",
+    "raw": "{\"schema_version\":1,\"release_id\":\"r_test\",\"workspace_revision\":0,\"categories\":[{\"id\":\"straight\",\"name\":\"sample\",\"sort_order\":0,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"steel\",\"name\":\"sample\",\"sort_order\":1,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"staple\",\"name\":\"sample\",\"sort_order\":2,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"pin\",\"name\":\"sample\",\"sort_order\":3,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"coil\",\"name\":\"sample\",\"sort_order\":4,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"remover\",\"name\":\"sample\",\"sort_order\":5,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"insulation\",\"name\":\"sample\",\"sort_order\":6,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"gas\",\"name\":\"sample\",\"sort_order\":7,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"nails\",\"name\":\"sample\",\"sort_order\":8,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"},{\"id\":\"other\",\"name\":\"sample\",\"sort_order\":9,\"lines\":\"\",\"hint\":\"\",\"scene\":\"\",\"use\":\"\",\"nail\":null,\"scene_ids\":[],\"color\":\"\"}],\"scenes\":[{\"id\":\"home-woodworking\",\"name\":\"home-woodworking\"},{\"id\":\"ceiling-framing\",\"name\":\"ceiling-framing\"},{\"id\":\"packaging-pallets\",\"name\":\"packaging-pallets\"},{\"id\":\"furniture-timber\",\"name\":\"furniture-timber\"},{\"id\":\"panel-fastening\",\"name\":\"panel-fastening\"},{\"id\":\"nail-removal\",\"name\":\"nail-removal\"},{\"id\":\"wall-insulation\",\"name\":\"wall-insulation\"},{\"id\":\"electrical-plumbing\",\"name\":\"electrical-plumbing\"},{\"id\":\"wall-mesh\",\"name\":\"wall-mesh\"},{\"id\":\"upholstery-rattan\",\"name\":\"upholstery-rattan\"}],\"nail_types\":[{\"id\":\"brad\",\"name\":\"brad\"},{\"id\":\"steel-nail\",\"name\":\"steel-nail\"},{\"id\":\"staple\",\"name\":\"staple\"},{\"id\":\"coil-nail\",\"name\":\"coil-nail\"},{\"id\":\"pin\",\"name\":\"pin\"},{\"id\":\"insulation-nail\",\"name\":\"insulation-nail\"},{\"id\":\"gas-nail\",\"name\":\"gas-nail\"}],\"legacy_series\":[{\"id\":\"s_f30\",\"slug\":\"f30\",\"name\":\"F30 系列\",\"product_ids\":[\"sample\"]}],\"products\":[{\"id\":\"sample\",\"slug\":\"f30m\",\"kind\":\"tool\",\"name\":\"工具\",\"model\":\"F30M\",\"category_id\":\"straight\",\"series\":\"\",\"legacy_series_ids\":[\"s_f30\"],\"summary\":\"真实用途说明\",\"applications\":[\"　\\t\"],\"features\":[],\"notes\":[],\"scene_ids\":[],\"nail_type\":null,\"fastener_text\":\"\",\"long_nose\":false,\"blower\":false,\"images\":[{\"media_id\":\"m_test\",\"label\":\"图片\",\"description\":\"\",\"sha256\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"format\":\"webp\",\"bytes\":10,\"width\":100,\"height\":50,\"path\":\"media/test.webp\"}],\"cover_media_id\":\"m_test\",\"visibility\":\"listed\",\"sort_order\":0,\"guide_profile\":{\"scene_ids\":[],\"materials\":[],\"substrates\":[],\"excluded_materials\":[],\"excluded_substrates\":[],\"power_source\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null,\"limitations\":[],\"consultation_notes\":[],\"required_requirements\":[],\"sources\":[],\"reviews\":[]},\"purchase_options\":[],\"version\":1,\"updated_at\":\"2026-11-06T00:00:00Z\"}],\"previously_published_routes\":[]}",
+    "valid": false,
+    "fields": [
+      "products.0.applications"
+    ]
+  },
+  {
+    "name": "MCP create consumes normalized integer and nullable range",
+    "schema": "mcp-tools.schema.json#/$defs/MCPCreateProductInput",
+    "raw": "{\"slug\":\"sample\",\"kind\":\"tool\",\"name\":\"\",\"model\":\"\",\"category_id\":\"straight\",\"series\":\"\",\"legacy_series_ids\":[],\"summary\":\"\",\"applications\":[],\"features\":[],\"notes\":[],\"scene_ids\":[],\"nail_type\":null,\"fastener_text\":\"\",\"long_nose\":false,\"blower\":false,\"images\":[{\"media_id\":\"m_test\",\"label\":\"图片\",\"description\":\"\"}],\"cover_media_id\":\"m_test\",\"visibility\":\"unlisted\",\"sort_order\":1e0,\"guide_profile\":{\"scene_ids\":[],\"materials\":[],\"substrates\":[],\"excluded_materials\":[],\"excluded_substrates\":[],\"power_source\":null,\"nail_type\":null,\"fastener_length_mm\":{\"min\":5e-324,\"max\":1.5},\"load_bearing\":null,\"long_nose\":null,\"blower\":null,\"limitations\":[],\"consultation_notes\":[],\"required_requirements\":[],\"sources\":[]},\"purchase_options\":[]}",
+    "valid": true,
+    "fields": [],
+    "expected": {
+      "slug": "sample",
+      "kind": "tool",
+      "name": "",
+      "model": "",
+      "category_id": "straight",
+      "series": "",
+      "legacy_series_ids": [],
+      "summary": "",
+      "applications": [],
+      "features": [],
+      "notes": [],
+      "scene_ids": [],
+      "nail_type": null,
+      "fastener_text": "",
+      "long_nose": false,
+      "blower": false,
+      "images": [
+        {
+          "media_id": "m_test",
+          "label": "图片",
+          "description": ""
+        }
+      ],
+      "cover_media_id": "m_test",
+      "visibility": "unlisted",
+      "sort_order": 1,
+      "guide_profile": {
+        "scene_ids": [],
+        "materials": [],
+        "substrates": [],
+        "excluded_materials": [],
+        "excluded_substrates": [],
+        "power_source": null,
+        "nail_type": null,
+        "fastener_length_mm": {
+          "min": 5e-324,
+          "max": 1.5
+        },
+        "load_bearing": null,
+        "long_nose": null,
+        "blower": null,
+        "limitations": [],
+        "consultation_notes": [],
+        "required_requirements": [],
+        "sources": []
+      },
+      "purchase_options": []
+    }
+  },
+  {
+    "name": "MCP create cover belongs to images",
+    "schema": "mcp-tools.schema.json#/$defs/MCPCreateProductInput",
+    "raw": "{\"slug\":\"sample\",\"kind\":\"tool\",\"name\":\"\",\"model\":\"\",\"category_id\":\"straight\",\"series\":\"\",\"legacy_series_ids\":[],\"summary\":\"\",\"applications\":[],\"features\":[],\"notes\":[],\"scene_ids\":[],\"nail_type\":null,\"fastener_text\":\"\",\"long_nose\":false,\"blower\":false,\"images\":[{\"media_id\":\"m_test\",\"label\":\"图片\",\"description\":\"\"}],\"cover_media_id\":\"m_missing\",\"visibility\":\"unlisted\",\"sort_order\":1,\"guide_profile\":{\"scene_ids\":[],\"materials\":[],\"substrates\":[],\"excluded_materials\":[],\"excluded_substrates\":[],\"power_source\":null,\"nail_type\":null,\"fastener_length_mm\":{\"min\":5e-324,\"max\":1.5},\"load_bearing\":null,\"long_nose\":null,\"blower\":null,\"limitations\":[],\"consultation_notes\":[],\"required_requirements\":[],\"sources\":[]},\"purchase_options\":[]}",
+    "valid": false,
+    "fields": [
+      "cover_media_id"
+    ]
+  },
+  {
+    "name": "MCP create local range reference retains target document",
+    "schema": "mcp-tools.schema.json#/$defs/MCPCreateProductInput",
+    "raw": "{\"slug\":\"sample\",\"kind\":\"tool\",\"name\":\"\",\"model\":\"\",\"category_id\":\"straight\",\"series\":\"\",\"legacy_series_ids\":[],\"summary\":\"\",\"applications\":[],\"features\":[],\"notes\":[],\"scene_ids\":[],\"nail_type\":null,\"fastener_text\":\"\",\"long_nose\":false,\"blower\":false,\"images\":[{\"media_id\":\"m_test\",\"label\":\"图片\",\"description\":\"\"}],\"cover_media_id\":\"m_test\",\"visibility\":\"unlisted\",\"sort_order\":1,\"guide_profile\":{\"scene_ids\":[],\"materials\":[],\"substrates\":[],\"excluded_materials\":[],\"excluded_substrates\":[],\"power_source\":null,\"nail_type\":null,\"fastener_length_mm\":{\"min\":32,\"max\":18},\"load_bearing\":null,\"long_nose\":null,\"blower\":null,\"limitations\":[],\"consultation_notes\":[],\"required_requirements\":[],\"sources\":[]},\"purchase_options\":[]}",
+    "valid": false,
+    "fields": [
+      "guide_profile.fastener_length_mm.max"
+    ]
+  },
+  {
+    "name": "MCPGetProductOutput accepts matching version and null facts",
+    "schema": "mcp-tools.schema.json#/$defs/MCPGetProductOutput",
+    "raw": "{\"product\":{\"id\":\"sample\",\"slug\":\"f30m\",\"kind\":\"tool\",\"name\":\"工具\",\"model\":\"F30M\",\"category_id\":\"straight\",\"series\":\"\",\"legacy_series_ids\":[\"s_f30\"],\"summary\":\"真实用途说明\",\"applications\":[\"\",\"　\",\"钉合\"],\"features\":[],\"notes\":[],\"scene_ids\":[],\"nail_type\":null,\"fastener_text\":\"\",\"long_nose\":false,\"blower\":false,\"images\":[{\"media_id\":\"m_test\",\"label\":\"图片\",\"description\":\"\"}],\"cover_media_id\":\"m_test\",\"visibility\":\"listed\",\"sort_order\":0,\"guide_profile\":{\"scene_ids\":[],\"materials\":[],\"substrates\":[],\"excluded_materials\":[],\"excluded_substrates\":[],\"power_source\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null,\"limitations\":[],\"consultation_notes\":[],\"required_requirements\":[],\"sources\":[],\"reviews\":[]},\"purchase_options\":[],\"version\":1,\"updated_at\":\"2026-11-06T00:00:00Z\"},\"version\":1,\"workspace_revision\":1}",
+    "valid": true,
+    "fields": [],
+    "expected": {
+      "product": {
+        "id": "sample",
+        "slug": "f30m",
+        "kind": "tool",
+        "name": "工具",
+        "model": "F30M",
+        "category_id": "straight",
+        "series": "",
+        "legacy_series_ids": [
+          "s_f30"
+        ],
+        "summary": "真实用途说明",
+        "applications": [
+          "",
+          "　",
+          "钉合"
+        ],
+        "features": [],
+        "notes": [],
+        "scene_ids": [],
+        "nail_type": null,
+        "fastener_text": "",
+        "long_nose": false,
+        "blower": false,
+        "images": [
+          {
+            "media_id": "m_test",
+            "label": "图片",
+            "description": ""
+          }
+        ],
+        "cover_media_id": "m_test",
+        "visibility": "listed",
+        "sort_order": 0,
+        "guide_profile": {
+          "scene_ids": [],
+          "materials": [],
+          "substrates": [],
+          "excluded_materials": [],
+          "excluded_substrates": [],
+          "power_source": null,
+          "nail_type": null,
+          "fastener_length_mm": null,
+          "load_bearing": null,
+          "long_nose": null,
+          "blower": null,
+          "limitations": [],
+          "consultation_notes": [],
+          "required_requirements": [],
+          "sources": [],
+          "reviews": []
+        },
+        "purchase_options": [],
+        "version": 1,
+        "updated_at": "2026-11-06T00:00:00Z"
+      },
+      "version": 1,
+      "workspace_revision": 1
+    }
+  },
+  {
+    "name": "MCPGetProductOutput rejects mismatched product version",
+    "schema": "mcp-tools.schema.json#/$defs/MCPGetProductOutput",
+    "raw": "{\"product\":{\"id\":\"sample\",\"slug\":\"f30m\",\"kind\":\"tool\",\"name\":\"工具\",\"model\":\"F30M\",\"category_id\":\"straight\",\"series\":\"\",\"legacy_series_ids\":[\"s_f30\"],\"summary\":\"真实用途说明\",\"applications\":[\"\",\"　\",\"钉合\"],\"features\":[],\"notes\":[],\"scene_ids\":[],\"nail_type\":null,\"fastener_text\":\"\",\"long_nose\":false,\"blower\":false,\"images\":[{\"media_id\":\"m_test\",\"label\":\"图片\",\"description\":\"\"}],\"cover_media_id\":\"m_test\",\"visibility\":\"listed\",\"sort_order\":0,\"guide_profile\":{\"scene_ids\":[],\"materials\":[],\"substrates\":[],\"excluded_materials\":[],\"excluded_substrates\":[],\"power_source\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null,\"limitations\":[],\"consultation_notes\":[],\"required_requirements\":[],\"sources\":[],\"reviews\":[]},\"purchase_options\":[],\"version\":1,\"updated_at\":\"2026-11-06T00:00:00Z\"},\"version\":2,\"workspace_revision\":1}",
+    "valid": false,
+    "fields": [
+      "version"
+    ]
+  },
+  {
+    "name": "MCPCreateProductOutput accepts matching version and null facts",
+    "schema": "mcp-tools.schema.json#/$defs/MCPCreateProductOutput",
+    "raw": "{\"product\":{\"id\":\"sample\",\"slug\":\"f30m\",\"kind\":\"tool\",\"name\":\"工具\",\"model\":\"F30M\",\"category_id\":\"straight\",\"series\":\"\",\"legacy_series_ids\":[\"s_f30\"],\"summary\":\"真实用途说明\",\"applications\":[\"\",\"　\",\"钉合\"],\"features\":[],\"notes\":[],\"scene_ids\":[],\"nail_type\":null,\"fastener_text\":\"\",\"long_nose\":false,\"blower\":false,\"images\":[{\"media_id\":\"m_test\",\"label\":\"图片\",\"description\":\"\"}],\"cover_media_id\":\"m_test\",\"visibility\":\"listed\",\"sort_order\":0,\"guide_profile\":{\"scene_ids\":[],\"materials\":[],\"substrates\":[],\"excluded_materials\":[],\"excluded_substrates\":[],\"power_source\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null,\"limitations\":[],\"consultation_notes\":[],\"required_requirements\":[],\"sources\":[],\"reviews\":[]},\"purchase_options\":[],\"version\":1,\"updated_at\":\"2026-11-06T00:00:00Z\"},\"version\":1,\"workspace_revision\":1}",
+    "valid": true,
+    "fields": [],
+    "expected": {
+      "product": {
+        "id": "sample",
+        "slug": "f30m",
+        "kind": "tool",
+        "name": "工具",
+        "model": "F30M",
+        "category_id": "straight",
+        "series": "",
+        "legacy_series_ids": [
+          "s_f30"
+        ],
+        "summary": "真实用途说明",
+        "applications": [
+          "",
+          "　",
+          "钉合"
+        ],
+        "features": [],
+        "notes": [],
+        "scene_ids": [],
+        "nail_type": null,
+        "fastener_text": "",
+        "long_nose": false,
+        "blower": false,
+        "images": [
+          {
+            "media_id": "m_test",
+            "label": "图片",
+            "description": ""
+          }
+        ],
+        "cover_media_id": "m_test",
+        "visibility": "listed",
+        "sort_order": 0,
+        "guide_profile": {
+          "scene_ids": [],
+          "materials": [],
+          "substrates": [],
+          "excluded_materials": [],
+          "excluded_substrates": [],
+          "power_source": null,
+          "nail_type": null,
+          "fastener_length_mm": null,
+          "load_bearing": null,
+          "long_nose": null,
+          "blower": null,
+          "limitations": [],
+          "consultation_notes": [],
+          "required_requirements": [],
+          "sources": [],
+          "reviews": []
+        },
+        "purchase_options": [],
+        "version": 1,
+        "updated_at": "2026-11-06T00:00:00Z"
+      },
+      "version": 1,
+      "workspace_revision": 1
+    }
+  },
+  {
+    "name": "MCPCreateProductOutput rejects mismatched product version",
+    "schema": "mcp-tools.schema.json#/$defs/MCPCreateProductOutput",
+    "raw": "{\"product\":{\"id\":\"sample\",\"slug\":\"f30m\",\"kind\":\"tool\",\"name\":\"工具\",\"model\":\"F30M\",\"category_id\":\"straight\",\"series\":\"\",\"legacy_series_ids\":[\"s_f30\"],\"summary\":\"真实用途说明\",\"applications\":[\"\",\"　\",\"钉合\"],\"features\":[],\"notes\":[],\"scene_ids\":[],\"nail_type\":null,\"fastener_text\":\"\",\"long_nose\":false,\"blower\":false,\"images\":[{\"media_id\":\"m_test\",\"label\":\"图片\",\"description\":\"\"}],\"cover_media_id\":\"m_test\",\"visibility\":\"listed\",\"sort_order\":0,\"guide_profile\":{\"scene_ids\":[],\"materials\":[],\"substrates\":[],\"excluded_materials\":[],\"excluded_substrates\":[],\"power_source\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null,\"limitations\":[],\"consultation_notes\":[],\"required_requirements\":[],\"sources\":[],\"reviews\":[]},\"purchase_options\":[],\"version\":1,\"updated_at\":\"2026-11-06T00:00:00Z\"},\"version\":2,\"workspace_revision\":1}",
+    "valid": false,
+    "fields": [
+      "version"
+    ]
+  },
+  {
+    "name": "MCP response nested cover belongs to images",
+    "schema": "mcp-tools.schema.json#/$defs/MCPGetProductOutput",
+    "raw": "{\"product\":{\"id\":\"sample\",\"slug\":\"f30m\",\"kind\":\"tool\",\"name\":\"工具\",\"model\":\"F30M\",\"category_id\":\"straight\",\"series\":\"\",\"legacy_series_ids\":[\"s_f30\"],\"summary\":\"真实用途说明\",\"applications\":[\"\",\"　\",\"钉合\"],\"features\":[],\"notes\":[],\"scene_ids\":[],\"nail_type\":null,\"fastener_text\":\"\",\"long_nose\":false,\"blower\":false,\"images\":[{\"media_id\":\"m_test\",\"label\":\"图片\",\"description\":\"\"}],\"cover_media_id\":\"m_missing\",\"visibility\":\"listed\",\"sort_order\":0,\"guide_profile\":{\"scene_ids\":[],\"materials\":[],\"substrates\":[],\"excluded_materials\":[],\"excluded_substrates\":[],\"power_source\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null,\"limitations\":[],\"consultation_notes\":[],\"required_requirements\":[],\"sources\":[],\"reviews\":[]},\"purchase_options\":[],\"version\":1,\"updated_at\":\"2026-11-06T00:00:00Z\"},\"version\":1,\"workspace_revision\":1}",
+    "valid": false,
+    "fields": [
+      "product.cover_media_id"
+    ]
+  },
+  {
+    "name": "proposal normalizes nested requirements and preserves null false",
+    "schema": "guide.schema.json#/$defs/GuideModelProposal",
+    "raw": "{\"intent\":\"consult\",\"requirements\":{\"scene_ids\":[],\"material\":\" 木材　\",\"substrate\":\" 基层\\t\",\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":false,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"candidate_product_ids\":[],\"selected_product_id\":null,\"selection_reference\":null}",
+    "valid": true,
+    "fields": [],
+    "expected": {
+      "intent": "consult",
+      "requirements": {
+        "scene_ids": [],
+        "material": "木材",
+        "substrate": "基层",
+        "nail_type": null,
+        "fastener_length_mm": null,
+        "air_supply": false,
+        "load_bearing": null,
+        "long_nose": null,
+        "blower": null
+      },
+      "candidate_product_ids": [],
+      "selected_product_id": null,
+      "selection_reference": null
+    }
+  },
+  {
+    "name": "GuideResult clarifying carries its legal conflicts array",
+    "schema": "guide.schema.json#/$defs/GuideResult",
+    "raw": "{\"release_id\":\"r_test\",\"state\":\"clarifying\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"conflicts\":[],\"question\":{\"field\":\"air_supply\",\"text\":\"现场有可用的压缩空气气源吗？\",\"options\":[\"有\",\"没有\",\"不确定\"]},\"recommendations\":[],\"selection\":null,\"missing_fields\":[\"air_supply\"],\"contact_href\":\"tel:10000\"}",
+    "valid": true,
+    "fields": [],
+    "expected": {
+      "release_id": "r_test",
+      "state": "clarifying",
+      "confirmed_requirements": {
+        "scene_ids": [],
+        "material": null,
+        "substrate": null,
+        "nail_type": null,
+        "fastener_length_mm": null,
+        "air_supply": null,
+        "load_bearing": null,
+        "long_nose": null,
+        "blower": null
+      },
+      "conflicts": [],
+      "question": {
+        "field": "air_supply",
+        "text": "现场有可用的压缩空气气源吗？",
+        "options": [
+          "有",
+          "没有",
+          "不确定"
+        ]
+      },
+      "recommendations": [],
+      "selection": null,
+      "missing_fields": [
+        "air_supply"
+      ],
+      "contact_href": "tel:10000"
+    }
+  },
+  {
+    "name": "GuideResult clarifying rejects missing conflicts",
+    "schema": "guide.schema.json#/$defs/GuideResult",
+    "raw": "{\"release_id\":\"r_test\",\"state\":\"clarifying\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"question\":{\"field\":\"air_supply\",\"text\":\"现场有可用的压缩空气气源吗？\",\"options\":[\"有\",\"没有\",\"不确定\"]},\"recommendations\":[],\"selection\":null,\"missing_fields\":[\"air_supply\"],\"contact_href\":\"tel:10000\"}",
+    "valid": false,
+    "fields": [
+      "conflicts"
+    ]
+  },
+  {
+    "name": "GuideResult clarifying rejects null conflicts",
+    "schema": "guide.schema.json#/$defs/GuideResult",
+    "raw": "{\"release_id\":\"r_test\",\"state\":\"clarifying\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"conflicts\":null,\"question\":{\"field\":\"air_supply\",\"text\":\"现场有可用的压缩空气气源吗？\",\"options\":[\"有\",\"没有\",\"不确定\"]},\"recommendations\":[],\"selection\":null,\"missing_fields\":[\"air_supply\"],\"contact_href\":\"tel:10000\"}",
+    "valid": false,
+    "fields": [
+      "conflicts"
+    ]
+  },
+  {
+    "name": "GuideResult clarifying rejects string conflicts",
+    "schema": "guide.schema.json#/$defs/GuideResult",
+    "raw": "{\"release_id\":\"r_test\",\"state\":\"clarifying\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"conflicts\":\"该工具需要压缩空气，现场明确没有可用气源。\",\"question\":{\"field\":\"air_supply\",\"text\":\"现场有可用的压缩空气气源吗？\",\"options\":[\"有\",\"没有\",\"不确定\"]},\"recommendations\":[],\"selection\":null,\"missing_fields\":[\"air_supply\"],\"contact_href\":\"tel:10000\"}",
+    "valid": false,
+    "fields": [
+      "conflicts"
+    ]
+  },
+  {
+    "name": "GuideResult clarifying rejects object conflicts",
+    "schema": "guide.schema.json#/$defs/GuideResult",
+    "raw": "{\"release_id\":\"r_test\",\"state\":\"clarifying\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"conflicts\":{},\"question\":{\"field\":\"air_supply\",\"text\":\"现场有可用的压缩空气气源吗？\",\"options\":[\"有\",\"没有\",\"不确定\"]},\"recommendations\":[],\"selection\":null,\"missing_fields\":[\"air_supply\"],\"contact_href\":\"tel:10000\"}",
+    "valid": false,
+    "fields": [
+      "conflicts"
+    ]
+  },
+  {
+    "name": "GuideResult clarifying rejects a conflict reason",
+    "schema": "guide.schema.json#/$defs/GuideResult",
+    "raw": "{\"release_id\":\"r_test\",\"state\":\"clarifying\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"conflicts\":[\"该工具需要压缩空气，现场明确没有可用气源。\"],\"question\":{\"field\":\"air_supply\",\"text\":\"现场有可用的压缩空气气源吗？\",\"options\":[\"有\",\"没有\",\"不确定\"]},\"recommendations\":[],\"selection\":null,\"missing_fields\":[\"air_supply\"],\"contact_href\":\"tel:10000\"}",
+    "valid": false,
+    "fields": [
+      "conflicts"
+    ]
+  },
+  {
+    "name": "GuideResult recommendations carries its legal conflicts array",
+    "schema": "guide.schema.json#/$defs/GuideResult",
+    "raw": "{\"release_id\":\"r_test\",\"state\":\"recommendations\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"conflicts\":[],\"question\":null,\"recommendations\":[{\"product_id\":\"p_test\",\"model\":\"TEST\",\"name\":\"测试工具\",\"detail_url\":\"/products/test/\",\"image\":null,\"match_level\":\"needs_confirmation\",\"matched_facts\":[],\"missing_fields\":[\"air_supply\"],\"confirmation_notes\":[\"请确认压缩空气气源\"]}],\"selection\":null,\"missing_fields\":[],\"contact_href\":\"tel:10000\"}",
+    "valid": true,
+    "fields": [],
+    "expected": {
+      "release_id": "r_test",
+      "state": "recommendations",
+      "confirmed_requirements": {
+        "scene_ids": [],
+        "material": null,
+        "substrate": null,
+        "nail_type": null,
+        "fastener_length_mm": null,
+        "air_supply": null,
+        "load_bearing": null,
+        "long_nose": null,
+        "blower": null
+      },
+      "conflicts": [],
+      "question": null,
+      "recommendations": [
+        {
+          "product_id": "p_test",
+          "model": "TEST",
+          "name": "测试工具",
+          "detail_url": "/products/test/",
+          "image": null,
+          "match_level": "needs_confirmation",
+          "matched_facts": [],
+          "missing_fields": [
+            "air_supply"
+          ],
+          "confirmation_notes": [
+            "请确认压缩空气气源"
+          ]
+        }
+      ],
+      "selection": null,
+      "missing_fields": [],
+      "contact_href": "tel:10000"
+    }
+  },
+  {
+    "name": "GuideResult recommendations rejects missing conflicts",
+    "schema": "guide.schema.json#/$defs/GuideResult",
+    "raw": "{\"release_id\":\"r_test\",\"state\":\"recommendations\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"question\":null,\"recommendations\":[{\"product_id\":\"p_test\",\"model\":\"TEST\",\"name\":\"测试工具\",\"detail_url\":\"/products/test/\",\"image\":null,\"match_level\":\"needs_confirmation\",\"matched_facts\":[],\"missing_fields\":[\"air_supply\"],\"confirmation_notes\":[\"请确认压缩空气气源\"]}],\"selection\":null,\"missing_fields\":[],\"contact_href\":\"tel:10000\"}",
+    "valid": false,
+    "fields": [
+      "conflicts"
+    ]
+  },
+  {
+    "name": "GuideResult recommendations rejects null conflicts",
+    "schema": "guide.schema.json#/$defs/GuideResult",
+    "raw": "{\"release_id\":\"r_test\",\"state\":\"recommendations\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"conflicts\":null,\"question\":null,\"recommendations\":[{\"product_id\":\"p_test\",\"model\":\"TEST\",\"name\":\"测试工具\",\"detail_url\":\"/products/test/\",\"image\":null,\"match_level\":\"needs_confirmation\",\"matched_facts\":[],\"missing_fields\":[\"air_supply\"],\"confirmation_notes\":[\"请确认压缩空气气源\"]}],\"selection\":null,\"missing_fields\":[],\"contact_href\":\"tel:10000\"}",
+    "valid": false,
+    "fields": [
+      "conflicts"
+    ]
+  },
+  {
+    "name": "GuideResult recommendations rejects string conflicts",
+    "schema": "guide.schema.json#/$defs/GuideResult",
+    "raw": "{\"release_id\":\"r_test\",\"state\":\"recommendations\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"conflicts\":\"该工具需要压缩空气，现场明确没有可用气源。\",\"question\":null,\"recommendations\":[{\"product_id\":\"p_test\",\"model\":\"TEST\",\"name\":\"测试工具\",\"detail_url\":\"/products/test/\",\"image\":null,\"match_level\":\"needs_confirmation\",\"matched_facts\":[],\"missing_fields\":[\"air_supply\"],\"confirmation_notes\":[\"请确认压缩空气气源\"]}],\"selection\":null,\"missing_fields\":[],\"contact_href\":\"tel:10000\"}",
+    "valid": false,
+    "fields": [
+      "conflicts"
+    ]
+  },
+  {
+    "name": "GuideResult recommendations rejects object conflicts",
+    "schema": "guide.schema.json#/$defs/GuideResult",
+    "raw": "{\"release_id\":\"r_test\",\"state\":\"recommendations\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"conflicts\":{},\"question\":null,\"recommendations\":[{\"product_id\":\"p_test\",\"model\":\"TEST\",\"name\":\"测试工具\",\"detail_url\":\"/products/test/\",\"image\":null,\"match_level\":\"needs_confirmation\",\"matched_facts\":[],\"missing_fields\":[\"air_supply\"],\"confirmation_notes\":[\"请确认压缩空气气源\"]}],\"selection\":null,\"missing_fields\":[],\"contact_href\":\"tel:10000\"}",
+    "valid": false,
+    "fields": [
+      "conflicts"
+    ]
+  },
+  {
+    "name": "GuideResult recommendations rejects a conflict reason",
+    "schema": "guide.schema.json#/$defs/GuideResult",
+    "raw": "{\"release_id\":\"r_test\",\"state\":\"recommendations\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"conflicts\":[\"该工具需要压缩空气，现场明确没有可用气源。\"],\"question\":null,\"recommendations\":[{\"product_id\":\"p_test\",\"model\":\"TEST\",\"name\":\"测试工具\",\"detail_url\":\"/products/test/\",\"image\":null,\"match_level\":\"needs_confirmation\",\"matched_facts\":[],\"missing_fields\":[\"air_supply\"],\"confirmation_notes\":[\"请确认压缩空气气源\"]}],\"selection\":null,\"missing_fields\":[],\"contact_href\":\"tel:10000\"}",
+    "valid": false,
+    "fields": [
+      "conflicts"
+    ]
+  },
+  {
+    "name": "GuideResult selected carries its legal conflicts array",
+    "schema": "guide.schema.json#/$defs/GuideResult",
+    "raw": "{\"release_id\":\"r_test\",\"state\":\"selected\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"question\":null,\"conflicts\":[],\"recommendations\":[],\"selection\":{\"product_id\":\"p_test\",\"model\":\"TEST\",\"name\":\"测试工具\",\"detail_url\":\"/products/test/\",\"image\":null,\"match_level\":\"needs_confirmation\",\"matched_facts\":[],\"missing_fields\":[\"air_supply\"],\"confirmation_notes\":[\"请确认压缩空气气源\"],\"purchase_options\":[],\"purchase_status\":\"unavailable\"},\"missing_fields\":[\"air_supply\"],\"contact_href\":\"tel:10000\"}",
+    "valid": true,
+    "fields": [],
+    "expected": {
+      "release_id": "r_test",
+      "state": "selected",
+      "confirmed_requirements": {
+        "scene_ids": [],
+        "material": null,
+        "substrate": null,
+        "nail_type": null,
+        "fastener_length_mm": null,
+        "air_supply": null,
+        "load_bearing": null,
+        "long_nose": null,
+        "blower": null
+      },
+      "question": null,
+      "conflicts": [],
+      "recommendations": [],
+      "selection": {
+        "product_id": "p_test",
+        "model": "TEST",
+        "name": "测试工具",
+        "detail_url": "/products/test/",
+        "image": null,
+        "match_level": "needs_confirmation",
+        "matched_facts": [],
+        "missing_fields": [
+          "air_supply"
+        ],
+        "confirmation_notes": [
+          "请确认压缩空气气源"
+        ],
+        "purchase_options": [],
+        "purchase_status": "unavailable"
+      },
+      "missing_fields": [
+        "air_supply"
+      ],
+      "contact_href": "tel:10000"
+    }
+  },
+  {
+    "name": "GuideResult selected rejects missing conflicts",
+    "schema": "guide.schema.json#/$defs/GuideResult",
+    "raw": "{\"release_id\":\"r_test\",\"state\":\"selected\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"question\":null,\"recommendations\":[],\"selection\":{\"product_id\":\"p_test\",\"model\":\"TEST\",\"name\":\"测试工具\",\"detail_url\":\"/products/test/\",\"image\":null,\"match_level\":\"needs_confirmation\",\"matched_facts\":[],\"missing_fields\":[\"air_supply\"],\"confirmation_notes\":[\"请确认压缩空气气源\"],\"purchase_options\":[],\"purchase_status\":\"unavailable\"},\"missing_fields\":[\"air_supply\"],\"contact_href\":\"tel:10000\"}",
+    "valid": false,
+    "fields": [
+      "conflicts"
+    ]
+  },
+  {
+    "name": "GuideResult selected rejects null conflicts",
+    "schema": "guide.schema.json#/$defs/GuideResult",
+    "raw": "{\"release_id\":\"r_test\",\"state\":\"selected\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"question\":null,\"conflicts\":null,\"recommendations\":[],\"selection\":{\"product_id\":\"p_test\",\"model\":\"TEST\",\"name\":\"测试工具\",\"detail_url\":\"/products/test/\",\"image\":null,\"match_level\":\"needs_confirmation\",\"matched_facts\":[],\"missing_fields\":[\"air_supply\"],\"confirmation_notes\":[\"请确认压缩空气气源\"],\"purchase_options\":[],\"purchase_status\":\"unavailable\"},\"missing_fields\":[\"air_supply\"],\"contact_href\":\"tel:10000\"}",
+    "valid": false,
+    "fields": [
+      "conflicts"
+    ]
+  },
+  {
+    "name": "GuideResult selected rejects string conflicts",
+    "schema": "guide.schema.json#/$defs/GuideResult",
+    "raw": "{\"release_id\":\"r_test\",\"state\":\"selected\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"question\":null,\"conflicts\":\"该工具需要压缩空气，现场明确没有可用气源。\",\"recommendations\":[],\"selection\":{\"product_id\":\"p_test\",\"model\":\"TEST\",\"name\":\"测试工具\",\"detail_url\":\"/products/test/\",\"image\":null,\"match_level\":\"needs_confirmation\",\"matched_facts\":[],\"missing_fields\":[\"air_supply\"],\"confirmation_notes\":[\"请确认压缩空气气源\"],\"purchase_options\":[],\"purchase_status\":\"unavailable\"},\"missing_fields\":[\"air_supply\"],\"contact_href\":\"tel:10000\"}",
+    "valid": false,
+    "fields": [
+      "conflicts"
+    ]
+  },
+  {
+    "name": "GuideResult selected rejects object conflicts",
+    "schema": "guide.schema.json#/$defs/GuideResult",
+    "raw": "{\"release_id\":\"r_test\",\"state\":\"selected\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"question\":null,\"conflicts\":{},\"recommendations\":[],\"selection\":{\"product_id\":\"p_test\",\"model\":\"TEST\",\"name\":\"测试工具\",\"detail_url\":\"/products/test/\",\"image\":null,\"match_level\":\"needs_confirmation\",\"matched_facts\":[],\"missing_fields\":[\"air_supply\"],\"confirmation_notes\":[\"请确认压缩空气气源\"],\"purchase_options\":[],\"purchase_status\":\"unavailable\"},\"missing_fields\":[\"air_supply\"],\"contact_href\":\"tel:10000\"}",
+    "valid": false,
+    "fields": [
+      "conflicts"
+    ]
+  },
+  {
+    "name": "GuideResult selected rejects a conflict reason",
+    "schema": "guide.schema.json#/$defs/GuideResult",
+    "raw": "{\"release_id\":\"r_test\",\"state\":\"selected\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"question\":null,\"conflicts\":[\"该工具需要压缩空气，现场明确没有可用气源。\"],\"recommendations\":[],\"selection\":{\"product_id\":\"p_test\",\"model\":\"TEST\",\"name\":\"测试工具\",\"detail_url\":\"/products/test/\",\"image\":null,\"match_level\":\"needs_confirmation\",\"matched_facts\":[],\"missing_fields\":[\"air_supply\"],\"confirmation_notes\":[\"请确认压缩空气气源\"],\"purchase_options\":[],\"purchase_status\":\"unavailable\"},\"missing_fields\":[\"air_supply\"],\"contact_href\":\"tel:10000\"}",
+    "valid": false,
+    "fields": [
+      "conflicts"
+    ]
+  },
+  {
+    "name": "GuideResult no_match carries its legal conflicts array",
+    "schema": "guide.schema.json#/$defs/GuideResult",
+    "raw": "{\"release_id\":\"r_test\",\"state\":\"no_match\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":false,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"conflicts\":[\"该工具需要压缩空气，现场明确没有可用气源。\"],\"question\":null,\"recommendations\":[],\"selection\":null,\"missing_fields\":[\"material\"],\"contact_href\":\"tel:10000\"}",
+    "valid": true,
+    "fields": [],
+    "expected": {
+      "release_id": "r_test",
+      "state": "no_match",
+      "confirmed_requirements": {
+        "scene_ids": [],
+        "material": null,
+        "substrate": null,
+        "nail_type": null,
+        "fastener_length_mm": null,
+        "air_supply": false,
+        "load_bearing": null,
+        "long_nose": null,
+        "blower": null
+      },
+      "conflicts": [
+        "该工具需要压缩空气，现场明确没有可用气源。"
+      ],
+      "question": null,
+      "recommendations": [],
+      "selection": null,
+      "missing_fields": [
+        "material"
+      ],
+      "contact_href": "tel:10000"
+    }
+  },
+  {
+    "name": "GuideResult no_match rejects missing conflicts",
+    "schema": "guide.schema.json#/$defs/GuideResult",
+    "raw": "{\"release_id\":\"r_test\",\"state\":\"no_match\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":false,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"question\":null,\"recommendations\":[],\"selection\":null,\"missing_fields\":[\"material\"],\"contact_href\":\"tel:10000\"}",
+    "valid": false,
+    "fields": [
+      "conflicts"
+    ]
+  },
+  {
+    "name": "GuideResult no_match rejects null conflicts",
+    "schema": "guide.schema.json#/$defs/GuideResult",
+    "raw": "{\"release_id\":\"r_test\",\"state\":\"no_match\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":false,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"conflicts\":null,\"question\":null,\"recommendations\":[],\"selection\":null,\"missing_fields\":[\"material\"],\"contact_href\":\"tel:10000\"}",
+    "valid": false,
+    "fields": [
+      "conflicts"
+    ]
+  },
+  {
+    "name": "GuideResult no_match rejects string conflicts",
+    "schema": "guide.schema.json#/$defs/GuideResult",
+    "raw": "{\"release_id\":\"r_test\",\"state\":\"no_match\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":false,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"conflicts\":\"该工具需要压缩空气，现场明确没有可用气源。\",\"question\":null,\"recommendations\":[],\"selection\":null,\"missing_fields\":[\"material\"],\"contact_href\":\"tel:10000\"}",
+    "valid": false,
+    "fields": [
+      "conflicts"
+    ]
+  },
+  {
+    "name": "GuideResult no_match rejects object conflicts",
+    "schema": "guide.schema.json#/$defs/GuideResult",
+    "raw": "{\"release_id\":\"r_test\",\"state\":\"no_match\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":false,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"conflicts\":{},\"question\":null,\"recommendations\":[],\"selection\":null,\"missing_fields\":[\"material\"],\"contact_href\":\"tel:10000\"}",
+    "valid": false,
+    "fields": [
+      "conflicts"
+    ]
+  },
+  {
+    "name": "GuideResult unavailable carries its legal conflicts array",
+    "schema": "guide.schema.json#/$defs/GuideResult",
+    "raw": "{\"release_id\":\"r_test\",\"state\":\"unavailable\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"conflicts\":[],\"question\":null,\"recommendations\":[],\"selection\":null,\"missing_fields\":[],\"contact_href\":\"tel:10000\"}",
+    "valid": true,
+    "fields": [],
+    "expected": {
+      "release_id": "r_test",
+      "state": "unavailable",
+      "confirmed_requirements": {
+        "scene_ids": [],
+        "material": null,
+        "substrate": null,
+        "nail_type": null,
+        "fastener_length_mm": null,
+        "air_supply": null,
+        "load_bearing": null,
+        "long_nose": null,
+        "blower": null
+      },
+      "conflicts": [],
+      "question": null,
+      "recommendations": [],
+      "selection": null,
+      "missing_fields": [],
+      "contact_href": "tel:10000"
+    }
+  },
+  {
+    "name": "GuideResult unavailable rejects missing conflicts",
+    "schema": "guide.schema.json#/$defs/GuideResult",
+    "raw": "{\"release_id\":\"r_test\",\"state\":\"unavailable\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"question\":null,\"recommendations\":[],\"selection\":null,\"missing_fields\":[],\"contact_href\":\"tel:10000\"}",
+    "valid": false,
+    "fields": [
+      "conflicts"
+    ]
+  },
+  {
+    "name": "GuideResult unavailable rejects null conflicts",
+    "schema": "guide.schema.json#/$defs/GuideResult",
+    "raw": "{\"release_id\":\"r_test\",\"state\":\"unavailable\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"conflicts\":null,\"question\":null,\"recommendations\":[],\"selection\":null,\"missing_fields\":[],\"contact_href\":\"tel:10000\"}",
+    "valid": false,
+    "fields": [
+      "conflicts"
+    ]
+  },
+  {
+    "name": "GuideResult unavailable rejects string conflicts",
+    "schema": "guide.schema.json#/$defs/GuideResult",
+    "raw": "{\"release_id\":\"r_test\",\"state\":\"unavailable\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"conflicts\":\"该工具需要压缩空气，现场明确没有可用气源。\",\"question\":null,\"recommendations\":[],\"selection\":null,\"missing_fields\":[],\"contact_href\":\"tel:10000\"}",
+    "valid": false,
+    "fields": [
+      "conflicts"
+    ]
+  },
+  {
+    "name": "GuideResult unavailable rejects object conflicts",
+    "schema": "guide.schema.json#/$defs/GuideResult",
+    "raw": "{\"release_id\":\"r_test\",\"state\":\"unavailable\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"conflicts\":{},\"question\":null,\"recommendations\":[],\"selection\":null,\"missing_fields\":[],\"contact_href\":\"tel:10000\"}",
+    "valid": false,
+    "fields": [
+      "conflicts"
+    ]
+  },
+  {
+    "name": "GuideResult unavailable rejects a conflict reason",
+    "schema": "guide.schema.json#/$defs/GuideResult",
+    "raw": "{\"release_id\":\"r_test\",\"state\":\"unavailable\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"conflicts\":[\"该工具需要压缩空气，现场明确没有可用气源。\"],\"question\":null,\"recommendations\":[],\"selection\":null,\"missing_fields\":[],\"contact_href\":\"tel:10000\"}",
+    "valid": false,
+    "fields": [
+      "conflicts"
+    ]
+  },
+  {
+    "name": "GuideResult no_match rejects empty array",
+    "schema": "guide.schema.json#/$defs/GuideResult",
+    "raw": "{\"release_id\":\"r_test\",\"state\":\"no_match\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":false,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"conflicts\":[],\"question\":null,\"recommendations\":[],\"selection\":null,\"missing_fields\":[\"material\"],\"contact_href\":\"tel:10000\"}",
+    "valid": false,
+    "fields": [
+      "conflicts"
+    ]
+  },
+  {
+    "name": "GuideResult no_match rejects empty reason",
+    "schema": "guide.schema.json#/$defs/GuideResult",
+    "raw": "{\"release_id\":\"r_test\",\"state\":\"no_match\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":false,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"conflicts\":[\"\"],\"question\":null,\"recommendations\":[],\"selection\":null,\"missing_fields\":[\"material\"],\"contact_href\":\"tel:10000\"}",
+    "valid": false,
+    "fields": [
+      "conflicts"
+    ]
+  },
+  {
+    "name": "GuideResult no_match rejects Unicode whitespace reason",
+    "schema": "guide.schema.json#/$defs/GuideResult",
+    "raw": "{\"release_id\":\"r_test\",\"state\":\"no_match\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":false,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"conflicts\":[\"\\t\\n\\u000b\\f\\r                  　\"],\"question\":null,\"recommendations\":[],\"selection\":null,\"missing_fields\":[\"material\"],\"contact_href\":\"tel:10000\"}",
+    "valid": false,
+    "fields": [
+      "conflicts"
+    ]
+  },
+  {
+    "name": "GuideResult no_match rejects null reason",
+    "schema": "guide.schema.json#/$defs/GuideResult",
+    "raw": "{\"release_id\":\"r_test\",\"state\":\"no_match\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":false,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"conflicts\":[null],\"question\":null,\"recommendations\":[],\"selection\":null,\"missing_fields\":[\"material\"],\"contact_href\":\"tel:10000\"}",
+    "valid": false,
+    "fields": [
+      "conflicts"
+    ]
+  },
+  {
+    "name": "GuideResult no_match rejects boolean reason",
+    "schema": "guide.schema.json#/$defs/GuideResult",
+    "raw": "{\"release_id\":\"r_test\",\"state\":\"no_match\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":false,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"conflicts\":[false],\"question\":null,\"recommendations\":[],\"selection\":null,\"missing_fields\":[\"material\"],\"contact_href\":\"tel:10000\"}",
+    "valid": false,
+    "fields": [
+      "conflicts"
+    ]
+  },
+  {
+    "name": "GuideResult no_match rejects 1001 characters",
+    "schema": "guide.schema.json#/$defs/GuideResult",
+    "raw": "{\"release_id\":\"r_test\",\"state\":\"no_match\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":false,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"conflicts\":[\"中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中中\"],\"question\":null,\"recommendations\":[],\"selection\":null,\"missing_fields\":[\"material\"],\"contact_href\":\"tel:10000\"}",
+    "valid": false,
+    "fields": [
+      "conflicts"
+    ]
+  },
+  {
+    "name": "GuideResult no_match rejects 1001 astral characters",
+    "schema": "guide.schema.json#/$defs/GuideResult",
+    "raw": "{\"release_id\":\"r_test\",\"state\":\"no_match\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":false,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"conflicts\":[\"𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷\"],\"question\":null,\"recommendations\":[],\"selection\":null,\"missing_fields\":[\"material\"],\"contact_href\":\"tel:10000\"}",
+    "valid": false,
+    "fields": [
+      "conflicts"
+    ]
+  },
+  {
+    "name": "GuideResult no_match rejects 101 reasons",
+    "schema": "guide.schema.json#/$defs/GuideResult",
+    "raw": "{\"release_id\":\"r_test\",\"state\":\"no_match\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":false,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"conflicts\":[\"合成wire原因0\",\"合成wire原因1\",\"合成wire原因2\",\"合成wire原因3\",\"合成wire原因4\",\"合成wire原因5\",\"合成wire原因6\",\"合成wire原因7\",\"合成wire原因8\",\"合成wire原因9\",\"合成wire原因10\",\"合成wire原因11\",\"合成wire原因12\",\"合成wire原因13\",\"合成wire原因14\",\"合成wire原因15\",\"合成wire原因16\",\"合成wire原因17\",\"合成wire原因18\",\"合成wire原因19\",\"合成wire原因20\",\"合成wire原因21\",\"合成wire原因22\",\"合成wire原因23\",\"合成wire原因24\",\"合成wire原因25\",\"合成wire原因26\",\"合成wire原因27\",\"合成wire原因28\",\"合成wire原因29\",\"合成wire原因30\",\"合成wire原因31\",\"合成wire原因32\",\"合成wire原因33\",\"合成wire原因34\",\"合成wire原因35\",\"合成wire原因36\",\"合成wire原因37\",\"合成wire原因38\",\"合成wire原因39\",\"合成wire原因40\",\"合成wire原因41\",\"合成wire原因42\",\"合成wire原因43\",\"合成wire原因44\",\"合成wire原因45\",\"合成wire原因46\",\"合成wire原因47\",\"合成wire原因48\",\"合成wire原因49\",\"合成wire原因50\",\"合成wire原因51\",\"合成wire原因52\",\"合成wire原因53\",\"合成wire原因54\",\"合成wire原因55\",\"合成wire原因56\",\"合成wire原因57\",\"合成wire原因58\",\"合成wire原因59\",\"合成wire原因60\",\"合成wire原因61\",\"合成wire原因62\",\"合成wire原因63\",\"合成wire原因64\",\"合成wire原因65\",\"合成wire原因66\",\"合成wire原因67\",\"合成wire原因68\",\"合成wire原因69\",\"合成wire原因70\",\"合成wire原因71\",\"合成wire原因72\",\"合成wire原因73\",\"合成wire原因74\",\"合成wire原因75\",\"合成wire原因76\",\"合成wire原因77\",\"合成wire原因78\",\"合成wire原因79\",\"合成wire原因80\",\"合成wire原因81\",\"合成wire原因82\",\"合成wire原因83\",\"合成wire原因84\",\"合成wire原因85\",\"合成wire原因86\",\"合成wire原因87\",\"合成wire原因88\",\"合成wire原因89\",\"合成wire原因90\",\"合成wire原因91\",\"合成wire原因92\",\"合成wire原因93\",\"合成wire原因94\",\"合成wire原因95\",\"合成wire原因96\",\"合成wire原因97\",\"合成wire原因98\",\"合成wire原因99\",\"合成wire原因100\"],\"question\":null,\"recommendations\":[],\"selection\":null,\"missing_fields\":[\"material\"],\"contact_href\":\"tel:10000\"}",
+    "valid": false,
+    "fields": [
+      "conflicts"
+    ]
+  },
+  {
+    "name": "GuideResult normalizes Chinese multiline reasons and preserves null false",
+    "schema": "guide.schema.json#/$defs/GuideResult",
+    "raw": "{\"release_id\":\"r_test\",\"state\":\"no_match\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":\"　木材\",\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":false,\"load_bearing\":false,\"long_nose\":null,\"blower\":null},\"conflicts\":[\"　 需要压缩空气\\n请核实“气源”与\\\\管线。  \"],\"question\":null,\"recommendations\":[],\"selection\":null,\"missing_fields\":[\"material\"],\"contact_href\":\"tel:10000\"}",
+    "valid": true,
+    "fields": [],
+    "expected": {
+      "release_id": "r_test",
+      "state": "no_match",
+      "confirmed_requirements": {
+        "scene_ids": [],
+        "material": "木材",
+        "substrate": null,
+        "nail_type": null,
+        "fastener_length_mm": null,
+        "air_supply": false,
+        "load_bearing": false,
+        "long_nose": null,
+        "blower": null
+      },
+      "conflicts": [
+        "需要压缩空气\n请核实“气源”与\\管线。"
+      ],
+      "question": null,
+      "recommendations": [],
+      "selection": null,
+      "missing_fields": [
+        "material"
+      ],
+      "contact_href": "tel:10000"
+    }
+  },
+  {
+    "name": "GuideResult no_match accepts one character",
+    "schema": "guide.schema.json#/$defs/GuideResult",
+    "raw": "{\"release_id\":\"r_test\",\"state\":\"no_match\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":false,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"conflicts\":[\"中\"],\"question\":null,\"recommendations\":[],\"selection\":null,\"missing_fields\":[\"material\"],\"contact_href\":\"tel:10000\"}",
+    "valid": true,
+    "fields": [],
+    "expected": {
+      "release_id": "r_test",
+      "state": "no_match",
+      "confirmed_requirements": {
+        "scene_ids": [],
+        "material": null,
+        "substrate": null,
+        "nail_type": null,
+        "fastener_length_mm": null,
+        "air_supply": false,
+        "load_bearing": null,
+        "long_nose": null,
+        "blower": null
+      },
+      "conflicts": [
+        "中"
+      ],
+      "question": null,
+      "recommendations": [],
+      "selection": null,
+      "missing_fields": [
+        "material"
+      ],
+      "contact_href": "tel:10000"
+    }
+  },
+  {
+    "name": "GuideResult no_match accepts 1000 Unicode characters after trim",
+    "schema": "guide.schema.json#/$defs/GuideResult",
+    "raw": "{\"release_id\":\"r_test\",\"state\":\"no_match\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":false,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"conflicts\":[\"　𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷\"],\"question\":null,\"recommendations\":[],\"selection\":null,\"missing_fields\":[\"material\"],\"contact_href\":\"tel:10000\"}",
+    "valid": true,
+    "fields": [],
+    "expected": {
+      "release_id": "r_test",
+      "state": "no_match",
+      "confirmed_requirements": {
+        "scene_ids": [],
+        "material": null,
+        "substrate": null,
+        "nail_type": null,
+        "fastener_length_mm": null,
+        "air_supply": false,
+        "load_bearing": null,
+        "long_nose": null,
+        "blower": null
+      },
+      "conflicts": [
+        "𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷"
+      ],
+      "question": null,
+      "recommendations": [],
+      "selection": null,
+      "missing_fields": [
+        "material"
+      ],
+      "contact_href": "tel:10000"
+    }
+  },
+  {
+    "name": "GuideResult no_match accepts 100 reasons",
+    "schema": "guide.schema.json#/$defs/GuideResult",
+    "raw": "{\"release_id\":\"r_test\",\"state\":\"no_match\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":false,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"conflicts\":[\"合成wire原因0\",\"合成wire原因1\",\"合成wire原因2\",\"合成wire原因3\",\"合成wire原因4\",\"合成wire原因5\",\"合成wire原因6\",\"合成wire原因7\",\"合成wire原因8\",\"合成wire原因9\",\"合成wire原因10\",\"合成wire原因11\",\"合成wire原因12\",\"合成wire原因13\",\"合成wire原因14\",\"合成wire原因15\",\"合成wire原因16\",\"合成wire原因17\",\"合成wire原因18\",\"合成wire原因19\",\"合成wire原因20\",\"合成wire原因21\",\"合成wire原因22\",\"合成wire原因23\",\"合成wire原因24\",\"合成wire原因25\",\"合成wire原因26\",\"合成wire原因27\",\"合成wire原因28\",\"合成wire原因29\",\"合成wire原因30\",\"合成wire原因31\",\"合成wire原因32\",\"合成wire原因33\",\"合成wire原因34\",\"合成wire原因35\",\"合成wire原因36\",\"合成wire原因37\",\"合成wire原因38\",\"合成wire原因39\",\"合成wire原因40\",\"合成wire原因41\",\"合成wire原因42\",\"合成wire原因43\",\"合成wire原因44\",\"合成wire原因45\",\"合成wire原因46\",\"合成wire原因47\",\"合成wire原因48\",\"合成wire原因49\",\"合成wire原因50\",\"合成wire原因51\",\"合成wire原因52\",\"合成wire原因53\",\"合成wire原因54\",\"合成wire原因55\",\"合成wire原因56\",\"合成wire原因57\",\"合成wire原因58\",\"合成wire原因59\",\"合成wire原因60\",\"合成wire原因61\",\"合成wire原因62\",\"合成wire原因63\",\"合成wire原因64\",\"合成wire原因65\",\"合成wire原因66\",\"合成wire原因67\",\"合成wire原因68\",\"合成wire原因69\",\"合成wire原因70\",\"合成wire原因71\",\"合成wire原因72\",\"合成wire原因73\",\"合成wire原因74\",\"合成wire原因75\",\"合成wire原因76\",\"合成wire原因77\",\"合成wire原因78\",\"合成wire原因79\",\"合成wire原因80\",\"合成wire原因81\",\"合成wire原因82\",\"合成wire原因83\",\"合成wire原因84\",\"合成wire原因85\",\"合成wire原因86\",\"合成wire原因87\",\"合成wire原因88\",\"合成wire原因89\",\"合成wire原因90\",\"合成wire原因91\",\"合成wire原因92\",\"合成wire原因93\",\"合成wire原因94\",\"合成wire原因95\",\"合成wire原因96\",\"合成wire原因97\",\"合成wire原因98\",\"合成wire原因99\"],\"question\":null,\"recommendations\":[],\"selection\":null,\"missing_fields\":[\"material\"],\"contact_href\":\"tel:10000\"}",
+    "valid": true,
+    "fields": [],
+    "expected": {
+      "release_id": "r_test",
+      "state": "no_match",
+      "confirmed_requirements": {
+        "scene_ids": [],
+        "material": null,
+        "substrate": null,
+        "nail_type": null,
+        "fastener_length_mm": null,
+        "air_supply": false,
+        "load_bearing": null,
+        "long_nose": null,
+        "blower": null
+      },
+      "conflicts": [
+        "合成wire原因0",
+        "合成wire原因1",
+        "合成wire原因2",
+        "合成wire原因3",
+        "合成wire原因4",
+        "合成wire原因5",
+        "合成wire原因6",
+        "合成wire原因7",
+        "合成wire原因8",
+        "合成wire原因9",
+        "合成wire原因10",
+        "合成wire原因11",
+        "合成wire原因12",
+        "合成wire原因13",
+        "合成wire原因14",
+        "合成wire原因15",
+        "合成wire原因16",
+        "合成wire原因17",
+        "合成wire原因18",
+        "合成wire原因19",
+        "合成wire原因20",
+        "合成wire原因21",
+        "合成wire原因22",
+        "合成wire原因23",
+        "合成wire原因24",
+        "合成wire原因25",
+        "合成wire原因26",
+        "合成wire原因27",
+        "合成wire原因28",
+        "合成wire原因29",
+        "合成wire原因30",
+        "合成wire原因31",
+        "合成wire原因32",
+        "合成wire原因33",
+        "合成wire原因34",
+        "合成wire原因35",
+        "合成wire原因36",
+        "合成wire原因37",
+        "合成wire原因38",
+        "合成wire原因39",
+        "合成wire原因40",
+        "合成wire原因41",
+        "合成wire原因42",
+        "合成wire原因43",
+        "合成wire原因44",
+        "合成wire原因45",
+        "合成wire原因46",
+        "合成wire原因47",
+        "合成wire原因48",
+        "合成wire原因49",
+        "合成wire原因50",
+        "合成wire原因51",
+        "合成wire原因52",
+        "合成wire原因53",
+        "合成wire原因54",
+        "合成wire原因55",
+        "合成wire原因56",
+        "合成wire原因57",
+        "合成wire原因58",
+        "合成wire原因59",
+        "合成wire原因60",
+        "合成wire原因61",
+        "合成wire原因62",
+        "合成wire原因63",
+        "合成wire原因64",
+        "合成wire原因65",
+        "合成wire原因66",
+        "合成wire原因67",
+        "合成wire原因68",
+        "合成wire原因69",
+        "合成wire原因70",
+        "合成wire原因71",
+        "合成wire原因72",
+        "合成wire原因73",
+        "合成wire原因74",
+        "合成wire原因75",
+        "合成wire原因76",
+        "合成wire原因77",
+        "合成wire原因78",
+        "合成wire原因79",
+        "合成wire原因80",
+        "合成wire原因81",
+        "合成wire原因82",
+        "合成wire原因83",
+        "合成wire原因84",
+        "合成wire原因85",
+        "合成wire原因86",
+        "合成wire原因87",
+        "合成wire原因88",
+        "合成wire原因89",
+        "合成wire原因90",
+        "合成wire原因91",
+        "合成wire原因92",
+        "合成wire原因93",
+        "合成wire原因94",
+        "合成wire原因95",
+        "合成wire原因96",
+        "合成wire原因97",
+        "合成wire原因98",
+        "合成wire原因99"
+      ],
+      "question": null,
+      "recommendations": [],
+      "selection": null,
+      "missing_fields": [
+        "material"
+      ],
+      "contact_href": "tel:10000"
+    }
+  },
+  {
+    "name": "GuideResult no_match accepts duplicate reasons",
+    "schema": "guide.schema.json#/$defs/GuideResult",
+    "raw": "{\"release_id\":\"r_test\",\"state\":\"no_match\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":false,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"conflicts\":[\"该工具需要压缩空气，现场明确没有可用气源。\",\"该工具需要压缩空气，现场明确没有可用气源。\"],\"question\":null,\"recommendations\":[],\"selection\":null,\"missing_fields\":[\"material\"],\"contact_href\":\"tel:10000\"}",
+    "valid": true,
+    "fields": [],
+    "expected": {
+      "release_id": "r_test",
+      "state": "no_match",
+      "confirmed_requirements": {
+        "scene_ids": [],
+        "material": null,
+        "substrate": null,
+        "nail_type": null,
+        "fastener_length_mm": null,
+        "air_supply": false,
+        "load_bearing": null,
+        "long_nose": null,
+        "blower": null
+      },
+      "conflicts": [
+        "该工具需要压缩空气，现场明确没有可用气源。",
+        "该工具需要压缩空气，现场明确没有可用气源。"
+      ],
+      "question": null,
+      "recommendations": [],
+      "selection": null,
+      "missing_fields": [
+        "material"
+      ],
+      "contact_href": "tel:10000"
+    }
+  },
+  {
+    "name": "GuideResult no_match still rejects question",
+    "schema": "guide.schema.json#/$defs/GuideResult",
+    "raw": "{\"release_id\":\"r_test\",\"state\":\"no_match\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":false,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"conflicts\":[\"该工具需要压缩空气，现场明确没有可用气源。\"],\"question\":{\"field\":\"air_supply\",\"text\":\"是否有气源？\",\"options\":[]},\"recommendations\":[],\"selection\":null,\"missing_fields\":[\"material\"],\"contact_href\":\"tel:10000\"}",
+    "valid": false,
+    "fields": [
+      "question"
+    ]
+  },
+  {
+    "name": "GuideResult no_match still rejects selection",
+    "schema": "guide.schema.json#/$defs/GuideResult",
+    "raw": "{\"release_id\":\"r_test\",\"state\":\"no_match\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":false,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"conflicts\":[\"该工具需要压缩空气，现场明确没有可用气源。\"],\"question\":null,\"recommendations\":[],\"selection\":{\"product_id\":\"p_test\",\"model\":\"TEST\",\"name\":\"测试工具\",\"detail_url\":\"/products/test/\",\"image\":null,\"match_level\":\"needs_confirmation\",\"matched_facts\":[],\"missing_fields\":[\"air_supply\"],\"confirmation_notes\":[\"请确认压缩空气气源\"],\"purchase_options\":[],\"purchase_status\":\"unavailable\"},\"missing_fields\":[\"material\"],\"contact_href\":\"tel:10000\"}",
+    "valid": false,
+    "fields": [
+      "selection"
+    ]
+  },
+  {
+    "name": "GuideResult no_match still rejects recommendations",
+    "schema": "guide.schema.json#/$defs/GuideResult",
+    "raw": "{\"release_id\":\"r_test\",\"state\":\"no_match\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":false,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"conflicts\":[\"该工具需要压缩空气，现场明确没有可用气源。\"],\"question\":null,\"recommendations\":[{\"product_id\":\"p_test\",\"model\":\"TEST\",\"name\":\"测试工具\",\"detail_url\":\"/products/test/\",\"image\":null,\"match_level\":\"needs_confirmation\",\"matched_facts\":[],\"missing_fields\":[\"air_supply\"],\"confirmation_notes\":[\"请确认压缩空气气源\"]}],\"selection\":null,\"missing_fields\":[\"material\"],\"contact_href\":\"tel:10000\"}",
+    "valid": false,
+    "fields": [
+      "recommendations"
+    ]
+  },
+  {
+    "name": "GuideResult no_match still rejects unknown output field",
+    "schema": "guide.schema.json#/$defs/GuideResult",
+    "raw": "{\"release_id\":\"r_test\",\"state\":\"no_match\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":false,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"conflicts\":[\"该工具需要压缩空气，现场明确没有可用气源。\"],\"question\":null,\"recommendations\":[],\"selection\":null,\"missing_fields\":[\"material\"],\"contact_href\":\"tel:10000\",\"explanation\":\"请核实气源\"}",
+    "valid": false,
+    "fields": [
+      "explanation"
+    ]
+  }
+]

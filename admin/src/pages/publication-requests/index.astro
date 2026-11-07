@@ -1,0 +1,19 @@
+---
+import Admin from '../../layouts/Admin.astro';
+---
+<Admin title="审阅与确认发布">
+  <form id="request-open" class="card"><label>发布意图 ID<input name="id" required autocomplete="off" /></label><button type="submit">打开发布意图</button></form>
+  <section id="request-detail" hidden>
+    <p id="request-scope" class="notice"></p>
+    <div class="card"><h2>本次审阅绑定的版本</h2><dl id="request-meta" class="publication-meta"></dl><p id="request-state" role="status" aria-live="polite"></p><p id="request-error" class="notice error" hidden></p><p id="request-conflict" class="notice error" hidden></p><button id="refresh-request" type="button">刷新执行状态</button></div>
+    <div id="request-diff"></div>
+    <form id="confirmation-form" class="card">
+      <label class="check"><input id="reviewed-workspace" type="checkbox" required />我已审阅以上完整差异、受影响页面、图片和购买渠道，确认指定目标及版本</label>
+      <div class="actions"><button id="confirm-publication" class="primary" type="submit" disabled>确认执行</button><button id="cancel-publication" class="danger" type="button" disabled>取消待确认意图</button></div>
+      <p>确认只针对以上已审阅摘要和版本。过期或冲突后须重新生成、审阅；不会自动换目标或重试确认。</p>
+    </form>
+    <div id="publication-result" class="card" hidden></div>
+  </section>
+  <div class="actions"><a href="/admin/publications/">发布记录与历史回退</a><a href="/admin/candidates/">重新生成完整工作区候选</a></div>
+  <script>import { mountRequest } from '../../lib/publication'; mountRequest();</script>
+</Admin>

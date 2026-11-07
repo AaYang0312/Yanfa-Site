@@ -1,0 +1,1261 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://yuanfa.example/schemas/public-catalog.schema.json",
+  "title": "PublicExport",
+  "$ref": "#/$defs/PublicExport",
+  "$defs": {
+    "PublicSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "public_label": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 120
+        },
+        "public_url": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "uri",
+              "pattern": "^https://[^/@\\s]+(?:[/?#]|$)"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "public_label",
+        "public_url"
+      ]
+    },
+    "ReviewedGuideProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "scene_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "product.schema.json#/$defs/SceneID"
+          },
+          "maxItems": 10,
+          "uniqueItems": true
+        },
+        "materials": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          },
+          "maxItems": 100,
+          "uniqueItems": true
+        },
+        "substrates": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          },
+          "maxItems": 100,
+          "uniqueItems": true
+        },
+        "excluded_materials": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          },
+          "maxItems": 100,
+          "uniqueItems": true
+        },
+        "excluded_substrates": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          },
+          "maxItems": 100,
+          "uniqueItems": true
+        },
+        "power_source": {
+          "anyOf": [
+            {
+              "$ref": "product.schema.json#/$defs/PowerSource"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "nail_type": {
+          "anyOf": [
+            {
+              "$ref": "product.schema.json#/$defs/NailType"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "fastener_length_mm": {
+          "anyOf": [
+            {
+              "$ref": "product.schema.json#/$defs/LengthRange"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "load_bearing": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "long_nose": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "blower": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000
+          },
+          "maxItems": 30
+        },
+        "consultation_notes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000
+          },
+          "maxItems": 30
+        },
+        "required_requirements": {
+          "type": "array",
+          "items": {
+            "$ref": "product.schema.json#/$defs/RequirementField"
+          },
+          "maxItems": 9,
+          "uniqueItems": true
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ReviewedSource"
+          },
+          "maxItems": 100
+        },
+        "unknown_fields": {
+          "type": "array",
+          "items": {
+            "$ref": "product.schema.json#/$defs/GuideField"
+          },
+          "maxItems": 14,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "scene_ids",
+        "materials",
+        "substrates",
+        "excluded_materials",
+        "excluded_substrates",
+        "power_source",
+        "nail_type",
+        "fastener_length_mm",
+        "load_bearing",
+        "long_nose",
+        "blower",
+        "limitations",
+        "consultation_notes",
+        "required_requirements",
+        "sources",
+        "unknown_fields"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "unknown_fields": {
+                "contains": {
+                  "const": "scene_ids"
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "scene_ids": {
+                "maxItems": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "unknown_fields": {
+                "contains": {
+                  "const": "materials"
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "materials": {
+                "maxItems": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "unknown_fields": {
+                "contains": {
+                  "const": "substrates"
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "substrates": {
+                "maxItems": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "unknown_fields": {
+                "contains": {
+                  "const": "excluded_materials"
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "excluded_materials": {
+                "maxItems": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "unknown_fields": {
+                "contains": {
+                  "const": "excluded_substrates"
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "excluded_substrates": {
+                "maxItems": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "unknown_fields": {
+                "contains": {
+                  "const": "power_source"
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "power_source": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "unknown_fields": {
+                "contains": {
+                  "const": "nail_type"
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "nail_type": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "unknown_fields": {
+                "contains": {
+                  "const": "fastener_length_mm"
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "fastener_length_mm": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "unknown_fields": {
+                "contains": {
+                  "const": "load_bearing"
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "load_bearing": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "unknown_fields": {
+                "contains": {
+                  "const": "long_nose"
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "long_nose": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "unknown_fields": {
+                "contains": {
+                  "const": "blower"
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "blower": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "unknown_fields": {
+                "contains": {
+                  "const": "limitations"
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "limitations": {
+                "maxItems": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "unknown_fields": {
+                "contains": {
+                  "const": "consultation_notes"
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "consultation_notes": {
+                "maxItems": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "unknown_fields": {
+                "contains": {
+                  "const": "required_requirements"
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "required_requirements": {
+                "maxItems": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "power_source": {
+                "type": "null"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "unknown_fields": {
+                "contains": {
+                  "const": "power_source"
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "nail_type": {
+                "type": "null"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "unknown_fields": {
+                "contains": {
+                  "const": "nail_type"
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "fastener_length_mm": {
+                "type": "null"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "unknown_fields": {
+                "contains": {
+                  "const": "fastener_length_mm"
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "load_bearing": {
+                "type": "null"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "unknown_fields": {
+                "contains": {
+                  "const": "load_bearing"
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "long_nose": {
+                "type": "null"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "unknown_fields": {
+                "contains": {
+                  "const": "long_nose"
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "blower": {
+                "type": "null"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "unknown_fields": {
+                "contains": {
+                  "const": "blower"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "PublicImage": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "url": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        },
+        "label": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 120
+        },
+        "description": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 1000
+        },
+        "width": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "url",
+        "label",
+        "description",
+        "width",
+        "height"
+      ]
+    },
+    "PublicPurchaseOption": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "purchase_option_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "platform": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "store_name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "match_scope": {
+          "type": "string",
+          "enum": [
+            "exact_model",
+            "listing_with_variants"
+          ]
+        },
+        "sku_hint": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 500
+        },
+        "destination_host": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9.-]+$"
+        },
+        "handoff_url": {
+          "type": "string",
+          "pattern": "^/go/products/[^/?#]+/[^/?#]+\\?release_id=[^&#]+$"
+        }
+      },
+      "required": [
+        "purchase_option_id",
+        "platform",
+        "store_name",
+        "match_scope",
+        "sku_hint",
+        "destination_host",
+        "handoff_url"
+      ]
+    },
+    "MatchedFact": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "field": {
+          "$ref": "product.schema.json#/$defs/GuideField"
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1000
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PublicSource"
+          },
+          "maxItems": 100
+        }
+      },
+      "required": [
+        "field",
+        "text",
+        "sources"
+      ]
+    },
+    "MatchDecision": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "match_level": {
+          "type": "string",
+          "enum": [
+            "matched",
+            "needs_confirmation",
+            "no_match"
+          ]
+        },
+        "matched_facts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MatchedFact"
+          },
+          "maxItems": 100
+        },
+        "missing_fields": {
+          "type": "array",
+          "items": {
+            "$ref": "public-catalog.schema.json#/$defs/MissingField"
+          },
+          "maxItems": 100,
+          "uniqueItems": true
+        },
+        "confirmation_notes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000
+          },
+          "maxItems": 100
+        },
+        "conflicts": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000
+          },
+          "maxItems": 100
+        }
+      },
+      "required": [
+        "match_level",
+        "matched_facts",
+        "missing_fields",
+        "confirmation_notes",
+        "conflicts"
+      ]
+    },
+    "PublicProduct": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "type": "integer",
+          "const": 1,
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        "release_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "product_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "product_version": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "slug": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "maxLength": 80
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "model": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 80
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "tool",
+            "consumable",
+            "entry"
+          ]
+        },
+        "category_id": {
+          "$ref": "product.schema.json#/$defs/CategoryID"
+        },
+        "series": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 120
+        },
+        "legacy_series_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 120,
+            "pattern": "^[A-Za-z0-9_-]+$"
+          },
+          "maxItems": 100,
+          "uniqueItems": true
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 500
+        },
+        "applications": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 0,
+            "maxLength": 1000
+          },
+          "maxItems": 30
+        },
+        "features": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 0,
+            "maxLength": 1000
+          },
+          "maxItems": 30
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 0,
+            "maxLength": 1000
+          },
+          "maxItems": 30
+        },
+        "scene_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "product.schema.json#/$defs/SceneID"
+          },
+          "maxItems": 10,
+          "uniqueItems": true
+        },
+        "nail_type": {
+          "anyOf": [
+            {
+              "$ref": "product.schema.json#/$defs/NailType"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "fastener_text": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 1000
+        },
+        "long_nose": {
+          "type": "boolean"
+        },
+        "blower": {
+          "type": "boolean"
+        },
+        "detail_url": {
+          "type": "string",
+          "pattern": "^/products/[a-z0-9-]+/$"
+        },
+        "images": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PublicImage"
+          },
+          "maxItems": 12
+        },
+        "guide_profile": {
+          "$ref": "#/$defs/ReviewedGuideProfile"
+        },
+        "match_level": {
+          "type": "string",
+          "enum": [
+            "matched",
+            "needs_confirmation"
+          ]
+        },
+        "matched_facts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MatchedFact"
+          },
+          "maxItems": 100
+        },
+        "missing_fields": {
+          "type": "array",
+          "items": {
+            "$ref": "public-catalog.schema.json#/$defs/MissingField"
+          },
+          "maxItems": 100,
+          "uniqueItems": true
+        },
+        "purchase_options": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PublicPurchaseOption"
+          },
+          "maxItems": 100
+        }
+      },
+      "required": [
+        "schema_version",
+        "release_id",
+        "product_id",
+        "product_version",
+        "slug",
+        "name",
+        "model",
+        "kind",
+        "category_id",
+        "series",
+        "legacy_series_ids",
+        "summary",
+        "applications",
+        "features",
+        "notes",
+        "scene_ids",
+        "nail_type",
+        "fastener_text",
+        "long_nose",
+        "blower",
+        "detail_url",
+        "images",
+        "guide_profile",
+        "match_level",
+        "matched_facts",
+        "missing_fields",
+        "purchase_options"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "match_level": {
+                "const": "matched"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "missing_fields": {
+                "maxItems": 0
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "missing_fields": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "CatalogQuery": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "q": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 200
+        },
+        "category": {
+          "$ref": "product.schema.json#/$defs/CategoryID"
+        },
+        "scene": {
+          "$ref": "product.schema.json#/$defs/SceneID"
+        },
+        "nail_type": {
+          "$ref": "product.schema.json#/$defs/NailType"
+        },
+        "material": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100,
+          "x-trim": true
+        },
+        "power_source": {
+          "$ref": "product.schema.json#/$defs/PowerSource"
+        },
+        "fastener_length_mm": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 1.7976931348623157e+308
+        },
+        "cursor": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100,
+          "default": 20
+        },
+        "release_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "include_unknown": {
+          "type": "boolean"
+        }
+      },
+      "required": []
+    },
+    "ProductList": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "release_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PublicProduct"
+          },
+          "maxItems": 100
+        },
+        "next_cursor": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 4096
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "release_id",
+        "items",
+        "next_cursor"
+      ],
+      "x-release-consistency": true
+    },
+    "ProductDetail": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "release_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "product": {
+          "$ref": "#/$defs/PublicProduct"
+        }
+      },
+      "required": [
+        "release_id",
+        "product"
+      ],
+      "x-release-consistency": true
+    },
+    "PublicExport": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "type": "integer",
+          "const": 1,
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        "release_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "generated_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "Z$"
+        },
+        "categories": {
+          "type": "array",
+          "items": {
+            "$ref": "catalog-snapshot.schema.json#/$defs/Category"
+          },
+          "maxItems": 10
+        },
+        "scenes": {
+          "type": "array",
+          "items": {
+            "$ref": "catalog-snapshot.schema.json#/$defs/Scene"
+          },
+          "maxItems": 10
+        },
+        "nail_types": {
+          "type": "array",
+          "items": {
+            "$ref": "catalog-snapshot.schema.json#/$defs/NailTypeEntry"
+          },
+          "maxItems": 7
+        },
+        "products": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PublicProduct"
+          },
+          "maxItems": 10000
+        }
+      },
+      "required": [
+        "schema_version",
+        "release_id",
+        "generated_at",
+        "categories",
+        "scenes",
+        "nail_types",
+        "products"
+      ],
+      "x-release-consistency": true
+    },
+    "PurchaseOptionsResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "release_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "product_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "purchase_options": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PublicPurchaseOption"
+          },
+          "maxItems": 100
+        },
+        "purchase_status": {
+          "type": "string",
+          "enum": [
+            "available",
+            "unavailable"
+          ]
+        }
+      },
+      "required": [
+        "release_id",
+        "product_id",
+        "purchase_options",
+        "purchase_status"
+      ]
+    },
+    "ReleaseResponse": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "type": "integer",
+          "const": 1,
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        "release_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        }
+      },
+      "required": [
+        "schema_version",
+        "release_id"
+      ]
+    },
+    "ReviewedSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "field": {
+          "$ref": "product.schema.json#/$defs/GuideField"
+        },
+        "public_label": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 120
+        },
+        "public_url": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "uri",
+              "pattern": "^https://[^/@\\s]+(?:[/?#]|$)"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "field",
+        "public_label",
+        "public_url"
+      ]
+    },
+    "MissingField": {
+      "type": "string",
+      "enum": [
+        "scene_ids",
+        "material",
+        "substrate",
+        "nail_type",
+        "fastener_length_mm",
+        "air_supply",
+        "load_bearing",
+        "long_nose",
+        "blower",
+        "guide_profile.scene_ids",
+        "guide_profile.materials",
+        "guide_profile.substrates",
+        "guide_profile.excluded_materials",
+        "guide_profile.excluded_substrates",
+        "guide_profile.power_source",
+        "guide_profile.nail_type",
+        "guide_profile.fastener_length_mm",
+        "guide_profile.load_bearing",
+        "guide_profile.long_nose",
+        "guide_profile.blower",
+        "guide_profile.limitations",
+        "guide_profile.consultation_notes",
+        "guide_profile.required_requirements"
+      ]
+    }
+  }
+}

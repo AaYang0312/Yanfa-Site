@@ -1,0 +1,422 @@
+---
+import Logo from './Logo.astro';
+import ProductArt from './ProductArt.astro';
+import ProductImage from './ProductImage.astro';
+import { topNav } from '../data/site';
+import { categories, representativeProduct } from '../data/catalog';
+
+const path = Astro.url.pathname;
+const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWith(href.split('#')[0]));
+
+const menus = [
+  {
+    id: 'products',
+    label: '产品中心',
+    href: '/products/',
+    items: categories.map((item) => ({
+      slug: item.slug,
+      name: item.name,
+      hint: item.hint,
+      color: item.color,
+      product: representativeProduct(item.slug),
+      href: `/products/?type=${item.slug}`,
+    })),
+  },
+];
+
+const plainLinks = [
+  { label: '枪钉', href: '/products/?type=nails' },
+  { label: '配件与其他', href: '/products/?type=other' },
+];
+---
+
+<header class="site-header" data-header>
+  <div class="topbar">
+    <div class="wrap topbar__inner">
+      <span class="topbar__lang"><span aria-current="true">中文</span></span>
+      <nav aria-label="站点导航">
+        <ul class="topbar__nav">
+          {topNav.map((item) => (
+            <li>
+              <a href={item.href} class:list={{ active: isActive(item.href) && !item.href.includes('#') }}>{item.label}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+  <div class="mainbar">
+    <div class="wrap mainbar__inner">
+      <Logo />
+      <nav aria-label="产品导航" class="mainnav">
+        <ul>
+          {menus.map((menu) => (
+            <li class="mainnav__item" data-mega-item>
+              <button
+                type="button"
+                class:list={['mainnav__link', { active: path.startsWith(menu.href) }]}
+                aria-expanded="false"
+                aria-controls={`mega-${menu.id}`}
+                data-mega-toggle
+              >
+                {menu.label}
+                <svg viewBox="0 0 10 10" aria-hidden="true"><path d="M3 1.5 6.5 5 3 8.5" fill="none" stroke="currentColor" stroke-width="1.2" /></svg>
+              </button>
+              <div class="mega" id={`mega-${menu.id}`} data-mega hidden>
+                <div class="wrap mega__inner">
+                  <h3 class="mega__title">全系列<br />气动钉枪</h3>
+                  <ul class="mega__grid">
+                    {menu.items.map((item) => (
+                      <li>
+                        <a href={item.href} style={`--hover:${item.color}`}>
+                          <span class="mega__thumb" aria-hidden="true">
+                            {item.product ? <ProductImage product={item.product} thumbnail sizes="56px" /> : <ProductArt category={item.slug} label={item.name} />}
+                          </span>
+                          <span>
+                            <strong>{item.name}</strong>
+                            <small>{item.hint}</small>
+                          </span>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                  <div class="mega__side">
+                    <a class="btn" href={menu.href}>查看全部产品</a>
+                    <button type="button" class="mega__close" data-mega-close aria-label="关闭菜单">
+                      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m3 3 10 10M13 3 3 13" stroke="currentColor" stroke-width="1.4" /></svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </li>
+          ))}
+          {plainLinks.map((item) => (
+            <li class="mainnav__item">
+              <a class:list={['mainnav__link', { active: isActive(item.href) }]} href={item.href}>{item.label}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+      <button type="button" class="burger" aria-expanded="false" aria-controls="drawer" data-drawer-toggle>
+        <span class="sr-only">打开菜单</span>
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="drawer" id="drawer" data-drawer hidden>
+    <div class="drawer__inner">
+      <p class="drawer__title">产品</p>
+      {menus.map((menu) => (
+        <details class="drawer__group">
+          <summary>{menu.label}</summary>
+          <ul>
+            {menu.items.map((item) => (
+              <li><a href={item.href}>{item.name}</a></li>
+            ))}
+            <li><a href={menu.href}>查看全部</a></li>
+          </ul>
+        </details>
+      ))}
+      <ul class="drawer__list">
+        {plainLinks.map((item) => (
+          <li><a href={item.href}>{item.label}</a></li>
+        ))}
+      </ul>
+      <p class="drawer__title">站点</p>
+      <ul class="drawer__list">
+        {topNav.map((item) => (
+          <li><a href={item.href}>{item.label}</a></li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 100;
+  }
+
+  .topbar {
+    height: var(--top-h);
+    background: var(--black);
+    color: #9a9a9a;
+    font-size: 13px;
+    font-weight: 300;
+  }
+
+  .topbar__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+  }
+
+  .topbar__lang [aria-current] {
+    color: #fff;
+  }
+
+  .topbar__nav {
+    display: flex;
+    gap: 28px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .topbar__nav a {
+    color: #fff;
+    text-decoration: none;
+    padding-bottom: 2px;
+    border-bottom: 1px solid transparent;
+  }
+
+  .topbar__nav a:hover,
+  .topbar__nav a.active {
+    border-bottom-color: #fff;
+  }
+
+  .mainbar {
+    position: relative;
+    height: var(--main-h);
+    background: #fff;
+    border-bottom: 1px solid var(--line);
+    transition: box-shadow 0.2s;
+  }
+
+  :global(.is-scrolled) .mainbar {
+    box-shadow: 0 6px 18px rgb(0 0 0 / 0.06);
+  }
+
+  .mainbar__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+  }
+
+  .mainnav ul {
+    display: flex;
+    gap: 34px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .mainnav__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 0;
+    border: 0;
+    border-bottom: 1px solid transparent;
+    background: none;
+    color: var(--ink);
+    font: inherit;
+    font-size: 15px;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .mainnav__link svg {
+    width: 10px;
+    height: 10px;
+    color: var(--muted);
+    transition: transform 0.2s;
+  }
+
+  .mainnav__link[aria-expanded='true'] svg {
+    transform: rotate(90deg);
+  }
+
+  .mainnav__link:hover,
+  .mainnav__link.active,
+  .mainnav__link[aria-expanded='true'] {
+    color: var(--wine);
+    border-bottom-color: var(--wine);
+  }
+
+  .mega {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    background: #fff;
+    border-top: 1px solid var(--line);
+    box-shadow: 0 24px 40px rgb(0 0 0 / 0.1);
+  }
+
+  .mega__inner {
+    display: grid;
+    grid-template-columns: 140px 1fr 170px;
+    gap: 32px;
+    padding-top: 36px;
+    padding-bottom: 40px;
+  }
+
+  .mega__title {
+    font-size: 22px;
+  }
+
+  .mega__grid {
+    display: grid !important;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 14px 20px !important;
+  }
+
+  .mega__grid a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 4px;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .mega__thumb {
+    display: grid;
+    place-items: center;
+    width: 56px;
+    height: 56px;
+    flex: none;
+    padding: 6px;
+    background: var(--paper);
+    border-bottom: 3px solid transparent;
+    transition: border-color 0.2s;
+  }
+
+  .mega__grid a:hover .mega__thumb {
+    border-bottom-color: var(--hover);
+  }
+
+  .mega__grid strong {
+    display: block;
+    font-weight: 500;
+  }
+
+  .mega__grid small {
+    display: block;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  .mega__grid a:hover strong {
+    color: var(--wine);
+  }
+
+  .mega__side {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+
+  .mega__side .btn {
+    min-width: 0;
+    padding: 10px 20px;
+  }
+
+  .mega__close {
+    width: 38px;
+    height: 38px;
+    border: 1px solid var(--ink);
+    background: #fff;
+    color: var(--ink);
+    cursor: pointer;
+  }
+
+  .mega__close svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .burger {
+    display: none;
+  }
+
+  .drawer {
+    position: fixed;
+    inset: var(--header-h) 0 0;
+    overflow-y: auto;
+    background: #fff;
+  }
+
+  .drawer__inner {
+    padding: 12px 20px 40px;
+  }
+
+  .drawer__title {
+    margin: 22px 0 6px;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+  }
+
+  .drawer__group summary,
+  .drawer__list a {
+    display: block;
+    padding: 13px 0;
+    border-bottom: 1px solid var(--line);
+    color: var(--ink);
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .drawer__group ul,
+  .drawer__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .drawer__group li a {
+    display: block;
+    padding: 10px 16px;
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  @media (max-width: 960px) {
+    .topbar,
+    .mainnav {
+      display: none;
+    }
+
+    .burger {
+      display: inline-flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 44px;
+      height: 44px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      background: #fff;
+      cursor: pointer;
+    }
+
+    .burger span:not(.sr-only) {
+      display: block;
+      height: 1.5px;
+      background: var(--ink);
+      transition: transform 0.2s, opacity 0.2s;
+    }
+
+    .burger[aria-expanded='true'] span:nth-of-type(2) {
+      transform: translateY(6.5px) rotate(45deg);
+    }
+
+    .burger[aria-expanded='true'] span:nth-of-type(3) {
+      opacity: 0;
+    }
+
+    .burger[aria-expanded='true'] span:nth-of-type(4) {
+      transform: translateY(-6.5px) rotate(-45deg);
+    }
+  }
+</style>

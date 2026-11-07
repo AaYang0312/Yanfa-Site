@@ -1,0 +1,229 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import aboutF30m from '../assets/client-1101/about-f30m.png';
+import { site } from '../data/site';
+
+const facts = [
+  { value: `${site.founded}年`, label: '品牌创立' },
+  { value: '40款', label: '气动钉枪' },
+  { value: '6个月', label: '免费整机质保' },
+];
+
+const sections = [
+  {
+    id: 'business',
+    title: '核心业务',
+    text: [
+      '全系列气动钉枪、配套工具、枪钉的研发、生产与销售。',
+      '产品线覆盖直钉枪、钢排钉枪、码钉枪、蚊钉枪、卷钉枪、取钉枪、保温枪和气动瓦斯枪，同时配套各类规格枪钉与气动工具配件。',
+      '产品适配家庭装修、工厂制造、物流包装等施工场景。',
+    ],
+  },
+  {
+    id: 'innovation',
+    title: '产品创新',
+    text: [
+      '首创加长枪嘴系列气动钉枪：F30M/T50L长嘴直钉枪、ST64ML/ST64GL长嘴钢钉枪。通过加长枪嘴设计，解决传统钉枪在狭窄空间作业的痛点，提升施工的灵活性与效率。',
+      '首创带吹尘功能气动钉枪：F30C/F30CL直钉枪。在钉枪上集成了吹尘功能，随手清理作业面的木屑与浮尘，减少装修现场需要携带的工具。',
+      '在结构设计、材料选用和制造工艺上持续改进；同时重视成本控制与供应链管理，以规模化生产和合理定价，坚持高性价比。',
+    ],
+  },
+  {
+    id: 'experience',
+    title: '行业经验',
+    text: [
+      `自 ${site.founded} 年创立以来，元发长期与装修师傅、工厂用户及DIY用户保持密切交流，收集用户痛点与需求，把现场的实际需求转化为产品改进与创新的方向。`,
+      `作为${site.legalName}旗下品牌，元发依托母公司的生产制造能力与质量管理体系，严格要求研发及生产品控。`,
+    ],
+  },
+];
+
+const users = ['装修木工师傅', '水电工师傅', '工厂生产用户', 'DIY 爱好者'];
+const channels = ['淘宝', '天猫', '抖店', '拼多多', '京东', '1688'];
+---
+
+<Base title="公司概况" description={`元发是 ${site.founded} 年创立的本土五金工具品牌，隶属${site.legalName}，主营气动钉枪及配套产品，首创加长枪嘴系列。`} contactStrip={false}>
+  <PageHead
+    title="公司概况"
+    lead={`元发是 ${site.founded} 年创立的本土五金工具品牌，隶属于${site.legalName}。`}
+    text="作为专注气动工具的创新品牌，元发始终以“产品创新”与“高性价比”为核心理念，为用户提供高效、实用的五金工具解决方案。"
+  />
+
+  <div class="wrap">
+    <div class="banner">
+      <Image
+        src={aboutF30m}
+        alt="元发 F30M 长嘴直钉枪实景海报"
+        widths={[400, 640, 800]}
+        sizes="(max-width: 800px) 100vw, 800px"
+        format="webp"
+        loading="eager"
+      />
+    </div>
+    <ul class="facts">
+      {facts.map((fact) => (
+        <li>
+          <strong>{fact.value}</strong>
+          <span>{fact.label}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+
+  {sections.map((section, index) => (
+    <section class:list={['section', { 'section--paper': index % 2 === 1 }]} id={section.id}>
+      <div class="wrap two-col">
+        <h2 class="h-section">{section.title}</h2>
+        <div class="body">
+          {section.text.map((text) => <p>{text}</p>)}
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <section class="section section--paper">
+    <div class="wrap two-col">
+      <h2 class="h-section">用户与渠道</h2>
+      <div class="where">
+        <div>
+          <h3>服务的用户</h3>
+          <ul class="tags">{users.map((item) => <li>{item}</li>)}</ul>
+        </div>
+        <div>
+          <h3>线上渠道</h3>
+          <ul class="tags">{channels.map((item) => <li>{item}</li>)}</ul>
+          <a class="where__link" href="/shop/">查看官方店铺</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .banner {
+    display: flex;
+    justify-content: center;
+    background: #0e131b;
+  }
+
+  .banner img {
+    display: block;
+    width: 100%;
+    max-width: 800px;
+    height: auto;
+  }
+
+  .facts {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .facts li {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 32px 24px;
+    border-left: 1px solid var(--line);
+  }
+
+  .facts li:first-child {
+    border-left: 0;
+    padding-left: 0;
+  }
+
+  .facts strong {
+    color: var(--wine);
+    font-family: var(--font-latin);
+    font-size: clamp(26px, 3vw, 38px);
+    font-weight: 400;
+    line-height: 1.1;
+  }
+
+  .facts span {
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 40px;
+  }
+
+  .body p {
+    color: var(--ink);
+  }
+
+  .body p:last-child {
+    margin-bottom: 0;
+  }
+
+  .where {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+
+  .where h3 {
+    margin-bottom: 14px;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--navy);
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .tags li {
+    padding: 4px 14px;
+    border: 1px solid var(--wine);
+    color: var(--wine);
+    font-size: 14px;
+  }
+
+  .where__link {
+    display: inline-block;
+    margin-top: 18px;
+    color: var(--wine);
+    font-size: 14px;
+  }
+
+  @media (max-width: 960px) {
+    .two-col,
+    .where {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .facts {
+      grid-template-columns: 1fr;
+    }
+
+    .facts li {
+      display: grid;
+      grid-template-columns: minmax(110px, 0.8fr) 1fr;
+      align-items: center;
+      gap: 16px;
+      padding: 20px 0;
+      border-left: 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .facts li:last-child {
+      border-bottom: 0;
+    }
+  }
+</style>

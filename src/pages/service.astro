@@ -1,0 +1,296 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import { warranty } from '../data/site';
+
+const repairSteps = [
+  { no: '01', title: '联系售后', text: '电话说明型号和故障现象，先判断能否通过调整或更换易损件解决。' },
+  { no: '02', title: '准备凭证', text: '提供购买凭证（订单截图即可）和故障照片，确认是否在 6 个月整机质保期内。' },
+  { no: '03', title: '寄出工具', text: '需要返修时，按售后告知的地址寄出，寄出运费由客户承担。' },
+  { no: '04', title: '维修寄回', text: '维修完成后寄回，寄回运费由元发承担。' },
+];
+
+const issues = [
+  {
+    symptom: '卡钉',
+    causes: ['钉型或钉长与枪不匹配', '弹夹内有碎屑或断钉', '推钉弹簧疲劳'],
+    action: '断开气源后打开弹夹清理，确认枪钉规格；反复出现时检查推钉器。',
+  },
+  {
+    symptom: '出钉无力、钉头打不平',
+    causes: ['气压不足或管路过长', '撞针尖端磨损', '活塞密封老化'],
+    action: '先把气压调到推荐范围，再检查撞针；仍无改善时更换活塞组件。',
+  },
+  {
+    symptom: '持续漏气',
+    causes: ['O 形圈或密封件损坏', '快速接头松动', '扳机阀密封失效'],
+    action: '用肥皂水找漏点，按型号成套更换密封件。',
+  },
+  {
+    symptom: '震动明显变大',
+    causes: ['缓冲垫老化或破裂', '枪体螺丝松动'],
+    action: '更换缓冲垫并紧固螺丝，避免长期满压空打。',
+  },
+];
+
+const care = [
+  '每天开工前从进气口滴入 2–3 滴气动工具油。',
+  '使用带油水分离器的气源，冬季注意排水。',
+  '按工件从低往高调气压，不长期满压使用。',
+  '每次换钉时顺手清理弹夹和枪嘴的木屑。',
+  '收工后断开气源，枪口朝下放置。',
+];
+---
+
+<Base title="质保服务" description="元发工具 6 个月免费整机质保：保修时长、保修范围、运费说明，以及送修流程和日常保养。">
+  <PageHead
+    title="质保服务"
+    lead={`${warranty.headline}。${warranty.short}。`}
+    text={warranty.lead}
+  />
+
+  <section class="section section--paper">
+    <div class="wrap">
+      <ul class="policy">
+        {warranty.items.map((item) => (
+          <li>
+            <h2>{item.title}</h2>
+            <p>{item.text}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap two">
+      <h2 class="h-section">送修流程</h2>
+      <ol class="repair">
+        {repairSteps.map((step) => (
+          <li>
+            <span class="repair__no">{step.no}</span>
+            <div>
+              <h3>{step.title}</h3>
+              <p>{step.text}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section section--paper">
+    <div class="wrap">
+      <div class="title-bar"><h2>常见故障排查</h2></div>
+      <div class="issues">
+        {issues.map((issue) => (
+          <article>
+            <h3>{issue.symptom}</h3>
+            <p class="issues__label">可能原因</p>
+            <ul>
+              {issue.causes.map((cause) => <li>{cause}</li>)}
+            </ul>
+            <p class="issues__label">处理建议</p>
+            <p>{issue.action}</p>
+          </article>
+        ))}
+      </div>
+      <p class="note">排查和拆装前务必断开气源。涉及内部结构的维修，建议交由熟悉该型号的人员处理。</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap care">
+      <h2 class="h-section">日常保养</h2>
+      <ol>
+        {care.map((item) => <li>{item}</li>)}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section section--paper">
+    <div class="wrap care">
+      <h2 class="h-section">配件</h2>
+      <div>
+        <p>
+          元发提供气动工具各类配件。联系时请准备：<span class="accent">枪身型号、故障现象和照片</span>，方便按型号匹配。
+        </p>
+        <div class="care__actions">
+          <a class="btn" href="/products/?type=other">配件与其他</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .policy {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .policy li {
+    padding: 32px 28px;
+    background: #fff;
+    border-top: 3px solid var(--wine);
+  }
+
+  .policy h2 {
+    margin-bottom: 14px;
+    font-size: 20px;
+  }
+
+  .policy p {
+    margin: 0;
+    color: var(--ink);
+    font-size: 14px;
+  }
+
+  .two {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 40px;
+  }
+
+  .repair {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .repair li {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 16px;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .repair li:first-child {
+    padding-top: 0;
+  }
+
+  .repair__no {
+    color: var(--wine);
+    font-family: var(--font-latin);
+    font-size: 34px;
+    font-weight: 300;
+    line-height: 1;
+  }
+
+  .repair h3 {
+    margin-bottom: 6px;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--navy);
+  }
+
+  .repair p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  .issues {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+
+  .issues article {
+    padding: 28px 24px;
+    background: #fff;
+    border-top: 3px solid var(--wine);
+  }
+
+  .issues h3 {
+    margin-bottom: 18px;
+    font-size: 19px;
+  }
+
+  .issues__label {
+    margin: 14px 0 4px;
+    color: var(--navy);
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .issues ul {
+    margin: 0;
+    padding-left: 1.1em;
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  .issues p:not(.issues__label) {
+    margin: 0;
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  .care {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 40px;
+  }
+
+  .care ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: care;
+  }
+
+  .care li {
+    position: relative;
+    padding: 14px 0 14px 52px;
+    border-bottom: 1px solid var(--line);
+    color: var(--ink);
+    counter-increment: care;
+  }
+
+  .care li::before {
+    content: counter(care, decimal-leading-zero);
+    position: absolute;
+    left: 0;
+    color: var(--wine);
+    font-family: var(--font-latin);
+    font-weight: 500;
+  }
+
+  .care p {
+    color: var(--ink);
+  }
+
+  .care__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 28px;
+  }
+
+  @media (max-width: 1100px) {
+    .issues,
+    .policy {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 960px) {
+    .care,
+    .two {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .issues,
+    .policy {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

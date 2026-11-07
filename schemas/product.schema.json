@@ -1,0 +1,1452 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://yuanfa.example/schemas/product.schema.json",
+  "title": "ProductDocument",
+  "$ref": "#/$defs/ProductDocument",
+  "$defs": {
+    "CategoryID": {
+      "type": "string",
+      "enum": [
+        "straight",
+        "steel",
+        "staple",
+        "pin",
+        "coil",
+        "remover",
+        "insulation",
+        "gas",
+        "nails",
+        "other"
+      ]
+    },
+    "SceneID": {
+      "type": "string",
+      "enum": [
+        "home-woodworking",
+        "ceiling-framing",
+        "packaging-pallets",
+        "furniture-timber",
+        "panel-fastening",
+        "nail-removal",
+        "wall-insulation",
+        "electrical-plumbing",
+        "wall-mesh",
+        "upholstery-rattan"
+      ]
+    },
+    "NailType": {
+      "type": "string",
+      "enum": [
+        "brad",
+        "steel-nail",
+        "staple",
+        "coil-nail",
+        "pin",
+        "insulation-nail",
+        "gas-nail"
+      ]
+    },
+    "RequirementField": {
+      "type": "string",
+      "enum": [
+        "scene_ids",
+        "material",
+        "substrate",
+        "nail_type",
+        "fastener_length_mm",
+        "air_supply",
+        "load_bearing",
+        "long_nose",
+        "blower"
+      ]
+    },
+    "PowerSource": {
+      "type": "string",
+      "enum": [
+        "pneumatic",
+        "gas",
+        "electric",
+        "manual"
+      ]
+    },
+    "LengthRange": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "min": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 1.7976931348623157e+308
+        },
+        "max": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 1.7976931348623157e+308
+        }
+      },
+      "required": [
+        "min",
+        "max"
+      ],
+      "x-ordered-range": [
+        "min",
+        "max"
+      ]
+    },
+    "ProductImage": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "media_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 120
+        },
+        "description": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 1000
+        }
+      },
+      "required": [
+        "media_id",
+        "label",
+        "description"
+      ]
+    },
+    "GuideSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "product_text",
+            "media",
+            "document"
+          ]
+        },
+        "reference": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1000
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "public_label": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 120
+        },
+        "public_url": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "uri",
+              "pattern": "^https://[^/@\\s]+(?:[/?#]|$)"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "reference",
+        "sha256",
+        "public_label",
+        "public_url"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "product_text"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "reference": {
+                "type": "string",
+                "pattern": "^/"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "reference": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 120,
+                "pattern": "^[A-Za-z0-9_-]+$"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "GuideField": {
+      "type": "string",
+      "enum": [
+        "scene_ids",
+        "materials",
+        "substrates",
+        "excluded_materials",
+        "excluded_substrates",
+        "power_source",
+        "nail_type",
+        "fastener_length_mm",
+        "load_bearing",
+        "long_nose",
+        "blower",
+        "limitations",
+        "consultation_notes",
+        "required_requirements"
+      ]
+    },
+    "GuideReview": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "field": {
+          "$ref": "#/$defs/GuideField"
+        },
+        "fact_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "source_sha256s": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "maxItems": 100,
+          "uniqueItems": true,
+          "minItems": 1
+        },
+        "reviewed_by": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "reviewed_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "Z$"
+        }
+      },
+      "required": [
+        "field",
+        "fact_sha256",
+        "source_sha256s",
+        "reviewed_by",
+        "reviewed_at"
+      ]
+    },
+    "GuideProfileEdit": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "scene_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SceneID"
+          },
+          "maxItems": 10,
+          "uniqueItems": true
+        },
+        "materials": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          },
+          "maxItems": 100,
+          "uniqueItems": true
+        },
+        "substrates": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          },
+          "maxItems": 100,
+          "uniqueItems": true
+        },
+        "excluded_materials": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          },
+          "maxItems": 100,
+          "uniqueItems": true
+        },
+        "excluded_substrates": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          },
+          "maxItems": 100,
+          "uniqueItems": true
+        },
+        "power_source": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PowerSource"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "nail_type": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/NailType"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "fastener_length_mm": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/LengthRange"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "load_bearing": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "long_nose": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "blower": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000
+          },
+          "maxItems": 30
+        },
+        "consultation_notes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000
+          },
+          "maxItems": 30
+        },
+        "required_requirements": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RequirementField"
+          },
+          "maxItems": 9,
+          "uniqueItems": true
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/GuideSource"
+          },
+          "maxItems": 100,
+          "x-unique-by": "id"
+        }
+      },
+      "required": [
+        "scene_ids",
+        "materials",
+        "substrates",
+        "excluded_materials",
+        "excluded_substrates",
+        "power_source",
+        "nail_type",
+        "fastener_length_mm",
+        "load_bearing",
+        "long_nose",
+        "blower",
+        "limitations",
+        "consultation_notes",
+        "required_requirements",
+        "sources"
+      ]
+    },
+    "GuideProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "scene_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SceneID"
+          },
+          "maxItems": 10,
+          "uniqueItems": true
+        },
+        "materials": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          },
+          "maxItems": 100,
+          "uniqueItems": true
+        },
+        "substrates": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          },
+          "maxItems": 100,
+          "uniqueItems": true
+        },
+        "excluded_materials": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          },
+          "maxItems": 100,
+          "uniqueItems": true
+        },
+        "excluded_substrates": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          },
+          "maxItems": 100,
+          "uniqueItems": true
+        },
+        "power_source": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PowerSource"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "nail_type": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/NailType"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "fastener_length_mm": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/LengthRange"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "load_bearing": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "long_nose": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "blower": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000
+          },
+          "maxItems": 30
+        },
+        "consultation_notes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000
+          },
+          "maxItems": 30
+        },
+        "required_requirements": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RequirementField"
+          },
+          "maxItems": 9,
+          "uniqueItems": true
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/GuideSource"
+          },
+          "maxItems": 100,
+          "x-unique-by": "id"
+        },
+        "reviews": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/GuideReview"
+          },
+          "maxItems": 14,
+          "x-unique-by": "field"
+        }
+      },
+      "required": [
+        "scene_ids",
+        "materials",
+        "substrates",
+        "excluded_materials",
+        "excluded_substrates",
+        "power_source",
+        "nail_type",
+        "fastener_length_mm",
+        "load_bearing",
+        "long_nose",
+        "blower",
+        "limitations",
+        "consultation_notes",
+        "required_requirements",
+        "sources",
+        "reviews"
+      ]
+    },
+    "PurchaseOptionEdit": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 120,
+              "pattern": "^[A-Za-z0-9_-]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "platform": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 120
+        },
+        "store_name": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 120
+        },
+        "url": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 2048
+        },
+        "match_scope": {
+          "type": "string",
+          "enum": [
+            "exact_model",
+            "listing_with_variants"
+          ]
+        },
+        "sku_hint": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 500
+        },
+        "enabled": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id",
+        "platform",
+        "store_name",
+        "url",
+        "match_scope",
+        "sku_hint",
+        "enabled"
+      ]
+    },
+    "PurchaseOption": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "platform": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 120
+        },
+        "store_name": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 120
+        },
+        "url": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 2048
+        },
+        "match_scope": {
+          "type": "string",
+          "enum": [
+            "exact_model",
+            "listing_with_variants"
+          ]
+        },
+        "sku_hint": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 500
+        },
+        "enabled": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id",
+        "platform",
+        "store_name",
+        "url",
+        "match_scope",
+        "sku_hint",
+        "enabled"
+      ]
+    },
+    "ProductEdit": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "tool",
+            "consumable",
+            "entry"
+          ]
+        },
+        "name": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 120
+        },
+        "model": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 80
+        },
+        "category_id": {
+          "$ref": "#/$defs/CategoryID"
+        },
+        "series": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 120
+        },
+        "legacy_series_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 120,
+            "pattern": "^[A-Za-z0-9_-]+$"
+          },
+          "maxItems": 100,
+          "uniqueItems": true
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 500
+        },
+        "applications": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 0,
+            "maxLength": 1000
+          },
+          "maxItems": 30
+        },
+        "features": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 0,
+            "maxLength": 1000
+          },
+          "maxItems": 30
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 0,
+            "maxLength": 1000
+          },
+          "maxItems": 30
+        },
+        "scene_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SceneID"
+          },
+          "maxItems": 10,
+          "uniqueItems": true
+        },
+        "nail_type": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/NailType"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "fastener_text": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 1000
+        },
+        "long_nose": {
+          "type": "boolean"
+        },
+        "blower": {
+          "type": "boolean"
+        },
+        "images": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ProductImage"
+          },
+          "maxItems": 12,
+          "x-unique-by": "media_id"
+        },
+        "cover_media_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 120,
+              "pattern": "^[A-Za-z0-9_-]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "visibility": {
+          "type": "string",
+          "enum": [
+            "listed",
+            "unlisted"
+          ]
+        },
+        "sort_order": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "guide_profile": {
+          "$ref": "#/$defs/GuideProfileEdit"
+        },
+        "purchase_options": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PurchaseOptionEdit"
+          },
+          "maxItems": 100,
+          "x-unique-by": "id"
+        }
+      },
+      "required": [
+        "kind",
+        "name",
+        "model",
+        "category_id",
+        "series",
+        "legacy_series_ids",
+        "summary",
+        "applications",
+        "features",
+        "notes",
+        "scene_ids",
+        "nail_type",
+        "fastener_text",
+        "long_nose",
+        "blower",
+        "images",
+        "cover_media_id",
+        "visibility",
+        "sort_order",
+        "guide_profile",
+        "purchase_options"
+      ],
+      "x-cover-membership": true
+    },
+    "ProductCreate": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "slug": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "maxLength": 80
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "tool",
+            "consumable",
+            "entry"
+          ]
+        },
+        "name": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 120
+        },
+        "model": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 80
+        },
+        "category_id": {
+          "$ref": "#/$defs/CategoryID"
+        },
+        "series": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 120
+        },
+        "legacy_series_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 120,
+            "pattern": "^[A-Za-z0-9_-]+$"
+          },
+          "maxItems": 100,
+          "uniqueItems": true
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 500
+        },
+        "applications": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 0,
+            "maxLength": 1000
+          },
+          "maxItems": 30
+        },
+        "features": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 0,
+            "maxLength": 1000
+          },
+          "maxItems": 30
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 0,
+            "maxLength": 1000
+          },
+          "maxItems": 30
+        },
+        "scene_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SceneID"
+          },
+          "maxItems": 10,
+          "uniqueItems": true
+        },
+        "nail_type": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/NailType"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "fastener_text": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 1000
+        },
+        "long_nose": {
+          "type": "boolean"
+        },
+        "blower": {
+          "type": "boolean"
+        },
+        "images": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ProductImage"
+          },
+          "maxItems": 12,
+          "x-unique-by": "media_id"
+        },
+        "cover_media_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 120,
+              "pattern": "^[A-Za-z0-9_-]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "visibility": {
+          "const": "unlisted",
+          "type": "string"
+        },
+        "sort_order": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "guide_profile": {
+          "$ref": "#/$defs/GuideProfileEdit"
+        },
+        "purchase_options": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PurchaseOptionEdit"
+          },
+          "maxItems": 100,
+          "x-unique-by": "id"
+        }
+      },
+      "required": [
+        "slug",
+        "kind",
+        "name",
+        "model",
+        "category_id",
+        "series",
+        "legacy_series_ids",
+        "summary",
+        "applications",
+        "features",
+        "notes",
+        "scene_ids",
+        "nail_type",
+        "fastener_text",
+        "long_nose",
+        "blower",
+        "images",
+        "cover_media_id",
+        "visibility",
+        "sort_order",
+        "guide_profile",
+        "purchase_options"
+      ],
+      "x-cover-membership": true
+    },
+    "ProductDocument": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "slug": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "maxLength": 80
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "tool",
+            "consumable",
+            "entry"
+          ]
+        },
+        "name": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 120
+        },
+        "model": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 80
+        },
+        "category_id": {
+          "$ref": "#/$defs/CategoryID"
+        },
+        "series": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 120
+        },
+        "legacy_series_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 120,
+            "pattern": "^[A-Za-z0-9_-]+$"
+          },
+          "maxItems": 100,
+          "uniqueItems": true
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 500
+        },
+        "applications": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 0,
+            "maxLength": 1000
+          },
+          "maxItems": 30
+        },
+        "features": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 0,
+            "maxLength": 1000
+          },
+          "maxItems": 30
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 0,
+            "maxLength": 1000
+          },
+          "maxItems": 30
+        },
+        "scene_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SceneID"
+          },
+          "maxItems": 10,
+          "uniqueItems": true
+        },
+        "nail_type": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/NailType"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "fastener_text": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 1000
+        },
+        "long_nose": {
+          "type": "boolean"
+        },
+        "blower": {
+          "type": "boolean"
+        },
+        "images": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ProductImage"
+          },
+          "maxItems": 12,
+          "x-unique-by": "media_id"
+        },
+        "cover_media_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 120,
+              "pattern": "^[A-Za-z0-9_-]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "visibility": {
+          "type": "string",
+          "enum": [
+            "listed",
+            "unlisted"
+          ]
+        },
+        "sort_order": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "guide_profile": {
+          "$ref": "#/$defs/GuideProfile"
+        },
+        "purchase_options": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PurchaseOption"
+          },
+          "maxItems": 100,
+          "x-unique-by": "id"
+        },
+        "version": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "Z$"
+        }
+      },
+      "required": [
+        "id",
+        "slug",
+        "kind",
+        "name",
+        "model",
+        "category_id",
+        "series",
+        "legacy_series_ids",
+        "summary",
+        "applications",
+        "features",
+        "notes",
+        "scene_ids",
+        "nail_type",
+        "fastener_text",
+        "long_nose",
+        "blower",
+        "images",
+        "cover_media_id",
+        "visibility",
+        "sort_order",
+        "guide_profile",
+        "purchase_options",
+        "version",
+        "updated_at"
+      ],
+      "x-cover-membership": true
+    },
+    "ProductEnvelope": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "product": {
+          "$ref": "#/$defs/ProductDocument"
+        },
+        "version": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "workspace_revision": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "product",
+        "version",
+        "workspace_revision"
+      ],
+      "x-product-version": true
+    },
+    "GuideReviewInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "version": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "facts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "field": {
+                "$ref": "#/$defs/GuideField"
+              },
+              "fact_sha256": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              },
+              "source_sha256s": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                },
+                "maxItems": 100,
+                "uniqueItems": true,
+                "minItems": 1
+              }
+            },
+            "required": [
+              "field",
+              "fact_sha256",
+              "source_sha256s"
+            ]
+          },
+          "maxItems": 14,
+          "x-unique-by": "field"
+        }
+      },
+      "required": [
+        "version",
+        "facts"
+      ]
+    },
+    "PublishedProduct": {
+      "$ref": "#/$defs/ProductDocument",
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "visibility": {
+                "const": "listed"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 120,
+                "pattern": "[^\\x09-\\x0d\\x20\\x85\\xa0  -     　]"
+              },
+              "purchase_options": {
+                "type": "array",
+                "items": {
+                  "allOf": [
+                    {
+                      "if": {
+                        "properties": {
+                          "match_scope": {
+                            "const": "listing_with_variants"
+                          }
+                        }
+                      },
+                      "then": {
+                        "properties": {
+                          "sku_hint": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 500,
+                            "pattern": "[^\\x09-\\x0d\\x20\\x85\\xa0  -     　]"
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "properties": {
+                    "platform": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 120
+                    },
+                    "store_name": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 120
+                    },
+                    "url": {
+                      "type": "string",
+                      "format": "uri",
+                      "pattern": "^https://[^/@\\s]+(?:[/?#]|$)"
+                    }
+                  }
+                }
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "kind": {
+                      "const": "tool"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "model": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 80,
+                      "pattern": "[^\\x09-\\x0d\\x20\\x85\\xa0  -     　]"
+                    },
+                    "summary": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 500,
+                      "pattern": "[^\\x09-\\x0d\\x20\\x85\\xa0  -     　]"
+                    },
+                    "applications": {
+                      "$ref": "#/$defs/PublishedToolApplications"
+                    },
+                    "images": {
+                      "type": "array",
+                      "minItems": 1
+                    },
+                    "cover_media_id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 120,
+                      "pattern": "^[A-Za-z0-9_-]+$"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "PublishedToolApplications": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "maxLength": 1000
+      },
+      "minItems": 1,
+      "maxItems": 30,
+      "contains": {
+        "type": "string",
+        "pattern": "[^\\x09-\\x0d\\x20\\x85\\xa0  -     　]"
+      }
+    }
+  }
+}

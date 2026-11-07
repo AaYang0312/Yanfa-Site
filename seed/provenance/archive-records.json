@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "frozen_at": "2026-11-07T13:35:21.044Z",
+  "source_row_semantics": "Synthetic public item index; not a row number in any private source document.",
+  "archives": [
+    {
+      "id": "legacy_catalog",
+      "source_path": "seed/provenance/legacy-catalog.ts",
+      "archive_path": "seed/provenance/legacy-catalog.ts",
+      "source_sha256": "e420797a833b9ed3567b0d15a321225724b72190ca2d5a1d470c888a3e3bc227",
+      "archive_sha256": "e420797a833b9ed3567b0d15a321225724b72190ca2d5a1d470c888a3e3bc227",
+      "differences": []
+    },
+    {
+      "id": "product_source",
+      "source_path": "seed/provenance/product-source.json",
+      "archive_path": "seed/provenance/product-source.json",
+      "source_sha256": "f5e6e054c6c4b1ae10b667ec970873c1e98afb60f4b9df875105970355038313",
+      "archive_sha256": "f5e6e054c6c4b1ae10b667ec970873c1e98afb60f4b9df875105970355038313",
+      "differences": []
+    }
+  ]
+}

@@ -1,0 +1,735 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import ProductArt from '../components/ProductArt.astro';
+import ProductImage from '../components/ProductImage.astro';
+import warrantyBanner from '../assets/ppt/warranty-banner.png';
+import homeHero from '../assets/client-1101/home-hero.png';
+import { site, warranty, media, mediaNote, shops } from '../data/site';
+import { categories, representativeProduct, toolProducts } from '../data/catalog';
+import { longNosePromotions, blowerPromotions } from '../data/product-promotions';
+const shopPlatforms = [...new Set(shops.map((shop) => shop.platform))].map((platform) => ({
+  platform,
+  shops: shops.filter((shop) => shop.platform === platform),
+}));
+
+const intro = [
+  {
+    title: '深耕气动工具',
+    text: `元发创立于 ${site.founded} 年，深耕气动工具领域十余年，提供全系列气动钉枪及配套产品，形成完整产品生态。`,
+  },
+  {
+    title: '注重产品创新',
+    text: '从用户体验出发，场景化进行产品的创新设计：\n解决狭窄空间作业痛点，首创“加长枪嘴系列”钉枪。\n首创“带吹尘功能”钉枪，随手清理作业面，减少工具携带。',
+  },
+];
+---
+
+<Base bodyClass="home">
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero__photo">
+      <Image src={homeHero} alt="元发 1013J 码钉枪木工作业实景" format="webp" widths={[480, 800, 1200, 1530]} sizes="(max-width: 960px) 140vh, 100vw" loading="eager" fetchpriority="high" />
+    </div>
+    <div class="hero__shade"></div>
+    <div class="wrap hero__layout">
+      <div class="hero__content">
+        <p class="hero__kicker"><span class="hero__flag"></span>{site.brand} {site.brandEn} · 创立于 {site.founded}</p>
+        <h1 id="hero-title">专注气动工具的<br />创新品牌</h1>
+        <p class="hero__lead">从首创加长枪嘴，到首创带吹尘功能，让工具更懂现场</p>
+        <div class="hero__actions">
+          <a class="btn btn--light" href="/products/">产品中心</a>
+          <a class="btn btn--light" href="/about/">我们是谁</a>
+        </div>
+      </div>
+    </div>
+    <a class="hero__scroll" href="#intro" aria-label="向下浏览"><span></span></a>
+  </section>
+
+  <section class="section intro" id="intro">
+    <div class="wrap intro__grid">
+      <h2 class="h-section">我们是谁</h2>
+      <div class="intro__items">
+        {intro.map((item) => (
+          <div>
+            <h3>{item.title}</h3>
+            <p>{item.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {longNosePromotions.length > 0 && <section class="split" aria-labelledby="long-title">
+    <div class="split__text">
+      <h2 id="long-title" class="h-section">首创<br />加长枪嘴系列</h2>
+      <div>
+        <p>枪嘴加长，可探入凹槽、边角、缝隙等狭窄作业面，轻松打钉</p>
+        <ul class="split__models">
+          {longNosePromotions.map((item) => (
+            <li>
+              <a href={`/products/${item.product.slug}/`}>
+                <strong>{item.model}</strong>
+                <span>{item.name}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+    <div class="split__art">
+      <div class="split__row">
+        {longNosePromotions.map((item) => (
+          <a class="split__photo" href={`/products/${item.product.slug}/`} aria-label={`查看 ${item.model}`}>
+            <Image src={item.image} alt={`${item.model} 加长枪嘴钉枪实景海报`} format="webp" widths={[240, 480, 750]} sizes="(max-width: 640px) 85vw, (max-width: 960px) 30vw, 18vw" />
+            <strong>{item.model}</strong>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>}
+
+  {blowerPromotions.length > 0 && <section class="split split--blower" aria-labelledby="blower-title">
+    <div class="split__text">
+      <h2 id="blower-title" class="h-section">首创<br />带吹尘功能</h2>
+      <div>
+        <p>元发首创带吹尘功能的直钉枪，打钉前先清理作业面的木屑和浮尘，方便打钉作业</p>
+        <ul class="split__models">
+          {blowerPromotions.map(({ product }) => (
+            <li><a href={`/products/${product.slug}/`}><strong>{product.model}</strong><span>{product.longNose ? '加长枪嘴 · 带吹尘功能' : '带吹尘功能'}</span></a></li>
+          ))}
+        </ul>
+      </div>
+    </div>
+    <div class="split__art">
+      <div class="split__row split__row--two">
+        {blowerPromotions.map(({ product, image }) => (
+          <a class="split__photo" href={`/products/${product.slug}/`} aria-label={`查看 ${product.model}`}>
+            <Image src={image} alt={`${product.model} 带吹尘功能直钉枪实景海报`} format="webp" widths={[320, 640, 800]} sizes="(max-width: 640px) 85vw, (max-width: 960px) 45vw, 25vw" />
+            <strong>{product.model}</strong>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>}
+
+  <section class="section products" id="products" aria-labelledby="products-title">
+    <div class="wrap">
+      <div class="products__head">
+        <h2 id="products-title" class="h-section">我们的产品</h2>
+        <p class="products__tags"><span>{toolProducts.length} 款工具</span><span>全系列配套</span></p>
+      </div>
+      <ul class="products__grid">
+        {categories.map((item) => {
+          const representative = representativeProduct(item.slug);
+          return (
+          <li class="cat">
+            <a class="cat__media" href={`/products/?type=${item.slug}`} tabindex="-1" aria-hidden="true">
+              {representative ? <ProductImage product={representative} sizes="(max-width: 640px) 45vw, 20vw" /> : <ProductArt category={item.slug} label={item.name} />}
+            </a>
+            <h3><a href={`/products/?type=${item.slug}`}>{item.name}</a></h3>
+            <p class="cat__lines">{item.lines}</p>
+            <p class="cat__scene">{item.scene}</p>
+            <p class="cat__use">{item.use}</p>
+          </li>
+        ); })}
+      </ul>
+      <div class="products__more">
+        <a class="btn" href="/products/">进入产品中心</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--paper service" id="service" aria-labelledby="service-title">
+    <div class="wrap service__grid">
+      <div class="service__media">
+        <Image
+          src={warrantyBanner}
+          alt="元发质保承诺：我们承诺，安心相伴，6 个月免费整机质保"
+          widths={[520, 1038]}
+          sizes="(max-width: 960px) 100vw, 50vw"
+        />
+      </div>
+      <div>
+        <h2 id="service-title" class="h-section">我们的服务</h2>
+        <p class="service__lead">{warranty.lead}</p>
+        <dl class="service__items">
+          {warranty.items.map((item) => (
+            <div>
+              <dt>{item.title}</dt>
+              <dd>{item.text}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="section channels">
+    <div class="wrap channels__grid">
+      <div class="channels__column">
+        <h2 class="h-section">官方媒体</h2>
+        <p class="muted channels__lead">{mediaNote}</p>
+        <ul class="channels__list">
+          {media.map((item) => (
+            <li><span>{item.platform}</span><strong>{item.name}</strong></li>
+          ))}
+        </ul>
+        <a class="btn" href="/media/">查看账号</a>
+      </div>
+      <div class="channels__column">
+        <h2 class="h-section">网上商城</h2>
+        <p class="muted channels__lead">官方店铺在线选购，型号、参数与价格以店铺详情页为准。</p>
+        <ul class="channels__list">
+          {shopPlatforms.map((group) => (
+            <li>
+              <span>{group.platform}</span>
+              <div class="channels__shops">
+                {group.shops.map((shop) => (
+                  <a href={shop.url} target="_blank" rel="noopener noreferrer" aria-label={shop.name}>
+                    <strong>{shop.name.replace(group.platform, '')}</strong>
+                  </a>
+                ))}
+              </div>
+            </li>
+          ))}
+        </ul>
+        <a class="btn" href="/shop/">全部店铺</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    position: relative;
+    display: grid;
+    place-items: center;
+    height: calc(100svh - var(--header-h) - clamp(24px, 4svh, 72px));
+    min-height: 640px;
+    overflow: hidden;
+    background: #05070a;
+    color: #fff;
+  }
+
+  .hero__layout {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    height: 100%;
+    max-width: 1800px;
+    padding: 80px clamp(20px, 5vw, 160px) 120px;
+  }
+
+  .hero__shade {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgb(0 0 0 / 0.28), rgb(0 0 0 / 0.52) 45%, rgb(0 0 0 / 0.62));
+  }
+
+  .hero__content {
+    width: 100%;
+    text-align: center;
+  }
+
+  .hero__kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: clamp(18px, 2svh, 32px);
+    font-size: clamp(16px, 1.1vw, 28px);
+    font-weight: 400;
+    letter-spacing: 0.06em;
+  }
+
+  .hero__flag {
+    width: 18px;
+    height: 18px;
+    background: linear-gradient(115deg, var(--wine) 0 50%, #fff 50% 60%, var(--navy) 60%);
+    transform: skewX(-12deg);
+  }
+
+  .hero h1 {
+    margin-bottom: clamp(24px, 2.4svh, 48px);
+    color: #fff;
+    font-size: clamp(44px, 3.2vw, 104px);
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: 0.04em;
+    text-shadow: 0 2px 24px rgb(0 0 0 / 0.45);
+  }
+
+  .hero h1 br { display: none; }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: clamp(16px, 1.4vw, 32px);
+    margin-top: clamp(48px, 8svh, 160px);
+  }
+
+  .hero__actions .btn {
+    min-width: clamp(170px, 11vw, 260px);
+    padding: clamp(13px, 1.15svh, 24px) clamp(32px, 3vw, 64px);
+    font-size: clamp(14px, 0.65vw, 20px);
+  }
+
+  .hero__lead { max-width: 36em; margin: 0 auto; color: #c5c9cf; font-size: clamp(17px, 1.1vw, 28px); }
+  .hero__photo { position: absolute; inset: 0; }
+  .hero__photo :global(img) { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 55%; }
+
+  .hero__scroll {
+    position: absolute;
+    bottom: clamp(28px, 3svh, 64px);
+    left: 50%;
+    width: 22px;
+    z-index: 2;
+    height: 34px;
+    margin-left: -11px;
+    border: 1px solid rgb(255 255 255 / 0.7);
+    border-radius: 12px;
+  }
+
+  .hero__scroll span {
+    position: absolute;
+    left: 50%;
+    top: 7px;
+    width: 2px;
+    height: 7px;
+    margin-left: -1px;
+    background: #fff;
+    border-radius: 2px;
+    animation: scroll-dot 1.8s infinite;
+  }
+
+  @keyframes scroll-dot {
+    0% {
+      opacity: 0;
+      transform: translateY(0);
+    }
+    30% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+  }
+
+  .intro__grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 40px;
+  }
+
+  .intro__items {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+  }
+
+  .intro__items h3 {
+    margin-bottom: 14px;
+    padding-bottom: 14px;
+    border-bottom: 2px solid var(--wine);
+    font-size: 20px;
+  }
+
+  .intro__items p {
+    margin: 0;
+    color: var(--ink);
+    white-space: pre-line;
+  }
+
+  .split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 540px;
+  }
+
+  .split__text {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 40px;
+    padding: 72px max(32px, calc((100vw - var(--wrap)) / 2 + 32px));
+    padding-right: 48px;
+    background: var(--navy);
+    color: #fff;
+  }
+
+  .split__text h2 {
+    color: #fff;
+  }
+
+  .split__text p {
+    max-width: 460px;
+    margin-bottom: 28px;
+    font-size: 14px;
+  }
+
+  .split__models {
+    display: grid;
+    gap: 1px;
+    max-width: 460px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    background: rgb(255 255 255 / 0.2);
+  }
+
+  .split__models a {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 14px 4px;
+    background: var(--navy);
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .split__models strong {
+    font-family: var(--font-latin);
+    font-size: 22px;
+    font-weight: 500;
+  }
+
+  .split__models span {
+    color: rgb(255 255 255 / 0.7);
+    font-size: 14px;
+  }
+
+  .split__models a:hover strong {
+    color: #ffb3c4;
+  }
+
+  .split__art {
+    position: relative;
+    overflow: hidden;
+    background: radial-gradient(120% 90% at 30% 20%, #ffffff, #d9dde1 60%, #b9bfc4);
+  }
+
+  .split__row {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: center;
+    gap: 12px;
+    height: 100%;
+    padding: 32px 24px;
+  }
+
+  .split__photo {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+    color: var(--wine);
+  }
+
+  .split__photo :global(img) { display: block; width: 100%; height: auto; }
+  .split__photo strong { font-size: 20px; font-weight: 500; }
+  .split__row--two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .split--blower .split__text, .split--blower .split__models a { background: var(--wine); }
+  .split--blower .split__art { order: -1; background: var(--paper); }
+  .split--blower .split__text { padding-left: 48px; padding-right: max(32px, calc((100vw - var(--wrap)) / 2 + 32px)); }
+
+
+  .products__head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+    padding-bottom: 22px;
+    margin-bottom: 40px;
+    border-bottom: 2px solid var(--wine);
+  }
+
+  .products__tags {
+    display: flex;
+    gap: 10px;
+    margin: 0;
+  }
+
+  .products__tags span {
+    padding: 2px 14px;
+    background: var(--wine);
+    color: #fff;
+    font-size: 14px;
+    letter-spacing: 0.1em;
+  }
+
+  .products__grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 40px 24px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .cat__media {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 4 / 3;
+    padding: 12px;
+    margin-bottom: 16px;
+    overflow: hidden;
+    background: #f3f4f5;
+  }
+
+  .cat__media :global(svg) {
+    transition: transform 0.5s ease;
+  }
+
+  .cat:hover .cat__media :global(svg) {
+    transform: scale(1.06);
+  }
+
+  .cat h3 {
+    margin-bottom: 8px;
+    font-size: 20px;
+  }
+
+  .cat h3 a {
+    color: var(--wine);
+    text-decoration: none;
+  }
+
+  .cat p {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .cat__lines {
+    color: var(--navy);
+    font-weight: 600;
+  }
+
+  .cat__scene {
+    margin-top: 6px !important;
+    color: var(--muted);
+  }
+
+  .cat__use {
+    margin-top: 6px !important;
+    color: var(--ink);
+  }
+
+  .cat__use::before {
+    content: '';
+    display: inline-block;
+    width: 14px;
+    height: 2px;
+    margin-right: 8px;
+    vertical-align: middle;
+    background: var(--wine);
+  }
+
+  .products__more {
+    margin-top: 56px;
+    text-align: center;
+  }
+
+  .service__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+  }
+
+  .service__media {
+    aspect-ratio: 1038 / 672;
+    overflow: hidden;
+  }
+
+  .service__media img {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin-top: -1.5%;
+  }
+
+  .service__lead {
+    margin: 20px 0 24px;
+    color: var(--wine);
+  }
+
+  .service__items {
+    margin: 0 0 32px;
+    border-top: 1px solid var(--ink);
+  }
+
+  .service__items div {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 16px;
+    padding: 12px 0;
+    border-bottom: 1px solid #d9dbde;
+    font-size: 14px;
+  }
+
+  .service__items dt {
+    color: var(--navy);
+    font-weight: 600;
+  }
+
+  .service__items dd {
+    margin: 0;
+    color: var(--ink);
+  }
+
+  .channels__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+  }
+
+  .channels__column {
+    display: grid;
+    grid-template-rows: auto 1fr auto auto;
+    align-items: start;
+    min-width: 0;
+  }
+
+  .channels__column > .btn { justify-self: start; }
+
+  .channels__lead {
+    margin: 18px 0 20px;
+    font-size: 14px;
+  }
+
+  .channels__list {
+    margin: 0 0 32px;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--ink);
+  }
+
+  .channels__list li {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 16px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 14px;
+  }
+
+  .channels__list span {
+    color: var(--muted);
+  }
+
+  .channels__list strong {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  .channels__list a {
+    text-decoration: none;
+  }
+
+  .channels__list a:hover strong {
+    color: var(--wine);
+  }
+
+  .channels__shops {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 20px;
+    min-width: 0;
+  }
+
+  .channels__shops a { white-space: nowrap; }
+
+  @media (min-width: 961px) {
+    :global(body.home) { --wrap: min(92vw, 2880px); }
+    :global(body.home .site-header .wrap) { max-width: none; padding-inline: clamp(32px, 4vw, 160px); }
+  }
+
+  @media (min-width: 1600px) {
+    .section { padding-block: clamp(112px, 5vw, 192px); }
+    .h-section { font-size: clamp(40px, 1.7vw, 64px); }
+    .intro__grid { gap: clamp(48px, 4vw, 144px); }
+    .intro__items { gap: clamp(48px, 3vw, 112px); }
+    .intro__items h3 { font-size: clamp(22px, 0.9vw, 32px); }
+    .intro__items p { max-width: 66ch; font-size: clamp(16px, 0.72vw, 22px); }
+    .split { min-height: clamp(620px, 34vw, 1040px); }
+    .split__text { gap: 64px; padding-block: clamp(88px, 5vw, 192px); }
+    .split__text p { max-width: 580px; font-size: clamp(16px, 0.72vw, 22px); }
+    .split__models { max-width: 640px; }
+    .split__models a { padding-block: clamp(18px, 0.8vw, 30px); }
+    .split__models strong { font-size: clamp(24px, 0.95vw, 36px); }
+    .split__models span { font-size: clamp(14px, 0.55vw, 20px); }
+    .split__row { gap: clamp(20px, 1.2vw, 48px); padding: clamp(32px, 3vw, 112px); }
+    .split__photo strong { font-size: clamp(22px, 0.8vw, 30px); }
+    .products__grid { gap: clamp(48px, 3vw, 112px) clamp(28px, 1.7vw, 64px); }
+    .cat h3 { font-size: clamp(22px, 0.9vw, 32px); }
+    .cat p { font-size: clamp(14px, 0.55vw, 20px); }
+    .service__grid, .channels__grid { gap: clamp(80px, 5vw, 192px); }
+    .service__lead, .channels__lead { font-size: clamp(16px, 0.65vw, 22px); }
+    .service__items div, .channels__list li { grid-template-columns: 120px 1fr; gap: 24px; padding-block: clamp(16px, 0.65vw, 24px); font-size: clamp(15px, 0.6vw, 20px); }
+  }
+
+  @media (max-width: 1100px) {
+    .products__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 960px) {
+    .intro__grid,
+    .intro__items,
+    .split,
+    .service__grid,
+    .channels__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .intro__items,
+    .service__grid,
+    .channels__grid {
+      gap: 40px;
+    }
+
+    .split__text {
+      padding: 56px 20px;
+    }
+
+    .split__art {
+      min-height: 320px;
+    }
+
+    .hero__layout { padding: 64px 20px 100px; }
+    .hero h1 { font-size: clamp(32px, 6vw, 48px); }
+    .hero h1 br { display: block; }
+    .hero__kicker { font-size: 14px; }
+    .hero__lead { max-width: 30em; font-size: 16px; }
+    .hero__actions { gap: 16px; margin-top: 48px; }
+    .hero__actions .btn { min-width: 160px; padding: 13px 30px; font-size: 14px; }
+    .hero__photo :global(img) { object-position: 42% 50%; }
+    .hero__scroll { bottom: 28px; }
+    .split--blower .split__art { order: 0; }
+    .split--blower .split__text { padding: 56px 20px; }
+  }
+
+  @media (max-width: 640px) {
+    .split__row,
+    .split__row--two { grid-template-columns: 1fr; gap: 32px; padding: 24px; }
+    .split__photo { width: min(100%, 420px); justify-self: center; }
+    .products__grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px 16px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero__scroll span {
+      animation: none;
+    }
+  }
+</style>

@@ -1,0 +1,110 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import wechatVideo from '../assets/ppt/wechat-video.png';
+import douyinNailgun from '../assets/ppt/douyin-nailgun.png';
+import douyinTools from '../assets/ppt/douyin-tools.png';
+import { media, mediaNote } from '../data/site';
+
+const shots = {
+  'wechat-video': wechatVideo,
+  'douyin-nailgun': douyinNailgun,
+  'douyin-tools': douyinTools,
+};
+---
+
+<Base title="官方媒体" description="元发官方微信视频号与抖音号：元发YANFA五金工具、元发钉枪、元发工具。">
+  <PageHead
+    title="官方媒体"
+    lead="看产品演示、施工视频和售后讲解。"
+    text={mediaNote}
+  />
+
+  <section class="section section--paper">
+    <div class="wrap">
+      <ul class="accounts">
+        {media.map((item) => (
+          <li>
+            <div class="accounts__shot">
+              <Image
+                src={shots[item.image]}
+                alt={`${item.platform}「${item.name}」主页截图`}
+                widths={[320, 640]}
+                sizes="(max-width: 640px) 80vw, 320px"
+              />
+            </div>
+            <p class="accounts__platform">{item.platform}</p>
+            <h2>{item.name}</h2>
+            <p class="accounts__bio">{item.bio}</p>
+            <p class="accounts__how">在{item.platform}中搜索「{item.name}」即可关注</p>
+          </li>
+        ))}
+      </ul>
+      <p class="note">截图来自账号主页，粉丝数等数据以平台实时显示为准。</p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .accounts {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .accounts__shot {
+    display: grid;
+    place-items: start center;
+    height: 520px;
+    margin-bottom: 24px;
+    padding: 24px 24px 0;
+    overflow: hidden;
+    background: #fff;
+    border-top: 3px solid var(--wine);
+  }
+
+  .accounts__shot img {
+    display: block;
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    box-shadow: 0 10px 30px rgb(0 0 0 / 0.12);
+  }
+
+  .accounts__platform {
+    margin: 0 0 4px;
+    color: var(--muted);
+    font-size: 13px;
+    letter-spacing: 0.12em;
+  }
+
+  .accounts h2 {
+    margin-bottom: 12px;
+    color: var(--wine);
+    font-size: 22px;
+  }
+
+  .accounts__bio {
+    margin: 0 0 8px;
+    color: var(--ink);
+    font-size: 14px;
+  }
+
+  .accounts__how {
+    margin: 0;
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  @media (max-width: 960px) {
+    .accounts {
+      grid-template-columns: 1fr;
+      max-width: 420px;
+      margin: 0 auto;
+    }
+  }
+</style>

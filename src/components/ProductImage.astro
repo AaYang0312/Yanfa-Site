@@ -1,0 +1,52 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import ProductArt from './ProductArt.astro';
+import { imagesOf, type Product, type ProductImage } from '../data/catalog';
+
+interface Props {
+  product: Product;
+  image?: ProductImage;
+  sizes?: string;
+  thumbnail?: boolean;
+  priority?: boolean;
+  descriptionId?: string;
+}
+
+const { product, image, sizes = '(max-width: 560px) 100vw, 33vw', thumbnail = false, priority = false, descriptionId } = Astro.props;
+const assets = import.meta.glob<{ default: ImageMetadata }>('../assets/catalog-media/*');
+const selected = image ?? imagesOf(product)[0];
+const load = selected ? assets[`../assets/catalog-media/${selected.file}`] : undefined;
+if (selected && !load) throw new Error(`Missing frozen media: ${selected.media_id}`);
+const asset = load ? (await load()).default : undefined;
+const widths = asset ? (thumbnail ? [80, 160] : [320, 640, 1000]).filter(width => width <= asset.width) : [];
+if (asset && !widths.length) widths.push(asset.width);
+---
+
+{asset ? (
+  <Image
+    src={asset}
+    data-media-id={selected.media_id}
+    alt={`${product.name} ${selected.label}，${product.summary}`}
+    aria-describedby={descriptionId}
+    widths={widths}
+    sizes={sizes}
+    format="webp"
+    loading={priority ? 'eager' : 'lazy'}
+    fetchpriority={priority ? 'high' : 'auto'}
+    decoding="async"
+    class="product-photo"
+  />
+) : (
+  <ProductArt category={product.category} nail={product.nail} label={`${product.name} 配套产品示意`} />
+)}
+
+<style>
+  .product-photo {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    object-fit: contain;
+  }
+</style>

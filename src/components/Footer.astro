@@ -1,0 +1,169 @@
+---
+import Logo from './Logo.astro';
+import { site, show, footerPages, media, telHref } from '../data/site';
+
+const half = Math.ceil(footerPages.length / 2);
+const columns = [footerPages.slice(0, half), footerPages.slice(half)];
+---
+
+<footer class="footer">
+  <div class="wrap footer__grid">
+    <div class="footer__logo"><Logo /></div>
+
+    <div>
+      <h4 class="footer__head accent">{site.legalName}</h4>
+      <p>{site.address || site.city}</p>
+      <p>
+        电话：{site.phone.trim() ? <a href={telHref()}>{site.phone}</a> : '待补充'}
+      </p>
+    </div>
+
+    <div>
+      <h4 class="footer__head">页面</h4>
+      <div class="footer__cols">
+        {columns.map((column) => (
+          <ul>
+            {column.map((item) => (
+              <li><a href={item.href}>{item.label}</a></li>
+            ))}
+          </ul>
+        ))}
+      </div>
+    </div>
+
+    <div>
+      <h4 class="footer__head">关注</h4>
+      <ul>
+        {media.map((item) => (
+          <li><a href="/media/">{item.platform}：{item.name}</a></li>
+        ))}
+      </ul>
+    </div>
+
+    <a class="footer__top" href="#top" aria-label="回到顶部">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 10.5 8 5.5l5 5" fill="none" stroke="currentColor" stroke-width="1.3" /></svg>
+    </a>
+  </div>
+
+  <div class="footer__bar">
+    <div class="wrap footer__bar-inner">
+      <span>
+        © {site.copyrightYear} {site.legalName} 版权所有
+        <span class="sep">|</span> 备案号：{show(site.icp)}
+        <span class="sep">|</span> <a href="/privacy/">隐私政策</a>
+      </span>
+      <span>{site.brandEn} {site.brandSub}</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--paper);
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .footer__grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1.3fr 1.6fr 1fr auto;
+    gap: 40px;
+    padding-top: 56px;
+    padding-bottom: 56px;
+  }
+
+  .footer__head {
+    margin-bottom: 16px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    color: var(--ink);
+  }
+
+  .footer__head.accent {
+    color: var(--wine);
+  }
+
+  .footer p {
+    margin: 0 0 10px;
+  }
+
+  .footer ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .footer li {
+    margin-bottom: 6px;
+  }
+
+  .footer a {
+    text-decoration: none;
+  }
+
+  .footer a:hover {
+    color: var(--wine);
+  }
+
+  .footer__cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .footer__top {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--ink);
+    color: var(--ink);
+  }
+
+  .footer__top svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .footer__bar {
+    background: var(--black);
+    color: #b5b5b5;
+    font-size: 12px;
+  }
+
+  .footer__bar-inner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px 24px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+
+  .sep {
+    margin: 0 6px;
+    color: #555;
+  }
+
+  @media (max-width: 960px) {
+    .footer__grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+
+    .footer__logo {
+      grid-column: 1 / -1;
+    }
+
+    .footer__top {
+      display: none;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .footer__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

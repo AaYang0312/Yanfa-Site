@@ -1,0 +1,453 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://yuanfa.example/schemas/mcp-tools.schema.json",
+  "title": "MCPTools",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "const": 1,
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
+    }
+  },
+  "required": [
+    "schema_version"
+  ],
+  "$defs": {
+    "MCPSearchProductsInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "query": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 200
+        },
+        "category": {
+          "$ref": "product.schema.json#/$defs/CategoryID"
+        },
+        "visibility": {
+          "type": "string",
+          "enum": [
+            "listed",
+            "unlisted"
+          ]
+        },
+        "cursor": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100,
+          "default": 20
+        }
+      },
+      "required": []
+    },
+    "MCPSearchProductsOutput": {
+      "$ref": "admin.schema.json#/$defs/AdminProductList"
+    },
+    "MCPGetProductInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "product_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        }
+      },
+      "required": [
+        "product_id"
+      ]
+    },
+    "MCPGetProductOutput": {
+      "$ref": "product.schema.json#/$defs/ProductEnvelope"
+    },
+    "MCPCreateProductInput": {
+      "$ref": "product.schema.json#/$defs/ProductCreate"
+    },
+    "MCPCreateProductOutput": {
+      "$ref": "product.schema.json#/$defs/ProductEnvelope"
+    },
+    "MCPUpdateProductInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "product_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "expected_version": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "edit": {
+          "$ref": "product.schema.json#/$defs/ProductEdit"
+        }
+      },
+      "required": [
+        "product_id",
+        "expected_version",
+        "edit"
+      ]
+    },
+    "MCPUpdateProductOutput": {
+      "$ref": "product.schema.json#/$defs/ProductEnvelope"
+    },
+    "MCPDeleteDraftInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "product_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "expected_version": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "product_id",
+        "expected_version"
+      ]
+    },
+    "MCPDeleteDraftOutput": {
+      "$ref": "admin.schema.json#/$defs/DeletionResult"
+    },
+    "MCPListMediaInput": {
+      "$ref": "admin.schema.json#/$defs/MediaQuery"
+    },
+    "MCPListMediaOutput": {
+      "$ref": "admin.schema.json#/$defs/MediaList"
+    },
+    "MCPOpenUploadInput": {
+      "$ref": "admin.schema.json#/$defs/OpenUploadInput"
+    },
+    "MCPOpenUploadOutput": {
+      "$ref": "admin.schema.json#/$defs/OpenUploadResult"
+    },
+    "MCPCreateCandidateInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "expected_workspace_revision": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "request_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        }
+      },
+      "required": [
+        "expected_workspace_revision",
+        "request_key"
+      ]
+    },
+    "MCPCreateCandidateOutput": {
+      "$ref": "admin.schema.json#/$defs/Candidate"
+    },
+    "MCPGetCandidateInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "candidate_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        }
+      },
+      "required": [
+        "candidate_id"
+      ]
+    },
+    "MCPGetCandidateOutput": {
+      "$ref": "admin.schema.json#/$defs/Candidate"
+    },
+    "MCPRequestPublicationInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "publish",
+            "rollback"
+          ]
+        },
+        "candidate_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 120,
+              "pattern": "^[A-Za-z0-9_-]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "release_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 120,
+              "pattern": "^[A-Za-z0-9_-]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "snapshot_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "expected_active_release_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 120,
+              "pattern": "^[A-Za-z0-9_-]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "expected_workspace_revision": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "request_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        }
+      },
+      "required": [
+        "kind",
+        "candidate_id",
+        "release_id",
+        "snapshot_sha256",
+        "expected_active_release_id",
+        "expected_workspace_revision",
+        "request_key"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "publish"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "candidate_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 120,
+                "pattern": "^[A-Za-z0-9_-]+$"
+              },
+              "release_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "candidate_id": {
+                "type": "null"
+              },
+              "release_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 120,
+                "pattern": "^[A-Za-z0-9_-]+$"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "MCPRequestPublicationOutput": {
+      "$ref": "admin.schema.json#/$defs/PublicationRequest"
+    },
+    "MCPGetPublicationInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        }
+      },
+      "required": [
+        "request_id"
+      ]
+    },
+    "MCPGetPublicationOutput": {
+      "$ref": "admin.schema.json#/$defs/PublicationRequest"
+    },
+    "MCPBusinessFailure": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "isError": {
+          "type": "boolean",
+          "const": true
+        },
+        "structuredContent": {
+          "$ref": "admin.schema.json#/$defs/ErrorResponse"
+        }
+      },
+      "required": [
+        "isError",
+        "structuredContent"
+      ]
+    }
+  },
+  "x-tools": [
+    {
+      "name": "search_products",
+      "inputSchema": {
+        "$ref": "#/$defs/MCPSearchProductsInput"
+      },
+      "outputSchema": {
+        "$ref": "#/$defs/MCPSearchProductsOutput"
+      },
+      "scope": "products:read"
+    },
+    {
+      "name": "get_product",
+      "inputSchema": {
+        "$ref": "#/$defs/MCPGetProductInput"
+      },
+      "outputSchema": {
+        "$ref": "#/$defs/MCPGetProductOutput"
+      },
+      "scope": "products:read"
+    },
+    {
+      "name": "create_product",
+      "inputSchema": {
+        "$ref": "#/$defs/MCPCreateProductInput"
+      },
+      "outputSchema": {
+        "$ref": "#/$defs/MCPCreateProductOutput"
+      },
+      "scope": "products:write"
+    },
+    {
+      "name": "update_product",
+      "inputSchema": {
+        "$ref": "#/$defs/MCPUpdateProductInput"
+      },
+      "outputSchema": {
+        "$ref": "#/$defs/MCPUpdateProductOutput"
+      },
+      "scope": "products:write"
+    },
+    {
+      "name": "delete_draft",
+      "inputSchema": {
+        "$ref": "#/$defs/MCPDeleteDraftInput"
+      },
+      "outputSchema": {
+        "$ref": "#/$defs/MCPDeleteDraftOutput"
+      },
+      "scope": "products:write"
+    },
+    {
+      "name": "list_media",
+      "inputSchema": {
+        "$ref": "#/$defs/MCPListMediaInput"
+      },
+      "outputSchema": {
+        "$ref": "#/$defs/MCPListMediaOutput"
+      },
+      "scope": "media:read"
+    },
+    {
+      "name": "open_upload",
+      "inputSchema": {
+        "$ref": "#/$defs/MCPOpenUploadInput"
+      },
+      "outputSchema": {
+        "$ref": "#/$defs/MCPOpenUploadOutput"
+      },
+      "scope": "media:read"
+    },
+    {
+      "name": "create_candidate",
+      "inputSchema": {
+        "$ref": "#/$defs/MCPCreateCandidateInput"
+      },
+      "outputSchema": {
+        "$ref": "#/$defs/MCPCreateCandidateOutput"
+      },
+      "scope": "candidates:write"
+    },
+    {
+      "name": "get_candidate",
+      "inputSchema": {
+        "$ref": "#/$defs/MCPGetCandidateInput"
+      },
+      "outputSchema": {
+        "$ref": "#/$defs/MCPGetCandidateOutput"
+      },
+      "scope": "products:read"
+    },
+    {
+      "name": "request_publication",
+      "inputSchema": {
+        "$ref": "#/$defs/MCPRequestPublicationInput"
+      },
+      "outputSchema": {
+        "$ref": "#/$defs/MCPRequestPublicationOutput"
+      },
+      "scope": "publications:write"
+    },
+    {
+      "name": "get_publication",
+      "inputSchema": {
+        "$ref": "#/$defs/MCPGetPublicationInput"
+      },
+      "outputSchema": {
+        "$ref": "#/$defs/MCPGetPublicationOutput"
+      },
+      "scope": "products:read"
+    }
+  ],
+  "x-errors": {
+    "isError": true,
+    "structuredContent": {
+      "$ref": "admin.schema.json#/$defs/ErrorResponse"
+    }
+  }
+}
