@@ -46,6 +46,8 @@ node scripts/package-runtime.mjs --root "$PWD" --out .work/runtime
 - `MODEL_PROVIDER=openai`、`MODEL_BASE_URL`、`MODEL_MODEL`、`MODEL_API_KEY`：客户授权模型配置，仅经受保护的环境文件或 1Panel 变量注入 Go，不写源码、镜像层、命令行或日志。
 - `YUANFA_IMAGE`：构建和审查时使用有版本的 tag；投产前记录仓库推送/拉取获得的实际 `repository:version@sha256:...` 并以该引用部署。不要以本地未构建 tag 代替镜像 digest 证据。
 
+BigModel 的 GLM-5.3-Flash 使用兼容接口：`MODEL_PROVIDER=openai`、`MODEL_BASE_URL=https://open.bigmodel.cn/api/paas/v4`、`MODEL_MODEL=glm-5.3-flash`，密钥放在受保护环境文件的 `MODEL_API_KEY` 中。模型标识和推理参数见[官方模型说明](https://docs.bigmodel.cn/cn/guide/models/vlm/glm-5.3-flash)。适配器对该型号使用 `reasoning_effort=low`，不叠加会干扰工具调用的 `response_format=json_object`；最终输出仍须通过 Go 的严格 JSON Schema 校验，原有 20 秒总时限、取消和无自动重试规则保留。配置后重启服务，除检查 `/health/ready` 的 `model=configured`，还须在网页实际发送产品查询并验证选型卡片；健康状态只代表配置齐全，不代表供应商调用已通过。
+
 授权环境中的构建/启动示例，仅引用由运维预备的受保护环境文件（权限0600），不创建、打印或复制现有秘密；模型 Key 等只放在该文件或受保护的面板变量中。先用同一项目、文件和环境执行 `config --quiet`，不要把可能含秘密的完整 Compose config 写入日志：
 
 ```sh
@@ -84,7 +86,22 @@ YUANFA_DATA_DIR=/srv/yuanfa-b/data YUANFA_HTTP_PORT=18082 SITE_URL=https://b.exa
 
 ## 初始化、发布及恢复边界
 
-在 serve 停止时，用同一镜像的一次性命令依次执行 `yuanfa migrate`、TTY 交互的 `yuanfa init-admin --username admin`、`yuanfa import-seed --seed /seed/initial-catalog.json --media-root /seed-media`。导入介质必须包含种子 JSON、相邻 `provenance/archive-records.json` 及其中引用的文件，以及完整媒体根目录，并作为独立只读挂载提供；它们不进入日常运行模板。密码不进入 argv/env/日志。首次发布通过后台创建候选、审阅、确认；日常产品维护和发布也只走后台/MCP 的既有权限合同。
+在 serve 停止时，用同一镜像的一次性命令依次执行 `yuanfa migrate`、TTY 交互的 `yuanfa init-admin --username admin`、`yuanfa import-seed --seed /seed/initial-catalog.json --media-root /seed-media`。导入介质必须包含种子 JSON、相邻 `provenance/archive-records.json` 及其中引用的文件，以及完整媒体根目录，并作为独立只读挂载提供；它们不进入日常运行模板。密码不进入 argv/env/日志。首次上线和日常维护均在产品编辑页点击“保存并更新官网”，等待成功状态。WorkBuddy 修改须在同一编辑页确认，机器草稿不加入其他产品的更新。
+
+更新程序前先备份数据，再运行迁移或正常启动；002迁移增加产品确认记录、自动更新批次和产品写入幂等回执。首次升级以已有成功目录为基线，不自动确认现有草稿。构建失败后在产品页重试，最近成功页面继续服务。中断的构建在重启后标为失败，已完成切换的回执以 active.json 修复。
+
+### 补充资料增量导入
+
+`scripts/material-manifest.json` 和相邻 `material-assets/` 是已核对的68条明细映射与56张可用图片，不包含客户原始工作簿、压缩包或私有路径。运行前备份，登录后台后通过受保护环境提供 `MATERIAL_ADMIN_COOKIE`（完整会话 Cookie，不是 MCP Token），不可写入命令行或日志：
+
+```sh
+node scripts/migrate-materials.mjs --base-url http://127.0.0.1:8080
+node scripts/migrate-materials.mjs --base-url http://127.0.0.1:8080 --apply
+```
+
+第一条只读核对，第二条按记录当前版本执行。脚本每次写前重新读取；当前内容偏离已核对基线则保留该条并报告冲突。允许重复执行，已导入内容和相同图片不会重复新增。不要对已有库重跑 import-seed。导入完成后仍需等待后台显示官网已更新，并核对68条明细、旧地址、缺图占位及14张图库。5项文字争议保留现有值，5张存疑图片暂不采用。
+
+Windows 导出初始 seed 时使用 `git -c core.autocrlf=false archive` 或保留原始字节的介质。不要让检出过程的 CRLF 转换改变 provenance 所引用的归档摘要；出现校验失败应修正介质，而非关闭校验。WSL 的 localhost 代理警告与站点应用独立；本地回环服务可用时无需为该警告修改产品或发布配置。
 
 `state/active.json.operation_id` 是激活身份的唯一权威，不能用时间或 release ID 猜测。启动按该指针修复切换后的 DB 回执；切换前中断不自动发布。备份完整保留 `candidates.validation_json` 中的 `baseline_operation_id` 和 `reconciled_operation_id`，不裁剪私有元数据，没有另需备份的基线 sidecar。历史成功版本、曾公开路由与资源保留；不得自动清理历史媒体。
 

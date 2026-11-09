@@ -1,0 +1,3619 @@
+{
+  "schema_version": 1,
+  "migration_id": "yuanfa-materials-2026-11-09-v1",
+  "counts": {
+    "tools": 50,
+    "parts": 5,
+    "nails": 13
+  },
+  "records": [
+    {
+      "row": 2,
+      "action": "preserve",
+      "id": "p_f30m",
+      "slug": "f30m",
+      "kind": "tool",
+      "baseline": {
+        "kind": "dd04afac1bebb050783a245ed0d88633759f352c85d4ab3bea3d416bf2019c75",
+        "name": "02ff147649b1aa4e7f721251a2f33401ee30e1bc40a37bbc47e26839daa239cb",
+        "model": "02ff147649b1aa4e7f721251a2f33401ee30e1bc40a37bbc47e26839daa239cb",
+        "category_id": "1fe90b6cdfb634b9ae18aa7dc446a0d5aa2befa8ab9fe5f502dc422fbdd900a7",
+        "series": "687cbf1ba7c13e48be6ef5158b12acec2f346102b4a9c7d22ea2609a1d36fccf",
+        "legacy_series_ids": "83d8f148ab99dd92723a2e5edf439da8931234c611a514fedbb68e25326026db",
+        "summary": "6eabd16a66e91dafd821896acdbacd1d6597109f5019dd162d4f3dc4263a4505",
+        "applications": "c0d06496df79b41a3a83ff9da8a7fa34d8c01c0e66472c677b823e07239052be",
+        "features": "cf34064bd3e26a35feedfac3ba2672fe33c18c87ca698e2a84f222ca97603345",
+        "notes": "421275394b83eda905a825974608541820a6248f96146ca99a14b5bf985e050d",
+        "scene_ids": "98150d9af88e26f25c95ad5578bf3cf6378d77917e2cda1026eab973482528e4",
+        "nail_type": "2034632f3d0c1c5187a71d05af6c9413be9dc804e5a3dcb838f18bd3a661cdee",
+        "fastener_text": "71fb7874f689ef39fa5e8ac02e0f310f39c7e71e175c18413546197c84380ebe",
+        "long_nose": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+        "blower": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "images": "8aa984d982b2956691771026237fefca41f34a6b7da6b399772b28160df7938e",
+        "cover_media_id": "33a8aac360b3ff43501fcd6124e8b1680b8c7c191ac9e6ffa657e44dcbeeabe8",
+        "visibility": "577f4dedb30ed669e09944f735e84f415fe90f3affd1af04a4d599b7e1a08d7f",
+        "sort_order": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+        "guide_profile": "2c8fbd4ae52ae2a4cdc81ea6572efdc482e1eb240e48058bf9d4c9947743e56f",
+        "purchase_options": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "conflict_fields": []
+    },
+    {
+      "row": 3,
+      "action": "preserve",
+      "id": "p_f30a",
+      "slug": "f30a",
+      "kind": "tool",
+      "baseline": {
+        "kind": "dd04afac1bebb050783a245ed0d88633759f352c85d4ab3bea3d416bf2019c75",
+        "name": "468a5b5e12752b4eb6b5ad3d9960bf1f30af641693a2959914ef29047ee5c8cd",
+        "model": "468a5b5e12752b4eb6b5ad3d9960bf1f30af641693a2959914ef29047ee5c8cd",
+        "category_id": "1fe90b6cdfb634b9ae18aa7dc446a0d5aa2befa8ab9fe5f502dc422fbdd900a7",
+        "series": "687cbf1ba7c13e48be6ef5158b12acec2f346102b4a9c7d22ea2609a1d36fccf",
+        "legacy_series_ids": "83d8f148ab99dd92723a2e5edf439da8931234c611a514fedbb68e25326026db",
+        "summary": "797e6fa4534d9e68c5c410e7456c45dd88341959dccb48bd44e7a93046d982c6",
+        "applications": "c0d06496df79b41a3a83ff9da8a7fa34d8c01c0e66472c677b823e07239052be",
+        "features": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "notes": "421275394b83eda905a825974608541820a6248f96146ca99a14b5bf985e050d",
+        "scene_ids": "98150d9af88e26f25c95ad5578bf3cf6378d77917e2cda1026eab973482528e4",
+        "nail_type": "2034632f3d0c1c5187a71d05af6c9413be9dc804e5a3dcb838f18bd3a661cdee",
+        "fastener_text": "71fb7874f689ef39fa5e8ac02e0f310f39c7e71e175c18413546197c84380ebe",
+        "long_nose": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "blower": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "images": "dac53056777cdcf74308b0912ea599f38bdbb26a4aa1084526169754d249d038",
+        "cover_media_id": "41c83871292ed2668724308b1fd3b0d097c1c3f66c2b8b927c580e8892ac5cd8",
+        "visibility": "577f4dedb30ed669e09944f735e84f415fe90f3affd1af04a4d599b7e1a08d7f",
+        "sort_order": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+        "guide_profile": "08be7830d60a29e4356ec50b5b1e98346dce94dda90635be137229ea2a1d98d9",
+        "purchase_options": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "conflict_fields": []
+    },
+    {
+      "row": 4,
+      "action": "preserve",
+      "id": "p_f30g",
+      "slug": "f30g",
+      "kind": "tool",
+      "baseline": {
+        "kind": "dd04afac1bebb050783a245ed0d88633759f352c85d4ab3bea3d416bf2019c75",
+        "name": "efc985e4d8e49681758194f95bcbe3d7851c0babc3ce2ccaa2dda63d320aab86",
+        "model": "efc985e4d8e49681758194f95bcbe3d7851c0babc3ce2ccaa2dda63d320aab86",
+        "category_id": "1fe90b6cdfb634b9ae18aa7dc446a0d5aa2befa8ab9fe5f502dc422fbdd900a7",
+        "series": "687cbf1ba7c13e48be6ef5158b12acec2f346102b4a9c7d22ea2609a1d36fccf",
+        "legacy_series_ids": "83d8f148ab99dd92723a2e5edf439da8931234c611a514fedbb68e25326026db",
+        "summary": "354ed57360766abc6cff04d68a05e79e23d20a99532cf3b94fb334ae09da7609",
+        "applications": "c0d06496df79b41a3a83ff9da8a7fa34d8c01c0e66472c677b823e07239052be",
+        "features": "db861d2cfdcd7ae0e0ac9c2c21038e778fc20e1c377d6054922b29f9c78940f5",
+        "notes": "421275394b83eda905a825974608541820a6248f96146ca99a14b5bf985e050d",
+        "scene_ids": "98150d9af88e26f25c95ad5578bf3cf6378d77917e2cda1026eab973482528e4",
+        "nail_type": "2034632f3d0c1c5187a71d05af6c9413be9dc804e5a3dcb838f18bd3a661cdee",
+        "fastener_text": "71fb7874f689ef39fa5e8ac02e0f310f39c7e71e175c18413546197c84380ebe",
+        "long_nose": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "blower": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "images": "d47dbf44d1db950aef3a11e24686da1d57c68214d0703aad9353eb3d4ad3ab2c",
+        "cover_media_id": "a03669bfd120837be89ff877963a5e03feafd21b79a57d1202079c65dcc09395",
+        "visibility": "577f4dedb30ed669e09944f735e84f415fe90f3affd1af04a4d599b7e1a08d7f",
+        "sort_order": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35",
+        "guide_profile": "d2c00207444f3cb5b9e74230d703155b83eb28edd768f1e1a24a95134a3e7d58",
+        "purchase_options": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "conflict_fields": []
+    },
+    {
+      "row": 5,
+      "action": "preserve",
+      "id": "p_f30c",
+      "slug": "f30c",
+      "kind": "tool",
+      "baseline": {
+        "kind": "dd04afac1bebb050783a245ed0d88633759f352c85d4ab3bea3d416bf2019c75",
+        "name": "7dbb5f1fb8853b061cd3ff1a93e1b56ebb11ada5a343fc9e234f2d18d2f73747",
+        "model": "7dbb5f1fb8853b061cd3ff1a93e1b56ebb11ada5a343fc9e234f2d18d2f73747",
+        "category_id": "1fe90b6cdfb634b9ae18aa7dc446a0d5aa2befa8ab9fe5f502dc422fbdd900a7",
+        "series": "687cbf1ba7c13e48be6ef5158b12acec2f346102b4a9c7d22ea2609a1d36fccf",
+        "legacy_series_ids": "83d8f148ab99dd92723a2e5edf439da8931234c611a514fedbb68e25326026db",
+        "summary": "64ff6052d76c7a5854e1dd11b56b8d42b7371a84ac310fa2d44eb2e98ce5fa75",
+        "applications": "c0d06496df79b41a3a83ff9da8a7fa34d8c01c0e66472c677b823e07239052be",
+        "features": "872e042981986cb177b69070613115972a26f37ad8c74244d5df52a4fdc7c4e4",
+        "notes": "421275394b83eda905a825974608541820a6248f96146ca99a14b5bf985e050d",
+        "scene_ids": "98150d9af88e26f25c95ad5578bf3cf6378d77917e2cda1026eab973482528e4",
+        "nail_type": "2034632f3d0c1c5187a71d05af6c9413be9dc804e5a3dcb838f18bd3a661cdee",
+        "fastener_text": "71fb7874f689ef39fa5e8ac02e0f310f39c7e71e175c18413546197c84380ebe",
+        "long_nose": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "blower": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+        "images": "1a93e9d8334a75cf65adf9144860ad688aaf8aff6e9bbfb4c770946014d4f391",
+        "cover_media_id": "af2fff1269a2ba50a2909728d0411ca3567da05b52618c8f66bbbaf815334066",
+        "visibility": "577f4dedb30ed669e09944f735e84f415fe90f3affd1af04a4d599b7e1a08d7f",
+        "sort_order": "4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce",
+        "guide_profile": "7e013365983da96371a9f8a21c300e138c82fc4b5125b84226c9c9b7d2741288",
+        "purchase_options": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "conflict_fields": []
+    },
+    {
+      "row": 6,
+      "action": "preserve",
+      "id": "p_f30cl",
+      "slug": "f30cl",
+      "kind": "tool",
+      "baseline": {
+        "kind": "dd04afac1bebb050783a245ed0d88633759f352c85d4ab3bea3d416bf2019c75",
+        "name": "1ade328758c5ec1d263b1bde0cd70f570befdb8d4c9eb868ea27a609ce00e3bb",
+        "model": "1ade328758c5ec1d263b1bde0cd70f570befdb8d4c9eb868ea27a609ce00e3bb",
+        "category_id": "1fe90b6cdfb634b9ae18aa7dc446a0d5aa2befa8ab9fe5f502dc422fbdd900a7",
+        "series": "687cbf1ba7c13e48be6ef5158b12acec2f346102b4a9c7d22ea2609a1d36fccf",
+        "legacy_series_ids": "83d8f148ab99dd92723a2e5edf439da8931234c611a514fedbb68e25326026db",
+        "summary": "b38c0916c44d0d0b6ce2e09faa6eb70a7e522be1dacaa7ad9276adfe2b440b1d",
+        "applications": "c0d06496df79b41a3a83ff9da8a7fa34d8c01c0e66472c677b823e07239052be",
+        "features": "bbfe69446d35b28f3959974f7adbd4c29b3a448c8d5dc433e7dc0c3994ce48d0",
+        "notes": "421275394b83eda905a825974608541820a6248f96146ca99a14b5bf985e050d",
+        "scene_ids": "98150d9af88e26f25c95ad5578bf3cf6378d77917e2cda1026eab973482528e4",
+        "nail_type": "2034632f3d0c1c5187a71d05af6c9413be9dc804e5a3dcb838f18bd3a661cdee",
+        "fastener_text": "71fb7874f689ef39fa5e8ac02e0f310f39c7e71e175c18413546197c84380ebe",
+        "long_nose": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+        "blower": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+        "images": "34425bc1819a3e02a40ca5c0a63048041002b7bf8fea90a9ff79d3833fa45913",
+        "cover_media_id": "eeb22c24c0a2fc89ddb6555e44152c998efd43e3f0c1327c674bf87f9c0a9712",
+        "visibility": "577f4dedb30ed669e09944f735e84f415fe90f3affd1af04a4d599b7e1a08d7f",
+        "sort_order": "4b227777d4dd1fc61c6f884f48641d02b4d121d3fd328cb08b5531fcacdabf8a",
+        "guide_profile": "14fd56b403e2162b0e0a334a271283a0c777606680a4b764a748068c15e38250",
+        "purchase_options": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "conflict_fields": []
+    },
+    {
+      "row": 7,
+      "action": "preserve",
+      "id": "p_t50l",
+      "slug": "t50l",
+      "kind": "tool",
+      "baseline": {
+        "kind": "dd04afac1bebb050783a245ed0d88633759f352c85d4ab3bea3d416bf2019c75",
+        "name": "92b0466e1a1e23e368f9dd38ce2787a2f318b9b243e47404e8256d729bdf2336",
+        "model": "92b0466e1a1e23e368f9dd38ce2787a2f318b9b243e47404e8256d729bdf2336",
+        "category_id": "1fe90b6cdfb634b9ae18aa7dc446a0d5aa2befa8ab9fe5f502dc422fbdd900a7",
+        "series": "40e30cf05336520c0b4b55171d4fdf2f3f1bfeebcf308315f630a0ca951ebe07",
+        "legacy_series_ids": "5d02046c8f24dfb4eec2d2154d4392c7ce8f6f3ce01468eee496a6f6ba570dd1",
+        "summary": "8c3c0fdc57019f4c80b3e530d412777cbc9cb7ca2cc026fcafb47ceb6453f728",
+        "applications": "4b69e9012c35669dadd221a787dc143f1ddf1597b9b9b310b9fdfd6e9265805d",
+        "features": "1407aeb9ae9f55b55b0c14f9b46339d34d663362aa72a0f9ff20ad22529fd970",
+        "notes": "63362e7760336f284b1daba3385d7bb67047c45f0855e4f0c899cf354ddeb4e5",
+        "scene_ids": "26bc5eb8489aea60b8b3cad6e247efe6c5a36aba3ec046c90bb99f793673e75c",
+        "nail_type": "2034632f3d0c1c5187a71d05af6c9413be9dc804e5a3dcb838f18bd3a661cdee",
+        "fastener_text": "028c219015b8c07f8d8821894a585f21707003a3db8c5ee9a631f634d6a07873",
+        "long_nose": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+        "blower": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "images": "d68d7586983d92adfb96a09c881023872a94498700c70a83848023ddb385fbdd",
+        "cover_media_id": "b922316f316ba31108545618e7277c845182e8e51a5fe52bf01e86add5bcebc3",
+        "visibility": "577f4dedb30ed669e09944f735e84f415fe90f3affd1af04a4d599b7e1a08d7f",
+        "sort_order": "ef2d127de37b942baad06145e54b0c619a1f22327b2ebbcfbec78f5564afe39d",
+        "guide_profile": "6a2be6ea06bbc192affeba863850fa66209c337015614e55e8d77ddfb1937a99",
+        "purchase_options": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "conflict_fields": []
+    },
+    {
+      "row": 8,
+      "action": "preserve",
+      "id": "p_t50sa",
+      "slug": "t50sa",
+      "kind": "tool",
+      "baseline": {
+        "kind": "dd04afac1bebb050783a245ed0d88633759f352c85d4ab3bea3d416bf2019c75",
+        "name": "235450297e366239104b2d5e52f4fe2454b6b1162d01cffe3d81bf2b103e855d",
+        "model": "235450297e366239104b2d5e52f4fe2454b6b1162d01cffe3d81bf2b103e855d",
+        "category_id": "1fe90b6cdfb634b9ae18aa7dc446a0d5aa2befa8ab9fe5f502dc422fbdd900a7",
+        "series": "40e30cf05336520c0b4b55171d4fdf2f3f1bfeebcf308315f630a0ca951ebe07",
+        "legacy_series_ids": "5d02046c8f24dfb4eec2d2154d4392c7ce8f6f3ce01468eee496a6f6ba570dd1",
+        "summary": "257ff11f3edb8bb90a170996e3aa26129a4da82e526d129aa89a5e87e40cb9be",
+        "applications": "4b69e9012c35669dadd221a787dc143f1ddf1597b9b9b310b9fdfd6e9265805d",
+        "features": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "notes": "63362e7760336f284b1daba3385d7bb67047c45f0855e4f0c899cf354ddeb4e5",
+        "scene_ids": "26bc5eb8489aea60b8b3cad6e247efe6c5a36aba3ec046c90bb99f793673e75c",
+        "nail_type": "2034632f3d0c1c5187a71d05af6c9413be9dc804e5a3dcb838f18bd3a661cdee",
+        "fastener_text": "028c219015b8c07f8d8821894a585f21707003a3db8c5ee9a631f634d6a07873",
+        "long_nose": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "blower": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "images": "79a98a327be81013ee862503feae0bcffc48b0e32346f149e3c99a285644919a",
+        "cover_media_id": "82e8f7d8c1dac116616456da77b6d14756d6b6463abdd40e0386ae67196d5746",
+        "visibility": "577f4dedb30ed669e09944f735e84f415fe90f3affd1af04a4d599b7e1a08d7f",
+        "sort_order": "e7f6c011776e8db7cd330b54174fd76f7d0216b612387a5ffcfb81e6f0919683",
+        "guide_profile": "14e1bbc429f03587979a0f82fc2030e6d3a422793ff9290d29d17f5d7c13e8dd",
+        "purchase_options": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "conflict_fields": []
+    },
+    {
+      "row": 9,
+      "action": "preserve",
+      "id": "p_t50g",
+      "slug": "t50g",
+      "kind": "tool",
+      "baseline": {
+        "kind": "dd04afac1bebb050783a245ed0d88633759f352c85d4ab3bea3d416bf2019c75",
+        "name": "1d5a7baf7420aba2f3ecc9523988f44d3af6fe4875488d2ca9aa7bc31cd3839b",
+        "model": "1d5a7baf7420aba2f3ecc9523988f44d3af6fe4875488d2ca9aa7bc31cd3839b",
+        "category_id": "1fe90b6cdfb634b9ae18aa7dc446a0d5aa2befa8ab9fe5f502dc422fbdd900a7",
+        "series": "40e30cf05336520c0b4b55171d4fdf2f3f1bfeebcf308315f630a0ca951ebe07",
+        "legacy_series_ids": "5d02046c8f24dfb4eec2d2154d4392c7ce8f6f3ce01468eee496a6f6ba570dd1",
+        "summary": "408477bfbd68eab71ce582cc9ac84ed6c5ad10c8739e4aba08f7c91b599be8ea",
+        "applications": "4b69e9012c35669dadd221a787dc143f1ddf1597b9b9b310b9fdfd6e9265805d",
+        "features": "0cce1c79b89ca7b8a2d03a495c6d760bc3894c3c0b6e1919bc302a356af06325",
+        "notes": "63362e7760336f284b1daba3385d7bb67047c45f0855e4f0c899cf354ddeb4e5",
+        "scene_ids": "26bc5eb8489aea60b8b3cad6e247efe6c5a36aba3ec046c90bb99f793673e75c",
+        "nail_type": "2034632f3d0c1c5187a71d05af6c9413be9dc804e5a3dcb838f18bd3a661cdee",
+        "fastener_text": "028c219015b8c07f8d8821894a585f21707003a3db8c5ee9a631f634d6a07873",
+        "long_nose": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "blower": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "images": "0d71d82a8b7d9d9a7c0b8aece4d2ae34539cdd936f43271d790fd131d92000a1",
+        "cover_media_id": "8597d373e859410b582f5fa37fc0ebfdbb9dc220e4d30fdc0c731eb810064ff5",
+        "visibility": "577f4dedb30ed669e09944f735e84f415fe90f3affd1af04a4d599b7e1a08d7f",
+        "sort_order": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451",
+        "guide_profile": "a143c3c083905f2cdbce4889e594da18db5f585693158bbbb4787eb83c2fa343",
+        "purchase_options": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "conflict_fields": []
+    },
+    {
+      "row": 10,
+      "action": "preserve",
+      "id": "p_st64ml",
+      "slug": "st64ml",
+      "kind": "tool",
+      "baseline": {
+        "kind": "dd04afac1bebb050783a245ed0d88633759f352c85d4ab3bea3d416bf2019c75",
+        "name": "51535917a308652dd657530881be1f8d4d375199af42709c55914e2c26ed17cf",
+        "model": "51535917a308652dd657530881be1f8d4d375199af42709c55914e2c26ed17cf",
+        "category_id": "df8fa615a8e759cba76ff2bcae6c9fa3e2b63a58daed0056350070acd73fb20a",
+        "series": "28a379d2114e03b99920456cfb9ceabc34833bb627a244ac1fb371c4744c21f1",
+        "legacy_series_ids": "a1b3d9168a805f01e7bad4f6bf2e20399e90ee98eb5f1ff9e3584bf5068e2a1a",
+        "summary": "ba8e1c8e6ffff3663846d06afd3e98cfbe4d47ba939807d5d81b2c45963912f8",
+        "applications": "b46b9fd48be244be7de698e5ee5d1af49ffbb9eee36e25105689fd99604db448",
+        "features": "c62d9c97a0a2409733c6c0bf8fbde3ca26197b7fd9b94ebdb8c956f25f8b7856",
+        "notes": "abe6859f2109f5f6dbdb43d8bf5231ad3435dfae57918ea68305e26c5b750474",
+        "scene_ids": "0288183aa7bb6912b7bdf7642cde94c044606bde022126f33f924235a21feea9",
+        "nail_type": "d9fc2b8b330bec3af1bf95d031d6374accbc8be0a5cb7f8c445a78e79695b400",
+        "fastener_text": "c0e34c6c38ac2e2a35c0e3bba395a18ac6febf533e60a3566129d3f6318a9b7d",
+        "long_nose": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+        "blower": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "images": "2e497e1aa5254a6283ef91ebc4f4544761d87a40866c32d48e2e78caaf7c7db2",
+        "cover_media_id": "2cc5018d3ce7dd0107f760de29b6a3bef035efbe31a126ce97243006c61e9b0a",
+        "visibility": "577f4dedb30ed669e09944f735e84f415fe90f3affd1af04a4d599b7e1a08d7f",
+        "sort_order": "2c624232cdd221771294dfbb310aca000a0df6ac8b66b696d90ef06fdefb64a3",
+        "guide_profile": "9ce5aa9c0d93d21b1424ecfa72e3c12efefc45bd8565fe77370f08d0c00f1533",
+        "purchase_options": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "conflict_fields": []
+    },
+    {
+      "row": 11,
+      "action": "preserve",
+      "id": "p_st64gl",
+      "slug": "st64gl",
+      "kind": "tool",
+      "baseline": {
+        "kind": "dd04afac1bebb050783a245ed0d88633759f352c85d4ab3bea3d416bf2019c75",
+        "name": "2fbb3c49ddaf671ad999d9afa005fe91f770b314b6d4e16099600d617a6880f7",
+        "model": "2fbb3c49ddaf671ad999d9afa005fe91f770b314b6d4e16099600d617a6880f7",
+        "category_id": "df8fa615a8e759cba76ff2bcae6c9fa3e2b63a58daed0056350070acd73fb20a",
+        "series": "28a379d2114e03b99920456cfb9ceabc34833bb627a244ac1fb371c4744c21f1",
+        "legacy_series_ids": "a1b3d9168a805f01e7bad4f6bf2e20399e90ee98eb5f1ff9e3584bf5068e2a1a",
+        "summary": "c31e5b95e6e0fd87bda03d5fd7ae06032dab970f9eed9c11bce4d67029c8da72",
+        "applications": "b46b9fd48be244be7de698e5ee5d1af49ffbb9eee36e25105689fd99604db448",
+        "features": "b334e5a71b2942566b8efe47e0c583d2c56007ece3df8d0b414d6f22806f70c9",
+        "notes": "abe6859f2109f5f6dbdb43d8bf5231ad3435dfae57918ea68305e26c5b750474",
+        "scene_ids": "0288183aa7bb6912b7bdf7642cde94c044606bde022126f33f924235a21feea9",
+        "nail_type": "d9fc2b8b330bec3af1bf95d031d6374accbc8be0a5cb7f8c445a78e79695b400",
+        "fastener_text": "c0e34c6c38ac2e2a35c0e3bba395a18ac6febf533e60a3566129d3f6318a9b7d",
+        "long_nose": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+        "blower": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "images": "aca225ba9f967cdeb60bbd0f53a1a7c009286fcdcb9fcc2f9821f2b8f887522f",
+        "cover_media_id": "6be894e593358894f908508d61b218181bfcc246ac299ac276b588dd8fdb07ff",
+        "visibility": "577f4dedb30ed669e09944f735e84f415fe90f3affd1af04a4d599b7e1a08d7f",
+        "sort_order": "19581e27de7ced00ff1ce50b2047e7a567c76b1cbaebabe5ef03f7c3017bb5b7",
+        "guide_profile": "77a29ec9a45bf3e475acbb12929c612ba1683287100b468c68009e755e890dbd",
+        "purchase_options": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "conflict_fields": []
+    },
+    {
+      "row": 12,
+      "action": "preserve",
+      "id": "p_st64g",
+      "slug": "st64g",
+      "kind": "tool",
+      "baseline": {
+        "kind": "dd04afac1bebb050783a245ed0d88633759f352c85d4ab3bea3d416bf2019c75",
+        "name": "77b1fcecf8a0685b2c9a357e4d55291ec315c33a871c1f4432fe922c6e4909be",
+        "model": "77b1fcecf8a0685b2c9a357e4d55291ec315c33a871c1f4432fe922c6e4909be",
+        "category_id": "df8fa615a8e759cba76ff2bcae6c9fa3e2b63a58daed0056350070acd73fb20a",
+        "series": "28a379d2114e03b99920456cfb9ceabc34833bb627a244ac1fb371c4744c21f1",
+        "legacy_series_ids": "a1b3d9168a805f01e7bad4f6bf2e20399e90ee98eb5f1ff9e3584bf5068e2a1a",
+        "summary": "c547fd1f97c491b7e48d6d81c15b3e5fdce596b45e2022066fa508e9d7907437",
+        "applications": "b46b9fd48be244be7de698e5ee5d1af49ffbb9eee36e25105689fd99604db448",
+        "features": "a9ee77f8240e7ed375f3cfbe5f6e184b3c77bf4dbec71032d3d26de89c6d09fc",
+        "notes": "abe6859f2109f5f6dbdb43d8bf5231ad3435dfae57918ea68305e26c5b750474",
+        "scene_ids": "0288183aa7bb6912b7bdf7642cde94c044606bde022126f33f924235a21feea9",
+        "nail_type": "d9fc2b8b330bec3af1bf95d031d6374accbc8be0a5cb7f8c445a78e79695b400",
+        "fastener_text": "c0e34c6c38ac2e2a35c0e3bba395a18ac6febf533e60a3566129d3f6318a9b7d",
+        "long_nose": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "blower": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "images": "29384a666aace4c0b687a65a302d027ab7f24b9bc8eb303ce4b159f4893a33e5",
+        "cover_media_id": "ab7b81b44d914858f5663dfd691a0ac2f808c60766eecd56a8b3e133f0976975",
+        "visibility": "577f4dedb30ed669e09944f735e84f415fe90f3affd1af04a4d599b7e1a08d7f",
+        "sort_order": "4a44dc15364204a80fe80e9039455cc1608281820fe2b24f1e5233ade6af1dd5",
+        "guide_profile": "c8df8ee92ed90b4c9f48f4cc7843a76d71acdb03c98e83ea551c86a52fe7c966",
+        "purchase_options": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "conflict_fields": []
+    },
+    {
+      "row": 13,
+      "action": "preserve",
+      "id": "p_st38lg",
+      "slug": "st38lg",
+      "kind": "tool",
+      "baseline": {
+        "kind": "dd04afac1bebb050783a245ed0d88633759f352c85d4ab3bea3d416bf2019c75",
+        "name": "cf1fe9a2e16409b479cfde781357475384511b16ad2a06773d9d3673b97f6dd4",
+        "model": "cf1fe9a2e16409b479cfde781357475384511b16ad2a06773d9d3673b97f6dd4",
+        "category_id": "df8fa615a8e759cba76ff2bcae6c9fa3e2b63a58daed0056350070acd73fb20a",
+        "series": "4636066f6c2308b91cf9c5525c2d2ea9d54c71c6a658f5b626a304e4f6e13d69",
+        "legacy_series_ids": "8984e206fcddbb620131232266401cd6ffbdea511030513b669fcbe966b7acc6",
+        "summary": "6d622e9dd5391ee0076d3605f488f402385d855a1e802f9177a936effbf4a5e5",
+        "applications": "f602bbb81e25be1f6b0f067e24d20308460da6b8f1f2d600c84bcf0ee8d68728",
+        "features": "6d2f61eb94884202c2e08b42d0f950077aa183b875ebcd10878e079a2bbf0189",
+        "notes": "477c6cf7df74016c421415e008e1f6abb2d47191a5453a4f1fa38186baf8367e",
+        "scene_ids": "373e4533abb8e756af60026cb140778a33ff6abfa6b3102f622d489160395afc",
+        "nail_type": "d9fc2b8b330bec3af1bf95d031d6374accbc8be0a5cb7f8c445a78e79695b400",
+        "fastener_text": "f33e1839943574f0ccb783302027a26a0cede7ec3640b3b93dfe1767d43c930c",
+        "long_nose": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+        "blower": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "images": "3d6fd1abf75f59bbb79c3e5b77960ca106ea9c561f13f2e60e2b6c7afc4e855b",
+        "cover_media_id": "ffaca957c456486c5e8ba65981de0c04e098a5f399b8b222e3d785b349d9ce5a",
+        "visibility": "577f4dedb30ed669e09944f735e84f415fe90f3affd1af04a4d599b7e1a08d7f",
+        "sort_order": "4fc82b26aecb47d2868c4efbe3581732a3e7cbcc6c2efb32062c08170a05eeb8",
+        "guide_profile": "988b157dc2dabc973e78df54b51a2cad032019ac3521328f818cc4893b260f04",
+        "purchase_options": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "conflict_fields": [
+        "notes"
+      ]
+    },
+    {
+      "row": 14,
+      "action": "preserve",
+      "id": "p_n851g",
+      "slug": "n851g",
+      "kind": "tool",
+      "baseline": {
+        "kind": "dd04afac1bebb050783a245ed0d88633759f352c85d4ab3bea3d416bf2019c75",
+        "name": "0e60dda8e0219b56c3bf82da26e8a5d3f3d1d946b78efca42b8017f31396233e",
+        "model": "0e60dda8e0219b56c3bf82da26e8a5d3f3d1d946b78efca42b8017f31396233e",
+        "category_id": "a8232757b3bb31d7bddb73a04568afd4c28d736f66c5f94f279d282fdcde33f8",
+        "series": "000a455740ea798455e9399777d053f4f473f4ff505ba434554529980c0b7922",
+        "legacy_series_ids": "72c0f4131315e8c3517de37a39a0674ebefa3c87e710d4c4a98da84939b871a9",
+        "summary": "8c03a78c80c1bcad474a1bf1b6c62842cb46e70cfa935b349c5830fef1e850fb",
+        "applications": "033fe9d28168fb33815b715be05233ac67602d02c5ebc36f3a64a07f44a25e76",
+        "features": "2ff46e6d65732139464cf3f46645093bd6007db020478faab75a05c39e72e7b9",
+        "notes": "33cb77b1094aebf268251bb9b973ce0f643d34cc1846a5b3da8df45c17bfc0c6",
+        "scene_ids": "4c55dda0020a10cabb6f92ea0da85927499e2e52530472b6cad23dc8ae31e418",
+        "nail_type": "a8232757b3bb31d7bddb73a04568afd4c28d736f66c5f94f279d282fdcde33f8",
+        "fastener_text": "dc77afa6db1c20219f2c5235ed410ed08480b5fc189164d1aa0423676fa9ebf7",
+        "long_nose": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "blower": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "images": "23b0b7b39cbf459f653ed0cd6640789640881eeac8783f4a39fe1847ecb4e0aa",
+        "cover_media_id": "699c8eb7ebd99843dbdfad0cea99144b70c94d19c63a721942c6ee13e83457fe",
+        "visibility": "577f4dedb30ed669e09944f735e84f415fe90f3affd1af04a4d599b7e1a08d7f",
+        "sort_order": "6b51d431df5d7f141cbececcf79edf3dd861c3b4069f0b11661a3eefacbba918",
+        "guide_profile": "117bf2e5b82e81805ee3e8319be5fa27483b63ae8a0496189f4272c64e198747",
+        "purchase_options": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "conflict_fields": []
+    },
+    {
+      "row": 15,
+      "action": "preserve",
+      "id": "p_n838g",
+      "slug": "n838g",
+      "kind": "tool",
+      "baseline": {
+        "kind": "dd04afac1bebb050783a245ed0d88633759f352c85d4ab3bea3d416bf2019c75",
+        "name": "313f37837445ba5ea37fbff0d83cbc9172a281023730e2e02d58d41e0c267be7",
+        "model": "313f37837445ba5ea37fbff0d83cbc9172a281023730e2e02d58d41e0c267be7",
+        "category_id": "a8232757b3bb31d7bddb73a04568afd4c28d736f66c5f94f279d282fdcde33f8",
+        "series": "000a455740ea798455e9399777d053f4f473f4ff505ba434554529980c0b7922",
+        "legacy_series_ids": "72c0f4131315e8c3517de37a39a0674ebefa3c87e710d4c4a98da84939b871a9",
+        "summary": "77acfddc2a3a4b43402181d3711fcf1b1c14414a872322431fab57932febbbde",
+        "applications": "46c666d7ad44a7bd31973d61e913b983958010d6eca20ff059f6bb21604272de",
+        "features": "489a5ad005c4e505d832b0826cc079c5f857d0a07491fb700e284515c03a8301",
+        "notes": "310078334ba5884d32ccbb098a4c7602466345570442769f1a203f3f363ea5fd",
+        "scene_ids": "4c55dda0020a10cabb6f92ea0da85927499e2e52530472b6cad23dc8ae31e418",
+        "nail_type": "a8232757b3bb31d7bddb73a04568afd4c28d736f66c5f94f279d282fdcde33f8",
+        "fastener_text": "7e4296fdbf8a16de93022fd5ecfcd54361bdc9996c9615248226b1b214057cc7",
+        "long_nose": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "blower": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "images": "fe57e7f00bbecff51a66f75c4159ff6dce276dc0ae91e82cb87514809b7c5b9e",
+        "cover_media_id": "dff6152abaf3371859b5c32c3094f3cee8898d5524dd934b967d2481dd52fb74",
+        "visibility": "577f4dedb30ed669e09944f735e84f415fe90f3affd1af04a4d599b7e1a08d7f",
+        "sort_order": "3fdba35f04dc8c462986c992bcf875546257113072a909c162f7e470e581e278",
+        "guide_profile": "c66a136a9fb18ba0be160d83639cd5162302392d76c5ea7f49a1fc45015e0f27",
+        "purchase_options": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "conflict_fields": []
+    },
+    {
+      "row": 16,
+      "action": "preserve",
+      "id": "p_425k",
+      "slug": "425k",
+      "kind": "tool",
+      "baseline": {
+        "kind": "dd04afac1bebb050783a245ed0d88633759f352c85d4ab3bea3d416bf2019c75",
+        "name": "f5c562daabb408fe7d1fa6204bcdc68c49675439088877836eaf5b082dae3b5e",
+        "model": "f5c562daabb408fe7d1fa6204bcdc68c49675439088877836eaf5b082dae3b5e",
+        "category_id": "a8232757b3bb31d7bddb73a04568afd4c28d736f66c5f94f279d282fdcde33f8",
+        "series": "dc9aebce5e84191367017097c2e12a446aed252050e8a07c49f9e3f14d09796d",
+        "legacy_series_ids": "4cbe9d19df7dab00a3f0072926eba2c4abb9ff18d4c3e573c3b71ec2c0c59882",
+        "summary": "53b2d65be2084daa79438267ff03cd228d1f7248cd80b3847d44f1afbda3d0bc",
+        "applications": "6f702d47af4193eec93628aa65a4b83e2a5b848a23d6350deee41d73aec079c6",
+        "features": "19025ef9754e36e29448944d2a8b9aa96a4f7fc9a165537452777f384ccf99a5",
+        "notes": "e156e64b47f204647fe31fca6ff9747392aa2175fa2cc0673e1cbacff3a95ca5",
+        "scene_ids": "1f6266449457fe013cc224e9fa412e0418a10fdabd02a5d014e87f306c0b48f7",
+        "nail_type": "a8232757b3bb31d7bddb73a04568afd4c28d736f66c5f94f279d282fdcde33f8",
+        "fastener_text": "24df1df7ba8e1394dda54c270322f9378388e3a7ad55e8bcfd397f8c61a2a33a",
+        "long_nose": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "blower": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "images": "db3d65e03042fcedbb5db58b38c7d064fa887a0a5d5ea6f42c5996db295596ba",
+        "cover_media_id": "0d0761e11d0cbbe5636bfc256d0c4f510fc28b99ee716fbbc92d3d58b6f987c4",
+        "visibility": "577f4dedb30ed669e09944f735e84f415fe90f3affd1af04a4d599b7e1a08d7f",
+        "sort_order": "8527a891e224136950ff32ca212b45bc93f69fbb801c3b1ebedac52775f99e61",
+        "guide_profile": "08d2f3b08a50b4ddf41198a242dd31b2abc5513fb84da692ce0d20621a479477",
+        "purchase_options": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "conflict_fields": []
+    },
+    {
+      "row": 17,
+      "action": "preserve",
+      "id": "p_416kg",
+      "slug": "416kg",
+      "kind": "tool",
+      "baseline": {
+        "kind": "dd04afac1bebb050783a245ed0d88633759f352c85d4ab3bea3d416bf2019c75",
+        "name": "8b4d36c724ee9081d58129bcd8ab73ee30176ade8056a5c4ea797dd89fb7efd8",
+        "model": "8b4d36c724ee9081d58129bcd8ab73ee30176ade8056a5c4ea797dd89fb7efd8",
+        "category_id": "a8232757b3bb31d7bddb73a04568afd4c28d736f66c5f94f279d282fdcde33f8",
+        "series": "dc9aebce5e84191367017097c2e12a446aed252050e8a07c49f9e3f14d09796d",
+        "legacy_series_ids": "4cbe9d19df7dab00a3f0072926eba2c4abb9ff18d4c3e573c3b71ec2c0c59882",
+        "summary": "f84a3c4a562be5b53ca861478e6e9f58c6693a32bc873463189dcc7b14b15295",
+        "applications": "79af5793c5a4165530414e6d98769ea719bd74a4c928f60e7a0d2345508dab98",
+        "features": "6a55959f1ac21d17a0ecacf65fd38e6bcf6e51f3a40a05f502ecfb4efee4d24c",
+        "notes": "e156e64b47f204647fe31fca6ff9747392aa2175fa2cc0673e1cbacff3a95ca5",
+        "scene_ids": "1f6266449457fe013cc224e9fa412e0418a10fdabd02a5d014e87f306c0b48f7",
+        "nail_type": "a8232757b3bb31d7bddb73a04568afd4c28d736f66c5f94f279d282fdcde33f8",
+        "fastener_text": "7b0a12cf2f357be0dda77bf619241721d3f41f9f5457989c2d10b629cb4a4bb9",
+        "long_nose": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "blower": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "images": "356bcd8360513539754c4f243e44191353206ea895f56f2b663d28f487b16dd5",
+        "cover_media_id": "5d72350a287331b974d1897e09d44910507ebe751883500c2ee6cc6ce50e20f7",
+        "visibility": "577f4dedb30ed669e09944f735e84f415fe90f3affd1af04a4d599b7e1a08d7f",
+        "sort_order": "e629fa6598d732768f7c726b4b621285f9c3b85303900aa912017db7617d8bdb",
+        "guide_profile": "d6b02aedc7d0acaee4cc9ecdad1d58e2fdb67f67692e56c0377b176f5a2a2e02",
+        "purchase_options": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "conflict_fields": []
+    },
+    {
+      "row": 18,
+      "action": "preserve",
+      "id": "p_440kg",
+      "slug": "440kg",
+      "kind": "tool",
+      "baseline": {
+        "kind": "dd04afac1bebb050783a245ed0d88633759f352c85d4ab3bea3d416bf2019c75",
+        "name": "5810124a013e0359ff51e79ed92d9bd8ef679bb54ca5b95b1202530c793df676",
+        "model": "5810124a013e0359ff51e79ed92d9bd8ef679bb54ca5b95b1202530c793df676",
+        "category_id": "a8232757b3bb31d7bddb73a04568afd4c28d736f66c5f94f279d282fdcde33f8",
+        "series": "dc9aebce5e84191367017097c2e12a446aed252050e8a07c49f9e3f14d09796d",
+        "legacy_series_ids": "4cbe9d19df7dab00a3f0072926eba2c4abb9ff18d4c3e573c3b71ec2c0c59882",
+        "summary": "66968aa94a5238cf94173a67efa16626a45efc9f4e53e9c1d9eea0af6895209c",
+        "applications": "60a122d98e6811c8c4ca7f7b7225d810c53e1aef215f50bc1fe944d15fba9bf4",
+        "features": "24c78bd239d67a578e9c4280dff28e9ef9817ac35ccad8d105a02714e06cc79f",
+        "notes": "e156e64b47f204647fe31fca6ff9747392aa2175fa2cc0673e1cbacff3a95ca5",
+        "scene_ids": "4c55dda0020a10cabb6f92ea0da85927499e2e52530472b6cad23dc8ae31e418",
+        "nail_type": "a8232757b3bb31d7bddb73a04568afd4c28d736f66c5f94f279d282fdcde33f8",
+        "fastener_text": "ee7d6464ffeddc7803961b5da9275ceb9e7eaf4c43d55d7d195befb782890990",
+        "long_nose": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "blower": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "images": "f9784f0ee405e89b6e71aa518cd3e6757bdf920887bfa04570c932b46b81a1ff",
+        "cover_media_id": "b7520c17d8d0dbe04b827031b7e872ede7173e264af142782b444350750689cf",
+        "visibility": "577f4dedb30ed669e09944f735e84f415fe90f3affd1af04a4d599b7e1a08d7f",
+        "sort_order": "b17ef6d19c7a5b1ee83b907c595526dcb1eb06db8227d650d5dda0a9f4ce8cd9",
+        "guide_profile": "ed8c93d6d04ec9bc9b96f149824e71b636f39a70fd4f837dc61cfa48042ab454",
+        "purchase_options": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "conflict_fields": []
+    },
+    {
+      "row": 19,
+      "action": "preserve",
+      "id": "p_422jg",
+      "slug": "422jg",
+      "kind": "tool",
+      "baseline": {
+        "kind": "dd04afac1bebb050783a245ed0d88633759f352c85d4ab3bea3d416bf2019c75",
+        "name": "34f752e130af658e22afceb3974e3b702712fa76e5d22f85d9e3001a4a1a9530",
+        "model": "34f752e130af658e22afceb3974e3b702712fa76e5d22f85d9e3001a4a1a9530",
+        "category_id": "a8232757b3bb31d7bddb73a04568afd4c28d736f66c5f94f279d282fdcde33f8",
+        "series": "09575204c93efd32dc05d0e7940a12290136312c7844e316a479947452db9050",
+        "legacy_series_ids": "1f5c6e7fd7160cf7638c1291f25d8aa7585262434ea14876e570412d07a07292",
+        "summary": "e344d35c136e27a29f2e4ad9dd7f3aefcb02890f409ff9bdb28e85ac682028d1",
+        "applications": "c573dfefd6d38b3f2599654e6c6bd54e224f5155abf32ea443d9efdea5db25d8",
+        "features": "86e8fe913369e04ce471c166d60e6fbeff0f7e7d69a2e7b560b107b9d21470ec",
+        "notes": "bd5e54b01f82a5a250583aba4c5eab3c1320349912935ebf6d7924a815cb095e",
+        "scene_ids": "1f6266449457fe013cc224e9fa412e0418a10fdabd02a5d014e87f306c0b48f7",
+        "nail_type": "a8232757b3bb31d7bddb73a04568afd4c28d736f66c5f94f279d282fdcde33f8",
+        "fastener_text": "b24df1262e6c68c5b5d214102732548bd8272ff48c3b497dba2139162b29b64a",
+        "long_nose": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "blower": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "images": "812bcff2ad534089419254fc1e6870bd563aa524db05ce6a728e4b88f2251d8f",
+        "cover_media_id": "f15e88e43f1f78843a771dfa02e3578f4732ebc93d29567f5d5e18159fcadbd5",
+        "visibility": "577f4dedb30ed669e09944f735e84f415fe90f3affd1af04a4d599b7e1a08d7f",
+        "sort_order": "4523540f1504cd17100c4835e85b7eefd49911580f8efff0599a8f283be6b9e3",
+        "guide_profile": "42786b39c37b59012290064508a64ff7ce3d12c8ba9f05ddafccd78f3ec4b2e7",
+        "purchase_options": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "conflict_fields": []
+    },
+    {
+      "row": 20,
+      "action": "preserve",
+      "id": "p_1013jg",
+      "slug": "1013jg",
+      "kind": "tool",
+      "baseline": {
+        "kind": "dd04afac1bebb050783a245ed0d88633759f352c85d4ab3bea3d416bf2019c75",
+        "name": "d63f72e538c2d86e9a950b78ff8465935f392a7c6b22c559b038b40a7724187b",
+        "model": "d63f72e538c2d86e9a950b78ff8465935f392a7c6b22c559b038b40a7724187b",
+        "category_id": "a8232757b3bb31d7bddb73a04568afd4c28d736f66c5f94f279d282fdcde33f8",
+        "series": "09575204c93efd32dc05d0e7940a12290136312c7844e316a479947452db9050",
+        "legacy_series_ids": "1f5c6e7fd7160cf7638c1291f25d8aa7585262434ea14876e570412d07a07292",
+        "summary": "702db0d3672e0ca8194f4e424ee72fb756be8b24354018b5e5393828d891642b",
+        "applications": "916001ee66b9d00da0295b49bb9de1f0892dd31825c57710ab926397a6c71652",
+        "features": "72d94f830faa3ab7365d92728a368928a81db87eb282ded056b287e684617ab2",
+        "notes": "bd5e54b01f82a5a250583aba4c5eab3c1320349912935ebf6d7924a815cb095e",
+        "scene_ids": "1f6266449457fe013cc224e9fa412e0418a10fdabd02a5d014e87f306c0b48f7",
+        "nail_type": "a8232757b3bb31d7bddb73a04568afd4c28d736f66c5f94f279d282fdcde33f8",
+        "fastener_text": "3becac4dcc807306f5b01c60724d27c0fecf5357416302c8ab69b7e0098e4797",
+        "long_nose": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "blower": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "images": "5e3737f097fdcc8832aef3a3b58e7984257f18f8c84b16cb9e4e1975bd121aed",
+        "cover_media_id": "cf516f18e77374ec2f3b40bc45eb69ba077205d032e7a0b9cd3d514acf9a832e",
+        "visibility": "577f4dedb30ed669e09944f735e84f415fe90f3affd1af04a4d599b7e1a08d7f",
+        "sort_order": "4ec9599fc203d176a301536c2e091a19bc852759b255bd6818810a42c5fed14a",
+        "guide_profile": "ce69dbefcd10c25d579945b58ca3a6910cffb458c743ffc753a2e1db4c81dffa",
+        "purchase_options": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "conflict_fields": []
+    },
+    {
+      "row": 21,
+      "action": "preserve",
+      "id": "p_1022jg",
+      "slug": "1022jg",
+      "kind": "tool",
+      "baseline": {
+        "kind": "dd04afac1bebb050783a245ed0d88633759f352c85d4ab3bea3d416bf2019c75",
+        "name": "45913e914fed5ecddea23ef14d831876b02282315f5ac59d599aa7c5f15d9735",
+        "model": "45913e914fed5ecddea23ef14d831876b02282315f5ac59d599aa7c5f15d9735",
+        "category_id": "a8232757b3bb31d7bddb73a04568afd4c28d736f66c5f94f279d282fdcde33f8",
+        "series": "09575204c93efd32dc05d0e7940a12290136312c7844e316a479947452db9050",
+        "legacy_series_ids": "1f5c6e7fd7160cf7638c1291f25d8aa7585262434ea14876e570412d07a07292",
+        "summary": "1156c53a4cd8174cfa65a6d815f5b9e7399b4492fdc5d0b8ff86df038c519cfd",
+        "applications": "bde3fb3060c74a1a79ff2fbd2e33cacb8f5e0131e65f0213bad094e3beec63b7",
+        "features": "7041e7a27d68b9f4bab05966083894fc07b033d20346425ba7f62b9cb0d1144f",
+        "notes": "bd5e54b01f82a5a250583aba4c5eab3c1320349912935ebf6d7924a815cb095e",
+        "scene_ids": "1f6266449457fe013cc224e9fa412e0418a10fdabd02a5d014e87f306c0b48f7",
+        "nail_type": "a8232757b3bb31d7bddb73a04568afd4c28d736f66c5f94f279d282fdcde33f8",
+        "fastener_text": "16a5e22a1004f0144044cdfb7de4079f2a50753610a2c063ce71c6616ecf6f61",
+        "long_nose": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "blower": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "images": "9101f7f4ae36f4bb7f0e9f43b6aa0de1338b3377a3280945b2330e329e3f3c52",
+        "cover_media_id": "20ef10c290f9dbe2330b624afef5df58cb29e75f5cefa724c56e20c8b191f742",
+        "visibility": "577f4dedb30ed669e09944f735e84f415fe90f3affd1af04a4d599b7e1a08d7f",
+        "sort_order": "9400f1b21cb527d7fa3d3eabba93557a18ebe7a2ca4e471cfe5e4c5b4ca7f767",
+        "guide_profile": "a02a86a1e7d7776bb1fc6b32b398211421281c91a2d28c6e7ab21fa82ff7a984",
+        "purchase_options": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "conflict_fields": []
+    },
+    {
+      "row": 22,
+      "action": "preserve",
+      "id": "p_gw838",
+      "slug": "gw838",
+      "kind": "tool",
+      "baseline": {
+        "kind": "dd04afac1bebb050783a245ed0d88633759f352c85d4ab3bea3d416bf2019c75",
+        "name": "9bf18b2d71477312801e7308fbb911064fe8bfc96a632bab873fe1455c15c18e",
+        "model": "9bf18b2d71477312801e7308fbb911064fe8bfc96a632bab873fe1455c15c18e",
+        "category_id": "a8232757b3bb31d7bddb73a04568afd4c28d736f66c5f94f279d282fdcde33f8",
+        "series": "7b5389eb5a93ea2734eac4b7317ac6e74b6f2c0b9a2603cb98fdb4a6e7fcc859",
+        "legacy_series_ids": "96a1c31b48ea2577d7f54b5e6aa982a96a2a0a1dd7c8de45b4913d43cdcd8be9",
+        "summary": "75b6a613d6778eab9a308592f24246d9a7b5e761e93766bcd7ef371bd258c50b",
+        "applications": "f35a99e0a1d9f0d35db1fdfd207f73e3484fcfbbf9c25953c322b6a304035756",
+        "features": "71c17441c3590a47bd4a3daf22cb65595c4246a6f8bf3b78f4f5e210346befd9",
+        "notes": "5fd73b6c3b5c735fec128e563486a6844b895fea56471df73ac303ea090ca828",
+        "scene_ids": "1ac0e68b6e34aca18dd16509040c07ab6cadf5bfd555810348dc74b60031bb74",
+        "nail_type": "a8232757b3bb31d7bddb73a04568afd4c28d736f66c5f94f279d282fdcde33f8",
+        "fastener_text": "5f9558b16c6fdcb412d89ed56d70f19ca21acb8d2b5a9ec42a53ff3a8ce858b5",
+        "long_nose": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "blower": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "images": "ec70f569213f67eb073cc8da6120491dca2af3dfc981ddf8acd97a317dde4128",
+        "cover_media_id": "46706aea915ee17c1559ba782ed83d7ed2a6e8eaacc84ad3ee15da5567587847",
+        "visibility": "577f4dedb30ed669e09944f735e84f415fe90f3affd1af04a4d599b7e1a08d7f",
+        "sort_order": "f5ca38f748a1d6eaf726b8a42fb575c3c71f1864a8143301782de13da2d9202b",
+        "guide_profile": "686fff4ac4759997bf5748c81280eaa30cc46c6cdfa5875a02097a74181a32c1",
+        "purchase_options": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "conflict_fields": []
+    },
+    {
+      "row": 23,
+      "action": "preserve",
+      "id": "p_pw2638",
+      "slug": "pw2638",
+      "kind": "tool",
+      "baseline": {
+        "kind": "dd04afac1bebb050783a245ed0d88633759f352c85d4ab3bea3d416bf2019c75",
+        "name": "350b82b7029b3bef7ba8a97187ed862f0c71a143edbb814168c63b270401f4f8",
+        "model": "350b82b7029b3bef7ba8a97187ed862f0c71a143edbb814168c63b270401f4f8",
+        "category_id": "a8232757b3bb31d7bddb73a04568afd4c28d736f66c5f94f279d282fdcde33f8",
+        "series": "9b73c4656a2b4fd0121af581dc7579edd87c1d8e438560a5652109672d0cfcd2",
+        "legacy_series_ids": "cf49965f34cbdb47db16034d908baee8f49615c6386fb0f5d540535d9a82ae54",
+        "summary": "0cf6de9ed0a70802f5a5fcce236871c2e43179eb87a3b5bd89f7aebfab00f9bb",
+        "applications": "4ab591029357fdacb5dee7985e03ec8cb86aa9eca5b29b0588f663eeae5df8e5",
+        "features": "9a3ae5397c761b4939dcd0e95f815090be46692488e89d232a662e355dbbd2a1",
+        "notes": "21092fdf2fcfc82212190ca6411dbd68834be8686c569a2fea7a2b8bd74bf3d2",
+        "scene_ids": "4c55dda0020a10cabb6f92ea0da85927499e2e52530472b6cad23dc8ae31e418",
+        "nail_type": "a8232757b3bb31d7bddb73a04568afd4c28d736f66c5f94f279d282fdcde33f8",
+        "fastener_text": "27f63442694cec510de1d0c49951bb226a6aeec677b8cdfe2c38290550dc8fbf",
+        "long_nose": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "blower": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "images": "034719fd80ea62d73a09a05a10dec5dbcbaba3e634302c987512463ebc32a926",
+        "cover_media_id": "33f91a9f8ce1b52228ac74b565eda8a01d9c6e447c3244b0cbf47bbf1f448f3c",
+        "visibility": "577f4dedb30ed669e09944f735e84f415fe90f3affd1af04a4d599b7e1a08d7f",
+        "sort_order": "6f4b6612125fb3a0daecd2799dfd6c9c299424fd920f9b308110a2c1fbd8f443",
+        "guide_profile": "83b0140362fd5893c3b812f721f69995bd5cf50ec0c40177bbabab41466ccc38",
+        "purchase_options": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "conflict_fields": []
+    },
+    {
+      "row": 24,
+      "action": "preserve",
+      "id": "p_p625g",
+      "slug": "p625g",
+      "kind": "tool",
+      "baseline": {
+        "kind": "dd04afac1bebb050783a245ed0d88633759f352c85d4ab3bea3d416bf2019c75",
+        "name": "c0425bf282d1587876001ddb6c8b8e239766b0c162b34d0a928a228e147e1f49",
+        "model": "c0425bf282d1587876001ddb6c8b8e239766b0c162b34d0a928a228e147e1f49",
+        "category_id": "306d4341737da79ea54041e19057baf7f5254a139860e9f4df6dc7c699e06d03",
+        "series": "9b73c4656a2b4fd0121af581dc7579edd87c1d8e438560a5652109672d0cfcd2",
+        "legacy_series_ids": "a84de29d976b45f9b80f783f3fa840299367dc98297bd558ccc6407284a83498",
+        "summary": "dc7e46c290ae60d5ea8e93171b81912103aed7015887f2f2f46aa5fb9cbda8d9",
+        "applications": "d232e742129269cb6eaab0b939c2490be8a4f1309bff18748a09cafec40d5743",
+        "features": "9f2f10dc71ba3d704e2bbba69ac7812dbf6dd5edcc9722b64095d24feb79f01e",
+        "notes": "48bfcd05522de8600e5f9b2facedc318a27ea5a24183c6e496cd36a4b394b974",
+        "scene_ids": "48e9a48718841fbaf85c06167cd41cb0a0974f0bd5f7add05bf9ac714e44ef33",
+        "nail_type": "306d4341737da79ea54041e19057baf7f5254a139860e9f4df6dc7c699e06d03",
+        "fastener_text": "3cfe645fcb82cf15ca354ef8c82cf4e1dd2793a1fa73fe137d74a559d85e78cc",
+        "long_nose": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "blower": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "images": "a003f72a05c2786683beb3a5a048bb273631479922fb0962d0604e13ad9454b3",
+        "cover_media_id": "fa37e55d8bc6ed0132ca40bd91c40f6832fe94c30e0ec8c3b3d16367b65e35e1",
+        "visibility": "577f4dedb30ed669e09944f735e84f415fe90f3affd1af04a4d599b7e1a08d7f",
+        "sort_order": "785f3ec7eb32f30b90cd0fcf3657d388b5ff4297f2f9716ff66e9b69c05ddd09",
+        "guide_profile": "5d112dbd02e507cc3ba626ba720ab8f643ee59f3c4aa084d89169e2d8899abc4",
+        "purchase_options": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "conflict_fields": [
+        "summary"
+      ]
+    },
+    {
+      "row": 25,
+      "action": "preserve",
+      "id": "p_p635g",
+      "slug": "p635g",
+      "kind": "tool",
+      "baseline": {
+        "kind": "dd04afac1bebb050783a245ed0d88633759f352c85d4ab3bea3d416bf2019c75",
+        "name": "21903ae2960641ead44c8a2cfbe9fd55a886c081199e2a40aa29e79951feb2fa",
+        "model": "21903ae2960641ead44c8a2cfbe9fd55a886c081199e2a40aa29e79951feb2fa",
+        "category_id": "306d4341737da79ea54041e19057baf7f5254a139860e9f4df6dc7c699e06d03",
+        "series": "9b73c4656a2b4fd0121af581dc7579edd87c1d8e438560a5652109672d0cfcd2",
+        "legacy_series_ids": "a84de29d976b45f9b80f783f3fa840299367dc98297bd558ccc6407284a83498",
+        "summary": "8e0e48863aa8794dc4384fa9963142e41500c919b13edb110f05595cee6e41b4",
+        "applications": "89f5454b0abcf6c9b194d3a862dcdda6e8d55d29b0d2ad4fe03b54ccda7d4750",
+        "features": "726cbfdab55bcaf99a0e2ef0c0dd090b4b36c396218db2d26477412083733657",
+        "notes": "48bfcd05522de8600e5f9b2facedc318a27ea5a24183c6e496cd36a4b394b974",
+        "scene_ids": "48e9a48718841fbaf85c06167cd41cb0a0974f0bd5f7add05bf9ac714e44ef33",
+        "nail_type": "306d4341737da79ea54041e19057baf7f5254a139860e9f4df6dc7c699e06d03",
+        "fastener_text": "bb190a9de9363e47a7f0d2f5d01219988cbab9fc677093509cc95554e58ff423",
+        "long_nose": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "blower": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "images": "7532b2a36d7f5bb5e2c523a34445bf258e7a7eb2e5714e68e48a1587c2a754ea",
+        "cover_media_id": "1667a7ee1ff8223217e399eb68ca334492f9b940b40c3e09b0834a38ec719647",
+        "visibility": "577f4dedb30ed669e09944f735e84f415fe90f3affd1af04a4d599b7e1a08d7f",
+        "sort_order": "535fa30d7e25dd8a49f1536779734ec8286108d115da5045d77f3b4185d8f790",
+        "guide_profile": "5c36ae09c35af5dd19d321d0a519d2b8debf95da7258c2af98f21ef256eec0cd",
+        "purchase_options": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "conflict_fields": [
+        "summary"
+      ]
+    },
+    {
+      "row": 26,
+      "action": "preserve",
+      "id": "p_cn55",
+      "slug": "cn55",
+      "kind": "tool",
+      "baseline": {
+        "kind": "dd04afac1bebb050783a245ed0d88633759f352c85d4ab3bea3d416bf2019c75",
+        "name": "ed63813bc77991ec2aca83d54c56eef501a6686d5cec5dc6679e0cf0614ae03a",
+        "model": "ed63813bc77991ec2aca83d54c56eef501a6686d5cec5dc6679e0cf0614ae03a",
+        "category_id": "617013dcf263942a8eba226046b5cca35064dd1e9c17ef9f1926aa756418fe5e",
+        "series": "27b907b9e5f3bd58e980e84e6923470ab212ef4644537624c7d066a91f8786b4",
+        "legacy_series_ids": "dfd85700149fca2304b3df93c9bb593317cca420e05a58045cc6f5198cbfc19c",
+        "summary": "18999d7d49f5c0a4bafcef7adf1d4dd7af5e08ded0629fb9b1d0f433769ec197",
+        "applications": "aab4515a97ebb5689be44c53e909daab81066163635d41bb347eb2342669544c",
+        "features": "2313f62b8e3c8e626ecd6bc742b1fe6acb6be9f04e09bdf424220e7cc0056707",
+        "notes": "67dc17ff9b77e44d59c36dca651acd3a609c4cd08e6ef33167a5752198aee2fd",
+        "scene_ids": "a1d7a560845d25e80b817f419c4f6c1c2dcb09ec6a3f46bae0f3ac8bc1e7ae3f",
+        "nail_type": "00066b301bd1b7348c29ca26db70c8e377e5db0e82b268936b3ffbf940ffe908",
+        "fastener_text": "2c2fe327b2a3d5f0e4815370126ea9cc24125ae20062b50b755eb888c0cb3a1a",
+        "long_nose": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "blower": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "images": "829dd04a44d182ffe3c91eb8dfcda0380b13e7a59ecf92860acbf59ce78e367f",
+        "cover_media_id": "f3cb50303774351501198ccb6f12e804629507bf835ef90af8454b7eeb1fff4e",
+        "visibility": "577f4dedb30ed669e09944f735e84f415fe90f3affd1af04a4d599b7e1a08d7f",
+        "sort_order": "c2356069e9d1e79ca924378153cfbbfb4d4416b1f99d41a2940bfdb66c5319db",
+        "guide_profile": "8ba6d9e608a351ed60f555b193f459fdb627f20872f4ad55c4bb2593790dac54",
+        "purchase_options": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "conflict_fields": []
+    },
+    {
+      "row": 27,
+      "action": "preserve",
+      "id": "p_cn70",
+      "slug": "cn70",
+      "kind": "tool",
+      "baseline": {
+        "kind": "dd04afac1bebb050783a245ed0d88633759f352c85d4ab3bea3d416bf2019c75",
+        "name": "cc2e8dafe24d915c37887e2fc3ca87458c15aa27d5bc903a9d15ac343e57689c",
+        "model": "cc2e8dafe24d915c37887e2fc3ca87458c15aa27d5bc903a9d15ac343e57689c",
+        "category_id": "617013dcf263942a8eba226046b5cca35064dd1e9c17ef9f1926aa756418fe5e",
+        "series": "27b907b9e5f3bd58e980e84e6923470ab212ef4644537624c7d066a91f8786b4",
+        "legacy_series_ids": "dfd85700149fca2304b3df93c9bb593317cca420e05a58045cc6f5198cbfc19c",
+        "summary": "79f518116ef3ef0c46fc5a131b31faf9ff13fb335a64a48cb66c14b8d7dbfbb2",
+        "applications": "40345d19b3bf7b60ff6d6bb72bcf6c4bcd3a4a4982f522dfe7dcfca6ac15a44a",
+        "features": "2313f62b8e3c8e626ecd6bc742b1fe6acb6be9f04e09bdf424220e7cc0056707",
+        "notes": "67dc17ff9b77e44d59c36dca651acd3a609c4cd08e6ef33167a5752198aee2fd",
+        "scene_ids": "a1d7a560845d25e80b817f419c4f6c1c2dcb09ec6a3f46bae0f3ac8bc1e7ae3f",
+        "nail_type": "00066b301bd1b7348c29ca26db70c8e377e5db0e82b268936b3ffbf940ffe908",
+        "fastener_text": "e417a600176638e54ec527e363b0e57b837a2fe3c8521fab38719fad39276b20",
+        "long_nose": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "blower": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "images": "12e0cccee382a29f8247c34e3c9358f151ab2417ee671c27f725990a1334995a",
+        "cover_media_id": "21f7f7d500bed37e427ba1360ea27a37b949572e75f53a5a2507d384d3c5c0eb",
+        "visibility": "577f4dedb30ed669e09944f735e84f415fe90f3affd1af04a4d599b7e1a08d7f",
+        "sort_order": "b7a56873cd771f2c446d369b649430b65a756ba278ff97ec81bb6f55b2e73569",
+        "guide_profile": "860937b9960d517b11508bdf1d497bdb81aafd65a6b54449f38a1d9360cad38f",
+        "purchase_options": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "conflict_fields": []
+    },
+    {
+      "row": 28,
+      "action": "preserve",
+      "id": "p_cn80",
+      "slug": "cn80",
+      "kind": "tool",
+      "baseline": {
+        "kind": "dd04afac1bebb050783a245ed0d88633759f352c85d4ab3bea3d416bf2019c75",
+        "name": "6e486eda8fb864f9beaa1a46ef9bb274599b11bcc9e95e140646b2da6f3b2d50",
+        "model": "6e486eda8fb864f9beaa1a46ef9bb274599b11bcc9e95e140646b2da6f3b2d50",
+        "category_id": "617013dcf263942a8eba226046b5cca35064dd1e9c17ef9f1926aa756418fe5e",
+        "series": "27b907b9e5f3bd58e980e84e6923470ab212ef4644537624c7d066a91f8786b4",
+        "legacy_series_ids": "dfd85700149fca2304b3df93c9bb593317cca420e05a58045cc6f5198cbfc19c",
+        "summary": "43c852d25a027d509067c205a1ddccea7165ee6d3e77fd30508bfc768c019380",
+        "applications": "ae58f47e17e2715bde4b491d6a18998495a3eafa24fdf68c6d39acfdced51875",
+        "features": "2313f62b8e3c8e626ecd6bc742b1fe6acb6be9f04e09bdf424220e7cc0056707",
+        "notes": "67dc17ff9b77e44d59c36dca651acd3a609c4cd08e6ef33167a5752198aee2fd",
+        "scene_ids": "a1d7a560845d25e80b817f419c4f6c1c2dcb09ec6a3f46bae0f3ac8bc1e7ae3f",
+        "nail_type": "00066b301bd1b7348c29ca26db70c8e377e5db0e82b268936b3ffbf940ffe908",
+        "fastener_text": "1cb75a8402d080855d2566b2b5d14614c755ec0bc37f2ad10b6422b55255da08",
+        "long_nose": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "blower": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "images": "9492c691d93486706b117bec75ae9fc6fb0e4aba10d92c6e4e6ec674494a72d6",
+        "cover_media_id": "cc655c1fd7f3b2f623153e1905aff6a21c4aa145e60667156ab67290e25b96bc",
+        "visibility": "577f4dedb30ed669e09944f735e84f415fe90f3affd1af04a4d599b7e1a08d7f",
+        "sort_order": "5f9c4ab08cac7457e9111a30e4664920607ea2c115a1433d7be98e97e64244ca",
+        "guide_profile": "3483700ef1e44c3438e5309d5f8a2c22f6006d28abddbf9da703c6664a7ffb20",
+        "purchase_options": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "conflict_fields": []
+    },
+    {
+      "row": 29,
+      "action": "preserve",
+      "id": "p_cn90",
+      "slug": "cn90",
+      "kind": "tool",
+      "baseline": {
+        "kind": "dd04afac1bebb050783a245ed0d88633759f352c85d4ab3bea3d416bf2019c75",
+        "name": "172165cb99c48b7b0169b8a4ebcef681f3030aab4cfe6da6e20a15f3083a752c",
+        "model": "172165cb99c48b7b0169b8a4ebcef681f3030aab4cfe6da6e20a15f3083a752c",
+        "category_id": "617013dcf263942a8eba226046b5cca35064dd1e9c17ef9f1926aa756418fe5e",
+        "series": "27b907b9e5f3bd58e980e84e6923470ab212ef4644537624c7d066a91f8786b4",
+        "legacy_series_ids": "dfd85700149fca2304b3df93c9bb593317cca420e05a58045cc6f5198cbfc19c",
+        "summary": "bd29f9265e4e51f4f4dbc8efedc86d8bb6a7f37af4348a833906a08e1ddf78d5",
+        "applications": "24ed56338dba7d1f04d0f52f7100eca75dacac4079412da3b45a209669526ffd",
+        "features": "2313f62b8e3c8e626ecd6bc742b1fe6acb6be9f04e09bdf424220e7cc0056707",
+        "notes": "67dc17ff9b77e44d59c36dca651acd3a609c4cd08e6ef33167a5752198aee2fd",
+        "scene_ids": "a1d7a560845d25e80b817f419c4f6c1c2dcb09ec6a3f46bae0f3ac8bc1e7ae3f",
+        "nail_type": "00066b301bd1b7348c29ca26db70c8e377e5db0e82b268936b3ffbf940ffe908",
+        "fastener_text": "8f14c5ed247da557c134311ba0312f5985a65ff3d7d91ee970c3c063bf7353e3",
+        "long_nose": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "blower": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "images": "0e88635b2e7c0f99ded103abf80ef34a685e3c25c32ff7eb73fe26aeb138ebfd",
+        "cover_media_id": "e0bef6cd833dc6d836ea5fbd5582842deb8ade0ea19e72ede09bfde709421842",
+        "visibility": "577f4dedb30ed669e09944f735e84f415fe90f3affd1af04a4d599b7e1a08d7f",
+        "sort_order": "670671cd97404156226e507973f2ab8330d3022ca96e0c93bdbdb320c41adcaf",
+        "guide_profile": "f71d4a99eb88f4de628adef2dd6fc05ce03c3e22ff7546dfafa52fe117adf32e",
+        "purchase_options": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "conflict_fields": []
+    },
+    {
+      "row": 30,
+      "action": "preserve",
+      "id": "p_t50scg",
+      "slug": "t50scg",
+      "kind": "tool",
+      "baseline": {
+        "kind": "dd04afac1bebb050783a245ed0d88633759f352c85d4ab3bea3d416bf2019c75",
+        "name": "5acb02f5a8be2959041a4caa6c3201c258d89afa7b0449bc742867029caafbde",
+        "model": "5acb02f5a8be2959041a4caa6c3201c258d89afa7b0449bc742867029caafbde",
+        "category_id": "0f22609157badee942a614c00156e27d46484109f64767bb8ef398463b20b243",
+        "series": "51e26bb9e4b1dc6c3650971f759ee524d2bb7e2cc30f5544a91fb92f4fe8b48e",
+        "legacy_series_ids": "b8f65658db4bfd802c9a03493efa3a9d277f61b8d12c6fac6777dc8c1239608b",
+        "summary": "292db2ec2c161d7b45d47a43e7bf358fd52b8159ad507026bcc21fef0ae739f0",
+        "applications": "ebd0149425dec04fed095502091d04dd634c6a1621c9656e6ca9a4978331653d",
+        "features": "52d92b34b41ee5d8973dcea3f84d50a4a19d48677c0b6668f6a8d8e7bdd75344",
+        "notes": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "scene_ids": "17661dcbbaa694f3677aa02800482ff992cf4635d62119b3fe898533ee9001d1",
+        "nail_type": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "fastener_text": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+        "long_nose": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "blower": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "images": "ad578937ac25aaef9a226ff938e7b4911c5c8c8cd7076e7f12625fc3591475bf",
+        "cover_media_id": "66d1400a0ad5cf2f796df698e4676fef211fabb25144c9606696ba4c649427bd",
+        "visibility": "577f4dedb30ed669e09944f735e84f415fe90f3affd1af04a4d599b7e1a08d7f",
+        "sort_order": "59e19706d51d39f66711c2653cd7eb1291c94d9b55eb14bda74ce4dc636d015a",
+        "guide_profile": "fd70bedf4f8019d563c3b5036e5b409e425453a0eee96fbd9c6eb7c7ecce2b67",
+        "purchase_options": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "conflict_fields": []
+    },
+    {
+      "row": 31,
+      "action": "preserve",
+      "id": "p_np55g",
+      "slug": "np55g",
+      "kind": "tool",
+      "baseline": {
+        "kind": "dd04afac1bebb050783a245ed0d88633759f352c85d4ab3bea3d416bf2019c75",
+        "name": "5d1535f256dc5b7c93694ad6a5c1ac424d6be8ba620c3324c828b8b4a63d0f7b",
+        "model": "5d1535f256dc5b7c93694ad6a5c1ac424d6be8ba620c3324c828b8b4a63d0f7b",
+        "category_id": "0f22609157badee942a614c00156e27d46484109f64767bb8ef398463b20b243",
+        "series": "51e26bb9e4b1dc6c3650971f759ee524d2bb7e2cc30f5544a91fb92f4fe8b48e",
+        "legacy_series_ids": "a3fa91d1e8a96093182aacdf55934b69e8d86ae63aa397074c2969f68a63fb76",
+        "summary": "2e93f17c48e25a5d2ab2c0dd590453396134b40e46ac09b88e9fe05109495607",
+        "applications": "a99fcd5e7c6903d6b23d298eb7765540cb5c63524e66fb7d4747c14d819d64d0",
+        "features": "cc7b201783f585ed026d300b194472fb8f394b6d8bb0da90e0256b5698075633",
+        "notes": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "scene_ids": "17661dcbbaa694f3677aa02800482ff992cf4635d62119b3fe898533ee9001d1",
+        "nail_type": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "fastener_text": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+        "long_nose": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "blower": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "images": "f9a3a7c7f60b451d7246317197fccf1baa10358d9fa2af9ee75fb708ff9d1a3f",
+        "cover_media_id": "0343834cdc0731978932f5b21238ea4b06a275792966a0ae61ae74436c623bd0",
+        "visibility": "577f4dedb30ed669e09944f735e84f415fe90f3affd1af04a4d599b7e1a08d7f",
+        "sort_order": "35135aaa6cc23891b40cb3f378c53a17a1127210ce60e125ccf03efcfdaec458",
+        "guide_profile": "6f6fb44b7130b62980923c5b07889b659f128b298aa2bc635a18a40ee5e3378e",
+        "purchase_options": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "conflict_fields": []
+    },
+    {
+      "row": 32,
+      "action": "preserve",
+      "id": "p_np70g",
+      "slug": "np70g",
+      "kind": "tool",
+      "baseline": {
+        "kind": "dd04afac1bebb050783a245ed0d88633759f352c85d4ab3bea3d416bf2019c75",
+        "name": "151d6aa1550629a3f20873ad47cf00d42c795e0d95d29e91813ca11db442d880",
+        "model": "151d6aa1550629a3f20873ad47cf00d42c795e0d95d29e91813ca11db442d880",
+        "category_id": "0f22609157badee942a614c00156e27d46484109f64767bb8ef398463b20b243",
+        "series": "51e26bb9e4b1dc6c3650971f759ee524d2bb7e2cc30f5544a91fb92f4fe8b48e",
+        "legacy_series_ids": "a3fa91d1e8a96093182aacdf55934b69e8d86ae63aa397074c2969f68a63fb76",
+        "summary": "e7db7d1a7a52fb996d76fa6c9b9d4c9813f5e43c46dad7d5dd1eba8cfa347ce1",
+        "applications": "296274e14859e586ff7cd27d988bacdcd05d3e441235e10cd09e020e502a6381",
+        "features": "cc7b201783f585ed026d300b194472fb8f394b6d8bb0da90e0256b5698075633",
+        "notes": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "scene_ids": "17661dcbbaa694f3677aa02800482ff992cf4635d62119b3fe898533ee9001d1",
+        "nail_type": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "fastener_text": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+        "long_nose": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "blower": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "images": "ececfd72eac51a325ee3d3a848c7e7c0db48d8458461d0a9bb958d589c8276d9",
+        "cover_media_id": "7b73bd5b135b95fd9b43f8d196beccedb0184ff5fbf3bbbf52bf9aae762d644a",
+        "visibility": "577f4dedb30ed669e09944f735e84f415fe90f3affd1af04a4d599b7e1a08d7f",
+        "sort_order": "624b60c58c9d8bfb6ff1886c2fd605d2adeb6ea4da576068201b6c6958ce93f4",
+        "guide_profile": "647d02058377a79c1002762c0460fdc00f050faffaa61da301914256f59ce0b3",
+        "purchase_options": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "conflict_fields": []
+    },
+    {
+      "row": 33,
+      "action": "preserve",
+      "id": "p_np90g",
+      "slug": "np90g",
+      "kind": "tool",
+      "baseline": {
+        "kind": "dd04afac1bebb050783a245ed0d88633759f352c85d4ab3bea3d416bf2019c75",
+        "name": "52bcf464f7ff1155786a50cab416884e2c1dcf8c6b48f489fee0dff84653c61a",
+        "model": "52bcf464f7ff1155786a50cab416884e2c1dcf8c6b48f489fee0dff84653c61a",
+        "category_id": "0f22609157badee942a614c00156e27d46484109f64767bb8ef398463b20b243",
+        "series": "7910d50509f860b4f16d4a1096e2a6fb8ee1eba5af19c62f77ff9b9b5c5aaec1",
+        "legacy_series_ids": "a3fa91d1e8a96093182aacdf55934b69e8d86ae63aa397074c2969f68a63fb76",
+        "summary": "b791c7aaf3cdd43c3a7f196cdf5ceffee1ccb8a246a93ba5e2039ea7324e7092",
+        "applications": "2919cf556c8aab1dac93c3aa7ba67eec2624b3a424ac7936b9567bddedc6c54a",
+        "features": "0061f67d33aa3b72040b4de852154102a5938c69d7b8ffc3f486b2d9d500da36",
+        "notes": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "scene_ids": "17661dcbbaa694f3677aa02800482ff992cf4635d62119b3fe898533ee9001d1",
+        "nail_type": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "fastener_text": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+        "long_nose": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "blower": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "images": "c2d014b743bdbc4c964e2c8b7cebf9830e4bb08952f350cb6898115cff7ba229",
+        "cover_media_id": "b7a7da1915dfe2a59df16dca2c885673614b8b69a86fc9fb528ade7828add417",
+        "visibility": "577f4dedb30ed669e09944f735e84f415fe90f3affd1af04a4d599b7e1a08d7f",
+        "sort_order": "eb1e33e8a81b697b75855af6bfcdbcbf7cbbde9f94962ceaec1ed8af21f5a50f",
+        "guide_profile": "5b0e4af7a61b7e24fc9f53bfa34d6741ebab4f159005debb4ce6b575fd6ef2e9",
+        "purchase_options": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "conflict_fields": []
+    },
+    {
+      "row": 34,
+      "action": "preserve",
+      "id": "p_bd70",
+      "slug": "bd70",
+      "kind": "tool",
+      "baseline": {
+        "kind": "dd04afac1bebb050783a245ed0d88633759f352c85d4ab3bea3d416bf2019c75",
+        "name": "739852879cf9b0fbe4e9f9bc289ab04b5e57925f9b4ab91aed9ccfd556462cd1",
+        "model": "739852879cf9b0fbe4e9f9bc289ab04b5e57925f9b4ab91aed9ccfd556462cd1",
+        "category_id": "0f22609157badee942a614c00156e27d46484109f64767bb8ef398463b20b243",
+        "series": "5945bd9dfd0062220a3230e8d1ab41986739f167448fb3e67f9b6a63c0c5a560",
+        "legacy_series_ids": "3b870499adfe3c019d07f97eee1f96ba65dc7d22ed505273cef705360c86dee5",
+        "summary": "dc30c8fe3d4b35d442d746706ad43ffc60b0a603cdf6b013af9daec76d2da250",
+        "applications": "d0c61f945505df74f603721a2e7fe4301799224cfcc96138aedb396182fdc5e7",
+        "features": "28ea5c9a0c5b9d9b069666902e4d1de454c7451090c6b139fae4d5686d33bdfb",
+        "notes": "1c61a86fd46eaf4b553fab2a3f36510e8e93e807998e5d77a7a0874e760ac617",
+        "scene_ids": "17661dcbbaa694f3677aa02800482ff992cf4635d62119b3fe898533ee9001d1",
+        "nail_type": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "fastener_text": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+        "long_nose": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "blower": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "images": "f4cd580ce8cac8530d18c954b7cba3891297bcdd89343e7b7de389e89cad5ed4",
+        "cover_media_id": "36a44d24275a4bb27c319f97f0996205fbb58b81c0c1815b40d826b467c6064c",
+        "visibility": "577f4dedb30ed669e09944f735e84f415fe90f3affd1af04a4d599b7e1a08d7f",
+        "sort_order": "e29c9c180c6279b0b02abd6a1801c7c04082cf486ec027aa13515e4f3884bb6b",
+        "guide_profile": "ed80ac4fdf2dd8069b801e6f1548e7ca881fe9a43a39b609db1d12476d0cd657",
+        "purchase_options": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "conflict_fields": []
+    },
+    {
+      "row": 35,
+      "action": "preserve",
+      "id": "p_bd70g",
+      "slug": "bd70g",
+      "kind": "tool",
+      "baseline": {
+        "kind": "dd04afac1bebb050783a245ed0d88633759f352c85d4ab3bea3d416bf2019c75",
+        "name": "989fb47a65296da78d2283b348d50af6f627acecb9dba800724f15f2f6edb07d",
+        "model": "989fb47a65296da78d2283b348d50af6f627acecb9dba800724f15f2f6edb07d",
+        "category_id": "0f22609157badee942a614c00156e27d46484109f64767bb8ef398463b20b243",
+        "series": "5945bd9dfd0062220a3230e8d1ab41986739f167448fb3e67f9b6a63c0c5a560",
+        "legacy_series_ids": "3b870499adfe3c019d07f97eee1f96ba65dc7d22ed505273cef705360c86dee5",
+        "summary": "4aa9a95c695f9114f4bb8758323514dbd289837b9c1afeb110875003580661a0",
+        "applications": "d0c61f945505df74f603721a2e7fe4301799224cfcc96138aedb396182fdc5e7",
+        "features": "a31a0176961ccad0fcc4141efa7ad5228c8d5ecc21707aec7dee0da5d91b6be2",
+        "notes": "40295a69f63790ac28c62ee865c6f0ba479c172662314e18f92f8bdff91fd694",
+        "scene_ids": "17661dcbbaa694f3677aa02800482ff992cf4635d62119b3fe898533ee9001d1",
+        "nail_type": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "fastener_text": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+        "long_nose": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "blower": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "images": "463283288fcb47613e6dc7912a5ca54375818b70b5b8aeaed64622c0f3525bf6",
+        "cover_media_id": "1f231a4c0cd775d8951daa9ea717ec24559c9f37206e3aace66157aac3b73df4",
+        "visibility": "577f4dedb30ed669e09944f735e84f415fe90f3affd1af04a4d599b7e1a08d7f",
+        "sort_order": "c6f3ac57944a531490cd39902d0f777715fd005efac9a30622d5f5205e7f6894",
+        "guide_profile": "8a915867472d440e36ecadeebe6fa309128e33cea3fb38091a02bbb27be92bb1",
+        "purchase_options": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "conflict_fields": []
+    },
+    {
+      "row": 36,
+      "action": "preserve",
+      "id": "p_bw120g",
+      "slug": "bw120g",
+      "kind": "tool",
+      "baseline": {
+        "kind": "dd04afac1bebb050783a245ed0d88633759f352c85d4ab3bea3d416bf2019c75",
+        "name": "400baa53cd1a599e9efc6329ffd93b8c1b42403d40c760f78346d849b9ad88aa",
+        "model": "400baa53cd1a599e9efc6329ffd93b8c1b42403d40c760f78346d849b9ad88aa",
+        "category_id": "17d338a0d574fb88f979c81c0bc0676c4d47ee29e052ebc92068350a14fa5209",
+        "series": "8b157ed1432cc3b935cf3cf603f7877a237f448b54b4b95ea4f196e5e732cdec",
+        "legacy_series_ids": "da4f6ec35711cc011b529a769606ca80db83b0c9d1bfcab8f62275843f5908eb",
+        "summary": "658971a300795df46341957b9146e6f669a40dc4e6a05d485844684c4ab13e5b",
+        "applications": "692d2a6549399e0d173d1bd633d6a57192a26ffec434a547f1d85f7e9973c895",
+        "features": "ae0f014ece6414d60d73dc1ee072d2a254573fd6befb5e3cf16c227845aa41aa",
+        "notes": "6eefbf6dc6c9c93921400e3f47f999c6452136900f52926e0195da9ce08e5ec9",
+        "scene_ids": "37f7c29d283cd978ae5b1514a70a090664bf5dc9b2029039d14ef4dfdf0aaa1a",
+        "nail_type": "ae7dc54fb8fe3a54f2baee0884c178119290cbd0632243696dea79a3f6659ea6",
+        "fastener_text": "acb26cab02d4fe829680622f008c9417f693ce49f01e23ddd757435172e92575",
+        "long_nose": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "blower": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "images": "4da2e2283cf7293fa2e556025ce316b2f8bd19c33f954e29e907a847772a2bf4",
+        "cover_media_id": "f50325dddd7acb51a2d26d6d5c3322e67cd2e5184fce3fe801606ea356f62073",
+        "visibility": "577f4dedb30ed669e09944f735e84f415fe90f3affd1af04a4d599b7e1a08d7f",
+        "sort_order": "86e50149658661312a9e0b35558d84f6c6d3da797f552a9657fe0558ca40cdef",
+        "guide_profile": "1a257d9cda58698c1ad1cc162f636085150127f827eace1fe45891ff1593001b",
+        "purchase_options": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "conflict_fields": []
+    },
+    {
+      "row": 37,
+      "action": "preserve",
+      "id": "p_bw160g",
+      "slug": "bw160g",
+      "kind": "tool",
+      "baseline": {
+        "kind": "dd04afac1bebb050783a245ed0d88633759f352c85d4ab3bea3d416bf2019c75",
+        "name": "29a2da137e2bed741f1ca7b8737a7f58ab3e3c5bbbc0d24b47437686c052b935",
+        "model": "29a2da137e2bed741f1ca7b8737a7f58ab3e3c5bbbc0d24b47437686c052b935",
+        "category_id": "17d338a0d574fb88f979c81c0bc0676c4d47ee29e052ebc92068350a14fa5209",
+        "series": "8b157ed1432cc3b935cf3cf603f7877a237f448b54b4b95ea4f196e5e732cdec",
+        "legacy_series_ids": "da4f6ec35711cc011b529a769606ca80db83b0c9d1bfcab8f62275843f5908eb",
+        "summary": "658971a300795df46341957b9146e6f669a40dc4e6a05d485844684c4ab13e5b",
+        "applications": "692d2a6549399e0d173d1bd633d6a57192a26ffec434a547f1d85f7e9973c895",
+        "features": "ae0f014ece6414d60d73dc1ee072d2a254573fd6befb5e3cf16c227845aa41aa",
+        "notes": "6eefbf6dc6c9c93921400e3f47f999c6452136900f52926e0195da9ce08e5ec9",
+        "scene_ids": "37f7c29d283cd978ae5b1514a70a090664bf5dc9b2029039d14ef4dfdf0aaa1a",
+        "nail_type": "ae7dc54fb8fe3a54f2baee0884c178119290cbd0632243696dea79a3f6659ea6",
+        "fastener_text": "9eb5740b6475a60f766e071ab4fb6bdb6335cf23c614c5db12180badaaf82d1f",
+        "long_nose": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "blower": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "images": "c166465216daa4d49f3a2c9951476ea6121d5e6fbb1b6663e2a193a2644687b7",
+        "cover_media_id": "bf500b58f4be043392daac5d3abe75fbe445d79627970cebad0b26bdac211e3a",
+        "visibility": "577f4dedb30ed669e09944f735e84f415fe90f3affd1af04a4d599b7e1a08d7f",
+        "sort_order": "9f14025af0065b30e47e23ebb3b491d39ae8ed17d33739e5ff3827ffb3634953",
+        "guide_profile": "b8b322521fecea0cbd54e940c029b0458d9effecaf2aad1cc60616ad675fa24e",
+        "purchase_options": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "conflict_fields": []
+    },
+    {
+      "row": 38,
+      "action": "preserve",
+      "id": "p_dbw150",
+      "slug": "dbw150",
+      "kind": "tool",
+      "baseline": {
+        "kind": "dd04afac1bebb050783a245ed0d88633759f352c85d4ab3bea3d416bf2019c75",
+        "name": "effb2c5d1757f108d300737b7642e67c0c9fe41be9b91e9236199469eaaca596",
+        "model": "effb2c5d1757f108d300737b7642e67c0c9fe41be9b91e9236199469eaaca596",
+        "category_id": "17d338a0d574fb88f979c81c0bc0676c4d47ee29e052ebc92068350a14fa5209",
+        "series": "aafd43c638d9d87b9e247c46fa546b9df4a78b8e909617d563164dcea022d7f3",
+        "legacy_series_ids": "f532acee3f657c306c54ea182bdb4ecf63353ea87990f3bfdc73ca699bbdf931",
+        "summary": "10b8f8e792a8022d339098cff9bb2b0463a3f6cca8b1912cd051541e3fc247af",
+        "applications": "692d2a6549399e0d173d1bd633d6a57192a26ffec434a547f1d85f7e9973c895",
+        "features": "2608e4bf523b42a6526cd057f1c4482bf3e2d45d4720dafa3c36305e5b1afedc",
+        "notes": "6eefbf6dc6c9c93921400e3f47f999c6452136900f52926e0195da9ce08e5ec9",
+        "scene_ids": "37f7c29d283cd978ae5b1514a70a090664bf5dc9b2029039d14ef4dfdf0aaa1a",
+        "nail_type": "ae7dc54fb8fe3a54f2baee0884c178119290cbd0632243696dea79a3f6659ea6",
+        "fastener_text": "a376fda2d55c4aa19926ef84199bc6e3531fa01747dd5c3b2bff3d04382b5fb6",
+        "long_nose": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "blower": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "images": "b2726bd2387f729f90b70b393756161799075c4fdee394719dddc472ecb998d1",
+        "cover_media_id": "7441bd14bf3a8ac255495d9a55740875c8715cbc89d7fd0f5b69617cafa268aa",
+        "visibility": "577f4dedb30ed669e09944f735e84f415fe90f3affd1af04a4d599b7e1a08d7f",
+        "sort_order": "76a50887d8f1c2e9301755428990ad81479ee21c25b43215cf524541e0503269",
+        "guide_profile": "01b428d9483bda582c1233747aba5d6f1cc407952d4d38d372b916152aacbbf0",
+        "purchase_options": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "conflict_fields": []
+    },
+    {
+      "row": 39,
+      "action": "preserve",
+      "id": "p_dbw200",
+      "slug": "dbw200",
+      "kind": "tool",
+      "baseline": {
+        "kind": "dd04afac1bebb050783a245ed0d88633759f352c85d4ab3bea3d416bf2019c75",
+        "name": "90754c6392ea2fda5049ce0de8886ab382e4d4b507679b98d9b2d35bcf809a7e",
+        "model": "90754c6392ea2fda5049ce0de8886ab382e4d4b507679b98d9b2d35bcf809a7e",
+        "category_id": "17d338a0d574fb88f979c81c0bc0676c4d47ee29e052ebc92068350a14fa5209",
+        "series": "aafd43c638d9d87b9e247c46fa546b9df4a78b8e909617d563164dcea022d7f3",
+        "legacy_series_ids": "f532acee3f657c306c54ea182bdb4ecf63353ea87990f3bfdc73ca699bbdf931",
+        "summary": "10b8f8e792a8022d339098cff9bb2b0463a3f6cca8b1912cd051541e3fc247af",
+        "applications": "692d2a6549399e0d173d1bd633d6a57192a26ffec434a547f1d85f7e9973c895",
+        "features": "2608e4bf523b42a6526cd057f1c4482bf3e2d45d4720dafa3c36305e5b1afedc",
+        "notes": "6eefbf6dc6c9c93921400e3f47f999c6452136900f52926e0195da9ce08e5ec9",
+        "scene_ids": "37f7c29d283cd978ae5b1514a70a090664bf5dc9b2029039d14ef4dfdf0aaa1a",
+        "nail_type": "ae7dc54fb8fe3a54f2baee0884c178119290cbd0632243696dea79a3f6659ea6",
+        "fastener_text": "35e3af51e7a8346c6fc7f4af2585e67d3c92136059251cedbf5c5f5a99401438",
+        "long_nose": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "blower": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "images": "0afc6b249e22c551e48e4a784ebd39487cc66061924775fafe274102d1df345e",
+        "cover_media_id": "c774a922000725d0e23eb9807dba96b835fd0bb22b04f8b6800602c80a68b54f",
+        "visibility": "577f4dedb30ed669e09944f735e84f415fe90f3affd1af04a4d599b7e1a08d7f",
+        "sort_order": "7a61b53701befdae0eeeffaecc73f14e20b537bb0f8b91ad7c2936dc63562b25",
+        "guide_profile": "9c2d525ecba7cd8fd5b0038f5cfb557db66fa450b2164b0f9790e03eb0f2d26b",
+        "purchase_options": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "conflict_fields": []
+    },
+    {
+      "row": 40,
+      "action": "preserve",
+      "id": "p_sr40a",
+      "slug": "sr40a",
+      "kind": "tool",
+      "baseline": {
+        "kind": "dd04afac1bebb050783a245ed0d88633759f352c85d4ab3bea3d416bf2019c75",
+        "name": "63ca5415449c902d3d2d3107e7491d0ba924da377238e9d1c36a2df24c56cf09",
+        "model": "63ca5415449c902d3d2d3107e7491d0ba924da377238e9d1c36a2df24c56cf09",
+        "category_id": "81c6df5e0aae4ebdf0d68377ea692f402f78cf5b50376f90346cd1034b482407",
+        "series": "810a11069ceb3c1c36044d001cadbd295c5bfe85972fc45e89d0b83d4e6529bb",
+        "legacy_series_ids": "8498db06b15221b2002a3d8cfa0fb7453ed6be58109a267acfb09a9dd8158762",
+        "summary": "c49791afa3a13853ec36655a91271f7250f75734f611c38f8bc6f8c9ea2e0f14",
+        "applications": "072cb98245646caac023b9f73102bef7adf6642fdad785cc992f039a87880b7e",
+        "features": "e9fa1f596c965304d1f7f65be60d4e8a94f8b5fe7abe2cd639deaff8cea402f1",
+        "notes": "d6ab5c568400ed2ddf35d154a73e4c1ed64838b2bfe98c82fe6f365041ae985b",
+        "scene_ids": "22fb91fc2b20b6a5e9c5b216fe8c7d77ccd300fd3cf0f1e2191b4c6530a3673a",
+        "nail_type": "981cb864fbae4d2dbdd3ebaaa3f68ac0923100e99f3f787fab65a06e3dafee32",
+        "fastener_text": "13ac414c52a8a92dbb554f6fc5b5bd464c9f03f41651e3750d7f90a564653d0a",
+        "long_nose": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+        "blower": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "images": "ad0d4f882e20d21cbb2e0e62ca2a46ed4ff01b35d9afade9491a0233d0383afc",
+        "cover_media_id": "0fdc2b9c570c0b1d4ac77c9acc9806a938f43866910ae7497bcced9339780936",
+        "visibility": "577f4dedb30ed669e09944f735e84f415fe90f3affd1af04a4d599b7e1a08d7f",
+        "sort_order": "aea92132c4cbeb263e6ac2bf6c183b5d81737f179f21efdc5863739672f0f470",
+        "guide_profile": "84dc7067655d2c934a2d92dd3e76cec6db91d737a8d11f70bd7208ccc922e76c",
+        "purchase_options": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "conflict_fields": [
+        "features"
+      ]
+    },
+    {
+      "row": 41,
+      "action": "preserve",
+      "id": "p_sr40b",
+      "slug": "sr40b",
+      "kind": "tool",
+      "baseline": {
+        "kind": "dd04afac1bebb050783a245ed0d88633759f352c85d4ab3bea3d416bf2019c75",
+        "name": "efefe04a27087561b97cbf44951e6297699dc4cb27c40615017b646fc1998aee",
+        "model": "efefe04a27087561b97cbf44951e6297699dc4cb27c40615017b646fc1998aee",
+        "category_id": "81c6df5e0aae4ebdf0d68377ea692f402f78cf5b50376f90346cd1034b482407",
+        "series": "810a11069ceb3c1c36044d001cadbd295c5bfe85972fc45e89d0b83d4e6529bb",
+        "legacy_series_ids": "8498db06b15221b2002a3d8cfa0fb7453ed6be58109a267acfb09a9dd8158762",
+        "summary": "6795fb8c6c9bda736b5e1d38d0515d555bd7ee2b4f8971da6960f465357910fa",
+        "applications": "072cb98245646caac023b9f73102bef7adf6642fdad785cc992f039a87880b7e",
+        "features": "cf566c8e42f63c9d913bbf66719ca86f0a6e98e144f63c0b2f3d34321bfea658",
+        "notes": "d6ab5c568400ed2ddf35d154a73e4c1ed64838b2bfe98c82fe6f365041ae985b",
+        "scene_ids": "22fb91fc2b20b6a5e9c5b216fe8c7d77ccd300fd3cf0f1e2191b4c6530a3673a",
+        "nail_type": "981cb864fbae4d2dbdd3ebaaa3f68ac0923100e99f3f787fab65a06e3dafee32",
+        "fastener_text": "13ac414c52a8a92dbb554f6fc5b5bd464c9f03f41651e3750d7f90a564653d0a",
+        "long_nose": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+        "blower": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "images": "51b387ebcf2d81220552a62377e69e75f1b5618fb10f36360affd141d9e5e01e",
+        "cover_media_id": "15b24dd18e279ac7aaa86188c66dacc7471aad735007b14214a3736c9ec78d0e",
+        "visibility": "577f4dedb30ed669e09944f735e84f415fe90f3affd1af04a4d599b7e1a08d7f",
+        "sort_order": "0b918943df0962bc7a1824c0555a389347b4febdc7cf9d1254406d80ce44e3f9",
+        "guide_profile": "7e6d5d90138d5aae64c16804c552f652190a27fc8c232208f4824a7acda92769",
+        "purchase_options": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "conflict_fields": [
+        "features"
+      ]
+    },
+    {
+      "row": 42,
+      "action": "create",
+      "slug": "yf1206",
+      "product": {
+        "kind": "tool",
+        "name": "YF1206",
+        "model": "YF1206",
+        "category_id": "other",
+        "series": "风批系列",
+        "summary": "6H直柄风批",
+        "applications": [
+          "适合各类螺丝功拆行业：工厂流水线、汽车维修、木工装修、家具安装"
+        ],
+        "features": [
+          "氧化硬质缸体强劲机芯，24小时持续工作",
+          "正反转开关，可打可退",
+          "无极调速，精准控制"
+        ],
+        "notes": [],
+        "fastener_text": "",
+        "nail_type": null,
+        "legacy_series_ids": [],
+        "scene_ids": [],
+        "long_nose": false,
+        "blower": false,
+        "images": [],
+        "cover_media_id": null,
+        "visibility": "listed",
+        "sort_order": 40,
+        "guide_profile": {
+          "scene_ids": [],
+          "materials": [],
+          "substrates": [],
+          "excluded_materials": [],
+          "excluded_substrates": [],
+          "power_source": null,
+          "nail_type": null,
+          "fastener_length_mm": null,
+          "load_bearing": null,
+          "long_nose": null,
+          "blower": null,
+          "limitations": [],
+          "consultation_notes": [],
+          "required_requirements": [],
+          "sources": []
+        },
+        "purchase_options": []
+      },
+      "images": []
+    },
+    {
+      "row": 43,
+      "action": "create",
+      "slug": "yf1208",
+      "product": {
+        "kind": "tool",
+        "name": "YF1208",
+        "model": "YF1208",
+        "category_id": "other",
+        "series": "风批系列",
+        "summary": "8H直柄风批",
+        "applications": [
+          "适合各类螺丝功拆行业：工厂流水线、汽车维修、木工装修、家具安装"
+        ],
+        "features": [
+          "氧化硬质缸体强劲机芯，24小时持续工作",
+          "正反转开关，可打可退",
+          "无极调速，精准控制"
+        ],
+        "notes": [],
+        "fastener_text": "",
+        "nail_type": null,
+        "legacy_series_ids": [],
+        "scene_ids": [],
+        "long_nose": false,
+        "blower": false,
+        "images": [],
+        "cover_media_id": null,
+        "visibility": "listed",
+        "sort_order": 41,
+        "guide_profile": {
+          "scene_ids": [],
+          "materials": [],
+          "substrates": [],
+          "excluded_materials": [],
+          "excluded_substrates": [],
+          "power_source": null,
+          "nail_type": null,
+          "fastener_length_mm": null,
+          "load_bearing": null,
+          "long_nose": null,
+          "blower": null,
+          "limitations": [],
+          "consultation_notes": [],
+          "required_requirements": [],
+          "sources": []
+        },
+        "purchase_options": []
+      },
+      "images": []
+    },
+    {
+      "row": 44,
+      "action": "create",
+      "slug": "yf1210",
+      "product": {
+        "kind": "tool",
+        "name": "YF1210",
+        "model": "YF1210",
+        "category_id": "other",
+        "series": "风批系列",
+        "summary": "10H直柄风批",
+        "applications": [
+          "适合各类螺丝功拆行业：工厂流水线、汽车维修、木工装修、家具安装"
+        ],
+        "features": [
+          "氧化硬质缸体强劲机芯，24小时持续工作",
+          "正反转开关，可打可退",
+          "无极调速，精准控制"
+        ],
+        "notes": [],
+        "fastener_text": "",
+        "nail_type": null,
+        "legacy_series_ids": [],
+        "scene_ids": [],
+        "long_nose": false,
+        "blower": false,
+        "images": [],
+        "cover_media_id": null,
+        "visibility": "listed",
+        "sort_order": 42,
+        "guide_profile": {
+          "scene_ids": [],
+          "materials": [],
+          "substrates": [],
+          "excluded_materials": [],
+          "excluded_substrates": [],
+          "power_source": null,
+          "nail_type": null,
+          "fastener_length_mm": null,
+          "load_bearing": null,
+          "long_nose": null,
+          "blower": null,
+          "limitations": [],
+          "consultation_notes": [],
+          "required_requirements": [],
+          "sources": []
+        },
+        "purchase_options": []
+      },
+      "images": []
+    },
+    {
+      "row": 45,
+      "action": "create",
+      "slug": "yf1206q",
+      "product": {
+        "kind": "tool",
+        "name": "YF1206Q",
+        "model": "YF1206Q",
+        "category_id": "other",
+        "series": "风批系列",
+        "summary": "6H枪式风批",
+        "applications": [
+          "适合各类螺丝功拆行业：工厂流水线、汽车维修、木工装修、家具安装",
+          "（握持更省力、下压/扣扳更顺手）"
+        ],
+        "features": [
+          "氧化硬质缸体强劲机芯，24小时持续工作",
+          "正反转开关，可打可退",
+          "无极调速，精准控制"
+        ],
+        "notes": [],
+        "fastener_text": "",
+        "nail_type": null,
+        "legacy_series_ids": [],
+        "scene_ids": [],
+        "long_nose": false,
+        "blower": false,
+        "images": [],
+        "cover_media_id": null,
+        "visibility": "listed",
+        "sort_order": 43,
+        "guide_profile": {
+          "scene_ids": [],
+          "materials": [],
+          "substrates": [],
+          "excluded_materials": [],
+          "excluded_substrates": [],
+          "power_source": null,
+          "nail_type": null,
+          "fastener_length_mm": null,
+          "load_bearing": null,
+          "long_nose": null,
+          "blower": null,
+          "limitations": [],
+          "consultation_notes": [],
+          "required_requirements": [],
+          "sources": []
+        },
+        "purchase_options": []
+      },
+      "images": []
+    },
+    {
+      "row": 46,
+      "action": "create",
+      "slug": "yf1210hl",
+      "product": {
+        "kind": "tool",
+        "name": "YF1210HL",
+        "model": "YF1210HL",
+        "category_id": "other",
+        "series": "风批系列",
+        "summary": "10H弯头风批",
+        "applications": [
+          "适合各类螺丝功拆行业：工厂流水线、汽车维修、木工装修、家具安装",
+          "（适合在深槽、内角、缝隙、机架内侧等直柄伸不进的位置进行作业）"
+        ],
+        "features": [
+          "氧化硬质缸体强劲机芯，24小时持续工作",
+          "正反转开关，可打可退",
+          "无极调速，精准控制"
+        ],
+        "notes": [],
+        "fastener_text": "",
+        "nail_type": null,
+        "legacy_series_ids": [],
+        "scene_ids": [],
+        "long_nose": false,
+        "blower": false,
+        "images": [],
+        "cover_media_id": null,
+        "visibility": "listed",
+        "sort_order": 44,
+        "guide_profile": {
+          "scene_ids": [],
+          "materials": [],
+          "substrates": [],
+          "excluded_materials": [],
+          "excluded_substrates": [],
+          "power_source": null,
+          "nail_type": null,
+          "fastener_length_mm": null,
+          "load_bearing": null,
+          "long_nose": null,
+          "blower": null,
+          "limitations": [],
+          "consultation_notes": [],
+          "required_requirements": [],
+          "sources": []
+        },
+        "purchase_options": []
+      },
+      "images": []
+    },
+    {
+      "row": 47,
+      "action": "create",
+      "slug": "f30-lithium",
+      "product": {
+        "kind": "tool",
+        "name": "F30锂电",
+        "model": "F30锂电",
+        "category_id": "other",
+        "series": "锂电系列",
+        "summary": "锂电款F30直钉枪",
+        "applications": [
+          "1.柜体与家具组装：橱柜、衣柜、书柜的侧板、层板、背板、抽屉组件拼接定位",
+          "2.石膏板安装：纸面石膏板配合龙骨固定，钉帽后续补腻子遮盖",
+          "3.装饰木作：木线条基层、护墙板衬板、门套线定位、小型装饰件装配",
+          "4.包装与薄板：普通木箱、薄板包装件、相框衬板、木盒拼接"
+        ],
+        "features": [
+          "大功率铜芯电机，打钉干脆",
+          "1500mAh大容量电池，18V-5节锂电电芯",
+          "高温淬火枪头，硬度提升30%",
+          "单打/连打快速切换",
+          "全铝合金弹匣，轻巧便携"
+        ],
+        "notes": [],
+        "fastener_text": "F直排钉\n（F10～F30）",
+        "nail_type": "brad",
+        "legacy_series_ids": [],
+        "scene_ids": [],
+        "long_nose": false,
+        "blower": false,
+        "images": [],
+        "cover_media_id": null,
+        "visibility": "listed",
+        "sort_order": 45,
+        "guide_profile": {
+          "scene_ids": [],
+          "materials": [],
+          "substrates": [],
+          "excluded_materials": [],
+          "excluded_substrates": [],
+          "power_source": null,
+          "nail_type": null,
+          "fastener_length_mm": null,
+          "load_bearing": null,
+          "long_nose": null,
+          "blower": null,
+          "limitations": [],
+          "consultation_notes": [],
+          "required_requirements": [],
+          "sources": []
+        },
+        "purchase_options": []
+      },
+      "images": []
+    },
+    {
+      "row": 48,
+      "action": "create",
+      "slug": "422j-lithium",
+      "product": {
+        "kind": "tool",
+        "name": "422J锂电",
+        "model": "422J锂电",
+        "category_id": "other",
+        "series": "锂电系列",
+        "summary": "锂电款422J码钉枪",
+        "applications": [
+          "1.细木工与家具内部：柜体内衬板、抽屉背板、层板衬条、相框背板等窄边部位固定，窄冠不挤占框料宽度",
+          "2.皮革与鞋包：鞋帮内衬、箱包衬料、皮带衬层、小件皮具加工",
+          "3.装潢与展览：窄装饰线基层、展板拼接、工艺品、模型制作",
+          "4.沙发小件：面料在内侧窄框、凹槽、转角处的定位收边"
+        ],
+        "features": [],
+        "notes": [],
+        "fastener_text": "4J窄冠细码钉",
+        "nail_type": "staple",
+        "legacy_series_ids": [],
+        "scene_ids": [],
+        "long_nose": false,
+        "blower": false,
+        "images": [],
+        "cover_media_id": null,
+        "visibility": "listed",
+        "sort_order": 46,
+        "guide_profile": {
+          "scene_ids": [],
+          "materials": [],
+          "substrates": [],
+          "excluded_materials": [],
+          "excluded_substrates": [],
+          "power_source": null,
+          "nail_type": null,
+          "fastener_length_mm": null,
+          "load_bearing": null,
+          "long_nose": null,
+          "blower": null,
+          "limitations": [],
+          "consultation_notes": [],
+          "required_requirements": [],
+          "sources": []
+        },
+        "purchase_options": []
+      },
+      "images": []
+    },
+    {
+      "row": 49,
+      "action": "create",
+      "slug": "1022j-lithium",
+      "product": {
+        "kind": "tool",
+        "name": "1022J锂电",
+        "model": "1022J锂电",
+        "category_id": "other",
+        "series": "锂电系列",
+        "summary": "锂电款1022J码钉枪",
+        "applications": [
+          "1.软体家具厚层包覆：沙发、床头软包、座椅面料 + 海绵 + 麻布多层叠加后需要长钉穿透固定的部位",
+          "2.橱柜与家具装配：柜体内衬板、背板、抽屉底板、家具边角加固定位",
+          "3.汽车座椅与床品：车座衬层、床垫围边、床架布艺包覆",
+          "4.装潢薄板与包装：护墙板多层衬板、装饰布、小型木箱外层板固定"
+        ],
+        "features": [],
+        "notes": [],
+        "fastener_text": "10J宽冠细码钉\n（1010J～1022J）",
+        "nail_type": "staple",
+        "legacy_series_ids": [],
+        "scene_ids": [],
+        "long_nose": false,
+        "blower": false,
+        "images": [],
+        "cover_media_id": null,
+        "visibility": "listed",
+        "sort_order": 47,
+        "guide_profile": {
+          "scene_ids": [],
+          "materials": [],
+          "substrates": [],
+          "excluded_materials": [],
+          "excluded_substrates": [],
+          "power_source": null,
+          "nail_type": null,
+          "fastener_length_mm": null,
+          "load_bearing": null,
+          "long_nose": null,
+          "blower": null,
+          "limitations": [],
+          "consultation_notes": [],
+          "required_requirements": [],
+          "sources": []
+        },
+        "purchase_options": []
+      },
+      "images": []
+    },
+    {
+      "row": 50,
+      "action": "create",
+      "slug": "yf32",
+      "product": {
+        "kind": "tool",
+        "name": "YF32",
+        "model": "YF32",
+        "category_id": "other",
+        "series": "炮钉枪系列",
+        "summary": "外排渣迷你便携款",
+        "applications": [
+          "龙骨吊顶、水电排卡安装、挂架固定、门窗安装、彩钢瓦固定、通风管道固定"
+        ],
+        "features": [
+          "前排渣口，不易卡壳",
+          "消音导流罩，噪音降低60%-75%",
+          "3档力度调节，无需螺丝按孔位调力度",
+          "高强度3mm加厚合金",
+          "便携随身，仅重0.76kg"
+        ],
+        "notes": [],
+        "fastener_text": "",
+        "nail_type": null,
+        "legacy_series_ids": [],
+        "scene_ids": [],
+        "long_nose": false,
+        "blower": false,
+        "images": [],
+        "cover_media_id": null,
+        "visibility": "listed",
+        "sort_order": 48,
+        "guide_profile": {
+          "scene_ids": [],
+          "materials": [],
+          "substrates": [],
+          "excluded_materials": [],
+          "excluded_substrates": [],
+          "power_source": null,
+          "nail_type": null,
+          "fastener_length_mm": null,
+          "load_bearing": null,
+          "long_nose": null,
+          "blower": null,
+          "limitations": [],
+          "consultation_notes": [],
+          "required_requirements": [],
+          "sources": []
+        },
+        "purchase_options": []
+      },
+      "images": []
+    },
+    {
+      "row": 51,
+      "action": "create",
+      "slug": "yf9000",
+      "product": {
+        "kind": "tool",
+        "name": "YF9000",
+        "model": "YF9000",
+        "category_id": "other",
+        "series": "炮钉枪系列",
+        "summary": "大枪吊顶神器",
+        "applications": [
+          "龙骨吊顶、水电排卡安装、挂架固定、门窗安装、彩钢瓦固定、通风管道固定"
+        ],
+        "features": [
+          "六角旋转，4档调威力"
+        ],
+        "notes": [],
+        "fastener_text": "",
+        "nail_type": null,
+        "legacy_series_ids": [],
+        "scene_ids": [],
+        "long_nose": false,
+        "blower": false,
+        "images": [],
+        "cover_media_id": null,
+        "visibility": "listed",
+        "sort_order": 49,
+        "guide_profile": {
+          "scene_ids": [],
+          "materials": [],
+          "substrates": [],
+          "excluded_materials": [],
+          "excluded_substrates": [],
+          "power_source": null,
+          "nail_type": null,
+          "fastener_length_mm": null,
+          "load_bearing": null,
+          "long_nose": null,
+          "blower": null,
+          "limitations": [],
+          "consultation_notes": [],
+          "required_requirements": [],
+          "sources": []
+        },
+        "purchase_options": []
+      },
+      "images": []
+    },
+    {
+      "row": 52,
+      "action": "create",
+      "slug": "quick-coupler",
+      "product": {
+        "kind": "entry",
+        "name": "快速接头",
+        "model": "",
+        "category_id": "other",
+        "series": "配件系列",
+        "summary": "气动钉枪外丝万向快速接头",
+        "applications": [
+          "连接气动钉枪与气管"
+        ],
+        "features": [
+          "360度角度可调节，使用更灵活",
+          "CNC微米级加工工艺，任意角度悬停",
+          "碳钢淬火镀镍，耐压10公斤"
+        ],
+        "notes": [],
+        "fastener_text": "",
+        "nail_type": null,
+        "legacy_series_ids": [],
+        "scene_ids": [],
+        "long_nose": false,
+        "blower": false,
+        "images": [],
+        "cover_media_id": null,
+        "visibility": "listed",
+        "sort_order": 50,
+        "guide_profile": {
+          "scene_ids": [],
+          "materials": [],
+          "substrates": [],
+          "excluded_materials": [],
+          "excluded_substrates": [],
+          "power_source": null,
+          "nail_type": null,
+          "fastener_length_mm": null,
+          "load_bearing": null,
+          "long_nose": null,
+          "blower": null,
+          "limitations": [],
+          "consultation_notes": [],
+          "required_requirements": [],
+          "sources": []
+        },
+        "purchase_options": []
+      },
+      "images": []
+    },
+    {
+      "row": 53,
+      "action": "create",
+      "slug": "spider-workbench",
+      "product": {
+        "kind": "entry",
+        "name": "蜘蛛腿工作台",
+        "model": "",
+        "category_id": "other",
+        "series": "配件系列",
+        "summary": "稳固承重的蜘蛛腿工作台",
+        "applications": [
+          "木工作业工作台，瓦工切割工作台，车间工作台，露营摆摊桌",
+          "多腿可选：4腿/6腿/8腿/9腿/10腿/12腿/15腿"
+        ],
+        "features": [
+          "快速伸缩，轻松携带",
+          "高低可调，地面不平也稳定",
+          "强力承重稳固不晃，承重≥1500kg"
+        ],
+        "notes": [],
+        "fastener_text": "",
+        "nail_type": null,
+        "legacy_series_ids": [],
+        "scene_ids": [],
+        "long_nose": false,
+        "blower": false,
+        "images": [],
+        "cover_media_id": null,
+        "visibility": "listed",
+        "sort_order": 51,
+        "guide_profile": {
+          "scene_ids": [],
+          "materials": [],
+          "substrates": [],
+          "excluded_materials": [],
+          "excluded_substrates": [],
+          "power_source": null,
+          "nail_type": null,
+          "fastener_length_mm": null,
+          "load_bearing": null,
+          "long_nose": null,
+          "blower": null,
+          "limitations": [],
+          "consultation_notes": [],
+          "required_requirements": [],
+          "sources": []
+        },
+        "purchase_options": []
+      },
+      "images": []
+    },
+    {
+      "row": 54,
+      "action": "create",
+      "slug": "pu-air-hose",
+      "product": {
+        "kind": "entry",
+        "name": "PU气管",
+        "model": "",
+        "category_id": "other",
+        "series": "配件系列",
+        "summary": "木工专用PU防冻气管",
+        "applications": [
+          "气动钉枪、气动打磨机、吹尘枪、汽车喷漆枪均适用",
+          "长度可选：10米/15米/20米/100米"
+        ],
+        "features": [
+          "高弹性，不打结",
+          "进口TPU精纯料，足米足量",
+          "耐高压，1Mpa不膨胀"
+        ],
+        "notes": [],
+        "fastener_text": "",
+        "nail_type": null,
+        "legacy_series_ids": [],
+        "scene_ids": [],
+        "long_nose": false,
+        "blower": false,
+        "images": [],
+        "cover_media_id": null,
+        "visibility": "listed",
+        "sort_order": 52,
+        "guide_profile": {
+          "scene_ids": [],
+          "materials": [],
+          "substrates": [],
+          "excluded_materials": [],
+          "excluded_substrates": [],
+          "power_source": null,
+          "nail_type": null,
+          "fastener_length_mm": null,
+          "load_bearing": null,
+          "long_nose": null,
+          "blower": null,
+          "limitations": [],
+          "consultation_notes": [],
+          "required_requirements": [],
+          "sources": []
+        },
+        "purchase_options": []
+      },
+      "images": []
+    },
+    {
+      "row": 55,
+      "action": "create",
+      "slug": "repair-kit",
+      "product": {
+        "kind": "entry",
+        "name": "通用修理包",
+        "model": "",
+        "category_id": "other",
+        "series": "配件系列",
+        "summary": "元发钉枪通用修理包",
+        "applications": [
+          "元发钉枪全系原装修理包"
+        ],
+        "features": [
+          "原装正品，经久耐用"
+        ],
+        "notes": [],
+        "fastener_text": "",
+        "nail_type": null,
+        "legacy_series_ids": [],
+        "scene_ids": [],
+        "long_nose": false,
+        "blower": false,
+        "images": [],
+        "cover_media_id": null,
+        "visibility": "listed",
+        "sort_order": 53,
+        "guide_profile": {
+          "scene_ids": [],
+          "materials": [],
+          "substrates": [],
+          "excluded_materials": [],
+          "excluded_substrates": [],
+          "power_source": null,
+          "nail_type": null,
+          "fastener_length_mm": null,
+          "load_bearing": null,
+          "long_nose": null,
+          "blower": null,
+          "limitations": [],
+          "consultation_notes": [],
+          "required_requirements": [],
+          "sources": []
+        },
+        "purchase_options": []
+      },
+      "images": []
+    },
+    {
+      "row": 56,
+      "action": "create",
+      "slug": "original-driver-blade",
+      "product": {
+        "kind": "entry",
+        "name": "原装撞针",
+        "model": "",
+        "category_id": "other",
+        "series": "配件系列",
+        "summary": "全系列元发钉枪撞针",
+        "applications": [
+          "元发钉枪原装撞针"
+        ],
+        "features": [
+          "优质钢材锻造，淬火工艺，耐磨损/抗冲击",
+          "CNC加工铝合金活塞，反应更灵敏",
+          "优质橡胶密封圈，气密性好"
+        ],
+        "notes": [],
+        "fastener_text": "",
+        "nail_type": null,
+        "legacy_series_ids": [],
+        "scene_ids": [],
+        "long_nose": false,
+        "blower": false,
+        "images": [],
+        "cover_media_id": null,
+        "visibility": "listed",
+        "sort_order": 54,
+        "guide_profile": {
+          "scene_ids": [],
+          "materials": [],
+          "substrates": [],
+          "excluded_materials": [],
+          "excluded_substrates": [],
+          "power_source": null,
+          "nail_type": null,
+          "fastener_length_mm": null,
+          "load_bearing": null,
+          "long_nose": null,
+          "blower": null,
+          "limitations": [],
+          "consultation_notes": [],
+          "required_requirements": [],
+          "sources": []
+        },
+        "purchase_options": []
+      },
+      "images": []
+    },
+    {
+      "row": 57,
+      "action": "create",
+      "slug": "nail-special-gas",
+      "product": {
+        "kind": "consumable",
+        "name": "特种瓦斯钉",
+        "model": "",
+        "category_id": "nails",
+        "series": "枪钉系列",
+        "summary": "气动瓦斯枪专用钉",
+        "applications": [
+          "适用钉枪：气动瓦斯枪",
+          "作业用途：专打高标号混凝土铁板等"
+        ],
+        "features": [
+          "2种类型：",
+          "1.加硬黑射钉：60号高碳钢子弹头弧形尖，阻力小穿透力强；磷黑工艺，超强防水防锈。",
+          "2.加硬搓尖缩杆射钉：65号高碳钢搓削成型，阻力小穿透力强；机械镀锌工艺，超强防水防锈。"
+        ],
+        "notes": [],
+        "fastener_text": "",
+        "nail_type": "gas-nail",
+        "legacy_series_ids": [],
+        "scene_ids": [],
+        "long_nose": false,
+        "blower": false,
+        "images": [],
+        "cover_media_id": null,
+        "visibility": "listed",
+        "sort_order": 55,
+        "guide_profile": {
+          "scene_ids": [],
+          "materials": [],
+          "substrates": [],
+          "excluded_materials": [],
+          "excluded_substrates": [],
+          "power_source": null,
+          "nail_type": null,
+          "fastener_length_mm": null,
+          "load_bearing": null,
+          "long_nose": null,
+          "blower": null,
+          "limitations": [],
+          "consultation_notes": [],
+          "required_requirements": [],
+          "sources": []
+        },
+        "purchase_options": []
+      },
+      "images": []
+    },
+    {
+      "row": 58,
+      "action": "create",
+      "slug": "nail-high-carbon-n",
+      "product": {
+        "kind": "consumable",
+        "name": "高碳钢N系列码钉",
+        "model": "",
+        "category_id": "nails",
+        "series": "枪钉系列",
+        "summary": "N819码钉枪专用高碳钢尖脚钉",
+        "applications": [
+          "适用钉枪：N819码钉枪",
+          "作业用途：混凝土挂网，金刚网纱窗固定，铁皮钉合，包装箱铁护角加固，木包装箱钉合，实木家具钉合"
+        ],
+        "features": [
+          "优选高碳钢材质，经久耐用",
+          "沾漆处理，高耐腐高品质",
+          "尖脚设计，穿透力强"
+        ],
+        "notes": [
+          "铁皮1mm以内，可以打进",
+          "不锈钢0.5mm以内，可以打进",
+          "铝型材2mm以内，可以打进"
+        ],
+        "fastener_text": "",
+        "nail_type": "staple",
+        "legacy_series_ids": [],
+        "scene_ids": [],
+        "long_nose": false,
+        "blower": false,
+        "images": [],
+        "cover_media_id": null,
+        "visibility": "listed",
+        "sort_order": 56,
+        "guide_profile": {
+          "scene_ids": [],
+          "materials": [],
+          "substrates": [],
+          "excluded_materials": [],
+          "excluded_substrates": [],
+          "power_source": null,
+          "nail_type": null,
+          "fastener_length_mm": null,
+          "load_bearing": null,
+          "long_nose": null,
+          "blower": null,
+          "limitations": [],
+          "consultation_notes": [],
+          "required_requirements": [],
+          "sources": []
+        },
+        "purchase_options": []
+      },
+      "images": []
+    },
+    {
+      "row": 59,
+      "action": "create",
+      "slug": "nail-coil",
+      "product": {
+        "kind": "consumable",
+        "name": "卷钉",
+        "model": "",
+        "category_id": "nails",
+        "series": "枪钉系列",
+        "summary": "卷钉枪专用钉（国标）",
+        "applications": [
+          "适用钉枪：卷钉枪",
+          "作业用途：木托盘、木包装箱、电缆盘、大型框架的钉合"
+        ],
+        "features": [
+          "坚固耐用，耐腐蚀",
+          "国标标准，不卡枪"
+        ],
+        "notes": [],
+        "fastener_text": "",
+        "nail_type": "coil-nail",
+        "legacy_series_ids": [],
+        "scene_ids": [],
+        "long_nose": false,
+        "blower": false,
+        "images": [],
+        "cover_media_id": null,
+        "visibility": "listed",
+        "sort_order": 57,
+        "guide_profile": {
+          "scene_ids": [],
+          "materials": [],
+          "substrates": [],
+          "excluded_materials": [],
+          "excluded_substrates": [],
+          "power_source": null,
+          "nail_type": null,
+          "fastener_length_mm": null,
+          "load_bearing": null,
+          "long_nose": null,
+          "blower": null,
+          "limitations": [],
+          "consultation_notes": [],
+          "required_requirements": [],
+          "sources": []
+        },
+        "purchase_options": []
+      },
+      "images": []
+    },
+    {
+      "row": 60,
+      "action": "create",
+      "slug": "nail-special-k4",
+      "product": {
+        "kind": "consumable",
+        "name": "K4系列特种码钉",
+        "model": "",
+        "category_id": "nails",
+        "series": "枪钉系列",
+        "summary": "425K码钉枪专用特种钉",
+        "applications": [
+          "适用钉枪：425K码钉枪",
+          "作业用途：编织藤椅固定，阳台纱窗固定，铝管固定，藤条固定，铝型材固定，硬质家具钉合"
+        ],
+        "features": [
+          "3种类型：",
+          "1.中碳钢平脚K4码钉，K406",
+          "2.高碳钢尖脚K4码钉，K408/K410/K413/K416",
+          "3.304不锈钢尖脚K4码钉，K408/K410/K413"
+        ],
+        "notes": [],
+        "fastener_text": "",
+        "nail_type": "staple",
+        "legacy_series_ids": [],
+        "scene_ids": [],
+        "long_nose": false,
+        "blower": false,
+        "images": [],
+        "cover_media_id": null,
+        "visibility": "listed",
+        "sort_order": 58,
+        "guide_profile": {
+          "scene_ids": [],
+          "materials": [],
+          "substrates": [],
+          "excluded_materials": [],
+          "excluded_substrates": [],
+          "power_source": null,
+          "nail_type": null,
+          "fastener_length_mm": null,
+          "load_bearing": null,
+          "long_nose": null,
+          "blower": null,
+          "limitations": [],
+          "consultation_notes": [],
+          "required_requirements": [],
+          "sources": []
+        },
+        "purchase_options": []
+      },
+      "images": [
+        {
+          "sha256": "a8c6a9e507f25f8275e017a7227149641e44fab67b9f9c68c618f359e7260684",
+          "label": "产品主图",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "row": 61,
+      "action": "create",
+      "slug": "nail-n",
+      "product": {
+        "kind": "consumable",
+        "name": "N系列码钉",
+        "model": "",
+        "category_id": "nails",
+        "series": "枪钉系列",
+        "summary": "N819/N851码钉枪专用钉",
+        "applications": [
+          "适用钉枪：N819码钉枪、N838码钉枪、N851码钉枪"
+        ],
+        "features": [
+          "多种规格可选：N9/N11/N13/N15/N17/N19/N21码钉"
+        ],
+        "notes": [],
+        "fastener_text": "",
+        "nail_type": "staple",
+        "legacy_series_ids": [],
+        "scene_ids": [],
+        "long_nose": false,
+        "blower": false,
+        "images": [],
+        "cover_media_id": null,
+        "visibility": "listed",
+        "sort_order": 59,
+        "guide_profile": {
+          "scene_ids": [],
+          "materials": [],
+          "substrates": [],
+          "excluded_materials": [],
+          "excluded_substrates": [],
+          "power_source": null,
+          "nail_type": null,
+          "fastener_length_mm": null,
+          "load_bearing": null,
+          "long_nose": null,
+          "blower": null,
+          "limitations": [],
+          "consultation_notes": [],
+          "required_requirements": [],
+          "sources": []
+        },
+        "purchase_options": []
+      },
+      "images": [
+        {
+          "sha256": "7ef8810593b1d63169b9e08e2d86307037a75f2d0550d924115dc21951e1a8fa",
+          "label": "N9 规格图",
+          "description": ""
+        },
+        {
+          "sha256": "52f20e8175abb107bbeccc92badda0f0283b59d48513d6195b00940f5bb43f53",
+          "label": "N11 规格图",
+          "description": ""
+        },
+        {
+          "sha256": "de08e039edb2051c94bdd27892a5fb9432586f0410b9f252c34c5e5f4a75fbc8",
+          "label": "N13 规格图",
+          "description": ""
+        },
+        {
+          "sha256": "6939f12719cdcce1939a6e1c26ccdc54a0a91cceddb68871642dcf4d29327d7a",
+          "label": "N15 规格图",
+          "description": ""
+        },
+        {
+          "sha256": "3848882bdc4e6ef4a1e5b069b278990c8bef6c3f4767a2a68b1c64eb0b3ea9d0",
+          "label": "N17 规格图",
+          "description": ""
+        },
+        {
+          "sha256": "69b8a1101f135d74161d1c9160ef271eb97850b59c653474c27cc66e1f90504b",
+          "label": "N19 规格图",
+          "description": ""
+        },
+        {
+          "sha256": "585e361004341fbdccea54f51d544c23a38698543718bb2c39ae0b7980fa1c4a",
+          "label": "N21 规格图",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "row": 62,
+      "action": "reuse",
+      "id": "p_nail-brad",
+      "baseline": {
+        "kind": "db6756584c1fcde31d8b2f1ab0521184df7613a3852eb043300be55821fd9983",
+        "name": "685620a957cd3cff0197687f22987b7a26b287989178e5101024eee4cd76d423",
+        "model": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+        "category_id": "11fe879ab1e1913bf68875fc2be09d52189e668b3eec523c303d146809d30bfa",
+        "series": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+        "legacy_series_ids": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "summary": "24434af80b50c0ac89869f55a3814976a0ea642b762613796bd16d7199fec463",
+        "applications": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "features": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "notes": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "scene_ids": "f6c84a65125386882abcdc173a880fab9952c018a5c3f67d369bf95ceac1f995",
+        "nail_type": "2034632f3d0c1c5187a71d05af6c9413be9dc804e5a3dcb838f18bd3a661cdee",
+        "fastener_text": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+        "long_nose": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "blower": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "images": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "cover_media_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "visibility": "577f4dedb30ed669e09944f735e84f415fe90f3affd1af04a4d599b7e1a08d7f",
+        "sort_order": "d59eced1ded07f84c145592f65bdf854358e009c5cd705f5215bf18697fed103",
+        "guide_profile": "8e102c41baaca74dfc7dac31bb2ba43f6bab93b2a022702627a5a588d5fdcbbb",
+        "purchase_options": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "slug": "nail-brad",
+      "product": {
+        "kind": "consumable",
+        "name": "F系列直钉",
+        "model": "",
+        "category_id": "nails",
+        "series": "枪钉系列",
+        "summary": "F30/F50直钉枪专用钉",
+        "applications": [
+          "适用钉枪：F30直钉枪、F32直钉枪、F50直钉枪",
+          "作业用途：家具、木柜钉合"
+        ],
+        "features": [
+          "3种类型：",
+          "1.F直钉：F15/F20/F25/F30/F38/F50直钉",
+          "2.高碳钢黑色F直钉：F10/F15/F20直钉",
+          "3.304不锈钢F直钉：F20/F30直钉"
+        ],
+        "notes": [],
+        "fastener_text": "",
+        "nail_type": "brad"
+      },
+      "images": [
+        {
+          "sha256": "a9b1cd9065daf992bf0ed861bac82e6ea280d381ec53680c0603952d9532d91e",
+          "label": "产品主图",
+          "description": ""
+        },
+        {
+          "sha256": "382f5cec767087c7841c877ed709455c5435614d226c9995ecfd3214733ee3c0",
+          "label": "F15 中标规格图",
+          "description": ""
+        },
+        {
+          "sha256": "d37ae1647e4704b0b99870141357c7c814eb422827bc7206beacf574d947a6c3",
+          "label": "F20 中标规格图",
+          "description": ""
+        },
+        {
+          "sha256": "4a58e3a3895e36826bfcdc6f8c455ddeb6f69f7353668949e10d4e69e8a1a0b2",
+          "label": "F25 中标规格图",
+          "description": ""
+        },
+        {
+          "sha256": "b8895c5dcd7d1be2b9411d4f43b87598f340e2a1515b013b2a5d357c196e993d",
+          "label": "F30 中标规格图",
+          "description": ""
+        },
+        {
+          "sha256": "3c3ab990c1c8f8e5bd6f50106517ecdf88f0cb292a8c1e708e7903637952f966",
+          "label": "F10 高碳钢黑色规格图",
+          "description": ""
+        },
+        {
+          "sha256": "f09c34d38d363b677e5e3edb66c6bcfd735dddb6d97c9fecaf26dc6507205f65",
+          "label": "F15 高碳钢黑色规格图",
+          "description": ""
+        },
+        {
+          "sha256": "cc55364c413776340fad26e58501e28522d7bcc1af968dd8275e8e745fb1c374",
+          "label": "F20 高碳钢黑色规格图",
+          "description": ""
+        },
+        {
+          "sha256": "958cf32eef4e2698d67061ecb5bf00c0c90fb13dcfa0d0bf2a2731086ecbc1b1",
+          "label": "F20 304不锈钢规格图",
+          "description": ""
+        },
+        {
+          "sha256": "0c7792ae493c0a60d74a85f7bb8c7d9af2e493724caa9172dcbcab44f3d7d121",
+          "label": "F30 304不锈钢规格图",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "row": 63,
+      "action": "create",
+      "slug": "nail-j4",
+      "product": {
+        "kind": "consumable",
+        "name": "J4系列码钉",
+        "model": "",
+        "category_id": "nails",
+        "series": "枪钉系列",
+        "summary": "422J码钉枪专用钉",
+        "applications": [
+          "适用钉枪：422J码钉枪",
+          "作业用途：木门制作，展览搭建"
+        ],
+        "features": [
+          "2种类型：",
+          "1.普通款：413j/416j/419j/422j码钉",
+          "2.304不锈钢款：413j/419j/422j码钉"
+        ],
+        "notes": [],
+        "fastener_text": "",
+        "nail_type": "staple",
+        "legacy_series_ids": [],
+        "scene_ids": [],
+        "long_nose": false,
+        "blower": false,
+        "images": [],
+        "cover_media_id": null,
+        "visibility": "listed",
+        "sort_order": 61,
+        "guide_profile": {
+          "scene_ids": [],
+          "materials": [],
+          "substrates": [],
+          "excluded_materials": [],
+          "excluded_substrates": [],
+          "power_source": null,
+          "nail_type": null,
+          "fastener_length_mm": null,
+          "load_bearing": null,
+          "long_nose": null,
+          "blower": null,
+          "limitations": [],
+          "consultation_notes": [],
+          "required_requirements": [],
+          "sources": []
+        },
+        "purchase_options": []
+      },
+      "images": [
+        {
+          "sha256": "ec6b68a52366bf0db58da22622f26de2cf3c22487ae174fa1a6cac84d5b226ae",
+          "label": "产品主图",
+          "description": ""
+        },
+        {
+          "sha256": "9ebb5060b6d5eeb933f7e8e551344c42329a0f153de523609dd6e3b266485838",
+          "label": "413J 中标规格图",
+          "description": ""
+        },
+        {
+          "sha256": "8ac85debb18feb6e55c4e43ed7a03e52bd9faab683e7f27bd3b6ff34e3df9959",
+          "label": "416J 中标规格图",
+          "description": ""
+        },
+        {
+          "sha256": "5462d5813e6527d8327cff93a6f4d0baa31b7b9fd76f8aad9bc74b64da1b1efe",
+          "label": "419J 中标规格图",
+          "description": ""
+        },
+        {
+          "sha256": "109a20586406a95213c6e4b160a02952de9eb07d4fe30d52d0ef1b7a97c7fb58",
+          "label": "422J 中标规格图",
+          "description": ""
+        },
+        {
+          "sha256": "3946d0284d8ce2649a7db309f128f50cb16dbaada56b04a045d121a8bae1e204",
+          "label": "413J 304不锈钢规格图",
+          "description": ""
+        },
+        {
+          "sha256": "3a8a993b9505d8c47a2b92d02f52aa94cc8d89bbbde31e7e661d1585efbe966d",
+          "label": "419J 304不锈钢规格图",
+          "description": ""
+        },
+        {
+          "sha256": "5bf2e72a256a2862966bdd644163b359957a678462500a24036cd1c19d9e5279",
+          "label": "422J 304不锈钢规格图",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "row": 64,
+      "action": "create",
+      "slug": "nail-j10",
+      "product": {
+        "kind": "consumable",
+        "name": "J10系列码钉",
+        "model": "",
+        "category_id": "nails",
+        "series": "枪钉系列",
+        "summary": "1013J/1022J码钉枪专用钉",
+        "applications": [
+          "适用钉枪：1013J码钉枪、1022J码钉枪",
+          "作业用途；将皮革、布料，固定在沙发架、床垫、或木板上"
+        ],
+        "features": [
+          "2种类型：",
+          "1.普通款：1006j/1008j/1010j/1013j/1016j/1022j码钉",
+          "2.304不锈钢款：1006j/1008j/1010j/1013j/1016j/1019j/1022j码钉"
+        ],
+        "notes": [],
+        "fastener_text": "",
+        "nail_type": "staple",
+        "legacy_series_ids": [],
+        "scene_ids": [],
+        "long_nose": false,
+        "blower": false,
+        "images": [],
+        "cover_media_id": null,
+        "visibility": "listed",
+        "sort_order": 62,
+        "guide_profile": {
+          "scene_ids": [],
+          "materials": [],
+          "substrates": [],
+          "excluded_materials": [],
+          "excluded_substrates": [],
+          "power_source": null,
+          "nail_type": null,
+          "fastener_length_mm": null,
+          "load_bearing": null,
+          "long_nose": null,
+          "blower": null,
+          "limitations": [],
+          "consultation_notes": [],
+          "required_requirements": [],
+          "sources": []
+        },
+        "purchase_options": []
+      },
+      "images": [
+        {
+          "sha256": "68a2ab9c4c7931293546768bb766cece2f95ab1db05933a89bbf8abbd4e37649",
+          "label": "产品主图",
+          "description": ""
+        },
+        {
+          "sha256": "9de45b10ebac7704874dc67e2535ce204342b8f92ad6b3662b689c3456be9896",
+          "label": "1006J 中标规格图",
+          "description": ""
+        },
+        {
+          "sha256": "48c88f641e58ea9d413f1cd8a771f03aa416021b235af529bd68ed0a4134b27d",
+          "label": "1008J 中标规格图",
+          "description": ""
+        },
+        {
+          "sha256": "2b6fa36772c8db38b8baba4b01e416175ad2827be2c3de226810d7c8032779da",
+          "label": "1010J 中标规格图",
+          "description": ""
+        },
+        {
+          "sha256": "9f1f1c521f53a0a6281af8ae65e664026af03e0b4ed440ade4f84ae0886a8e9d",
+          "label": "1013J 中标规格图",
+          "description": ""
+        },
+        {
+          "sha256": "ba43e1c937562209df7bd7c2de9200c2b686c8aebb4dcb79d0c99baf46028e0a",
+          "label": "1016J 中标规格图",
+          "description": ""
+        },
+        {
+          "sha256": "10e7c1346d1b7fc5d60e8d58e7e22f93ba6da8dbd1f5c44284ee315d7e914c1c",
+          "label": "1022J 中标规格图",
+          "description": ""
+        },
+        {
+          "sha256": "5a8a771978b5df89f701f284ba7e64b65590457840a95ac4b380820adc6ce085",
+          "label": "1006J 304不锈钢规格图",
+          "description": ""
+        },
+        {
+          "sha256": "c68825b7149aaac951ea30bbe91f09521ddfe7faf127d5c601e98ab190565d7a",
+          "label": "1008J 304不锈钢规格图",
+          "description": ""
+        },
+        {
+          "sha256": "c61690254075406d97f0ee8eac41b467d064d086f9ea9530a6fab1b4bebe3efa",
+          "label": "1010J 304不锈钢规格图",
+          "description": ""
+        },
+        {
+          "sha256": "c7a077a1fc77a73bb34a8ff807de2daeb275a9500291ad4397ea125492cd724a",
+          "label": "1013J 304不锈钢规格图",
+          "description": ""
+        },
+        {
+          "sha256": "d82564764e9b98fab09cbe3b7c28dd2884f6be0976101938462e14f97e98b740",
+          "label": "1016J 304不锈钢规格图",
+          "description": ""
+        },
+        {
+          "sha256": "9755bfa771a69d82b80863e3b17317a8ac1313c1c79ae4b83c727c8c29c3e094",
+          "label": "1019J 304不锈钢规格图",
+          "description": ""
+        },
+        {
+          "sha256": "50d37f8cf35b40d94db6560310c7322c9e9fedd4df49ffb3857836a68eb074d9",
+          "label": "1022J 304不锈钢规格图",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "row": 65,
+      "action": "create",
+      "slug": "nail-10f",
+      "product": {
+        "kind": "consumable",
+        "name": "10F系列码钉",
+        "model": "",
+        "category_id": "nails",
+        "series": "枪钉系列",
+        "summary": "1010F码钉枪专用钉",
+        "applications": [
+          "适用钉枪：1010F码钉枪",
+          "作业用途：将皮革、布料，固定在沙发架、坐垫、鞋模上"
+        ],
+        "features": [
+          "硬度高、强度高、不卡钉",
+          "表面光滑，寿命长",
+          "3种型号：1006F/1008F/1010F细码钉"
+        ],
+        "notes": [],
+        "fastener_text": "",
+        "nail_type": "staple",
+        "legacy_series_ids": [],
+        "scene_ids": [],
+        "long_nose": false,
+        "blower": false,
+        "images": [],
+        "cover_media_id": null,
+        "visibility": "listed",
+        "sort_order": 63,
+        "guide_profile": {
+          "scene_ids": [],
+          "materials": [],
+          "substrates": [],
+          "excluded_materials": [],
+          "excluded_substrates": [],
+          "power_source": null,
+          "nail_type": null,
+          "fastener_length_mm": null,
+          "load_bearing": null,
+          "long_nose": null,
+          "blower": null,
+          "limitations": [],
+          "consultation_notes": [],
+          "required_requirements": [],
+          "sources": []
+        },
+        "purchase_options": []
+      },
+      "images": [
+        {
+          "sha256": "c83c436c71c6e36357b43acb2ce14b178a15f5e802dd2ea05785652f86abca9e",
+          "label": "产品主图",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "row": 66,
+      "action": "reuse",
+      "id": "p_nail-pin",
+      "baseline": {
+        "kind": "db6756584c1fcde31d8b2f1ab0521184df7613a3852eb043300be55821fd9983",
+        "name": "dfa7c34b2a9cd03d3131466c288f4e978cfb68f7f0b763f9ff0a34a55f342e96",
+        "model": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+        "category_id": "11fe879ab1e1913bf68875fc2be09d52189e668b3eec523c303d146809d30bfa",
+        "series": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+        "legacy_series_ids": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "summary": "f5694a78da618bf2b23d5c65ca6da4c1d45219cd37ada3a67723dc7324c3066c",
+        "applications": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "features": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "notes": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "scene_ids": "48e9a48718841fbaf85c06167cd41cb0a0974f0bd5f7add05bf9ac714e44ef33",
+        "nail_type": "306d4341737da79ea54041e19057baf7f5254a139860e9f4df6dc7c699e06d03",
+        "fastener_text": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+        "long_nose": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "blower": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "images": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "cover_media_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "visibility": "577f4dedb30ed669e09944f735e84f415fe90f3affd1af04a4d599b7e1a08d7f",
+        "sort_order": "44cb730c420480a0477b505ae68af508fb90f96cf0ec54c6ad16949dd427f13a",
+        "guide_profile": "8e102c41baaca74dfc7dac31bb2ba43f6bab93b2a022702627a5a588d5fdcbbb",
+        "purchase_options": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "slug": "nail-pin",
+      "product": {
+        "kind": "consumable",
+        "name": "蚊钉",
+        "model": "",
+        "category_id": "nails",
+        "series": "枪钉系列",
+        "summary": "蚊钉枪专用钉",
+        "applications": [
+          "适用钉枪：P625蚊钉枪、P635蚊钉枪",
+          "作业用途：无头钉，适合高级家具装潢钉合"
+        ],
+        "features": [
+          "坚固耐用，耐腐蚀",
+          "国标标准，不卡枪",
+          "2种类型：",
+          "1.镀铜款：6mm/8mm/10mm/12mm/15mm/18mm/20mm/22mm/25mm/30mm",
+          "2.不锈钢款：10mm/15mm/20mm/25mm"
+        ],
+        "notes": [],
+        "fastener_text": "",
+        "nail_type": "pin"
+      },
+      "images": [
+        {
+          "sha256": "9ba785d2e16f4f0e472eb0781240282f9d0e9529410643b8c5bf9ff5cb3b629f",
+          "label": "产品主图",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "row": 67,
+      "action": "create",
+      "slug": "nail-k",
+      "product": {
+        "kind": "consumable",
+        "name": "K系列码钉",
+        "model": "",
+        "category_id": "nails",
+        "series": "枪钉系列",
+        "summary": "425K/440K码钉枪专用钉",
+        "applications": [
+          "适用钉枪：425K码钉枪、440K码钉枪",
+          "作业用途：实木家具、沙发架的制作"
+        ],
+        "features": [
+          "坚固耐用，耐腐蚀",
+          "国标标准，不卡枪",
+          "3种型号：K425/K432/K438码钉"
+        ],
+        "notes": [],
+        "fastener_text": "",
+        "nail_type": "staple",
+        "legacy_series_ids": [],
+        "scene_ids": [],
+        "long_nose": false,
+        "blower": false,
+        "images": [],
+        "cover_media_id": null,
+        "visibility": "listed",
+        "sort_order": 65,
+        "guide_profile": {
+          "scene_ids": [],
+          "materials": [],
+          "substrates": [],
+          "excluded_materials": [],
+          "excluded_substrates": [],
+          "power_source": null,
+          "nail_type": null,
+          "fastener_length_mm": null,
+          "load_bearing": null,
+          "long_nose": null,
+          "blower": null,
+          "limitations": [],
+          "consultation_notes": [],
+          "required_requirements": [],
+          "sources": []
+        },
+        "purchase_options": []
+      },
+      "images": [
+        {
+          "sha256": "992732aebd2d8d8f9f2c73cd8cff714b30be469919a6aa8a9b34715a19dcf040",
+          "label": "产品主图",
+          "description": ""
+        },
+        {
+          "sha256": "baa963da12f81a8f05df8ddb2c6392d0444c5cd75ad47f8d04fa95aff288702a",
+          "label": "425K规格图",
+          "description": ""
+        },
+        {
+          "sha256": "d2e0bc8a2b1f389a4f1dc8d457d08746a8858334052bbcf725638ef3f8dd975c",
+          "label": "432K规格图",
+          "description": ""
+        },
+        {
+          "sha256": "90d13bcb974d0c97780a6c28fcc973c53c039a4a4e05d6bb145afc1656d9c9ad",
+          "label": "438K规格图",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "row": 68,
+      "action": "reuse",
+      "id": "p_nail-steel",
+      "baseline": {
+        "kind": "db6756584c1fcde31d8b2f1ab0521184df7613a3852eb043300be55821fd9983",
+        "name": "f56c3a9809638b1e4d0ed8ba05fc7b8d2cbb4156b5c775594da8d56d8e0e443b",
+        "model": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+        "category_id": "11fe879ab1e1913bf68875fc2be09d52189e668b3eec523c303d146809d30bfa",
+        "series": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+        "legacy_series_ids": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "summary": "2ef923b9f00d6ff354e719040197011211c928f6fefad77f97c1479999bdaaf3",
+        "applications": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "features": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "notes": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "scene_ids": "66540d48ffca96c8ffbd9208fde54e339a98c2e9f87c78cf0f7a012fd73b9150",
+        "nail_type": "d9fc2b8b330bec3af1bf95d031d6374accbc8be0a5cb7f8c445a78e79695b400",
+        "fastener_text": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+        "long_nose": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "blower": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "images": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "cover_media_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "visibility": "577f4dedb30ed669e09944f735e84f415fe90f3affd1af04a4d599b7e1a08d7f",
+        "sort_order": "3d914f9348c9cc0ff8a79716700b9fcd4d2f3e711608004eb8f138bcba7f14d9",
+        "guide_profile": "8e102c41baaca74dfc7dac31bb2ba43f6bab93b2a022702627a5a588d5fdcbbb",
+        "purchase_options": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "slug": "nail-steel",
+      "product": {
+        "kind": "consumable",
+        "name": "钢排钉",
+        "model": "",
+        "category_id": "nails",
+        "series": "枪钉系列",
+        "summary": "ST38/ST64钢钉枪专用钉",
+        "applications": [
+          "适用钉枪：ST38钢钉枪、ST64钢钉枪",
+          "作业用途：承重木方固定、厚料多层固定、高强度混凝土打钉"
+        ],
+        "features": [
+          "专用排钉胶，不易散钉",
+          "镀锌防锈处理，耐腐蚀，持久耐用",
+          "菱形钻石尖，强劲穿透力",
+          "搞硬度碳钢，成熟回火工艺，不崩尖，不折弯",
+          "多种型号：ST18/ST25/ST32/ST38/ST45/ST50/ST57/ST64"
+        ],
+        "notes": [],
+        "fastener_text": "",
+        "nail_type": "steel-nail"
+      },
+      "images": [
+        {
+          "sha256": "8b2aefb1b92ba476018d98fdc58b4f6427d807d1c7b9f041b7e0a110aa9ebb43",
+          "label": "产品主图",
+          "description": ""
+        },
+        {
+          "sha256": "9496f5343a4635f8d67667d04540813505e80a2933f15053b37f853f98d1dd89",
+          "label": "ST18规格图",
+          "description": ""
+        },
+        {
+          "sha256": "6a8c30c1c9ef3be99135e09dc3ee9225efe2894732a66a5a3fec7d6df354be96",
+          "label": "ST25规格图",
+          "description": ""
+        },
+        {
+          "sha256": "f1ba27cbed86a184fe617557bbc664bddbdabc8ebe9fddd19f94e2704c98d060",
+          "label": "ST32规格图",
+          "description": ""
+        },
+        {
+          "sha256": "f8e73bb7b2d02efb60cf0956758062a3b7510372ae4830fea48c0ca5fa16cd04",
+          "label": "ST38规格图",
+          "description": ""
+        },
+        {
+          "sha256": "d9e299006b56484a1c5a930629d4e158f52f4ea61f9490fc5f928d4385cbd36e",
+          "label": "ST45规格图",
+          "description": ""
+        },
+        {
+          "sha256": "0a3bde5da5ffc15266f9712c32c13b23d3134ac30eccbc8c3c83e27474d3d64a",
+          "label": "ST50规格图",
+          "description": ""
+        },
+        {
+          "sha256": "c719b6ab03319b92c2a346151746605e09c10ac602bcf2c2d3a03686ae4119c0",
+          "label": "ST57规格图",
+          "description": ""
+        },
+        {
+          "sha256": "5aa5753ca146eef7be23757b5c67f5f7f96b6a6153a6f929da78104f4169b3a3",
+          "label": "ST64规格图",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "row": 69,
+      "action": "create",
+      "slug": "nail-fst",
+      "product": {
+        "kind": "consumable",
+        "name": "FST无头钢排钉",
+        "model": "",
+        "category_id": "nails",
+        "series": "枪钉系列",
+        "summary": "打踢脚线专用钉",
+        "applications": [
+          "适用钉枪：FST钢钉抢",
+          "作业用途：固定踢脚线、及木工装潢，看不到一点痕迹"
+        ],
+        "features": [
+          "加厚材质，耐腐蚀",
+          "表面光滑，寿命长",
+          "3种型号：FST20/FST25/FST30无头钢钉"
+        ],
+        "notes": [],
+        "fastener_text": "",
+        "nail_type": "steel-nail",
+        "legacy_series_ids": [],
+        "scene_ids": [],
+        "long_nose": false,
+        "blower": false,
+        "images": [],
+        "cover_media_id": null,
+        "visibility": "listed",
+        "sort_order": 67,
+        "guide_profile": {
+          "scene_ids": [],
+          "materials": [],
+          "substrates": [],
+          "excluded_materials": [],
+          "excluded_substrates": [],
+          "power_source": null,
+          "nail_type": null,
+          "fastener_length_mm": null,
+          "load_bearing": null,
+          "long_nose": null,
+          "blower": null,
+          "limitations": [],
+          "consultation_notes": [],
+          "required_requirements": [],
+          "sources": []
+        },
+        "purchase_options": []
+      },
+      "images": [
+        {
+          "sha256": "36e30bba8ac3c0c47e9ded180d6cb88b2c4c685f70d6429d2729ce6dddae6143",
+          "label": "产品主图",
+          "description": ""
+        }
+      ]
+    }
+  ],
+  "hubs": [
+    {
+      "id": "p_nail-staple",
+      "slug": "nail-staple",
+      "action": "delete-hub",
+      "baseline": {
+        "kind": "db6756584c1fcde31d8b2f1ab0521184df7613a3852eb043300be55821fd9983",
+        "name": "3b4166a86214d6001642e2dea4073c3afd6bb0064402aaad76fd835a12180328",
+        "model": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+        "category_id": "11fe879ab1e1913bf68875fc2be09d52189e668b3eec523c303d146809d30bfa",
+        "series": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+        "legacy_series_ids": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "summary": "8712d0f4f2432a5569a57a8532c38b30f7bec2614c991d3492372a5543ff1534",
+        "applications": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "features": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "notes": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "scene_ids": "4c55dda0020a10cabb6f92ea0da85927499e2e52530472b6cad23dc8ae31e418",
+        "nail_type": "a8232757b3bb31d7bddb73a04568afd4c28d736f66c5f94f279d282fdcde33f8",
+        "fastener_text": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+        "long_nose": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "blower": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "images": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "cover_media_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "visibility": "577f4dedb30ed669e09944f735e84f415fe90f3affd1af04a4d599b7e1a08d7f",
+        "sort_order": "73475cb40a568e8da8a045ced110137e159f890ac4da883b6b17dc651b3a8049",
+        "guide_profile": "8e102c41baaca74dfc7dac31bb2ba43f6bab93b2a022702627a5a588d5fdcbbb",
+        "purchase_options": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "product": {},
+      "images": [],
+      "members": [
+        "nail-high-carbon-n",
+        "nail-special-k4",
+        "nail-n",
+        "nail-j4",
+        "nail-j10",
+        "nail-10f",
+        "nail-k"
+      ]
+    },
+    {
+      "id": "p_lithium",
+      "slug": "lithium",
+      "action": "delete-hub",
+      "baseline": {
+        "kind": "db6756584c1fcde31d8b2f1ab0521184df7613a3852eb043300be55821fd9983",
+        "name": "db16e1daf192355d35e4b8c660d46cb56625c35099df91468403e33d9621d489",
+        "model": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+        "category_id": "d448c0e0f65da7948e3edb7805b5272b54f75f427c33333157324b626f5ca51f",
+        "series": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+        "legacy_series_ids": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "summary": "415d53d735abf442fda1a5816925eef9faa04936a720c30acd26196bfd92b591",
+        "applications": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "features": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "notes": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "scene_ids": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "nail_type": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "fastener_text": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+        "long_nose": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "blower": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "images": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "cover_media_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "visibility": "577f4dedb30ed669e09944f735e84f415fe90f3affd1af04a4d599b7e1a08d7f",
+        "sort_order": "71ee45a3c0db9a9865f7313dd3372cf60dca6479d46261f3542eb9346e4a04d6",
+        "guide_profile": "8e102c41baaca74dfc7dac31bb2ba43f6bab93b2a022702627a5a588d5fdcbbb",
+        "purchase_options": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "product": {},
+      "images": [],
+      "members": [
+        "f30-lithium",
+        "422j-lithium",
+        "1022j-lithium"
+      ]
+    },
+    {
+      "id": "p_air-screwdriver",
+      "slug": "air-screwdriver",
+      "action": "delete-hub",
+      "baseline": {
+        "kind": "db6756584c1fcde31d8b2f1ab0521184df7613a3852eb043300be55821fd9983",
+        "name": "307088d6fe06a788ad4b61c06b7a3a21b8b2d1a7be6b0135b118d2fc8efacba7",
+        "model": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+        "category_id": "d448c0e0f65da7948e3edb7805b5272b54f75f427c33333157324b626f5ca51f",
+        "series": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+        "legacy_series_ids": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "summary": "2c072ed7b5a4c256c788664a79dd3bab43ee548af57a9080e30e55ae2505b93c",
+        "applications": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "features": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "notes": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "scene_ids": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "nail_type": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "fastener_text": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+        "long_nose": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "blower": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "images": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "cover_media_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "visibility": "577f4dedb30ed669e09944f735e84f415fe90f3affd1af04a4d599b7e1a08d7f",
+        "sort_order": "811786ad1ae74adfdd20dd0372abaaebc6246e343aebd01da0bfc4c02bf0106c",
+        "guide_profile": "8e102c41baaca74dfc7dac31bb2ba43f6bab93b2a022702627a5a588d5fdcbbb",
+        "purchase_options": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "product": {},
+      "images": [],
+      "members": [
+        "yf1206",
+        "yf1208",
+        "yf1210",
+        "yf1206q",
+        "yf1210hl"
+      ]
+    },
+    {
+      "id": "p_parts",
+      "slug": "parts",
+      "action": "delete-hub",
+      "baseline": {
+        "kind": "db6756584c1fcde31d8b2f1ab0521184df7613a3852eb043300be55821fd9983",
+        "name": "c195d66d77ab85806beee89a7ce45ccf6456c912e8a64e750bed21675bfc1e1d",
+        "model": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+        "category_id": "d448c0e0f65da7948e3edb7805b5272b54f75f427c33333157324b626f5ca51f",
+        "series": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+        "legacy_series_ids": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "summary": "c7ff38ed110a8b4a9c25ec78093acad3b0b2c2746bc38b523b430a21621c7e01",
+        "applications": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "features": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "notes": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "scene_ids": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "nail_type": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "fastener_text": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+        "long_nose": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "blower": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "images": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "cover_media_id": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "visibility": "577f4dedb30ed669e09944f735e84f415fe90f3affd1af04a4d599b7e1a08d7f",
+        "sort_order": "25fc0e7096fc653718202dc30b0c580b8ab87eac11a700cba03a7c021bc35b0c",
+        "guide_profile": "8e102c41baaca74dfc7dac31bb2ba43f6bab93b2a022702627a5a588d5fdcbbb",
+        "purchase_options": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "product": {},
+      "images": [],
+      "members": [
+        "quick-coupler",
+        "spider-workbench",
+        "pu-air-hose",
+        "repair-kit",
+        "original-driver-blade"
+      ]
+    }
+  ],
+  "assets": [
+    {
+      "sha256": "a8c6a9e507f25f8275e017a7227149641e44fab67b9f9c68c618f359e7260684",
+      "file": "material-assets/a8c6a9e507f25f8275e017a7227149641e44fab67b9f9c68c618f359e7260684.jpg",
+      "bytes": 189991,
+      "width": 800,
+      "height": 800,
+      "format": "jpeg"
+    },
+    {
+      "sha256": "7ef8810593b1d63169b9e08e2d86307037a75f2d0550d924115dc21951e1a8fa",
+      "file": "material-assets/7ef8810593b1d63169b9e08e2d86307037a75f2d0550d924115dc21951e1a8fa.jpg",
+      "bytes": 110444,
+      "width": 800,
+      "height": 800,
+      "format": "jpeg"
+    },
+    {
+      "sha256": "52f20e8175abb107bbeccc92badda0f0283b59d48513d6195b00940f5bb43f53",
+      "file": "material-assets/52f20e8175abb107bbeccc92badda0f0283b59d48513d6195b00940f5bb43f53.jpg",
+      "bytes": 109815,
+      "width": 800,
+      "height": 800,
+      "format": "jpeg"
+    },
+    {
+      "sha256": "de08e039edb2051c94bdd27892a5fb9432586f0410b9f252c34c5e5f4a75fbc8",
+      "file": "material-assets/de08e039edb2051c94bdd27892a5fb9432586f0410b9f252c34c5e5f4a75fbc8.jpg",
+      "bytes": 110670,
+      "width": 800,
+      "height": 800,
+      "format": "jpeg"
+    },
+    {
+      "sha256": "6939f12719cdcce1939a6e1c26ccdc54a0a91cceddb68871642dcf4d29327d7a",
+      "file": "material-assets/6939f12719cdcce1939a6e1c26ccdc54a0a91cceddb68871642dcf4d29327d7a.jpg",
+      "bytes": 110407,
+      "width": 800,
+      "height": 800,
+      "format": "jpeg"
+    },
+    {
+      "sha256": "3848882bdc4e6ef4a1e5b069b278990c8bef6c3f4767a2a68b1c64eb0b3ea9d0",
+      "file": "material-assets/3848882bdc4e6ef4a1e5b069b278990c8bef6c3f4767a2a68b1c64eb0b3ea9d0.jpg",
+      "bytes": 109920,
+      "width": 800,
+      "height": 800,
+      "format": "jpeg"
+    },
+    {
+      "sha256": "69b8a1101f135d74161d1c9160ef271eb97850b59c653474c27cc66e1f90504b",
+      "file": "material-assets/69b8a1101f135d74161d1c9160ef271eb97850b59c653474c27cc66e1f90504b.jpg",
+      "bytes": 110170,
+      "width": 800,
+      "height": 800,
+      "format": "jpeg"
+    },
+    {
+      "sha256": "585e361004341fbdccea54f51d544c23a38698543718bb2c39ae0b7980fa1c4a",
+      "file": "material-assets/585e361004341fbdccea54f51d544c23a38698543718bb2c39ae0b7980fa1c4a.jpg",
+      "bytes": 109825,
+      "width": 800,
+      "height": 800,
+      "format": "jpeg"
+    },
+    {
+      "sha256": "a9b1cd9065daf992bf0ed861bac82e6ea280d381ec53680c0603952d9532d91e",
+      "file": "material-assets/a9b1cd9065daf992bf0ed861bac82e6ea280d381ec53680c0603952d9532d91e.jpg",
+      "bytes": 170256,
+      "width": 800,
+      "height": 800,
+      "format": "jpeg"
+    },
+    {
+      "sha256": "382f5cec767087c7841c877ed709455c5435614d226c9995ecfd3214733ee3c0",
+      "file": "material-assets/382f5cec767087c7841c877ed709455c5435614d226c9995ecfd3214733ee3c0.jpg",
+      "bytes": 106276,
+      "width": 800,
+      "height": 800,
+      "format": "jpeg"
+    },
+    {
+      "sha256": "d37ae1647e4704b0b99870141357c7c814eb422827bc7206beacf574d947a6c3",
+      "file": "material-assets/d37ae1647e4704b0b99870141357c7c814eb422827bc7206beacf574d947a6c3.jpg",
+      "bytes": 114156,
+      "width": 800,
+      "height": 800,
+      "format": "jpeg"
+    },
+    {
+      "sha256": "4a58e3a3895e36826bfcdc6f8c455ddeb6f69f7353668949e10d4e69e8a1a0b2",
+      "file": "material-assets/4a58e3a3895e36826bfcdc6f8c455ddeb6f69f7353668949e10d4e69e8a1a0b2.jpg",
+      "bytes": 113218,
+      "width": 800,
+      "height": 800,
+      "format": "jpeg"
+    },
+    {
+      "sha256": "b8895c5dcd7d1be2b9411d4f43b87598f340e2a1515b013b2a5d357c196e993d",
+      "file": "material-assets/b8895c5dcd7d1be2b9411d4f43b87598f340e2a1515b013b2a5d357c196e993d.jpg",
+      "bytes": 113982,
+      "width": 800,
+      "height": 800,
+      "format": "jpeg"
+    },
+    {
+      "sha256": "3c3ab990c1c8f8e5bd6f50106517ecdf88f0cb292a8c1e708e7903637952f966",
+      "file": "material-assets/3c3ab990c1c8f8e5bd6f50106517ecdf88f0cb292a8c1e708e7903637952f966.jpg",
+      "bytes": 91604,
+      "width": 800,
+      "height": 800,
+      "format": "jpeg"
+    },
+    {
+      "sha256": "f09c34d38d363b677e5e3edb66c6bcfd735dddb6d97c9fecaf26dc6507205f65",
+      "file": "material-assets/f09c34d38d363b677e5e3edb66c6bcfd735dddb6d97c9fecaf26dc6507205f65.jpg",
+      "bytes": 102946,
+      "width": 800,
+      "height": 800,
+      "format": "jpeg"
+    },
+    {
+      "sha256": "cc55364c413776340fad26e58501e28522d7bcc1af968dd8275e8e745fb1c374",
+      "file": "material-assets/cc55364c413776340fad26e58501e28522d7bcc1af968dd8275e8e745fb1c374.jpg",
+      "bytes": 104125,
+      "width": 800,
+      "height": 800,
+      "format": "jpeg"
+    },
+    {
+      "sha256": "958cf32eef4e2698d67061ecb5bf00c0c90fb13dcfa0d0bf2a2731086ecbc1b1",
+      "file": "material-assets/958cf32eef4e2698d67061ecb5bf00c0c90fb13dcfa0d0bf2a2731086ecbc1b1.jpg",
+      "bytes": 101526,
+      "width": 800,
+      "height": 800,
+      "format": "jpeg"
+    },
+    {
+      "sha256": "0c7792ae493c0a60d74a85f7bb8c7d9af2e493724caa9172dcbcab44f3d7d121",
+      "file": "material-assets/0c7792ae493c0a60d74a85f7bb8c7d9af2e493724caa9172dcbcab44f3d7d121.jpg",
+      "bytes": 115999,
+      "width": 800,
+      "height": 800,
+      "format": "jpeg"
+    },
+    {
+      "sha256": "ec6b68a52366bf0db58da22622f26de2cf3c22487ae174fa1a6cac84d5b226ae",
+      "file": "material-assets/ec6b68a52366bf0db58da22622f26de2cf3c22487ae174fa1a6cac84d5b226ae.jpg",
+      "bytes": 128560,
+      "width": 800,
+      "height": 800,
+      "format": "jpeg"
+    },
+    {
+      "sha256": "9ebb5060b6d5eeb933f7e8e551344c42329a0f153de523609dd6e3b266485838",
+      "file": "material-assets/9ebb5060b6d5eeb933f7e8e551344c42329a0f153de523609dd6e3b266485838.jpg",
+      "bytes": 87953,
+      "width": 800,
+      "height": 800,
+      "format": "jpeg"
+    },
+    {
+      "sha256": "8ac85debb18feb6e55c4e43ed7a03e52bd9faab683e7f27bd3b6ff34e3df9959",
+      "file": "material-assets/8ac85debb18feb6e55c4e43ed7a03e52bd9faab683e7f27bd3b6ff34e3df9959.jpg",
+      "bytes": 89778,
+      "width": 800,
+      "height": 800,
+      "format": "jpeg"
+    },
+    {
+      "sha256": "5462d5813e6527d8327cff93a6f4d0baa31b7b9fd76f8aad9bc74b64da1b1efe",
+      "file": "material-assets/5462d5813e6527d8327cff93a6f4d0baa31b7b9fd76f8aad9bc74b64da1b1efe.jpg",
+      "bytes": 87855,
+      "width": 800,
+      "height": 800,
+      "format": "jpeg"
+    },
+    {
+      "sha256": "109a20586406a95213c6e4b160a02952de9eb07d4fe30d52d0ef1b7a97c7fb58",
+      "file": "material-assets/109a20586406a95213c6e4b160a02952de9eb07d4fe30d52d0ef1b7a97c7fb58.jpg",
+      "bytes": 88674,
+      "width": 800,
+      "height": 800,
+      "format": "jpeg"
+    },
+    {
+      "sha256": "3946d0284d8ce2649a7db309f128f50cb16dbaada56b04a045d121a8bae1e204",
+      "file": "material-assets/3946d0284d8ce2649a7db309f128f50cb16dbaada56b04a045d121a8bae1e204.jpg",
+      "bytes": 82558,
+      "width": 800,
+      "height": 800,
+      "format": "jpeg"
+    },
+    {
+      "sha256": "3a8a993b9505d8c47a2b92d02f52aa94cc8d89bbbde31e7e661d1585efbe966d",
+      "file": "material-assets/3a8a993b9505d8c47a2b92d02f52aa94cc8d89bbbde31e7e661d1585efbe966d.jpg",
+      "bytes": 82341,
+      "width": 800,
+      "height": 800,
+      "format": "jpeg"
+    },
+    {
+      "sha256": "5bf2e72a256a2862966bdd644163b359957a678462500a24036cd1c19d9e5279",
+      "file": "material-assets/5bf2e72a256a2862966bdd644163b359957a678462500a24036cd1c19d9e5279.jpg",
+      "bytes": 82774,
+      "width": 800,
+      "height": 800,
+      "format": "jpeg"
+    },
+    {
+      "sha256": "68a2ab9c4c7931293546768bb766cece2f95ab1db05933a89bbf8abbd4e37649",
+      "file": "material-assets/68a2ab9c4c7931293546768bb766cece2f95ab1db05933a89bbf8abbd4e37649.jpg",
+      "bytes": 144070,
+      "width": 800,
+      "height": 800,
+      "format": "jpeg"
+    },
+    {
+      "sha256": "9de45b10ebac7704874dc67e2535ce204342b8f92ad6b3662b689c3456be9896",
+      "file": "material-assets/9de45b10ebac7704874dc67e2535ce204342b8f92ad6b3662b689c3456be9896.jpg",
+      "bytes": 86799,
+      "width": 800,
+      "height": 800,
+      "format": "jpeg"
+    },
+    {
+      "sha256": "48c88f641e58ea9d413f1cd8a771f03aa416021b235af529bd68ed0a4134b27d",
+      "file": "material-assets/48c88f641e58ea9d413f1cd8a771f03aa416021b235af529bd68ed0a4134b27d.jpg",
+      "bytes": 87079,
+      "width": 800,
+      "height": 800,
+      "format": "jpeg"
+    },
+    {
+      "sha256": "2b6fa36772c8db38b8baba4b01e416175ad2827be2c3de226810d7c8032779da",
+      "file": "material-assets/2b6fa36772c8db38b8baba4b01e416175ad2827be2c3de226810d7c8032779da.jpg",
+      "bytes": 87829,
+      "width": 800,
+      "height": 800,
+      "format": "jpeg"
+    },
+    {
+      "sha256": "9f1f1c521f53a0a6281af8ae65e664026af03e0b4ed440ade4f84ae0886a8e9d",
+      "file": "material-assets/9f1f1c521f53a0a6281af8ae65e664026af03e0b4ed440ade4f84ae0886a8e9d.jpg",
+      "bytes": 88646,
+      "width": 800,
+      "height": 800,
+      "format": "jpeg"
+    },
+    {
+      "sha256": "ba43e1c937562209df7bd7c2de9200c2b686c8aebb4dcb79d0c99baf46028e0a",
+      "file": "material-assets/ba43e1c937562209df7bd7c2de9200c2b686c8aebb4dcb79d0c99baf46028e0a.jpg",
+      "bytes": 90844,
+      "width": 800,
+      "height": 800,
+      "format": "jpeg"
+    },
+    {
+      "sha256": "10e7c1346d1b7fc5d60e8d58e7e22f93ba6da8dbd1f5c44284ee315d7e914c1c",
+      "file": "material-assets/10e7c1346d1b7fc5d60e8d58e7e22f93ba6da8dbd1f5c44284ee315d7e914c1c.jpg",
+      "bytes": 94956,
+      "width": 800,
+      "height": 800,
+      "format": "jpeg"
+    },
+    {
+      "sha256": "5a8a771978b5df89f701f284ba7e64b65590457840a95ac4b380820adc6ce085",
+      "file": "material-assets/5a8a771978b5df89f701f284ba7e64b65590457840a95ac4b380820adc6ce085.jpg",
+      "bytes": 75400,
+      "width": 800,
+      "height": 800,
+      "format": "jpeg"
+    },
+    {
+      "sha256": "c68825b7149aaac951ea30bbe91f09521ddfe7faf127d5c601e98ab190565d7a",
+      "file": "material-assets/c68825b7149aaac951ea30bbe91f09521ddfe7faf127d5c601e98ab190565d7a.jpg",
+      "bytes": 76211,
+      "width": 800,
+      "height": 800,
+      "format": "jpeg"
+    },
+    {
+      "sha256": "c61690254075406d97f0ee8eac41b467d064d086f9ea9530a6fab1b4bebe3efa",
+      "file": "material-assets/c61690254075406d97f0ee8eac41b467d064d086f9ea9530a6fab1b4bebe3efa.jpg",
+      "bytes": 77315,
+      "width": 800,
+      "height": 800,
+      "format": "jpeg"
+    },
+    {
+      "sha256": "c7a077a1fc77a73bb34a8ff807de2daeb275a9500291ad4397ea125492cd724a",
+      "file": "material-assets/c7a077a1fc77a73bb34a8ff807de2daeb275a9500291ad4397ea125492cd724a.jpg",
+      "bytes": 78488,
+      "width": 800,
+      "height": 800,
+      "format": "jpeg"
+    },
+    {
+      "sha256": "d82564764e9b98fab09cbe3b7c28dd2884f6be0976101938462e14f97e98b740",
+      "file": "material-assets/d82564764e9b98fab09cbe3b7c28dd2884f6be0976101938462e14f97e98b740.jpg",
+      "bytes": 79960,
+      "width": 800,
+      "height": 800,
+      "format": "jpeg"
+    },
+    {
+      "sha256": "9755bfa771a69d82b80863e3b17317a8ac1313c1c79ae4b83c727c8c29c3e094",
+      "file": "material-assets/9755bfa771a69d82b80863e3b17317a8ac1313c1c79ae4b83c727c8c29c3e094.jpg",
+      "bytes": 83525,
+      "width": 800,
+      "height": 800,
+      "format": "jpeg"
+    },
+    {
+      "sha256": "50d37f8cf35b40d94db6560310c7322c9e9fedd4df49ffb3857836a68eb074d9",
+      "file": "material-assets/50d37f8cf35b40d94db6560310c7322c9e9fedd4df49ffb3857836a68eb074d9.jpg",
+      "bytes": 83978,
+      "width": 800,
+      "height": 800,
+      "format": "jpeg"
+    },
+    {
+      "sha256": "c83c436c71c6e36357b43acb2ce14b178a15f5e802dd2ea05785652f86abca9e",
+      "file": "material-assets/c83c436c71c6e36357b43acb2ce14b178a15f5e802dd2ea05785652f86abca9e.jpg",
+      "bytes": 130955,
+      "width": 800,
+      "height": 800,
+      "format": "jpeg"
+    },
+    {
+      "sha256": "9ba785d2e16f4f0e472eb0781240282f9d0e9529410643b8c5bf9ff5cb3b629f",
+      "file": "material-assets/9ba785d2e16f4f0e472eb0781240282f9d0e9529410643b8c5bf9ff5cb3b629f.jpg",
+      "bytes": 130217,
+      "width": 800,
+      "height": 800,
+      "format": "jpeg"
+    },
+    {
+      "sha256": "992732aebd2d8d8f9f2c73cd8cff714b30be469919a6aa8a9b34715a19dcf040",
+      "file": "material-assets/992732aebd2d8d8f9f2c73cd8cff714b30be469919a6aa8a9b34715a19dcf040.jpg",
+      "bytes": 127666,
+      "width": 800,
+      "height": 800,
+      "format": "jpeg"
+    },
+    {
+      "sha256": "baa963da12f81a8f05df8ddb2c6392d0444c5cd75ad47f8d04fa95aff288702a",
+      "file": "material-assets/baa963da12f81a8f05df8ddb2c6392d0444c5cd75ad47f8d04fa95aff288702a.jpg",
+      "bytes": 105166,
+      "width": 800,
+      "height": 800,
+      "format": "jpeg"
+    },
+    {
+      "sha256": "d2e0bc8a2b1f389a4f1dc8d457d08746a8858334052bbcf725638ef3f8dd975c",
+      "file": "material-assets/d2e0bc8a2b1f389a4f1dc8d457d08746a8858334052bbcf725638ef3f8dd975c.jpg",
+      "bytes": 104937,
+      "width": 800,
+      "height": 800,
+      "format": "jpeg"
+    },
+    {
+      "sha256": "90d13bcb974d0c97780a6c28fcc973c53c039a4a4e05d6bb145afc1656d9c9ad",
+      "file": "material-assets/90d13bcb974d0c97780a6c28fcc973c53c039a4a4e05d6bb145afc1656d9c9ad.jpg",
+      "bytes": 105546,
+      "width": 800,
+      "height": 800,
+      "format": "jpeg"
+    },
+    {
+      "sha256": "8b2aefb1b92ba476018d98fdc58b4f6427d807d1c7b9f041b7e0a110aa9ebb43",
+      "file": "material-assets/8b2aefb1b92ba476018d98fdc58b4f6427d807d1c7b9f041b7e0a110aa9ebb43.jpg",
+      "bytes": 143533,
+      "width": 800,
+      "height": 800,
+      "format": "jpeg"
+    },
+    {
+      "sha256": "9496f5343a4635f8d67667d04540813505e80a2933f15053b37f853f98d1dd89",
+      "file": "material-assets/9496f5343a4635f8d67667d04540813505e80a2933f15053b37f853f98d1dd89.jpg",
+      "bytes": 139198,
+      "width": 800,
+      "height": 800,
+      "format": "jpeg"
+    },
+    {
+      "sha256": "6a8c30c1c9ef3be99135e09dc3ee9225efe2894732a66a5a3fec7d6df354be96",
+      "file": "material-assets/6a8c30c1c9ef3be99135e09dc3ee9225efe2894732a66a5a3fec7d6df354be96.jpg",
+      "bytes": 145560,
+      "width": 800,
+      "height": 800,
+      "format": "jpeg"
+    },
+    {
+      "sha256": "f1ba27cbed86a184fe617557bbc664bddbdabc8ebe9fddd19f94e2704c98d060",
+      "file": "material-assets/f1ba27cbed86a184fe617557bbc664bddbdabc8ebe9fddd19f94e2704c98d060.jpg",
+      "bytes": 151129,
+      "width": 800,
+      "height": 800,
+      "format": "jpeg"
+    },
+    {
+      "sha256": "f8e73bb7b2d02efb60cf0956758062a3b7510372ae4830fea48c0ca5fa16cd04",
+      "file": "material-assets/f8e73bb7b2d02efb60cf0956758062a3b7510372ae4830fea48c0ca5fa16cd04.jpg",
+      "bytes": 139148,
+      "width": 800,
+      "height": 800,
+      "format": "jpeg"
+    },
+    {
+      "sha256": "d9e299006b56484a1c5a930629d4e158f52f4ea61f9490fc5f928d4385cbd36e",
+      "file": "material-assets/d9e299006b56484a1c5a930629d4e158f52f4ea61f9490fc5f928d4385cbd36e.jpg",
+      "bytes": 138503,
+      "width": 800,
+      "height": 800,
+      "format": "jpeg"
+    },
+    {
+      "sha256": "0a3bde5da5ffc15266f9712c32c13b23d3134ac30eccbc8c3c83e27474d3d64a",
+      "file": "material-assets/0a3bde5da5ffc15266f9712c32c13b23d3134ac30eccbc8c3c83e27474d3d64a.jpg",
+      "bytes": 141646,
+      "width": 800,
+      "height": 800,
+      "format": "jpeg"
+    },
+    {
+      "sha256": "c719b6ab03319b92c2a346151746605e09c10ac602bcf2c2d3a03686ae4119c0",
+      "file": "material-assets/c719b6ab03319b92c2a346151746605e09c10ac602bcf2c2d3a03686ae4119c0.jpg",
+      "bytes": 144256,
+      "width": 800,
+      "height": 800,
+      "format": "jpeg"
+    },
+    {
+      "sha256": "5aa5753ca146eef7be23757b5c67f5f7f96b6a6153a6f929da78104f4169b3a3",
+      "file": "material-assets/5aa5753ca146eef7be23757b5c67f5f7f96b6a6153a6f929da78104f4169b3a3.jpg",
+      "bytes": 142565,
+      "width": 800,
+      "height": 800,
+      "format": "jpeg"
+    },
+    {
+      "sha256": "36e30bba8ac3c0c47e9ded180d6cb88b2c4c685f70d6429d2729ce6dddae6143",
+      "file": "material-assets/36e30bba8ac3c0c47e9ded180d6cb88b2c4c685f70d6429d2729ce6dddae6143.jpg",
+      "bytes": 146555,
+      "width": 800,
+      "height": 800,
+      "format": "jpeg"
+    }
+  ],
+  "held_images": [
+    {
+      "sha256": "5c5d34080cb6683179caa914de1ad08a447fdc1f3a6311ea261272d75c26c2bb",
+      "reason": "T38 family unresolved"
+    },
+    {
+      "sha256": "c3f32791eef403be0a40e0f963e431dae1c7bc1907b9fd027a008a1afe214d66",
+      "reason": "T50 family unresolved"
+    },
+    {
+      "sha256": "9bf8e4b3ab67bebe68bab7c0a857dd0f5745ab7ae87d55c3a8468d7bd47d06a8",
+      "reason": "F12 sales range unresolved"
+    },
+    {
+      "sha256": "3f18981c69c5c86d3f3b4f8c2b74bd848ecd13d7bd915f9e4e928bce196340d0",
+      "reason": "F25 sales range unresolved"
+    },
+    {
+      "sha256": "c14ddaf39592194b087f0ffa64e1e2576ebb5f27b2f7492ecfcf6be4a6f25ced",
+      "reason": "FST additional lengths unresolved"
+    }
+  ]
+}

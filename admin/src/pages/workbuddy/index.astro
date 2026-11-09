@@ -1,24 +1,4 @@
 ---
-import Admin from '../../layouts/Admin.astro';
+import LegacyRedirect from '../../components/LegacyRedirect.astro';
 ---
-<Admin title="WorkBuddy 接入与凭证">
-  <p>为客户私有自定义 MCP 签发有期限的凭证。凭证允许查询和编辑工作区、创建候选及待确认意图；发布确认、选型审核和凭证管理始终由浏览器管理员完成。</p>
-  <form id="token-form" class="card" autocomplete="off">
-    <h2>签发凭证</h2><label>凭证名称<input name="name" maxlength="120" required /></label><label>到期时间（本地时间）<input name="expires_at" type="datetime-local" required /></label>
-    <fieldset id="token-scopes"><legend>允许的操作</legend></fieldset>
-    <p>原值只在签发成功时显示一次。关闭或离开页面后无法再次查询；遗失时撤销并重新签发。</p>
-    <button id="issue-token" type="submit" class="primary">签发一次性展示凭证</button>
-  </form>
-  <section id="issued-token" class="card" hidden aria-labelledby="issued-title">
-    <h2 id="issued-title">凭证已签发：仅本次展示</h2><p>请在实际 WorkBuddy 配置入口安全绑定；不要把凭证放入截图、日志、工单或共享配置模板。</p>
-    <label>本次签发的 Token<input id="token-secret" readonly autocomplete="off" spellcheck="false" /></label><div class="actions"><button id="copy-token" type="button">复制本次 Token</button><button id="dismiss-token" type="button">我已保存，清除本次展示</button></div>
-  </section>
-  <section class="card"><h2>配置模板与连接指引</h2>
-    <label>MCP 地址<input id="mcp-endpoint" readonly /></label>
-    <pre id="mcp-template" class="publication-json" tabindex="0"></pre><button id="copy-template" type="button">复制不含密钥的模板</button>
-    <ol><li>在目标 WorkBuddy 版本的自定义 MCP 配置入口添加 Streamable HTTP 服务，生产地址使用本站 HTTPS 的 /mcp。</li><li>按目标客户端支持的方式，把上方一次性凭证绑定到 Authorization Bearer。模板中的 {'${YUANFA_MCP_TOKEN}'} 是占位符，不保证客户端自动读取系统环境变量。</li><li>连接后查询产品并读取当前版本，再保存草稿；图片通过受保护的后台上传链接选择，随后由 WorkBuddy 查询新素材并更新关联，无需手工复制媒体 ID。</li><li>创建完整工作区候选，查看差异与预览，再打开发布意图的审阅链接登录确认。让 WorkBuddy 查询执行状态；只有 succeeded 的 release 才已生效。</li></ol>
-    <p>客户实际版本、配置入口、凭证绑定和协商协议需在目标设备验证；本页模板不代表已完成客户实机验收。</p>
-  </section>
-  <section><div class="actions"><h2>已签发凭证</h2><button id="refresh-tokens" type="button">刷新凭证列表</button></div><p>列表只显示名称、权限、时间和状态，不提供原值。撤销后后续请求立即失去授权。</p><div id="tokens"></div></section>
-  <script>import { mountTokens } from '../../lib/tokens'; mountTokens();</script>
-</Admin>
+<LegacyRedirect target="/admin/settings/" />

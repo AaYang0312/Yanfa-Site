@@ -1,21 +1,21 @@
 ---
 import Crumbs from './Crumbs.astro';
-import ProductArt from './ProductArt.astro';
 import ProductImage from './ProductImage.astro';
 import ProductGallery from './ProductGallery.astro';
 import { products, categories, categoryBySlug, productsIn, nailOf, nailName, scenesOf, type Product } from '../data/catalog';
-import { productNote, telHref } from '../data/site';
+import { telHref } from '../data/site';
 
 interface Props { product: Product }
 const { product } = Astro.props;
 const category = categoryBySlug(product.category);
 const nail = nailOf(product);
 const isTool = product.kind === 'tool';
+const applicationsLabel = product.kind === 'consumable' ? '适用工具与用途' : '适用场景';
 const specs = [
   { label: '产品类型', value: category.name },
   ...(product.series ? [{ label: '所属系列', value: product.series }] : []),
   ...(product.fastener ? [{ label: '适用枪钉', value: product.fastener.replace(/\n/g, ' ') }] : []),
-  ...(isTool && scenesOf(product).length ? [{ label: '适用场景', value: scenesOf(product).join('、') }] : []),
+  ...(scenesOf(product).length ? [{ label: '适用场景', value: scenesOf(product).join('、') }] : []),
 ];
 const matchingCategory = product.category === 'nails' ? categories.find((item) => item.nail === product.nail) : undefined;
 const matchedGuns = matchingCategory ? productsIn(matchingCategory.slug) : [];
@@ -31,8 +31,7 @@ const related = (siblings.length ? siblings : products.filter((item) => item.kin
   <div class="detail__top">
     {product.images.length > 0 ? <ProductGallery product={product} /> : (
       <div class="detail__media">
-        <ProductArt category={product.category} nail={product.nail} label={`${product.name} 示意图`} />
-        <span class="detail__caption">配套产品示意</span>
+        <ProductImage product={product} />
       </div>
     )}
     <div class="detail__info">
@@ -51,13 +50,10 @@ const related = (siblings.length ? siblings : products.filter((item) => item.kin
           {product.features.slice(0, 3).map((feature) => <li>{feature}</li>)}
         </ul>
       )}
-      {!isTool && <p>请提供所用工具的具体型号或作业需求，我们为您匹配在售产品与规格。</p>}
-      <div class="detail__actions">
-        <a class="btn btn--solid" href={telHref()}>电话咨询</a>
-        <a class="btn" href="/shop/">去网上商城</a>
-        <button class="btn" type="button" data-guide-open>帮我选工具</button>
-      </div>
-      <p class="note">{productNote}</p>
+      <nav class="detail__actions" aria-label="购买与咨询">
+        <a class="btn btn--solid" href={telHref()}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 3 3 5-3 3c1 2 3 4 5 5l3-3 5 3v3c0 1-1 2-2 2C10 20 4 14 3 5c0-1 1-2 2-2z" /></svg>型号与配件咨询</a>
+        <a class="btn" href="/shop/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l1 12H4L5 8Zm3 0V6a4 4 0 0 1 8 0v2" /></svg>价格与库存</a>
+      </nav>
     </div>
   </div>
 </div>
@@ -67,7 +63,7 @@ const related = (siblings.length ? siblings : products.filter((item) => item.kin
     <nav class="detail-nav" aria-label="产品信息章节">
       <div class="wrap">
         {product.features.length > 0 && <a href="#features">产品特点</a>}
-        {product.applications.length > 0 && <a href="#applications">适用场景</a>}
+        {product.applications.length > 0 && <a href="#applications">{applicationsLabel}</a>}
         {product.notes.length > 0 && <a href="#usage">使用说明</a>}
         {related.length > 0 && <a href="#related">相关型号</a>}
       </div>
@@ -82,7 +78,7 @@ const related = (siblings.length ? siblings : products.filter((item) => item.kin
     )}
     {product.applications.length > 0 && <section class="section" id="applications">
       <div class="wrap detail__grid">
-        <h2 class="h-section">适用场景</h2>
+        <h2 class="h-section">{applicationsLabel}</h2>
         <div class="application-copy">
           {product.applications.map((text) => <p>{text.replace(/^\d+[.、]/, '')}</p>)}
         </div>
@@ -104,13 +100,12 @@ const related = (siblings.length ? siblings : products.filter((item) => item.kin
 {(matchedGuns.length > 0 || nailItem) && (
   <section class="section">
     <div class="wrap detail__grid">
-      <h2 class="h-section">{nailItem ? '同类枪钉入口' : '同类工具入口'}</h2>
-      <div class="matched">
-        <p class="note">仅作类别导航；具体规格与适用性请核对型号资料或电话咨询。</p>
+      <h2 class="h-section">{nailItem ? '浏览枪钉' : '浏览工具'}</h2>
+      <nav class="matched" aria-label={nailItem ? '枪钉分类导航' : '工具分类导航'}>
         {nailItem && (
           <a class="matched__item" href={`/products/${nailItem.slug}/`}>
-            <span class="matched__art" aria-hidden="true"><ProductArt category="nails" nail={nailItem.nail} /></span>
-            <span><strong>{nailName(nail)}</strong><small>查看类别资料 · 按具体型号核实规格</small></span>
+            <span class="matched__art" aria-hidden="true"><ProductImage product={nailItem} thumbnail sizes="120px" /></span>
+            <span><strong>{nailItem.name}</strong><small>{nailName(nail)}</small></span>
           </a>
         )}
         {matchedGuns.map((item) => (
@@ -119,14 +114,14 @@ const related = (siblings.length ? siblings : products.filter((item) => item.kin
             <span><strong>{item.name}</strong><small>{item.fastener}</small></span>
           </a>
         ))}
-      </div>
+      </nav>
     </div>
   </section>
 )}
 
 {related.length > 0 && <section class="section related" id="related">
   <div class="wrap">
-    <div class="title-bar"><h2>{siblings.length ? `其他${category.name}` : '更多产品'}</h2></div>
+    <div class="title-bar"><h2>{siblings.length ? category.slug === 'other' ? '同类产品' : `其他${category.name}` : '更多产品'}</h2></div>
     <ul class="related__list">
       {related.map((item) => (
         <li>
@@ -141,6 +136,14 @@ const related = (siblings.length ? siblings : products.filter((item) => item.kin
 </section>}
 
 <style>
+  .detail__actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .detail__actions .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding-right: 16px; padding-left: 16px; }
+  .detail__actions svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+  .matched { min-width: 0; }
+  .matched__item { min-width: 0; gap: 16px; }
+  .matched__item > span:last-child { min-width: 0; overflow-wrap: anywhere; }
+  .matched__art { width: clamp(64px, 20vw, 120px); }
+  @media (max-width: 380px) { .detail__actions { grid-template-columns: 1fr; } }
   .detail-highlights { padding-left: 18px; margin: 0 0 28px; color: var(--navy); font-size: 14px; }
   .detail-highlights li { margin-bottom: 6px; }
   .detail-nav { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }

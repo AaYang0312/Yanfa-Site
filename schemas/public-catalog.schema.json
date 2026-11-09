@@ -875,7 +875,7 @@
           "items": {
             "$ref": "#/$defs/PublicImage"
           },
-          "maxItems": 12
+          "maxItems": 20
         },
         "guide_profile": {
           "$ref": "#/$defs/ReviewedGuideProfile"

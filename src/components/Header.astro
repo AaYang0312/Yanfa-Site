@@ -1,6 +1,6 @@
 ---
 import Logo from './Logo.astro';
-import ProductArt from './ProductArt.astro';
+import ProductPlaceholder from './ProductPlaceholder.astro';
 import ProductImage from './ProductImage.astro';
 import { topNav } from '../data/site';
 import { categories, representativeProduct } from '../data/catalog';
@@ -71,7 +71,7 @@ const plainLinks = [
                       <li>
                         <a href={item.href} style={`--hover:${item.color}`}>
                           <span class="mega__thumb" aria-hidden="true">
-                            {item.product ? <ProductImage product={item.product} thumbnail sizes="56px" /> : <ProductArt category={item.slug} label={item.name} />}
+                            {item.product ? <ProductImage product={item.product} thumbnail sizes="56px" /> : <ProductPlaceholder name={item.name} />}
                           </span>
                           <span>
                             <strong>{item.name}</strong>

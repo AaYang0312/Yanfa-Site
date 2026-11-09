@@ -1,0 +1,5 @@
+# Keep source, shell scripts and embedded migration bytes stable across hosts.
+* text=auto eol=lf
+
+# These archives are hash-verified against their exact committed bytes.
+seed/provenance/** -text

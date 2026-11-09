@@ -116,10 +116,23 @@ func (s *Service) checkLocked(ctx context.Context, tx *sql.Tx, c contract.Candid
 		return business("ACTIVE_CHANGED", "线上版本已变化，请重新生成并审阅。")
 	}
 	var revision int64
+	var approved sql.NullString
+	if err := tx.QueryRowContext(ctx, `SELECT versions_json FROM site_update_batches WHERE candidate_id=? AND ?='publish'`, c.ID, kind).Scan(&approved); err != nil && !errors.Is(err, sql.ErrNoRows) {
+		return err
+	}
+	if approved.Valid {
+		current, err := confirmationVersions(ctx, tx)
+		if err != nil {
+			return err
+		}
+		if current != approved.String {
+			return business("CONFIRMATIONS_CHANGED", "有新的产品修改，正在合并更新。")
+		}
+	}
 	if err := tx.QueryRowContext(ctx, `SELECT revision FROM workspace WHERE id=1`).Scan(&revision); err != nil {
 		return err
 	}
-	if revision != expectedRevision {
+	if !approved.Valid && revision != expectedRevision {
 		return business("WORKSPACE_CHANGED", "工作区已变化，请重新生成并审阅。")
 	}
 	var state, hash string
@@ -135,7 +148,7 @@ func (s *Service) checkLocked(ctx context.Context, tx *sql.Tx, c contract.Candid
 		baselineMatches := baselineType.Valid && ((baselineType.String == "null" && operation == "") || (baselineType.String == "text" && baselineOperation.Valid && baselineOperation.String != "" && baselineOperation.String == operation))
 		// Missing metadata belongs to an older, unverifiable baseline. It must
 		// be rebuilt, never inferred from an equal release ID after rollback.
-		if !baselineMatches || c.WorkspaceRevision != revision || !same(c.ExpectedActiveReleaseID, expectedActive) {
+		if !baselineMatches || (!approved.Valid && c.WorkspaceRevision != revision) || !same(c.ExpectedActiveReleaseID, expectedActive) {
 			return business("CANDIDATE_STALE", "候选已过期，请重新生成并审阅。")
 		}
 	}

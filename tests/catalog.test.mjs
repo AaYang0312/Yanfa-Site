@@ -57,10 +57,15 @@ test('snapshot inputs fail closed for missing files, unsupported schema and inco
   t.after(() => rm(directory, { recursive: true, force: true }));
   assert.throws(() => readSnapshot(undefined), /CATALOG_SNAPSHOT/);
   assert.throws(() => readSnapshot(resolve(directory, 'missing.json')), /ENOENT/);
-  for (const change of [snapshot => { snapshot.schema_version = 999; }, snapshot => { snapshot.products[0].images = []; snapshot.products[0].cover_media_id = null; }]) {
+  for (const change of [snapshot => { snapshot.schema_version = 999; }, snapshot => { snapshot.products[0].name = ''; }]) {
     const snapshot = structuredClone(fixture); change(snapshot);
     const path = resolve(directory, 'invalid.json');
     await writeFile(path, JSON.stringify(snapshot));
     assert.throws(() => readSnapshot(path), error => error.status === 422);
   }
+  const withoutPhotos = structuredClone(fixture);
+  withoutPhotos.products[0].images = []; withoutPhotos.products[0].cover_media_id = null;
+  const placeholderPath = resolve(directory, 'placeholder.json');
+  await writeFile(placeholderPath, JSON.stringify(withoutPhotos));
+  assert.equal(readSnapshot(placeholderPath).products[0].images.length, 0);
 });

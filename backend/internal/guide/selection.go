@@ -69,11 +69,11 @@ func (s *Service) Select(ctx context.Context, h *release.Handle, input contract.
 		return zero, err
 	}
 	out.State = "selected"
-	out.Question = question(decision.MissingFields)
+	out.Question = suitabilityQuestion(req.Requirements, decision.MissingFields)
 	out.Selection = &contract.GuideSelection{
 		ProductID: p.ProductID, Model: p.Model, Name: p.Name, DetailURL: p.DetailURL,
 		MatchLevel: decision.MatchLevel, MatchedFacts: decision.MatchedFacts,
-		MissingFields: decision.MissingFields, ConfirmationNotes: decision.ConfirmationNotes,
+		MissingFields: decision.MissingFields, ConfirmationNotes: introduction(p),
 		PurchaseOptions: options.PurchaseOptions, PurchaseStatus: options.PurchaseStatus,
 	}
 	if len(p.Images) > 0 {

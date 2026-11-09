@@ -21,6 +21,7 @@ type consultModel struct {
 	proposal string
 	query    string
 	toolName string
+	toolText string
 	block    bool
 	calls    atomic.Int64
 	active   atomic.Int64
@@ -41,6 +42,7 @@ func (m *consultModel) Generate(ctx context.Context, input []*schema.Message, _ 
 	for _, msg := range input {
 		if msg.Role == schema.Tool {
 			hasTool = true
+			m.toolText = msg.Content
 		}
 	}
 	if !hasTool {

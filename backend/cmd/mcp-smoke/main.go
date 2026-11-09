@@ -35,7 +35,7 @@ import (
 //go:embed browser.mjs
 var browserScript string
 
-var allScopes = []contract.TokenScope{"products:read", "products:write", "media:read", "candidates:write", "publications:write"}
+var allScopes = []contract.TokenScope{"products:read", "products:write", "media:read"}
 
 type event struct {
 	Method        string `json:"method"`
@@ -88,6 +88,7 @@ type smoke struct {
 	readerTrace               *transport
 	tools                     map[string]*sdk.Tool
 	outputSchemas             map[string]string
+	editLinks                 map[string]string
 	report                    map[string]any
 	checks                    []string
 	calls                     []map[string]any
@@ -176,8 +177,14 @@ func callUsing[T any](s *smoke, session *sdk.ClientSession, principal, name stri
 		failure := decode[contract.ErrorResponse](b)
 		panic(errors.New(name + ": " + failure.Error.Code))
 	}
-	encoded, err := json.Marshal(result.StructuredContent)
-	must(err, "tool response encoding failed")
+	encoded := structuredJSON(result)
+	if name == "get_product" || name == "create_product" || name == "update_product" {
+		product := decode[contract.ProductEnvelope](encoded)
+		if s.editLinks == nil {
+			s.editLinks = map[string]string{}
+		}
+		s.editLinks[product.Product.ID] = productEditURL(result.Content, product.Product.ID)
+	}
 	must(contract.ValidateJSON(s.outputSchemas[name], encoded), name+" output violates shared schema")
 	s.calls = append(s.calls, map[string]any{"tool": name, "principal": principal, "isError": false})
 	return decode[T](encoded)
@@ -228,41 +235,54 @@ func (s *smoke) state() contract.SessionResponse {
 	require(status == 200, "session state unavailable")
 	return decode[contract.SessionResponse](b)
 }
-func (s *smoke) publish(label, productID string) contract.PublicationRequest {
-	state := s.state()
-	in := contract.MCPCreateCandidateInput{ExpectedWorkspaceRevision: state.WorkspaceRevision, RequestKey: rand.Text()}
-	c := call[contract.Candidate](s, "create_candidate", in)
-	repeated := call[contract.Candidate](s, "create_candidate", in)
-	require(repeated.ID == c.ID, "candidate idempotency lost")
-	conflict := in
-	conflict.ExpectedWorkspaceRevision++
-	s.failure("create_candidate", conflict, "IDEMPOTENCY_CONFLICT")
-	deadline := time.Now().Add(330 * time.Second)
-	for c.State != "ready" && c.State != "failed" {
-		require(time.Now().Before(deadline), "candidate polling timeout")
-		time.Sleep(200 * time.Millisecond)
-		c = call[contract.Candidate](s, "get_candidate", contract.MCPGetCandidateInput{CandidateID: c.ID})
+func structuredJSON(result *sdk.CallToolResult) []byte {
+	require(result.StructuredContent != nil, "tool response missing structured content")
+	encoded, err := json.Marshal(result.StructuredContent)
+	must(err, "tool response encoding failed")
+	return encoded
+}
+func productEditURL(content []sdk.Content, productID string) string {
+	for _, item := range content {
+		text, ok := item.(*sdk.TextContent)
+		if !ok {
+			continue
+		}
+		index := strings.Index(text.Text, "/admin/products/edit/?id=")
+		if index < 0 {
+			continue
+		}
+		link := strings.Fields(text.Text[index:])[0]
+		u, err := url.Parse(link)
+		if err == nil && u.Path == "/admin/products/edit/" && u.Query().Get("id") == productID && u.Scheme == "" && u.Host == "" {
+			return link
+		}
 	}
-	require(c.State == "ready", "real candidate build failed")
-	s.save(label+"-candidate.json", c)
-	request := contract.MCPRequestPublicationInput{Kind: "publish", CandidateID: &c.ID, SnapshotSHA256: c.SnapshotSHA256, ExpectedActiveReleaseID: c.ExpectedActiveReleaseID, ExpectedWorkspaceRevision: c.WorkspaceRevision, RequestKey: rand.Text()}
-	p := call[contract.PublicationRequest](s, "request_publication", request)
-	repeatedP := call[contract.PublicationRequest](s, "request_publication", request)
-	require(repeatedP.ID == p.ID, "publication idempotency lost")
-	require(p.State == "awaiting_confirmation", "intent prematurely activated")
-	before := s.state()
-	require(equalID(before.ActiveReleaseID, state.ActiveReleaseID), "intent changed active release")
-	s.checkReaderPending(label, productID, c, p)
-	// Navigate the exact service-returned link; no reconstructed dynamic route.
-	proof := s.browser(map[string]any{"action": "confirm", "url": p.ReviewURL, "out": filepath.Join(s.out, label), "request_id": p.ID, "sha256": p.SnapshotSHA256, "expected_active": p.ExpectedActiveReleaseID, "revision": p.ExpectedWorkspaceRevision, "release_id": c.ID})
+	panic(errors.New("product response omitted its readable edit link"))
+}
+func (s *smoke) update(productID string) contract.SiteUpdate {
+	status, body := s.request("GET", "/api/admin/site-updates", nil, nil)
+	require(status == 200, "site update status unavailable")
+	for _, item := range decode[contract.SiteUpdateList](body).Items {
+		if item.ProductID == productID {
+			return item
+		}
+	}
+	panic(errors.New("product update status absent"))
+}
+func (s *smoke) confirmProduct(label, productID string) contract.SiteUpdate {
+	product := call[contract.ProductEnvelope](s, "get_product", contract.MCPGetProductInput{ProductID: productID})
+	pending := s.update(productID)
+	require(pending.Version == product.Version && pending.State == "draft", "machine edit was unexpectedly confirmed")
+	s.checkReaderDraft(label, product)
+	// This is the original service-returned human link, not a reconstructed route.
+	proof := s.browser(map[string]any{"action": "confirm", "url": s.editLinks[productID], "out": filepath.Join(s.out, label), "product_id": productID, "expected_version": product.Version})
 	s.save(label+"-browser.json", proof)
-	p = call[contract.PublicationRequest](s, "get_publication", contract.MCPGetPublicationInput{RequestID: p.ID})
-	require(p.State == "succeeded" && p.ResultReleaseID != nil && *p.ResultReleaseID == c.ID && p.CompletedAt != nil && p.SiteURL != nil, "confirmed publication has no real success result")
-	require(equalID(s.state().ActiveReleaseID, p.ResultReleaseID), "published authority mismatch")
-	s.checkReaderSucceeded(label, c, p)
-	s.save(label+"-publication.json", p)
-	s.pass(label + " MCP candidate, original browser review/confirm and SDK succeeded result")
-	return p
+	updated := s.update(productID)
+	require(updated.State == "succeeded" && updated.Version >= product.Version+1 && s.state().ActiveReleaseID != nil, "browser confirmation has no successful update")
+	s.checkReaderConfirmed(label, productID, updated.Version)
+	s.save(label+"-site-update.json", updated)
+	s.pass(label + " machine draft, original product link, browser confirmation and version-aware success")
+	return updated
 }
 func equalID(a, b *string) bool { return a == nil && b == nil || a != nil && b != nil && *a == *b }
 
@@ -368,7 +388,7 @@ func run(base, out string) (exit int) {
 		s.outputSchemas[tool.Name] = "mcp-tools.schema.json" + tool.Output.Ref
 		require(s.tools[tool.Name] != nil, "shared management tool absent")
 	}
-	require(len(s.tools) == 11, "unexpected management tools")
+	require(len(s.tools) == len(manifest.Tools), "management tools differ from shared contract")
 	for _, forbidden := range []string{"confirm_publication", "guide_review", "issue_token"} {
 		require(s.tools[forbidden] == nil, "browser-only tool exposed")
 	}
@@ -456,7 +476,7 @@ func run(base, out string) (exit int) {
 	require(status == 412, "stale browser edit did not conflict")
 	httpFailure := decode[contract.ErrorResponse](b)
 	require(httpFailure.Error.Code == stale.Code && httpFailure.Error.CurrentVersion != nil && *httpFailure.Error.CurrentVersion == changed.Version, "HTTP/MCP conflict not equivalent")
-	for _, path := range []string{"/api/admin/publication-requests/unknown/confirm", "/api/admin/products/" + source.Product.ID + "/guide-review", "/api/admin/mcp-tokens"} {
+	for _, path := range []string{"/api/admin/site-updates/retry", "/api/admin/products/" + source.Product.ID + "/guide-review", "/api/admin/mcp-tokens"} {
 		status, _ = s.request("POST", path, map[string]any{}, map[string]string{"Authorization": "Bearer " + token.Secret})
 		require(status == 403, "Bearer bypassed browser-only API")
 	}
@@ -466,7 +486,8 @@ func run(base, out string) (exit int) {
 	}
 	s.pass("workspace CRUD, strict client path/server-field boundary, HTTP/MCP equivalent VERSION_CONFLICT and browser-only denials")
 	s.phase = "text publication chain"
-	textPublication := s.publish("text", source.Product.ID)
+	s.confirmProduct("text", source.Product.ID)
+	textReleaseID := s.state().ActiveReleaseID
 	s.phase = "image upload and association"
 	upload := call[contract.OpenUploadResult](s, "open_upload", contract.OpenUploadInput{ProductID: &source.Product.ID})
 	img := image.NewNRGBA(image.Rect(0, 0, 48, 36))
@@ -505,13 +526,14 @@ func run(base, out string) (exit int) {
 	imageChange.CoverMediaID = &uploaded.MediaID
 	call[contract.ProductEnvelope](s, "update_product", contract.MCPUpdateProductInput{ProductID: source.Product.ID, ExpectedVersion: current.Version, Edit: imageChange})
 	s.phase = "image publication chain"
-	imagePublication := s.publish("image", source.Product.ID)
-	status, b = s.request("GET", "/api/catalog/products/"+source.Product.ID+"?release_id="+*imagePublication.ResultReleaseID, nil, nil)
+	s.confirmProduct("image", source.Product.ID)
+	imageReleaseID := s.state().ActiveReleaseID
+	status, b = s.request("GET", "/api/catalog/products/"+source.Product.ID+"?release_id="+*imageReleaseID, nil, nil)
 	require(status == 200, "published product unavailable")
 	detail := decode[contract.ProductDetail](b)
 	require(detail.Product.Summary == textChange.Summary && len(detail.Product.Images) > 0 && strings.Contains(detail.Product.Images[0].URL, uploaded.SHA256), "published text/image differ from MCP changes")
-	s.report["text_release_id"] = textPublication.ResultReleaseID
-	s.report["image_release_id"] = imagePublication.ResultReleaseID
+	s.report["text_release_id"] = textReleaseID
+	s.report["image_release_id"] = imageReleaseID
 	s.report["uploaded_media_id"] = uploaded.MediaID
 	s.pass("browser upload login return, original after cursor, image/cover association and published image/text")
 	s.phase = "revocation on existing client"

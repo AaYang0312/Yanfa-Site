@@ -1,7 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
-import ProductArt from './ProductArt.astro';
+import ProductPlaceholder from './ProductPlaceholder.astro';
 import { imagesOf, type Product, type ProductImage } from '../data/catalog';
 
 interface Props {
@@ -38,7 +38,7 @@ if (asset && !widths.length) widths.push(asset.width);
     class="product-photo"
   />
 ) : (
-  <ProductArt category={product.category} nail={product.nail} label={`${product.name} 配套产品示意`} />
+  <ProductPlaceholder name={product.name} />
 )}
 
 <style>

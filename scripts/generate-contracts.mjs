@@ -57,7 +57,7 @@ if (formatted.error || formatted.status !== 0) throw formatted.error || new Erro
 golang = formatted.stdout;
 await mkdir(resolve(root, 'src/generated'), { recursive: true });
 await mkdir(resolve(root, 'backend/internal/contract'), { recursive: true });
-await writeFile(resolve(root, 'src/generated/contracts.ts'), typescript);
+await writeFile(resolve(root, 'src/generated/contracts.ts'), typescript.replace(/[ \t]+$/gm, ''));
 await writeFile(resolve(root, 'backend/internal/contract/types_generated.go'), golang);
 // The browser/admin validator uses precisely the embedded Go source documents.
 await writeFile(resolve(root, 'src/generated/schema-documents.json'), JSON.stringify(documents, null, 2) + '\n');

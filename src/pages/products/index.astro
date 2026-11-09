@@ -6,7 +6,7 @@ import ItemCard from '../../components/ItemCard.astro';
 import ProductImage from '../../components/ProductImage.astro';
 import {
   products,
-  toolProducts,
+  productCountText,
   categories,
   categoryBySlug,
   nailTypes,
@@ -15,7 +15,6 @@ import {
   scenesOf,
   searchTextOf,
 } from '../../data/catalog';
-import { productNote } from '../../data/site';
 
 const groups = [
   { name: 'type', label: '类型', options: categories.map((item) => ({ value: item.slug, label: `${item.name}（${products.filter((product) => product.category === item.slug).length}）` })) },
@@ -28,7 +27,7 @@ function linesFor(product: (typeof products)[number]) {
   const category = categoryBySlug(product.category);
   if (product.category === 'nails') {
     const gun = categories.find((item) => item.nail === product.nail);
-    return [{ label: '配套', value: gun?.name ?? '' }];
+    return [{ label: '工具类别', value: gun?.name ?? '' }];
   }
   if (product.category === 'other') return [{ label: '说明', value: product.summary ?? '' }];
   return [
@@ -38,11 +37,10 @@ function linesFor(product: (typeof products)[number]) {
 }
 ---
 
-<Base title="产品中心" description={`元发 ${toolProducts.length} 款在售工具型号，按类型、适用场景和钉子类型选型。查看产品实图、功能特点、适用枪钉与使用说明。`}>
+<Base title="产品中心" description={`元发 ${productCountText}，按类型、适用场景和钉子类型选型。查看产品图片、功能特点与使用说明。`}>
   <div class="wrap">
     <div class="crumbs-row"><Crumbs items={[{ label: '产品中心' }]} /></div>
-    <p class="catalog-intro">{toolProducts.length} 款在售工具，覆盖木工装修、家具制造、包装与回收。按工序选型，查看产品实图与适配枪钉。</p>
-    <button class="btn" type="button" data-guide-open>帮我选工具</button>
+    <p class="catalog-intro">{productCountText}</p>
     <Catalog title="产品中心" groups={groups} typeNames={typeNames}>
       {products.map((product) => {
         const category = categoryBySlug(product.category);
@@ -65,7 +63,6 @@ function linesFor(product: (typeof products)[number]) {
           </ItemCard>
         );
       })}
-      <p slot="after" class="note">{productNote}</p>
     </Catalog>
   </div>
 </Base>

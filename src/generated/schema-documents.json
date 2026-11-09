@@ -1259,6 +1259,57 @@
           "model",
           "release_id"
         ]
+      },
+      "SiteUpdate": {
+        "required": [
+          "product_id",
+          "version",
+          "state",
+          "message",
+          "public_url"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "state": {
+            "enum": [
+              "pending",
+              "updating",
+              "succeeded",
+              "failed",
+              "draft"
+            ],
+            "type": "string"
+          },
+          "public_url": {
+            "type": "string"
+          },
+          "product_id": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "SiteUpdateList": {
+        "required": [
+          "items"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/SiteUpdate"
+            }
+          }
+        },
+        "type": "object"
       }
     }
   },
@@ -1973,7 +2024,7 @@
             "items": {
               "$ref": "#/$defs/SnapshotProductImage"
             },
-            "maxItems": 12,
+            "maxItems": 20,
             "x-unique-by": "media_id"
           },
           "cover_media_id": {
@@ -2140,16 +2191,6 @@
                       },
                       "applications": {
                         "$ref": "product.schema.json#/$defs/PublishedToolApplications"
-                      },
-                      "images": {
-                        "type": "array",
-                        "minItems": 1
-                      },
-                      "cover_media_id": {
-                        "type": "string",
-                        "minLength": 1,
-                        "maxLength": 120,
-                        "pattern": "^[A-Za-z0-9_-]+$"
                       }
                     }
                   }
@@ -2399,6 +2440,7 @@
           "intent": {
             "type": "string",
             "enum": [
+              "clarify",
               "consult",
               "select"
             ]
@@ -2441,6 +2483,22 @@
                 "type": "null"
               }
             ]
+          },
+          "reply": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000,
+            "x-trim": true,
+            "description": "简短自然的用户可见回复；普通介绍和追问不追加通用核实清单。"
+          },
+          "cleared_requirements": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/GuideRequirementClearance"
+            },
+            "maxItems": 9,
+            "uniqueItems": true,
+            "description": "仅明确撤销的条件；reference须逐字引用本轮用户消息。未列入的旧条件不会因null而丢失。"
           }
         },
         "required": [
@@ -2455,7 +2513,10 @@
             "if": {
               "properties": {
                 "intent": {
-                  "const": "consult"
+                  "enum": [
+                    "clarify",
+                    "consult"
+                  ]
                 }
               }
             },
@@ -2482,6 +2543,25 @@
                   "minLength": 1,
                   "maxLength": 2000,
                   "pattern": "[^\\x09-\\x0d\\x20\\x85\\xa0  -     　]"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "intent": {
+                  "const": "clarify"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "reply"
+              ],
+              "properties": {
+                "candidate_product_ids": {
+                  "maxItems": 0
                 }
               }
             }
@@ -2861,6 +2941,13 @@
           "contact_href": {
             "type": "string",
             "pattern": "^tel:[+0-9]+$"
+          },
+          "reply": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000,
+            "x-trim": true,
+            "description": "简短自然的用户可见回复；普通介绍和追问不追加通用核实清单。"
           }
         },
         "required": [
@@ -2995,6 +3082,25 @@
           "name",
           "phone",
           "contact_href"
+        ]
+      },
+      "GuideRequirementClearance": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "field": {
+            "$ref": "product.schema.json#/$defs/RequirementField"
+          },
+          "reference": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000,
+            "x-trim": true
+          }
+        },
+        "required": [
+          "field",
+          "reference"
         ]
       }
     }
@@ -4272,7 +4378,7 @@
             "items": {
               "$ref": "#/$defs/ProductImage"
             },
-            "maxItems": 12,
+            "maxItems": 20,
             "x-unique-by": "media_id"
           },
           "cover_media_id": {
@@ -4449,7 +4555,7 @@
             "items": {
               "$ref": "#/$defs/ProductImage"
             },
-            "maxItems": 12,
+            "maxItems": 20,
             "x-unique-by": "media_id"
           },
           "cover_media_id": {
@@ -4466,7 +4572,10 @@
             ]
           },
           "visibility": {
-            "const": "unlisted",
+            "enum": [
+              "listed",
+              "unlisted"
+            ],
             "type": "string"
           },
           "sort_order": {
@@ -4630,7 +4739,7 @@
             "items": {
               "$ref": "#/$defs/ProductImage"
             },
-            "maxItems": 12,
+            "maxItems": 20,
             "x-unique-by": "media_id"
           },
           "cover_media_id": {
@@ -4870,16 +4979,6 @@
                       },
                       "applications": {
                         "$ref": "#/$defs/PublishedToolApplications"
-                      },
-                      "images": {
-                        "type": "array",
-                        "minItems": 1
-                      },
-                      "cover_media_id": {
-                        "type": "string",
-                        "minLength": 1,
-                        "maxLength": 120,
-                        "pattern": "^[A-Za-z0-9_-]+$"
                       }
                     }
                   }
@@ -5781,7 +5880,7 @@
             "items": {
               "$ref": "#/$defs/PublicImage"
             },
-            "maxItems": 12
+            "maxItems": 20
           },
           "guide_profile": {
             "$ref": "#/$defs/ReviewedGuideProfile"

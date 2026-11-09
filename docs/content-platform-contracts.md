@@ -31,11 +31,19 @@ Go/JS 的归一化及扩展约束遍历会逐层访问 `$ref` 目标，并在目
 
 命令入口：`contracts:generate` 生成共享类型与 schema 文档，`test:contracts` 校验契约，`site:config` 生成站点配置；`seed:export`（`node --experimental-strip-types scripts/export-initial-catalog.mjs`）导出一次性初始化目录；`build:admin` / `dev:admin`（`astro build/dev --root admin`）构建或预览独立后台。独立后台使用根目录锁定依赖，base=/admin、输出 admin/dist；React 只用于官网导购岛。
 
-## 私有产品、发布和审核
+## 产品保存与官网更新
 
-`product.schema.json`：ProductDocument、ProductCreate、ProductEdit、GuideProfile/Edit、GuideReview/Input、PurchaseOption/Edit、ProductEnvelope、PublishedProduct。Create 包含 slug 且目标 unlisted；Edit 不接收 slug/id/version/updated_at 或审核结果。输入为完整可编辑对象，数组整体替换。来源是 `{id,kind,reference,sha256,public_label,public_url}`；product_text.reference 为 JSON Pointer，media/document.reference 为媒体/归档来源 ID。公开 URL 为 HTTPS 或 null。
+日常后台只提供产品和设置。浏览器 Create/Replace/Delete 在同一事务记录产品变更、`product_confirmations` 中的确认版本以及幂等回执；MCP 修改仅写工作区草稿。浏览器可创建上架产品，MCP 创建仍限未上架。普通表单保留未展示的渠道和内部字段，不显示标识、哈希或审核操作。
 
-草稿允许空名称/型号/简介/用途/图片、null 封面和未完成购买地址；用 ProductCreate/Edit/Document 校验。发布用 PublishedProduct（或下述 PublishableSnapshot）：listed 名称非空；listed tool 的型号、简介、图片、封面非空，且用途数组至少一项含非 Unicode White_Space 字符；两种发布投影均引用唯一的 PublishedToolApplications 约束，空字符串/全空白用途不能绕过发布。封面属于 images，图片 media_id 不重复。购买渠道发布时平台/店名/HTTPS 地址须完整，listing_with_variants 必须 sku_hint。路径、媒体是否可解码、引用是否归属及唯一性还需在业务层绑定当前存储事实校验，不能单凭 schema 宣告发布可用。
+自动更新只合并最近成功目录与逐产品确认版本，使用持久串行构建队列及现有原子激活器。激活前验证确认版本集合与公开基线；新确认使旧构建失效，机器草稿变更不会被混入，也不会使合法确认无法发布。普通表单未显示的商城链接、内部选型资料、旧系列和排序使用已确认或成功公开版本，隐藏的机器修改留在私有工作区；新条目不会自动确认隐藏的购买渠道或安全事实。确认时检查有效目录的型号唯一性，不允许草稿改名释放仍在公开/已确认目录中使用的型号。失败保留最后成功公开版本。业务删除允许浏览器删除已公开产品，保留永久地址与成功版本引用。
+
+`GET /api/admin/site-updates` 返回 SiteUpdateList，各产品状态为 pending/updating/succeeded/failed/draft；只有当前产品版本实际进入公开目录才显示 succeeded。删除以确认的删除版本判断。`POST /api/admin/site-updates/retry` 只重新排队失败的已确认内容，两者要求浏览器会话，写操作同时要求 CSRF/Origin。POST/PUT/DELETE 产品支持 Idempotency-Key；相同身份、操作和内容重试返回原回执，异内容409。客户端网络重试必须复用原键，编辑内容改变后生成新键。
+
+## 保留的内部数据与兼容接口
+
+`product.schema.json`：ProductDocument、ProductCreate、ProductEdit、GuideProfile/Edit、GuideReview/Input、PurchaseOption/Edit、ProductEnvelope、PublishedProduct。Create 包含系统生成的 slug；Edit 不接收 slug/id/version/updated_at 或审核结果。输入为完整可编辑对象，数组整体替换。来源是 `{id,kind,reference,sha256,public_label,public_url}`；product_text.reference 为 JSON Pointer，media/document.reference 为媒体/归档来源 ID。公开 URL 为 HTTPS 或 null。
+
+草稿允许空名称/型号/简介/用途/图片、null 封面和未完成购买地址；用 ProductCreate/Edit/Document 校验。发布用 PublishedProduct（或下述 PublishableSnapshot）：listed 名称非空；listed tool 的型号、简介非空，用途至少一项含非空白字符。缺图允许发布，官网显示明确的中性占位，不伪造产品照片。图片最多20张，非空封面必须属于 images，media_id 不重复。已有购买渠道仍接受平台/店名/HTTPS 地址及多规格提示校验。图片解码、引用归属及唯一性仍由业务层检查。
 
 新购买渠道 id=null，由服务器赋稳定 ID；已有 id 必须属于该产品，删除不复用。`ValidatePurchaseURL(raw, allowedHosts)` 使用 URL 解析器验证 HTTPS、无 userinfo、精确 hostname 白名单；部署白名单只放客户核实的商品主机，不放短链/重定向器。不能从 site.ts 店铺入口猜逐型号映射。
 
@@ -63,11 +71,15 @@ GuideRequirements 恰九个必填字段：scene_ids、material、substrate、nai
 
 ConsultRequest 为 release_id/message，附 messages?/requirements?/context_product_id?。当前纯文本最多2000字符，历史仅 user/assistant，最多12条、总计16000字符；禁止system/tool和派生内容。只有首轮未传 requirements 才由业务调用 UnknownRequirements() 初始化；传了不完整对象则422。SelectionRequest 必须 release_id/selected_product_id/requirements，不接收 message/messages/context_product_id/match_level/missing_fields/URL；完整条件由最新成功结果回传，显式选择绕过模型。
 
-内部 GuideModelProposal 固定 intent/requirements/candidate_product_ids/selected_product_id/selection_reference 五字段。consult 时后两项必须null；select 时二者非空，selection_reference 是当前消息中明确型号/稳定ID的原文引用。schema 校验形状与互斥；导购服务还必须验证引用实际存在于当前消息、对应同版目录唯一稳定ID且表达明确选择。仅询问/比较型号保持consult；“第二款”等含糊引用、context 或仅剩一候选均不能当作选定。歧义返回 question.field=null、text=“请点击要选择的商品卡片”、options=[]，不能伪造 requirements 缺口。
+内部 GuideModelProposal 保留 intent/requirements/candidate_product_ids/selected_product_id/selection_reference，增加可选 `reply`（Unicode trim 后1–2000字符）供自然介绍和追问。intent 为 clarify/consult/select；clarify 必须有 reply、候选为空，可不查询目录先追问用途，避免泛泛咨询时直接堆产品。clarify/consult 时后两项必须null；select 时二者非空，selection_reference 是当前消息中明确型号/稳定ID的原文引用。介绍/比较/推荐具体型号仍必须通过本轮公开工具读取目录。schema 校验形状与互斥；导购服务还必须验证引用实际存在于当前消息、对应同版目录唯一稳定ID且表达明确选择。仅询问/比较型号保持consult；“第二款”等含糊引用、context 或仅剩一候选均不能当作选定。歧义返回 question.field=null、text=“请点击要选择的商品卡片”、options=[]，不能伪造 requirements 缺口。
 
 同次 Eino 提议先在已有条件上合并当前明确更正，保留未改字段和 null，再送同一校验；解析后直接调用导购服务的 Select，不追加模型调用。提议不接收匹配等级、缺口、购买渠道或 URL；它不是浏览器请求分支。
 
-GuideResult 的 state 为 clarifying/recommendations/selected/no_match/unavailable；含完整 confirmed_requirements、必填 conflicts:string[]、question（无问题=null）、最多3个 recommendations、selection（仅selected非null）、missing_fields、contact_href。卡片固定 product_id/model/name/detail_url/image/match_level/matched_facts/missing_fields/confirmation_notes。selection 另有 purchase_options/purchase_status；无渠道仍 selected/200、purchase_status=unavailable。selected 顶层和卡片缺口必须完全一致；matched 无缺口，needs_confirmation 有缺口。no_match 的 conflicts 为1–100条确定性说明，question=null、selection=null、recommendations=[]，不提供购买按钮；其余四种状态必须显式 conflicts=[]。每条说明按既有 Unicode White_Space trim 后为1–1000字符，拒绝空白、缺字段、null、错类型和超限；允许重复原文，不截断、不补默认数组。
+模型将旧条件返回为 null/空场景时，服务端默认保留已有值；明确撤销通过可选 `cleared_requirements:[{field,reference}]` 表达，reference 必须逐字存在于本轮用户消息，且被撤销字段必须为空。非空明确更正正常生效。带自然 reply 时保留有效候选的模型顺序；服务端剔除冲突候选或截成最多三款后，不沿用可能引用其他卡片的回复。
+
+导购内部 `search_products` 默认 `include_unknown=true`、`limit=5`，用于从已发布说明中发现产品，避免因结构化选型资料尚未完善而反复空搜；显式指定的筛选开关保持原值。公开目录 API 的默认筛选规则不变，最终确定性冲突判断也不变。模型优先按简短用途词搜索，通常一次搜索、必要时一次详情即可回复，不为补齐缺项反复检索。
+
+GuideResult 的 state 为 clarifying/recommendations/selected/no_match/unavailable；含完整 confirmed_requirements、必填 conflicts:string[]、question（无问题=null）、最多3个 recommendations、selection（仅selected非null）、missing_fields、contact_href，以及可选 `reply`。reply 在普通介绍/澄清中作为用户可见文本，不追加全面缺项清单；no_match/unavailable 仍使用确定性文本，候选被硬冲突排除时丢弃可能描述错误候选的模型回复。原有不带 reply 的会话结果仍合法。卡片固定 product_id/model/name/detail_url/image/match_level/matched_facts/missing_fields/confirmation_notes；普通介绍 notes 不含重复通用核实前缀。结构化 missing_fields 保留真实值，前端只将与用户明确条件相关的必要缺项译为中文提示，不展示内部字段名。selection 另有 purchase_options/purchase_status；无渠道仍 selected/200、purchase_status=unavailable。selected 顶层和卡片缺口必须完全一致；matched 无缺口，needs_confirmation 有缺口。no_match 的 conflicts 为1–100条确定性说明，question=null、selection=null、recommendations=[]，不提供购买按钮；其余四种状态必须显式 conflicts=[]。每条说明按既有 Unicode White_Space trim 后为1–1000字符，拒绝空白、缺字段、null、错类型和超限；允许重复原文，不截断、不补默认数组。
 
 单商品 no_match 直接承接本次 matching.Evaluate 返回的自有 MatchDecision.Conflicts，保留原文、顺序及真实 MissingFields；其他状态初始化空数组。air_supply=false 的已审核 pneumatic 冲突使用现有供能说明；null 仍是缺口，true 只消除气源缺口，动力未知仍需确认。conflicts 不是第十个访客条件，也不加入请求、模型提议、推荐或 selection；请求伪造仍422。匹配和购买判定保持同一 Evaluate 与原渠道边界。
 
@@ -112,11 +124,11 @@ Service方法用指针接收器，Actor仅认证层构造；Handle不可变且�
 
 ## AI SDK 消息流与客户端提交
 
-锁定 @ai-sdk/react4.0.167/ai7.0.163。Go 对外先完成业务校验与发布版本复核，再发 `Content-Type: text/event-stream`、`x-vercel-ai-ui-message-stream: v1`、`Cache-Control: no-store`；不发Eino内部事件或模型原始token。
+锁定 @ai-sdk/react4.0.167/ai7.0.163。咨询使用模型SDK原生Stream与Eino流式事件。模型先生成条件、候选ID等内部元数据（含cleared_requirements），reply必须为最后字段。Go先校验这些元数据与当前发布版本，再逐段提取、发送自然回答；不发工具调用、推理或原始JSON。首段文字到达时才开流，头为 `Content-Type: text/event-stream; charset=utf-8`、`x-vercel-ai-ui-message-stream: v1`、`Cache-Control: no-store`、`X-Accel-Buffering: no`。最终仍须完整校验提案，确认文字与元数据一致并复核版本后才发结果。
 
 成功事件顺序：start(messageId) → text-start(id) → text-delta(id,delta，可多块) → text-end(id) → 唯一 data-guide-result(data=完整GuideResult) → finish → `data: [DONE]\n\n`。每个事件用JSON编码，UTF8/中文/换行正确转义；文本id一致，逐事件flush，无模拟打字延时。选择请求始终JSON；不可用JSON返回503 GuideResult，开流前409/422/429按错误JSON返回。开流后失败只能写sanitized error后终止，不发成功finish，不伪造503。
 
-前端必须旁路观察原始流的data数量、finish、DONE、error、abort、EOF；唯一完整data+finish+DONE且无错后，再读/api/catalog/release并原子提交。useChat.status=ready 或 onFinish 不能单独作为提交依据；会话未完成/失败更正必须保留pending，禁用旧选择/购买。静态协议样例不能替代真实模型、Go导购、useChat页面或OpenResty链路的验证。
+前端必须旁路观察原始流的data数量、finish、DONE、error、abort、EOF；校验后的text-delta可立即展示在当前请求的临时气泡中。唯一完整data+finish+DONE且无错后，再读/api/catalog/release并原子提交历史、条件与商品卡片。取消、断流、清空或版本失效必须丢弃临时文字。useChat.status=ready 或 onFinish 不能单独作为提交依据；会话未完成/失败更正必须保留pending，禁用旧选择/购买。静态协议样例不能替代真实模型、Go导购、useChat页面或OpenResty链路的验证。
 
 JSON 与 SSE 的 data-guide-result 严格消费同一必填 conflicts 数组。no_match 的说明由服务端决策提供，下游逐项以纯文本展示并保留咨询入口，清除旧选择/购买；未知证据显示真实缺口与无法确认。旧 sessionStorage 完整结果缺 conflicts 时拒绝恢复为当前结果；可分别校验保留纯文本历史和九字段需求，清除操作卡并提示重新咨询/选择，不补[]，不更改 yuanfa.guide.v1/version1。
 

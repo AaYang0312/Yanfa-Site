@@ -1,32 +1,26 @@
 ---
+import '@fontsource/jost/400.css';
+import '@fontsource/jost/500.css';
+import '@fontsource/jost/600.css';
 import '../styles/admin.css';
+import logo from '../../../src/assets/ppt/logo.png';
 const { title, login = false } = Astro.props;
+const settings = Astro.url.pathname.includes('/settings') || Astro.url.pathname.includes('/workbuddy');
 ---
 <!doctype html>
 <html lang="zh-CN">
-  <head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><meta name="robots" content="noindex,nofollow" /><title>{title} · 元发内容管理</title></head>
-  <body>
+  <head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><meta name="robots" content="noindex,nofollow" /><title>{title} · 元发产品管理</title></head>
+  <body class:list={[{ 'login-page': login }]}>
     <a class="skip" href="#main">跳到主要内容</a>
-    <header class="topbar"><a class="brand" href="/admin/">元发 <span>内容管理</span></a>
-      {!login && <><nav aria-label="后台导航"><a href="/admin/products/">产品</a><a href="/admin/media/">素材</a><a href="/admin/guide-reviews/">选型审核</a><a href="/admin/candidates/">候选版本</a><a href="/admin/publications/">发布与回退</a><a href="/admin/workbuddy/">WorkBuddy 接入</a></nav><button id="logout" type="button">退出</button></>}
-    </header>
-    <main id="main" tabindex="-1"><h1>{title}</h1>
-      {!login && <p id="session-state" class="muted" aria-live="polite">正在检查管理会话…</p>}
-      <div id="notice" role="status" aria-live="polite" tabindex="-1"></div>
-      <slot />
+    <header class="topbar"><div class="topbar-inner">
+      <a class="brand" href="/admin/products/" aria-label="元发产品管理"><img src={logo.src} alt="元发 YANFA" width="134" height="40" /></a>
+      {!login && <><nav aria-label="后台导航"><a href="/admin/products/" aria-current={!settings ? 'page' : undefined}>产品管理</a><a href="/admin/settings/" aria-current={settings ? 'page' : undefined}>设置</a></nav><div class="account-nav"><span id="session-state" class="muted" aria-live="polite"></span><a href="/" target="_blank" rel="noopener">查看官网<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M14 3h7v7m0-7L10 14M10 3H4a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1v-6" /></svg></a><button id="logout" class="text-button" type="button">退出</button></div></>}
+      {login && <a class="site-link" href="/">返回官网</a>}
+    </div></header>
+    <main id="main" tabindex="-1"><div class="page-heading"><h1>{title}</h1><slot name="heading" /></div>
+      <div id="notice" role="status" aria-live="polite" tabindex="-1"></div><slot />
     </main>
-    <script>
-      import { initSession } from '../lib/api';
-      if (document.querySelector('#session-state')) initSession();
-    </script>
+    <footer class="admin-footer">元发工具官网管理</footer>
+    <script>import { initSession } from '../lib/api'; if (document.querySelector('#session-state')) initSession();</script>
   </body>
-  <style is:global>
-    .publication-meta{display:grid;grid-template-columns:minmax(6rem,auto) minmax(0,1fr);gap:.35rem 1rem;overflow-wrap:anywhere}
-    .publication-meta dt{font-weight:600}.publication-meta dd{margin:0;min-width:0}
-    .publication-json,.publication-change pre{white-space:pre-wrap;overflow-wrap:anywhere;max-width:100%;font-size:.88rem}
-    .publication-thumbnail{display:block;max-width:100%;width:160px;height:120px;object-fit:contain}
-    .publication-change>summary{overflow-wrap:anywhere}.publication-change .diff>div{min-width:0}
-    #session-state{overflow-wrap:anywhere}
-    @media(max-width:500px){.publication-meta{grid-template-columns:minmax(0,1fr)}.publication-meta dd{margin-bottom:.5rem}}
-  </style>
 </html>

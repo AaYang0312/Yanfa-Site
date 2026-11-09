@@ -6,6 +6,7 @@ import { resolve, relative, sep } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { parseArgs } from 'node:util';
 import { validateContract } from '../src/generated/validate-contract.mjs';
+import { materialFamilies } from '../src/data/material-families.ts';
 
 export const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');
 export const mediaFilename = image => `${image.sha256}.${image.format === 'jpeg' ? 'jpg' : image.format}`;
@@ -89,7 +90,14 @@ export async function auditSite(snapshotPath, sitePath) {
   for (const route of snapshot.previously_published_routes.filter(route => !listed.some(product => product.id === route.product_id))) {
     const html = htmlByPath.get(resolve(root, 'products', route.slug, 'index.html'));
     assert.match(html, /name="robots" content="noindex/);
-    assert.match(html, /已下架/);
+    const family = materialFamilies.find(item => item.id === route.product_id && item.slug === route.slug);
+    if (family) {
+      assert.ok(html.includes(`data-family-owner="${family.id}"`), `Historical family route lost its owner: ${route.slug}`);
+      for (const member of listed.filter(item => family.members.includes(item.slug))) assert.ok(html.includes(`href="/products/${member.slug}/"`), `Historical family route lost a listed member: ${member.slug}`);
+    } else {
+      assert.match(html, /data-withdrawn(?:\s|=|>)/);
+      assert.match(html, /已下架/);
+    }
     assert.match(html, /href="tel:/);
     assert.doesNotMatch(html, /data-gallery/);
   }

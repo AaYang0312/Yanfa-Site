@@ -105,5 +105,3 @@ export const shops = [
 ];
 
 export const pendingShops = ['拼多多店', '抖音店', '微信小店'];
-
-export const productNote = '请按具体型号匹配枪钉与配件。配置、价格及供货情况，以官方店铺详情或客服确认为准。';

@@ -56,7 +56,7 @@ const { title, groups, typeNames } = Astro.props;
       <slot />
     </div>
     <div class="catalog__empty" data-empty hidden>
-      <p>没有符合条件的产品，请尝试其他型号或减少筛选条件。</p>
+      <p>暂无匹配产品</p>
       <button type="reset" form="catalog-filters" class="btn">清除全部条件</button>
     </div>
     <slot name="after" />

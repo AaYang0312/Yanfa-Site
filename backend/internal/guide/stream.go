@@ -9,11 +9,12 @@ import (
 
 	"github.com/google/uuid"
 	"yuanfa-official/backend/internal/contract"
+	"yuanfa-official/backend/internal/matching"
 )
 
-// ResultText is entirely deterministic. Technical no_match explanations are
-// emitted verbatim from conflicts; uncertainty names the actual missing fields.
-// No provider text, internal error or product-authored instruction is rendered.
+// ResultText keeps deterministic failures authoritative and uses the validated
+// conversational reply for introductions and clarification. Structured facts
+// and product controls remain separate from natural language.
 func ResultText(result contract.GuideResult) string {
 	switch result.State {
 	case "no_match":
@@ -21,11 +22,18 @@ func ResultText(result contract.GuideResult) string {
 	case "unavailable":
 		return "导购暂时不可用，请使用产品筛选或联系咨询。"
 	}
+	if result.Reply != nil {
+		return *result.Reply
+	}
 	var lines []string
 	if result.State == "selected" {
 		lines = append(lines, "已选择："+result.Selection.Model+" "+result.Selection.Name)
+		for _, f := range result.Selection.MatchedFacts {
+			lines = append(lines, f.Text)
+		}
+		lines = append(lines, result.Selection.ConfirmationNotes...)
 	}
-	if len(result.MissingFields) > 0 {
+	if len(result.MissingFields) > 0 && hasStatedRequirements(result.ConfirmedRequirements) {
 		lines = append(lines, "目前无法确认全部适配条件，仍需核实："+joinMissing(result.MissingFields)+"。请补充条件或联系咨询。")
 	}
 	if result.Question != nil {
@@ -39,7 +47,7 @@ func ResultText(result contract.GuideResult) string {
 		lines = append(lines, r.ConfirmationNotes...)
 	}
 	if len(lines) == 0 {
-		lines = append(lines, "请查看已审核商品资料，或联系咨询确认适配条件。")
+		lines = append(lines, "请查看官网产品介绍，或联系咨询确认适配条件。")
 	}
 	return strings.Join(lines, "\n")
 }
@@ -49,7 +57,7 @@ func joinMissing(fields []contract.MissingField) string {
 		if i > 0 {
 			b.WriteString("、")
 		}
-		b.WriteString(string(f))
+		b.WriteString(matching.MissingLabel(f))
 	}
 	return b.String()
 }

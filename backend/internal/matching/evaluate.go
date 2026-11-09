@@ -178,11 +178,11 @@ func Evaluate(req contract.GuideRequirements, p contract.ReviewedGuideProfile) c
 	})
 	out.MissingFields = slices.Compact(out.MissingFields)
 	for _, field := range out.MissingFields {
-		note := "请补充或核实条件：" + string(field)
+		note := "请补充或核实条件：" + MissingLabel(field)
 		if field == "air_supply" {
 			note = "请确认现场有可用压缩空气。"
 		} else if strings.HasPrefix(string(field), "guide_profile.") {
-			note = "产品选型资料待核实：" + strings.TrimPrefix(string(field), "guide_profile.")
+			note = MissingLabel(field) + "尚无法确认，请联系咨询。"
 		}
 		out.ConfirmationNotes = append(out.ConfirmationNotes, note)
 	}

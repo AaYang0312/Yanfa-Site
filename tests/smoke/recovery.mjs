@@ -17,6 +17,12 @@ const password=await passwordFile(),binary=join(root,'.work/bin/yuanfa-integrati
 const report={success:false,commands:[],scenarios:[]};
 const env={...process.env,GOTOOLCHAIN:'local',GOPROXY:'https://goproxy.cn',GOSUMDB:'sum.golang.org'};for(const key of ['HTTP_PROXY','HTTPS_PROXY','ALL_PROXY','http_proxy','https_proxy','all_proxy','npm_config_proxy','npm_config_https_proxy'])delete env[key];
 let owned,privateRoot;
+let rpcID=1;
+async function draftTool(secret,name,arguments_){
+ const id=rpcID++,response=await fetch(base+'/mcp',{method:'POST',headers:{Authorization:'Bearer '+secret,'Content-Type':'application/json',Accept:'application/json, text/event-stream','MCP-Protocol-Version':'2025-03-26'},body:JSON.stringify({jsonrpc:'2.0',id,method:'tools/call',params:{name,arguments:arguments_}})});
+ assert.equal(response.status,200,'isolated draft MCP transport');const text=await response.text();const message=response.headers.get('content-type')?.includes('text/event-stream')?text.split(/\r?\n/).filter(line=>line.startsWith('data:')).map(line=>JSON.parse(line.slice(5))).find(item=>item.id===id):JSON.parse(text);
+ assert.ok(message&&!message.error,'isolated draft MCP protocol');assert.ok(!message.result.isError,JSON.stringify(message.result.structuredContent));assert.ok(message.result.structuredContent);return message.result.structuredContent;
+}
 try{
  assert.equal((await command(values.go,['build','-tags=integration','-o','.work/bin/yuanfa-integration','./backend/cmd/yuanfa'],env,report)).exit_code,0,'build actual tagged binary');
  const roleRoot=dirname(dirname(resolve(process.env.DATA_DIR)));const integration=join(roleRoot,'integration');await mkdir(integration,{recursive:true,mode:0o700});
@@ -29,7 +35,13 @@ try{
   const originalAuthority=JSON.parse(await readFile(join(data,'state/active.json'),'utf8'));
   const oldManifest=JSON.parse(await readFile(join(data,'artifacts',baseline.id,'manifest.json'),'utf8'));const oldImagePath='/'+oldManifest.resources.find(r=>r.path.startsWith('media/')).path;const oldImage=await api.expect(oldImagePath,{anonymous:true},200,'baseline successful image');
   const tag=randomBytes(6).toString('hex');const bytes=await sharp({create:{width:32,height:24,channels:3,background:'#'+tag.slice(0,6)}}).png().toBuffer();const form=new FormData();form.append('file',new Blob([bytes]),'crash-boundary.png');const image=(await api.expect('/api/admin/media',{method:'POST',raw:form},201,'upload new exclusive image')).json;
-  const seed=(await api.request('/api/admin/products/p_f30m')).json.product;const draft={slug:'v06-crash-'+tag,...editable(seed),model:'CRASH-'+tag,name:'Crash boundary fixture',visibility:'unlisted',images:[{media_id:image.media_id,label:'boundary',description:''}],cover_media_id:image.media_id};let p=(await api.expect('/api/admin/products',{method:'POST',body:draft},201,'new isolated draft')).json.product;const edit=editable(p);edit.visibility='listed';p=(await api.expect('/api/admin/products/'+p.id,{method:'PUT',headers:{'If-Match':'"'+p.version+'"'},body:edit},200,'target listed new product')).json.product;
+  // This scenario tests explicit publication recovery. Browser writes now
+  // enqueue automatic updates; use real MCP drafts so no unrelated automatic
+  // activation competes with the exact crash boundary under test.
+  const issued=(await api.expect('/api/admin/mcp-tokens',{method:'POST',body:{name:'isolated recovery drafts',expires_at:new Date(Date.now()+3600000).toISOString(),scopes:['products:read','products:write']}},201,'issue isolated draft credential')).json;
+  const seed=(await api.request('/api/admin/products/p_f30m')).json.product;const draft={slug:'v06-crash-'+tag,...editable(seed),model:'CRASH-'+tag,name:'Crash boundary fixture',visibility:'unlisted',images:[{media_id:image.media_id,label:'boundary',description:''}],cover_media_id:image.media_id};let p=(await draftTool(issued.secret,'create_product',draft)).product;const edit=editable(p);edit.visibility='listed';p=(await draftTool(issued.secret,'update_product',{product_id:p.id,expected_version:p.version,edit})).product;
+  await api.expect('/api/admin/mcp-tokens/'+issued.token.id,{method:'DELETE'},204,'revoke isolated draft credential');
+  assert.equal((await api.expect('/api/admin/site-updates',{},200,'draft has no automatic confirmation')).json.items.find(item=>item.product_id===p.id)?.state,'draft');
   const candidate=await api.waitCandidate((await api.freeze()).id);assert.equal(candidate.state,'ready');const pending=await api.intent(candidate);const request=await api.intent(candidate);const confirmationKey='crash-confirm-'+tag;
   await writeFile(join(control,'scenario.json'),JSON.stringify({barrier}),{mode:0o600});await api.confirm(request,confirmationKey);
   const originalConfirmationAPI=api;
@@ -58,4 +70,4 @@ try{
   await writeFile(join(evidence,'active-after-aba.json'),roundTripBytes);await stopServer(owned);owned=undefined;await rm(privateRoot,{recursive:true,force:true});privateRoot=undefined;scenario.cleaned=true;console.log('PASS '+barrier+' -> '+recovered.state+' / '+expected+'; ABA rejected across restart');
  }
  report.success=true;
-}catch(error){report.error=error.message;throw error}finally{try{await stopServer(owned)}finally{if(privateRoot)await rm(privateRoot,{recursive:true,force:true});await writeFile(join(out,'recovery-smoke.json'),JSON.stringify(report,null,2))}}
+}catch(error){report.error=error.stack;throw error}finally{try{await stopServer(owned)}finally{try{if(privateRoot)await rm(privateRoot,{recursive:true,force:true,maxRetries:5,retryDelay:100})}finally{await writeFile(join(out,'recovery-smoke.json'),JSON.stringify(report,null,2))}}}

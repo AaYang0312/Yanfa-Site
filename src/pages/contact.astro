@@ -3,57 +3,49 @@ import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
 import { site, telHref } from '../data/site';
 
-const dealer = [
-  { title: '零售批发', text: '五金店、工具批发与建材渠道，按区域洽谈供货。' },
-  { title: '工厂采购', text: '家具厂、包装厂与托盘厂，按用量确认钉枪系列与枪钉规格。' },
-  { title: '装修班组', text: '木工、水电工班组集中采购，可同时配齐钉枪、枪钉和配件。' },
+const inquiries = [
+  { title: '产品选型', details: ['型号', '作业用途'] },
+  { title: '采购报价', details: ['型号', '数量'] },
+  { title: '批发合作', details: ['区域', '渠道类型'] },
 ];
 ---
 
 <Base title="联系" description={`联系${site.name}：询价、选型与批发合作。`} contactStrip={false}>
-  <PageHead
-    title="联系"
-    lead="产品选型、报价或批发合作，欢迎电话联系。"
-    text="说明型号、数量和用途会更快：例如“F30M，20 把，吊顶边角”。"
-  />
+  <PageHead title="联系" />
 
   <section class="section section--paper">
     <div class="wrap contact">
       <div class="contact__info">
         <h2>{site.legalName}</h2>
         <p>{site.brand} {site.brandEn}</p>
-        <p>说明产品型号、数量和作业用途，方便我们为您匹配产品与规格。</p>
       </div>
 
       <div class="contact__phone">
         <p class="contact__label">咨询电话</p>
         <a class="contact__number" href={telHref()}>{site.phone}</a>
-        <p>产品选型 · 报价咨询 · 批发合作</p>
         <a class="btn btn--solid" href={telHref()}>拨打电话</a>
       </div>
     </div>
   </section>
 
-  <section class="section" id="dealer">
-    <div class="wrap dealer">
-      <div>
-        <h2 class="h-section">批发合作</h2>
-        <p class="muted dealer__intro">欢迎五金渠道与终端用户合作。请拨打上方电话，说明所在区域、渠道类型和采购需求。</p>
-      </div>
-      <ul>
-        {dealer.map((item) => (
-          <li>
-            <h3>{item.title}</h3>
-            <p>{item.text}</p>
-          </li>
+  <section class="section" id="dealer" aria-labelledby="inquiries-heading">
+    <div class="wrap inquiries">
+      <h2 class="h-section" id="inquiries-heading">业务咨询</h2>
+      <dl class="inquiries__list">
+        {inquiries.map((item) => (
+          <div>
+            <dt>{item.title}</dt>
+            <dd>{item.details.map((detail) => <span>{detail}</span>)}</dd>
+          </div>
         ))}
-      </ul>
+      </dl>
     </div>
   </section>
 </Base>
 
 <style>
-  .contact {
+  .contact,
+  .inquiries {
     display: grid;
     grid-template-columns: 1fr 2fr;
     gap: 64px;
@@ -92,49 +84,42 @@ const dealer = [
 
   .contact__phone > .btn { margin-top: 12px; }
 
-  .dealer {
+  .inquiries__list {
     display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: 40px;
-  }
-
-  .dealer__intro {
-    margin-top: 20px;
-    font-size: 14px;
-  }
-
-  .dealer ul {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 32px;
     margin: 0;
-    padding: 0;
-    list-style: none;
   }
 
-  .dealer h3 {
-    margin-bottom: 10px;
-    padding-bottom: 10px;
+  .inquiries__list dt {
+    margin-bottom: 16px;
+    padding-bottom: 12px;
     border-bottom: 2px solid var(--wine);
+    color: var(--navy);
     font-size: 18px;
+    font-weight: 500;
   }
 
-  .dealer p {
+  .inquiries__list dd {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 20px;
     margin: 0;
-    color: var(--muted);
-    font-size: 14px;
+    color: var(--text);
   }
 
   @media (max-width: 960px) {
     .contact,
-    .dealer,
-    .dealer ul {
+    .inquiries {
       grid-template-columns: 1fr;
       gap: 32px;
     }
 
-    .contact__phone {
-      padding: 24px 20px;
-    }
+    .contact__phone { padding: 24px 20px; }
+  }
+
+  @media (max-width: 640px) {
+    .inquiries__list { grid-template-columns: 1fr; gap: 24px; }
+    .inquiries__list dt { margin-bottom: 12px; }
   }
 </style>

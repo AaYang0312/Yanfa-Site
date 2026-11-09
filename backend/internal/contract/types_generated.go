@@ -210,6 +210,18 @@ type HealthReady struct {
 	ReleaseID *string `json:"release_id"`
 }
 
+type SiteUpdate struct {
+	Message   string `json:"message"`
+	Version   int64  `json:"version"`
+	State     string `json:"state"`
+	PublicURL string `json:"public_url"`
+	ProductID string `json:"product_id"`
+}
+
+type SiteUpdateList struct {
+	Items []SiteUpdate `json:"items"`
+}
+
 type Category struct {
 	ID        CategoryID `json:"id"`
 	Name      string     `json:"name"`
@@ -390,11 +402,13 @@ type GuideRequest struct {
 }
 
 type GuideModelProposal struct {
-	Intent              string            `json:"intent"`
-	Requirements        GuideRequirements `json:"requirements"`
-	CandidateProductIDs []string          `json:"candidate_product_ids"`
-	SelectedProductID   *string           `json:"selected_product_id"`
-	SelectionReference  *string           `json:"selection_reference"`
+	Intent              string                      `json:"intent"`
+	Requirements        GuideRequirements           `json:"requirements"`
+	CandidateProductIDs []string                    `json:"candidate_product_ids"`
+	SelectedProductID   *string                     `json:"selected_product_id"`
+	SelectionReference  *string                     `json:"selection_reference"`
+	Reply               *string                     `json:"reply,omitempty"`
+	ClearedRequirements []GuideRequirementClearance `json:"cleared_requirements,omitempty"`
 }
 
 type GuideQuestion struct {
@@ -439,6 +453,7 @@ type GuideResult struct {
 	Selection             *GuideSelection       `json:"selection"`
 	MissingFields         []MissingField        `json:"missing_fields"`
 	ContactHref           string                `json:"contact_href"`
+	Reply                 *string               `json:"reply,omitempty"`
 }
 
 type SiteConfig struct {
@@ -446,6 +461,11 @@ type SiteConfig struct {
 	Name          string `json:"name"`
 	Phone         string `json:"phone"`
 	ContactHref   string `json:"contact_href"`
+}
+
+type GuideRequirementClearance struct {
+	Field     RequirementField `json:"field"`
+	Reference string           `json:"reference"`
 }
 
 type MCPSearchProductsInput struct {

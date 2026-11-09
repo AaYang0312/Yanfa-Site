@@ -1,10 +1,12 @@
 # WorkBuddy 私有管理 MCP 接入
 
+本地验收记录（2026-11-09）：用户已在实际 WorkBuddy 客户端完成测试，反馈连接和使用正常。此记录确认当前本地环境的接入结果；部署地址或凭证变化后按下文重新配置。
+
 管理端点为同源 `/mcp`，由固定的官方 `github.com/modelcontextprotocol/go-sdk v1.8.0` 提供 stateless Streamable HTTP。生产环境通过 HTTPS 访问；loopback HTTP 仅用于本地开发。初始化、协议协商、POST 响应及 GET/DELETE 行为由 SDK 决定，不提供自制 JSON-RPC 或旧 SSE 桥接协议。
 
 服务使用 stateless 传输，无 `Mcp-Session-Id` 依赖。已鉴权 GET/DELETE 由 SDK 返回 405，缺凭证则先返回 401。目标 WorkBuddy 的协议协商和兼容性须在实际客户端确认。
 
-管理员登录 `/admin/workbuddy/`，选择名称、未来有效期和所需权限后签发 Token。原值仅在签发时显示一次；关闭前按目标客户端支持的安全方式保存，遗失则撤销并重新签发。服务只保存哈希，每次 HTTP 请求和工具调用都核对有效期及撤销状态。客户端已初始化、TCP 连接仍在或此前调用成功均不延长授权。
+管理员在后台设置（`/admin/settings/`）打开 WorkBuddy 接入，填写连接名称、失效时间，选择“只读查询”或“编辑产品”等权限后创建连接。凭证原值仅显示一次；关闭前按目标客户端支持的安全方式保存，遗失则撤销并重新创建。服务只保存哈希，每次 HTTP 请求和工具调用都核对有效期及撤销状态。客户端已初始化、TCP 连接仍在或此前调用成功均不延长授权。旧 `/admin/workbuddy/` 地址跳转到设置页。
 
 配置结构：
 
@@ -34,41 +36,57 @@
 | --- | --- | --- |
 | `search_products` | `products:read` | `query/category/visibility/cursor/limit`；工作区摘要、每件产品版本、全局 revision、线上 release |
 | `get_product` | `products:read` | `product_id`；完整产品、`version`、`workspace_revision` |
-| `create_product` | `products:write` | 全部 ProductCreate 可编辑字段；创建目标下架草稿，稳定 ID 由服务器生成 |
-| `update_product` | `products:write` | `product_id/expected_version/edit`；整体替换可编辑数组和字段，返回新版本 |
+| `create_product` | `products:write` | 全部 ProductCreate 可编辑字段；创建目标下架机器草稿，返回可读的产品编辑确认链接 |
+| `update_product` | `products:write` | `product_id/expected_version/edit`；整体替换可编辑字段，保存机器草稿并返回产品编辑确认链接 |
 | `delete_draft` | `products:write` | `product_id/expected_version`；只删除从未公开的草稿，保留 slug 归属 |
 | `list_media` | `media:read` | `after/cursor/limit`；私有素材元数据及受登录保护的预览 URL，无磁盘路径 |
-| `open_upload` | `media:read` | 可选 `product_id`；需登录的 `upload_url` 与原始 `after` 标记，只返回链接 |
-| `create_candidate` | `candidates:write` | `expected_workspace_revision/request_key`；异步冻结整个已保存工作区 |
-| `get_candidate` | `products:read` | `candidate_id`；真实构建状态、冻结摘要、差异、过期标记及业务服务原始审阅链接 |
-| `request_publication` | `publications:write` | 发布/回退目标、摘要、预期线上 ID/工作区版本、`request_key`；待浏览器确认意图 |
-| `get_publication` | `products:read` | `request_id`；真实意图状态、完成时间及成功 release |
+| `open_upload` | `media:read` | 可选 `product_id`；产品编辑页（无 ID 时为新增页）的 `upload_url` 与原始 `after` 标记，只返回链接 |
+| `create_candidate` | `candidates:write` | 旧版兼容：构建候选，不确认、不激活，不自动调用 |
+| `get_candidate` | `products:read` | 旧版兼容：查询真实构建状态；结构化字段保持兼容 |
+| `request_publication` | `publications:write` | 旧版兼容：创建待确认意图，不确认、不激活，不自动调用 |
+| `get_publication` | `products:read` | 旧版兼容：查询意图状态、完成时间及成功 release |
 
 仅含 `products:read` 的最小权限 Token 可初始化官方 SDK 客户端、读取候选及其原始审阅链接，并查询同一发布意图的待确认和成功结果，包括原始 ID、审阅 envelope 与实际生效 release。它不具备创建/更新/删除产品、创建候选或创建发布意图的权限；这些工具返回 `isError: true` 和结构化 `FORBIDDEN`。签发只读查询凭证不需要附加任何写 scope。候选、意图及浏览器确认继续复用同一业务服务，不使用提权 Actor 或管理 HTTP 自调用。
 
 写入成功只代表草稿已保存。旧版本更新返回 MCP `isError: true`，`structuredContent.error.code=VERSION_CONFLICT`，并含 `current_version`；对应浏览器 PUT 返回 HTTP 412。保留本地编辑，重新读取后由用户合并，不自动重试旧内容。字段错误同样返回 `isError` 和结构化 `code/message/fields`；内部错误统一脱敏，不返回 SQL、密钥或私有路径。认证和 Origin 失败在 HTTP 边界返回 401/403，协议错误由 SDK 处理。
 
+创建、更新及读取产品继续通过 `structuredContent` 返回原有完整 `ProductEnvelope`，包括客户端并发控制所需字段。人读的 `content` 改为中文说明和 `/admin/products/edit/?id=…` 链接，不再重复输出完整 JSON、来源哈希或发布摘要。旧客户端应从 `structuredContent` 读取数据，不要把人读文字当 JSON 解析。链接相对于连接的官网域名；客户端展示时可用该已配置域名补全，不能换成其他站点。
+
 ## 文字修改完整流程
 
 1. `search_products` 查找，`get_product` 取得当前版本和完整文档。
-2. 保留 slug、稳定 ID、审核等服务器字段，向 `update_product` 只提交完整 `edit` 与原 `expected_version`；结果供下一次操作使用。
-3. `create_candidate` 使用最新工作区 revision 和本次唯一 `request_key`。不要等待该调用完成构建；轮询 `get_candidate`，queued/building 不能报告成功。
-4. ready 后展示完整差异、警告和原始 `review_url`。候选冻结整个工作区，包含其他已保存产品的修改。`workspace_changed` 或冲突要求重新生成并审阅。
-5. `request_publication` 精确携带候选 ID、SHA、冻结的 expected active/revision，发布时 `release_id=null`。同一次不确定请求重用相同 key 和内容；同 key 不同内容返回幂等冲突。
-6. 用户打开服务原样返回的 `review_url`，登录后回到该意图，人工审阅并勾选确认。MCP 没有 confirm、选型事实审核和 Token 管理工具；创建意图不改变官网。
-7. `get_publication` 查询执行状态。仅 `succeeded` 且有 `result_release_id/completed_at/site_url` 才报告生效版本；failed/stale/expired/cancelled 均不能当成功。
+2. 向 `update_product` 只提交完整 `edit` 与原 `expected_version`；保留未修改的可编辑资料，不向 edit 填入 ID、版本或审核等服务器字段。新增产品使用 `create_product`。
+3. 展示工具返回的产品编辑链接，并说明“草稿已保存，尚未更新官网”。不要自动调用 `create_candidate` 或 `request_publication`。
+4. 用户打开该链接，登录后检查同一简化编辑页的文字、图片及上下架状态，点击“保存并更新官网”。只有这个浏览器操作把当前产品写入已确认内容，系统随后自动构建和更新。
+5. 浏览器显示本次修改对应的更新结果。只有实际切换成功且包含该次修改，才表示官网已更新；失败保留最后成功官网，使用页面重试。MCP 保存成功、目标为上架、候选就绪都不能当成上线成功。
 
-回退使用同一个 `request_publication`，`kind=rollback`、`candidate_id=null`、`release_id` 指定兼容 schema 的历史成功版本，仍须浏览器确认。回退不修改工作区。
+机器草稿不进入已确认台账，也不会被其他产品的保存或重试顺带发布。它可以晚于该产品最后一次浏览器确认版本；此时公开目录仍使用已确认版本。MCP 不提供确认、更新重试或连接创建/撤销工具，不把 Bearer 身份转换成浏览器身份。旧候选/发布意图仅用于协议兼容，不是日常编辑步骤，更不会自动激活。
 
 ## 图片修改完整流程
 
-调用 `open_upload`，把返回的链接交给用户在浏览器打开。该页面实际登录后可选择本机文件上传；MCP 不读取 `C:\\...`、`/Users/...`、`file:` 或远端文件路径，也不承诺替用户自动打开浏览器。
+调用 `open_upload`，把返回的链接交给用户在浏览器打开。有 `product_id` 时进入 `/admin/products/edit/?id=…`，无 ID 时进入 `/admin/products/new/`；登录后在产品图片区选择本机文件上传，不再进入独立素材库。`after` 仍原样保留在结构化结果，供客户端查询新素材；人读文字只显示操作说明和产品页链接。MCP 不读取 `C:\\...`、`/Users/...`、`file:` 或远端文件路径，也不承诺替用户自动打开浏览器。
 
-保留此次返回的 `after`。上传后 `list_media` 使用该固定 `after`，后续分页增加服务器返回的 `cursor`，不要用每页响应的新 `after` 替换当前遍历下界。根据缩略图、说明及上传时间让用户辨认素材，从结果取得 ID；无需用户手工复制 media_id。把已选素材加入完整 `images`，需要时替换 `cover_media_id`，带当前版本保存，再执行同一候选、浏览器确认和结果查询流程。上传未关联图片仍是私有素材，不自动上线。
+保留此次返回的 `after`。上传后 `list_media` 使用该固定 `after`，后续分页增加服务器返回的 `cursor`，不要用每页响应的新 `after` 替换当前遍历下界。根据缩略图、说明及上传时间让用户辨认素材，从结果取得 ID；无需用户手工复制 media_id。把已选素材加入完整 `images`，需要时替换 `cover_media_id`，带当前版本保存，再交付产品编辑链接，由用户检查并点击“保存并更新官网”。上传未关联图片仍是私有素材，不自动上线。日常维护也可直接在产品编辑页上传、排序、设置封面或移除图片。
 
-## 本地官方 SDK 烟测
+## 公开导购与未知条件
 
-仅对专用隔离数据运行，下述命令会真实修改一个已导入的上架产品并发布文字、图片两个完整候选。仓库须已安装锁定依赖并生成 site config、构建后台；服务按 migrate → TTY `init-admin` → `import-seed` → `serve` 启动。使用独立 DATA_DIR 和端口，不共享运行中的数据库。`GO_BIN` 指向固定的 Go1.27.3 可执行文件，Go 设置 `GOTOOLCHAIN=local`，TMPDIR/GOTMPDIR 使用私有绝对路径；浏览器子进程独用短 TMPDIR。部署和应用配置见 [运维说明](content-platform-operations.md)。
+公开导购只读取当前成功发布的目录，与管理工作区草稿隔离。关键词搜索覆盖名称、型号、简介、用途、特点和注意事项，无需独立的逐事实审核。导购把这些公开文字作为明确标注的产品介绍，较长内容提供摘要并提示查看详情；没有声明选型条件时，不强制展开技术问卷。
+
+普通说明、分类和名称相似不构成适配证据。材料、基材、钉型、尺寸、兼容性、承重等条件缺失或冲突时仍保持未知或冲突，不批量生成已审核事实。已有有效证据可继续参与确定性判断；介绍文字不会写进 `matched_facts`。展示产品介绍或购买入口也不等于确认适配。模型未配置时仍返回导购暂不可用；公开目录搜索和产品详情可正常使用。
+
+## 本地验证
+
+使用固定 Go 工具链运行实际服务边界测试：
+
+```sh
+"$GO_BIN" test ./backend/internal/matching/... ./backend/internal/catalog/... ./backend/internal/guide/... ./backend/internal/mcp/... -count=1
+```
+
+覆盖公开文字检索与介绍、未知安全条件、响应大小限制、只读拒绝全部写工具、已初始化连接的过期与撤销、并发版本冲突，以及 MCP 创建/更新返回编辑链接且不创建确认记录。简化浏览器流程的集成验收还需确认：机器草稿不会被其他保存发布，用户检查后保存才更新，失败可重试且保留最近成功官网。
+
+### 旧版候选兼容烟测
+
+仓库 `mcp-smoke` 当前覆盖旧版候选和发布意图链路，不代表简化编辑页已验收；旧页面退出日常导航后，该浏览器脚本需配合集成任务调整。仅在专用隔离数据、确认兼容入口可用时运行，下述命令会真实修改并发布产品。仓库须已安装锁定依赖并生成 site config、构建后台；服务按 migrate → TTY `init-admin` → `import-seed` → `serve` 启动。使用独立 DATA_DIR 和端口，不共享运行中的数据库。`GO_BIN` 指向固定的 Go1.27.3 可执行文件，Go 设置 `GOTOOLCHAIN=local`，TMPDIR/GOTMPDIR 使用私有绝对路径；浏览器子进程独用短 TMPDIR。部署和应用配置见 [运维说明](content-platform-operations.md)。
 
 ```sh
 export GOTOOLCHAIN=local

@@ -177,7 +177,7 @@ func TestSelectionAirAndIndependentGaps(t *testing.T) {
 	if out.State != "selected" || out.Selection.MatchLevel != "needs_confirmation" || out.ConfirmedRequirements.AirSupply != nil || !slices.Equal(out.MissingFields, []contract.MissingField{"air_supply"}) || !slices.Equal(out.Selection.MissingFields, out.MissingFields) {
 		t.Fatalf("unknown air: %+v", out)
 	}
-	if out.Selection.PurchaseStatus != "available" || out.Selection.PurchaseOptions[0].PurchaseOptionID != "o_selection" || !strings.Contains(strings.Join(out.Selection.ConfirmationNotes, " "), "压缩空气") || out.Question == nil || *out.Question.Field != "air_supply" {
+	if out.Selection.PurchaseStatus != "available" || out.Selection.PurchaseOptions[0].PurchaseOptionID != "o_selection" || out.Question == nil || *out.Question.Field != "air_supply" || !strings.Contains(out.Question.Text, "压缩空气") {
 		t.Fatal("air warning must coexist with server channel")
 	}
 	req.Requirements.AirSupply = new(false)

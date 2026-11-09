@@ -540,7 +540,7 @@ func (s *Service) Create(ctx context.Context, actor auth.Actor, input contract.P
 	if err != nil {
 		return out, err
 	}
-	if c.Visibility != "unlisted" {
+	if c.Visibility != "unlisted" && !actor.IsBrowser() {
 		return out, invalid("visibility")
 	}
 	id, err := randomID("p_")
@@ -560,6 +560,9 @@ func (s *Service) Create(ctx context.Context, actor auth.Actor, input contract.P
 		return out, err
 	}
 	defer tx.Rollback()
+	if previous, found, e := replay[contract.ProductEnvelope](ctx, tx, actor, "create", input); e != nil || found {
+		return previous, e
+	}
 	_, d, err := workspace(ctx, tx)
 	if err != nil {
 		return out, err
@@ -584,6 +587,14 @@ func (s *Service) Create(ctx context.Context, actor auth.Actor, input contract.P
 	if err != nil {
 		return out, err
 	}
+	if actor.IsBrowser() {
+		if err = s.confirmBrowser(ctx, tx, p, false, d); err != nil {
+			return out, err
+		}
+	}
+	if err = rememberWrite(ctx, tx, actor, "create", input, out); err != nil {
+		return out, err
+	}
 	return out, tx.Commit()
 }
 func (s *Service) Replace(ctx context.Context, actor auth.Actor, id string, expected int64, input contract.ProductEdit) (contract.ProductEnvelope, error) {
@@ -602,6 +613,10 @@ func (s *Service) Replace(ctx context.Context, actor auth.Actor, id string, expe
 		return out, err
 	}
 	defer tx.Rollback()
+	request := []any{id, expected, input}
+	if previous, found, e := replay[contract.ProductEnvelope](ctx, tx, actor, "replace", request); e != nil || found {
+		return previous, e
+	}
 	old, err := get(ctx, tx, id)
 	if err != nil {
 		return out, err
@@ -619,6 +634,9 @@ func (s *Service) Replace(ctx context.Context, actor auth.Actor, id string, expe
 	if err != nil {
 		return out, err
 	}
+	if actor.IsBrowser() {
+		pruneTextSources(&p)
+	}
 	if err = s.references(ctx, tx, &p, d); err != nil {
 		return out, err
 	}
@@ -628,6 +646,14 @@ func (s *Service) Replace(ctx context.Context, actor auth.Actor, id string, expe
 	p.GuideProfile.Reviews = retainedReviews(old.GuideProfile, p.GuideProfile)
 	out, err = save(ctx, tx, p, d, false)
 	if err != nil {
+		return out, err
+	}
+	if actor.IsBrowser() {
+		if err = s.confirmBrowser(ctx, tx, p, false, d); err != nil {
+			return out, err
+		}
+	}
+	if err = rememberWrite(ctx, tx, actor, "replace", request, out); err != nil {
 		return out, err
 	}
 	return out, tx.Commit()
@@ -705,6 +731,10 @@ func (s *Service) Delete(ctx context.Context, actor auth.Actor, id string, expec
 		return out, err
 	}
 	defer tx.Rollback()
+	request := []any{id, expected}
+	if previous, found, e := replay[contract.DeletionResult](ctx, tx, actor, "delete", request); e != nil || found {
+		return previous, e
+	}
 	p, err := get(ctx, tx, id)
 	if err != nil {
 		return out, err
@@ -712,12 +742,14 @@ func (s *Service) Delete(ctx context.Context, actor auth.Actor, id string, expec
 	if err = expectedVersion(expected, p.Version); err != nil {
 		return out, err
 	}
-	var published int
-	if err = tx.QueryRowContext(ctx, `SELECT ever_published FROM reserved_routes WHERE slug=?`, p.Slug).Scan(&published); err != nil {
+	// A browser confirmation protects the product before its first activation,
+	// including when a newer machine draft has not changed that confirmation.
+	var protected bool
+	if err = tx.QueryRowContext(ctx, `SELECT ever_published<>0 OR EXISTS(SELECT 1 FROM product_confirmations WHERE product_id=? AND deleted=0) FROM reserved_routes WHERE slug=?`, p.ID, p.Slug).Scan(&protected); err != nil {
 		return out, err
 	}
-	if published != 0 {
-		return out, contract.NewBusinessError(409, "PRODUCT_PUBLISHED", "已公开的产品只能下架，不能删除。")
+	if protected && !actor.IsBrowser() {
+		return out, contract.NewBusinessError(409, "PRODUCT_PUBLISHED", "已确认或已公开的产品，请在浏览器中确认删除。")
 	}
 	_, d, err := workspace(ctx, tx)
 	if err != nil {
@@ -746,6 +778,14 @@ func (s *Service) Delete(ctx context.Context, actor auth.Actor, id string, expec
 	}
 	out.DeletedID = id
 	if err = tx.QueryRowContext(ctx, `SELECT revision FROM workspace WHERE id=1`).Scan(&out.WorkspaceRevision); err != nil {
+		return out, err
+	}
+	if actor.IsBrowser() {
+		if err = s.confirmBrowser(ctx, tx, p, true, d); err != nil {
+			return out, err
+		}
+	}
+	if err = rememberWrite(ctx, tx, actor, "delete", request, out); err != nil {
 		return out, err
 	}
 	return out, tx.Commit()

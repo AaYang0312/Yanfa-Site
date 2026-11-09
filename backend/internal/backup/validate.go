@@ -199,7 +199,7 @@ func validateData(ctx context.Context, db *sql.DB, data string) error {
 	if err != nil {
 		return err
 	}
-	rows, err = db.QueryContext(ctx, "SELECT id,slug,version,document_json FROM products WHERE deleted_at IS NULL")
+	rows, err = db.QueryContext(ctx, `SELECT id,slug,version,document_json FROM products WHERE deleted_at IS NULL UNION ALL SELECT product_id,json_extract(document_json,'$.slug'),version,document_json FROM product_confirmations WHERE deleted=0`)
 	if err != nil {
 		return err
 	}

@@ -961,9 +961,7 @@
     "fields": [
       "model",
       "summary",
-      "applications",
-      "images",
-      "cover_media_id"
+      "applications"
     ]
   },
   {
@@ -1231,7 +1229,9 @@
         "blower": null
       },
       "question": null,
-      "conflicts": ["该工具需要压缩空气，现场明确没有可用气源。"],
+      "conflicts": [
+        "该工具需要压缩空气，现场明确没有可用气源。"
+      ],
       "recommendations": [],
       "selection": {
         "product_id": "p_test",
@@ -2998,7 +2998,7 @@
     "schema": "guide.schema.json#/$defs/GuideRequirements",
     "data": {
       "scene_ids": [],
-      "material": "　",
+      "material": "\u0085　",
       "substrate": null,
       "nail_type": null,
       "fastener_length_mm": null,

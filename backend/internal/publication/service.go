@@ -84,9 +84,10 @@ func (s *Service) Start(parent context.Context) error {
 		return err
 	}
 	s.ctx, s.cancel = context.WithCancel(parent)
-	s.done.Add(2)
+	s.done.Add(3)
 	go func() { defer s.done.Done(); s.buildLoop() }()
 	go func() { defer s.done.Done(); s.activationLoop() }()
+	go func() { defer s.done.Done(); s.automaticLoop() }()
 	return nil
 }
 func (s *Service) Close() error {

@@ -1,9 +1,6 @@
----
-const { review = false } = Astro.props;
----
-<form id="product-filter" class="grid"><label>搜索名称或型号<input name="q" type="search" maxlength="200" /></label><label>分类<select name="category" aria-label="分类"><option value="">全部分类</option></select></label><label>目标上下架<select name="visibility" aria-label="目标上下架"><option value="">全部状态</option><option value="listed">目标上架</option><option value="unlisted">目标下架</option></select></label><div class="actions"><button type="submit">搜索</button>{!review && <a class="button primary" href="/admin/products/new/">新建草稿</a>}</div></form>
-<p class="muted">按排序值、稳定 ID 升序。目标状态和未发布修改分别展示；保存不会立即公开。</p>
-<div id="products" data-review={review ? 'true' : 'false'} aria-live="polite"></div><button id="more-products" type="button" hidden>加载更多产品</button>
-<script>
-  import '../lib/products';
-</script>
+<div class="list-intro"><p>查找、整理产品，让官网资料保持最新。</p><a class="button primary" href="/admin/products/new/"><span aria-hidden="true">＋</span> 新增产品</a></div>
+<form id="product-filter" class="product-filter"><label class="search-field">搜索产品<input name="q" type="search" maxlength="200" placeholder="输入产品名称或型号" /></label><label>产品分类<select name="category" aria-label="产品分类"><option value="">全部分类</option></select></label><label>上架状态<select name="visibility" aria-label="上架状态"><option value="">全部状态</option><option value="listed">上架</option><option value="unlisted">下架</option></select></label><button type="submit">搜索</button></form>
+<div id="list-update" role="status" aria-live="polite" hidden></div>
+<div class="product-table"><div class="product-table-head" aria-hidden="true"><span>产品</span><span>分类</span><span>上架状态 / 官网进度</span><span>操作</span></div><div id="products" aria-live="polite" aria-busy="true"><p class="empty">正在读取产品…</p></div></div>
+<div class="list-footer"><p id="product-count" class="muted"></p><button id="more-products" type="button" hidden>加载更多产品</button></div>
+<script>import '../lib/products';</script>

@@ -1,0 +1,4 @@
+---
+const { target = '/admin/products/' } = Astro.props;
+---
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8" /><meta name="robots" content="noindex,nofollow" /><meta name="viewport" content="width=device-width,initial-scale=1" /><title>元发产品管理</title><meta http-equiv="refresh" content={`0;url=${target}`} /></head><body><a href={target}>进入产品管理</a><script is:inline define:vars={{ target }}>location.replace(target);</script></body></html>

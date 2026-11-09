@@ -147,6 +147,11 @@ func (s *Service) ImportSeed(ctx context.Context, seedPath, mediaRoot string) er
 		if _, err = save(ctx, tx, p, d, true); err != nil {
 			return err
 		}
+		// Seed is an explicitly imported baseline, not a machine draft. It is
+		// available to the first browser save but does not itself start a build.
+		if err = confirm(ctx, tx, p, false, "succeeded"); err != nil {
+			return err
+		}
 	}
 	b, err := canonical(d)
 	if err != nil {

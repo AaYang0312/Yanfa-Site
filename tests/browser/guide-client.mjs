@@ -101,11 +101,11 @@ try {
   const { chromium } = await import(pathToFileURL(process.env.PLAYWRIGHT_MODULE || resolve('node_modules/playwright-core/index.mjs')).href);
   browserServer = await chromium.launchServer({ executablePath: process.env.BROWSER_PATH, headless: true, args: ['--no-sandbox'] }); browser = await chromium.connect(browserServer.wsEndpoint()); report.browser_pid = browserServer.process().pid;
   const page = await makePage();
-  await pass('production 503 preserves pending correction and functional fallback links', async () => {
+  await pass('production 503 preserves pending correction and compact contact action', async () => {
     await open(page); await send(page, '真实无模型咨询'); await waitFailure(page);
     assert.match(await page.locator('[data-guide-notice]').innerText(), /HTTP 503.*UNAVAILABLE/);
-    assert.equal(await page.getByRole('link', { name: '搜索与筛选', exact: true }).getAttribute('href'), '/products/');
-    assert.equal(await page.getByRole('navigation', { name: '导购备用入口' }).getByRole('link', { name: '电话咨询', exact: true }).getAttribute('href'), site.contact_href);
+    assert.equal(await page.getByRole('navigation', { name: '导购备用入口' }).count(), 0);
+    assert.equal(await page.getByRole('dialog', { name: '工具选型导购' }).getByRole('link', { name: '电话咨询', exact: true }).getAttribute('href'), site.contact_href);
     await page.getByRole('button', { name: '明确撤销未完成请求' }).click(); await page.waitForFunction(() => !document.querySelector('#guide-message').disabled);
   });
   let buttonSelection;

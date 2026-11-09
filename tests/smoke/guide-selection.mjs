@@ -84,7 +84,7 @@ try {
  assert.equal(unknown.state,'selected'); assert.equal(unknown.selection.match_level,'needs_confirmation');
  assert.equal(unknown.confirmed_requirements.air_supply,null);
  assert.deepEqual(unknown.missing_fields,['air_supply']); assert.deepEqual(unknown.selection.missing_fields,['air_supply']);
- assert.equal(unknown.question.field,'air_supply'); assert.ok(unknown.selection.confirmation_notes.some(x=>x.includes('压缩空气')));
+ assert.equal(unknown.question.field,'air_supply'); assert.match(unknown.question.text,/气源|压缩空气/,'missing air supply is asked in the actionable question');
  assert.equal(unknown.selection.purchase_status,'available');
  assert.deepEqual(unknown.selection.purchase_options.map(x=>x.purchase_option_id),p.purchase_options.filter(x=>x.enabled).map(x=>x.id));
  assert.equal(unknown.selection.purchase_options[1].match_scope,'listing_with_variants'); assert.equal(unknown.selection.purchase_options[1].sku_hint,scenario.options[1].sku_hint);

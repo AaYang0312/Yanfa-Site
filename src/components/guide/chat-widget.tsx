@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { GuideSession } from '../../scripts/guide/session';
 import { ChatPanel } from './chat-panel';
+import { GuideIcon } from './icon';
 import './guide.css';
 export default function GuideWidget({ releaseId, contextProductId, contactHref }: { releaseId: string; contextProductId?: string; contactHref: string }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -26,7 +27,10 @@ export default function GuideWidget({ releaseId, contextProductId, contactHref }
   }, []);
   return <div className="yg" data-guide-widget ref={root}>
     {/* Aisle keeps its panel mounted so toggling preserves useChat and input. */}
-    <div className="yg-position" id="guide-panel" hidden={!isOpen}><ChatPanel session={session} open={isOpen} onClose={close} contextProductId={contextProductId} contactHref={contactHref} /></div>
-    <button ref={launcher} className="yg-launcher" type="button" aria-controls="guide-panel" aria-expanded={isOpen} aria-label={isOpen ? '关闭工具导购' : '帮我选工具'} onClick={() => { if (isOpen) close(); else { returnFocus.current = launcher.current; setIsOpen(true); } }}> {isOpen ? '关闭导购' : '帮我选工具'} </button>
+    <div className="yg-position" id="guide-panel" data-open={isOpen} aria-hidden={!isOpen} inert={!isOpen}><ChatPanel session={session} open={isOpen} onClose={close} contextProductId={contextProductId} contactHref={contactHref} /></div>
+    <button ref={launcher} className="yg-launcher" type="button" aria-controls="guide-panel" aria-expanded={isOpen} aria-label={isOpen ? '关闭工具导购' : '工具导购'} onKeyDown={event => { if (event.key === 'Escape' && isOpen) close(); }} onClick={() => { if (isOpen) close(); else { returnFocus.current = launcher.current; setIsOpen(true); } }}>
+      <GuideIcon name={isOpen ? 'close' : 'chat'} size={26} />
+      <span className="yg-launcher-tooltip" aria-hidden="true">{isOpen ? '关闭工具导购' : '工具导购'}</span>
+    </button>
   </div>;
 }

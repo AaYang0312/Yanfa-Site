@@ -1,0 +1,11 @@
+---
+import Admin from '../../layouts/Admin.astro';
+---
+<Admin title="设置">
+  <p class="settings-intro">连接 WorkBuddy，让它帮助查询产品和准备修改。修改完成后，打开产品编辑链接，核对并保存即可更新官网。</p>
+  <div class="settings-layout"><div><form id="token-form" class="settings-panel" autocomplete="off"><h2>连接 WorkBuddy</h2><label>连接名称<input name="name" maxlength="120" required placeholder="例如：产品资料维护" /></label><label>失效时间<input name="expires_at" type="datetime-local" required /></label><fieldset id="token-scopes"><legend>允许的操作</legend><label class="check"><input type="radio" name="permission" value="read" checked />只读查询</label><label class="check"><input type="radio" name="permission" value="edit" />查询与编辑产品</label></fieldset><p>编辑权限用于准备修改，更新官网仍由管理员确认。</p><button id="issue-token" type="submit" class="primary">创建连接</button></form>
+  <section id="issued-token" class="settings-panel" hidden aria-labelledby="issued-title"><h2 id="issued-title">连接已创建</h2><p>连接密钥仅显示这一次，请复制到 WorkBuddy。离开页面后将无法再次查看。</p><label>连接密钥<input id="token-secret" readonly autocomplete="off" spellcheck="false" /></label><div class="actions"><button id="copy-token" type="button">复制密钥</button><button id="dismiss-token" type="button">已保存，隐藏密钥</button></div></section></div>
+  <section class="settings-panel"><h2>在 WorkBuddy 中添加连接</h2><label>连接地址<input id="mcp-endpoint" readonly /></label><ol><li>打开 WorkBuddy 的自定义 MCP 设置，添加 HTTP 连接。</li><li>填入连接地址，并将创建的密钥填入 Bearer 授权设置。也可复制下方配置，将占位文字替换为密钥。</li><li>让 WorkBuddy 查询或准备产品修改，然后打开它提供的产品编辑链接，检查后点击“保存并更新官网”。</li></ol><details><summary>查看连接配置</summary><pre id="mcp-template" tabindex="0"></pre></details><button id="copy-template" type="button">复制连接配置</button><p class="config-note">配置不包含密钥。不同版本的 WorkBuddy，设置入口可能略有差异。</p></section></div>
+  <section class="settings-panel"><div class="section-heading"><h2>已创建的连接</h2><button id="refresh-tokens" type="button">刷新</button></div><div id="tokens"><p class="muted">正在读取连接…</p></div></section>
+  <script>import { mountTokens } from '../../lib/tokens'; mountTokens();</script>
+</Admin>

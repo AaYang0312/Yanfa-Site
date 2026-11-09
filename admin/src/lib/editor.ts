@@ -1,223 +1,272 @@
-// Editing workflow: static pages hydrate from the authenticated workspace API.
-// Keep server metadata out of ProductEdit; review only the last saved document.
-// A 412 keeps the mutable form and requires an explicit baseline decision.
-import { api, ApiError, getSession, isDirty, notice, setDirty, showError } from './api';
-import { button, checkbox, element, input, reorder, select } from './dom';
-import { categories, facts, legacySeries, nails, requirements, scenes } from './labels';
-import { mediaPicker } from './media';
+import { api, ApiError, errorMessage, getSession, notice, setDirty, showError } from './api';
+import { button, checkbox, element, input, select } from './dom';
+import { categories, nails, scenes } from './labels';
+import { mediaPreview, missingImage, uploadImage } from './media';
+import { editable, fieldLabels, MAX_IMAGES, mergeEdits, moveImage, newProduct, newSlug, type VisibleField } from './product-state';
+import { renderUpdate, watchSiteUpdates } from './site-updates';
 import { validateContract } from '../../../src/generated/validate-contract.mjs';
-import type { GuideField, GuideProfileEdit, GuideReviewInput, MediaRecord, ProductCreate, ProductDocument, ProductEdit, ProductEnvelope, RequirementField, SceneID } from '../../../src/generated/contracts';
+import type { ProductDocument, ProductEdit, ProductEnvelope, ProductImage, SiteUpdate } from '../../../src/generated/contracts';
 
 const form = document.querySelector<HTMLFormElement>('#product-editor')!;
-const params = new URLSearchParams(location.search);
-let id = params.get('id');
-let slug = '';
-let saved: ProductDocument | null = null;
-let etag: string | null = null;
-let busy = false;
-let conflictVersion: ProductDocument | null = null;
-let edit: ProductEdit = {
-  kind: 'tool', name: '', model: '', category_id: 'straight', series: '', legacy_series_ids: [], summary: '', applications: [], features: [], notes: [], scene_ids: [], nail_type: null, fastener_text: '', long_nose: false, blower: false, images: [], cover_media_id: null, visibility: 'unlisted', sort_order: 0,
-  guide_profile: { scene_ids: [], materials: [], substrates: [], excluded_materials: [], excluded_substrates: [], power_source: null, nail_type: null, fastener_length_mm: null, load_bearing: null, long_nose: null, blower: null, limitations: [], consultation_notes: [], required_requirements: [], sources: [] }, purchase_options: [],
-};
 const $ = (selector: string) => document.querySelector<HTMLElement>(selector)!;
-function editable(product: ProductDocument): ProductEdit {
-  const { id: _id, slug: _slug, version: _version, updated_at: _updated, guide_profile, ...fields } = structuredClone(product);
-  const { reviews: _reviews, ...guide } = guide_profile;
-  return { ...fields, guide_profile: guide };
-}
+const saveButton = $('#save-product') as HTMLButtonElement;
+const deleteButton = $('#delete-product') as HTMLButtonElement;
+const uploader = $('#upload-images') as HTMLInputElement;
+let id = new URLSearchParams(location.search).get('id');
+const slug = newSlug();
+let saved: ProductDocument | null = null, etag: string | null = null;
+let edit = newProduct();
+let busy = false, uploading = false, deleted = false, conflict = false;
+let separateModel = false;
+let updates: SiteUpdate[] | null = [], trackedVersion: number | null = null;
+let refreshUpdates: () => Promise<void> = async () => {};
+let pending: { path: string; method: 'POST' | 'PUT' | 'DELETE'; body?: string; key: string; etag?: string; version: number } | null = null;
 function mark() { setDirty(true); }
-function lines(text: string) { return text.split('\n').map(line => line.trim()).filter(Boolean); }
-function choices<T extends string>(label: string, values: T[], options: Record<T, string>, update: (values: T[]) => void) {
-  const group = element('fieldset'); group.append(element('legend', label)); const controls = element('div', '', 'choices');
-  for (const key of Object.keys(options) as T[]) controls.append(checkbox(options[key], values.includes(key), checked => {
-    values = checked ? [...values, key] : values.filter(value => value !== key); update(values); mark();
-  }));
-  group.append(controls); return group;
+function lines(text: string) { return text.split('\n').map(value => value.trim()).filter(Boolean); }
+function lock() {
+  $('.editor-layout').inert = busy || uploading || !!pending || conflict;
+  saveButton.disabled = busy || uploading || conflict || deleted || pending?.method === 'DELETE';
+  deleteButton.disabled = busy || uploading || conflict || deleted || !!pending;
+  saveButton.textContent = busy ? '正在保存…' : pending ? '重试保存' : '保存并更新官网';
 }
 function renderBasic() {
-  const root = $('#basic-fields'); root.replaceChildren(); const grid = element('div', '', 'grid');
-  grid.append(input('固定路径 slug', slug, value => { slug = value; mark(); }, { max: 80, required: true, readOnly: !!id }), select('条目类型', edit.kind, { tool: '工具', consumable: '耗材', entry: '配套入口' }, value => { edit.kind = value as ProductEdit['kind']; mark(); }),
-    input('产品名称', edit.name, value => { edit.name = value; mark(); }, { max: 120 }), input('型号', edit.model, value => { edit.model = value; mark(); }, { max: 80 }),
-    select('分类', edit.category_id, categories, value => { edit.category_id = value as ProductEdit['category_id']; mark(); }), input('展示系列名称', edit.series, value => { edit.series = value; mark(); }, { max: 120 }),
-    input('排序值', String(edit.sort_order), value => { edit.sort_order = Number(value); mark(); }, { type: 'number' }));
-  const order = grid.querySelector<HTMLInputElement>('input[type=number]')!; order.min = '0'; order.step = '1'; order.required = true;
-  const visibility = select('目标上下架状态', edit.visibility, { unlisted: '目标下架', listed: '目标上架' }, value => { edit.visibility = value as ProductEdit['visibility']; mark(); });
-  visibility.querySelector('select')!.disabled = !id; grid.append(visibility); root.append(grid,
-    input('产品简介', edit.summary, value => { edit.summary = value; mark(); }, { max: 500, multiline: true }));
-  for (const [key, label] of [['applications', '用途（每行一项）'], ['features', '特点（每行一项）'], ['notes', '说明（每行一项）']] as const) root.append(input(label, edit[key].join('\n'), value => { edit[key] = lines(value); mark(); }, { multiline: true }));
-  root.append(choices('展示场景', edit.scene_ids, scenes, values => { edit.scene_ids = values; }), choices('旧系列归属', edit.legacy_series_ids, legacySeries, values => { edit.legacy_series_ids = values; }));
-  const tags = element('div', '', 'grid'); tags.append(select('展示枪钉类型', edit.nail_type ?? '', { '': '未知 / 不适用', ...nails }, value => { edit.nail_type = (value || null) as ProductEdit['nail_type']; mark(); }), input('展示紧固件规格', edit.fastener_text, value => { edit.fastener_text = value; mark(); }, { max: 1000 }), checkbox('展示加长枪嘴标签', edit.long_nose, value => { edit.long_nose = value; mark(); }), checkbox('展示吹尘标签', edit.blower, value => { edit.blower = value; mark(); })); root.append(tags);
+  const root = $('#basic-fields'); root.replaceChildren();
+  const identity = element('div', '', 'grid');
+  const primary = input(separateModel ? '产品名称' : '产品名称 / 型号', edit.name, value => {
+    const sameModel = edit.name === edit.model;
+    edit.name = value;
+    if (!separateModel && ((!!id && sameModel) || (!id && edit.kind === 'tool'))) edit.model = value;
+    mark();
+  }, { max: separateModel || edit.kind !== 'tool' ? 120 : 80, required: true });
+  identity.append(primary);
+  if (separateModel) identity.append(input('型号（可留空）', edit.model, value => { edit.model = value; mark(); }, { max: 80 }));
+  root.append(identity);
+  const different = checkbox('单独填写型号', separateModel, value => {
+    separateModel = value;
+    if (!value && edit.model && edit.model !== edit.name) { separateModel = true; notice('名称与型号不同，已保留两个输入。若型号不适用，可清空型号。'); }
+    renderBasic();
+  });
+  different.classList.add('model-toggle'); root.append(different);
+  const grid = element('div', '', 'grid');
+  grid.append(select('产品分类', edit.category_id, categories, value => {
+    edit.category_id = value as ProductEdit['category_id'];
+    if (!id) {
+      edit.kind = value === 'nails' ? 'consumable' : value === 'other' ? 'entry' : 'tool';
+      if (!separateModel) edit.model = edit.kind === 'tool' ? edit.name : '';
+    }
+    mark(); renderBasic(); renderDisplay();
+  }), input('系列（可留空）', edit.series, value => { edit.series = value; mark(); }, { max: 120 }));
+  root.append(grid, input('产品简介', edit.summary, value => { edit.summary = value; mark(); }, { max: 500, multiline: true }));
+  const state = select('官网展示', edit.visibility, { listed: '上架 · 在官网展示', unlisted: '下架 · 不在官网展示' }, value => { edit.visibility = value as ProductEdit['visibility']; mark(); });
+  state.classList.add('visibility-field'); root.append(state);
+}
+function renderDisplay() {
+  const root = $('#display-fields'); root.replaceChildren();
+  if (edit.kind === 'tool' || edit.fastener_text || edit.nail_type) {
+    const grid = element('div', '', 'grid');
+    grid.append(input('适用枪钉（可留空）', edit.fastener_text, value => { edit.fastener_text = value; mark(); }, { max: 1000 }), select('枪钉类型（可不选）', edit.nail_type ?? '', { '': '不选择', ...nails }, value => { edit.nail_type = (value || null) as ProductEdit['nail_type']; mark(); })); root.append(grid);
+  }
+  const applicationLabel = edit.kind === 'consumable' || edit.category_id === 'nails' ? '适用工具与用途' : '使用场景';
+  for (const [key, label] of [['applications', applicationLabel], ['features', '产品特点'], ['notes', '注意事项']] as const) {
+    const control = input(label, edit[key].join('\n'), value => { edit[key] = lines(value); mark(); }, { multiline: true });
+    control.append(element('small', '每行一项，可留空。')); root.append(control);
+  }
+  const group = element('fieldset'); group.append(element('legend', '场景分类（可多选）'));
+  const choices = element('div', '', 'choices');
+  for (const [key, label] of Object.entries(scenes)) choices.append(checkbox(label, edit.scene_ids.includes(key as keyof typeof scenes), checked => {
+    edit.scene_ids = checked ? [...edit.scene_ids, key as keyof typeof scenes] : edit.scene_ids.filter(value => value !== key); mark();
+  }));
+  group.append(choices); root.append(group);
+  if (edit.kind === 'tool' || edit.long_nose || edit.blower) {
+    const tags = element('div', '', 'choices display-tags');
+    tags.append(checkbox('加长枪嘴', edit.long_nose, checked => { edit.long_nose = checked; mark(); }), checkbox('吹尘功能', edit.blower, checked => { edit.blower = checked; mark(); })); root.append(tags);
+  }
+}
+let dragged: string | null = null;
+function reorderImage(from: number, to: number) {
+  const mediaID = edit.images[from]?.media_id;
+  moveImage(edit.images, from, to); mark(); renderImages();
+  if (mediaID) $('#image-fields').querySelector<HTMLElement>(`[data-media-id="${CSS.escape(mediaID)}"] .image-preview`)?.focus();
 }
 function renderImages() {
   const root = $('#image-fields'); root.replaceChildren();
-  if (!edit.images.length) root.append(element('p', '尚未关联图片；未完成草稿可先保存。', 'empty'));
+  $('#image-count').textContent = `${edit.images.length} / ${MAX_IMAGES}`;
+  uploader.disabled = edit.images.length >= MAX_IMAGES;
+  if (!edit.images.length) {
+    const empty = element('div', '', 'image-empty'); empty.append(missingImage(), element('p', '可以先保存文字资料，官网将显示“暂无实物图”。')); root.append(empty);
+  }
   edit.images.forEach((image, index) => {
-    const row = element('article', '', 'card image-row'); row.dataset.imageId = image.media_id;
-    const preview = element('img'); preview.src = `/api/admin/media/${encodeURIComponent(image.media_id)}/file`; preview.alt = image.label || `产品图片 ${index + 1}`;
-    row.append(element('h3', `图片 ${index + 1}`), preview, element('small', image.media_id), input('图片标题', image.label, value => { image.label = value; mark(); }, { max: 120 }), input('图片说明', image.description, value => { image.description = value; mark(); }, { max: 1000, multiline: true }));
-    const cover = element('label', '', 'check'); const radio = element('input'); radio.type = 'radio'; radio.name = 'cover'; radio.value = image.media_id; radio.checked = edit.cover_media_id === image.media_id;
-    radio.addEventListener('change', () => { edit.cover_media_id = image.media_id; mark(); }); cover.append(radio, document.createTextNode('用作封面')); row.append(cover);
-    const actions = reorder(edit.images, index, renderImages, mark); actions.append(button('移除图片关联', () => { edit.images.splice(index, 1); if (edit.cover_media_id === image.media_id) edit.cover_media_id = null; mark(); renderImages(); })); row.append(actions); root.append(row);
+    const isCover = edit.cover_media_id === image.media_id;
+    const card = element('article', '', `image-card${isCover ? ' is-cover' : ''}`); card.dataset.mediaId = image.media_id;
+    const preview = mediaPreview(image.media_id, image.label || `${edit.name || '产品'}图片 ${index + 1}`); preview.className = 'image-preview'; preview.tabIndex = 0; preview.draggable = true; preview.setAttribute('aria-label', `图片 ${index + 1}，使用下方按钮调整顺序`);
+    if (isCover) preview.append(element('span', '封面', 'badge'));
+    preview.addEventListener('dragstart', event => { if (busy || uploading || pending || conflict) { event.preventDefault(); return; } dragged = image.media_id; event.dataTransfer?.setData('text/plain', image.media_id); if (event.dataTransfer) event.dataTransfer.effectAllowed = 'move'; card.setAttribute('aria-grabbed', 'true'); });
+    preview.addEventListener('dragend', () => { dragged = null; card.removeAttribute('aria-grabbed'); root.querySelectorAll('.drag-over').forEach(item => item.classList.remove('drag-over')); });
+    card.addEventListener('dragover', event => { if (dragged && dragged !== image.media_id) { event.preventDefault(); card.classList.add('drag-over'); } });
+    card.addEventListener('dragleave', event => { if (!card.contains(event.relatedTarget as Node | null)) card.classList.remove('drag-over'); });
+    card.addEventListener('drop', event => { event.preventDefault(); if (!dragged) return; const from = edit.images.findIndex(item => item.media_id === dragged); dragged = null; reorderImage(from, index); });
+    const details = element('div', '', 'image-details');
+    details.append(input('图片标题（可选）', image.label, value => { image.label = value; mark(); }, { max: 120 }));
+    const more = element('details'); more.append(element('summary', image.description ? '编辑图片说明' : '添加图片说明（可选）'), input('图片说明', image.description, value => { image.description = value; mark(); }, { multiline: true, max: 1000 })); details.append(more);
+    const actions = element('div', '', 'image-actions');
+    const cover = button(isCover ? '已设为封面' : '设为封面', () => { edit.cover_media_id = image.media_id; mark(); renderImages(); }); cover.disabled = isCover;
+    const up = button('前移', () => reorderImage(index, index - 1)); up.disabled = index === 0; up.setAttribute('aria-label', `将图片 ${index + 1} 前移`);
+    const down = button('后移', () => reorderImage(index, index + 1)); down.disabled = index === edit.images.length - 1; down.setAttribute('aria-label', `将图片 ${index + 1} 后移`);
+    actions.append(cover, button('替换', () => chooseReplacement(image)), up, down, button('移除', () => {
+      edit.images.splice(index, 1); if (isCover) edit.cover_media_id = edit.images[0]?.media_id ?? null; mark(); renderImages();
+    }, 'text-button danger'));
+    details.append(actions); card.append(preview, details); root.append(card);
   });
 }
-function addImage(media: Pick<MediaRecord, 'media_id'>) {
-  if (edit.images.some(image => image.media_id === media.media_id)) { notice('此图已在产品中。'); return; }
-  if (edit.images.length >= 12) { notice('最多关联 12 张图片。', true); return; }
-  edit.images.push({ media_id: media.media_id, label: '', description: '' }); mark(); renderImages();
+function chooseReplacement(image: ProductImage) {
+  const file = element('input'); file.type = 'file'; file.accept = 'image/jpeg,image/png,image/webp';
+  file.addEventListener('change', () => { if (file.files?.length) void uploadFiles([...file.files], image.media_id); }); file.click();
 }
-function renderGuide() {
-  const guide = edit.guide_profile; const root = $('#guide-fields'); root.replaceChildren();
-  root.append(choices<SceneID>('选型适用场景', guide.scene_ids, scenes, values => { guide.scene_ids = values; }));
-  const grid = element('div', '', 'grid');
-  for (const key of ['materials', 'substrates', 'excluded_materials', 'excluded_substrates', 'limitations', 'consultation_notes'] as const) grid.append(input(`选型${facts[key]}（每行一项）`, guide[key].join('\n'), value => { guide[key] = lines(value); mark(); }, { multiline: true }));
-  grid.append(select('选型动力要求', guide.power_source ?? '', { '': '未知', pneumatic: '气动', gas: '瓦斯', electric: '电动', manual: '手动' }, value => { guide.power_source = (value || null) as GuideProfileEdit['power_source']; mark(); }), select('选型紧固件类型', guide.nail_type ?? '', { '': '未知', ...nails }, value => { guide.nail_type = (value || null) as GuideProfileEdit['nail_type']; mark(); }));
-  for (const key of ['load_bearing', 'long_nose', 'blower'] as const) grid.append(select(`选型${facts[key]}`, guide[key] === null ? '' : String(guide[key]), { '': '未知', true: '是', false: '否' }, value => { guide[key] = value === '' ? null : value === 'true'; mark(); }));
-  root.append(grid);
-  const range = element('fieldset'); range.append(element('legend', '选型紧固件长度范围（mm）'));
-  const known = checkbox('已知长度范围', guide.fastener_length_mm !== null, value => {
-    guide.fastener_length_mm = value ? { min: 1, max: 1 } : null; mark(); renderGuide();
-  }); range.append(known);
-  if (guide.fastener_length_mm) for (const key of ['min', 'max'] as const) {
-    const control = input(key === 'min' ? '最小长度 mm' : '最大长度 mm', String(guide.fastener_length_mm[key]), value => { guide.fastener_length_mm![key] = Number(value); mark(); }, { type: 'number', required: true });
-    const number = control.querySelector('input')!; number.min = '0'; number.step = 'any'; range.append(control);
-  }
-  root.append(range, choices<RequirementField>('用途必需条件（需单独审核）', guide.required_requirements, requirements, values => { guide.required_requirements = values; }));
-}
-function renderSources() {
-  const root = $('#source-fields'); root.replaceChildren();
-  edit.guide_profile.sources.forEach((source, index) => {
-    const row = element('article', '', 'card source-row'); row.append(element('h3', `来源 ${index + 1}`));
-    row.append(input('来源 ID', source.id, value => { source.id = value; mark(); }, { max: 120, required: true }), select('来源类型', source.kind, { product_text: '展示文本', media: '私有素材', document: '已核验归档文档' }, value => { source.kind = value as typeof source.kind; mark(); renderSources(); }), input('来源引用', source.reference, value => { source.reference = value; mark(); }, { max: 1000, required: true }));
-    if (source.kind === 'document') row.append(input('归档文档 SHA256', source.sha256, value => { source.sha256 = value; mark(); }, { max: 64, required: true }));
-    else row.append(element('small', '保存时由服务器计算内容 SHA256。'));
-    row.append(input('公开来源标签', source.public_label, value => { source.public_label = value; mark(); }, { max: 120 }), input('公开来源 HTTPS 地址（可空）', source.public_url ?? '', value => { source.public_url = value || null; mark(); }, { type: 'url', max: 2048 }));
-    const actions = reorder(edit.guide_profile.sources, index, renderSources, mark); actions.append(button('移除来源', () => { edit.guide_profile.sources.splice(index, 1); mark(); renderSources(); })); row.append(actions); root.append(row);
-  });
-}
-function renderChannels() {
-  const root = $('#channel-fields'); root.replaceChildren(); $('#channel-empty').hidden = !!edit.purchase_options.length;
-  edit.purchase_options.forEach((channel, index) => {
-    const row = element('article', '', 'card channel-row'); row.append(element('h3', `渠道 ${index + 1}`), element('small', channel.id ? `渠道 ID：${channel.id}` : '新渠道：保存时生成稳定 ID'));
-    row.append(input('平台', channel.platform, value => { channel.platform = value; mark(); }, { max: 120 }), input('店铺名称', channel.store_name, value => { channel.store_name = value; mark(); }, { max: 120 }), input('商品详情 HTTPS 地址', channel.url, value => { channel.url = value; mark(); }, { type: 'url', max: 2048 }), select('型号对应范围', channel.match_scope, { exact_model: '精确型号', listing_with_variants: '需要选择规格' }, value => { channel.match_scope = value as typeof channel.match_scope; mark(); }), input('SKU 选择提示', channel.sku_hint, value => { channel.sku_hint = value; mark(); }, { max: 500 }), checkbox('启用此渠道', channel.enabled, value => { channel.enabled = value; mark(); }));
-    const actions = reorder(edit.purchase_options, index, renderChannels, mark); actions.append(button('删除购买渠道', () => { edit.purchase_options.splice(index, 1); mark(); renderChannels(); })); row.append(actions); root.append(row);
-  });
-}
-async function sha256(value: unknown) {
-  const hash = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(JSON.stringify(value)));
-  return Array.from(new Uint8Array(hash), byte => byte.toString(16).padStart(2, '0')).join('');
-}
-function renderReviews() {
-  const root = $('#review-fields'); root.replaceChildren();
-  if (!saved) { root.append(element('p', '保存草稿后即可逐事实审核。')); return; }
-  const profile = saved.guide_profile;
-  for (const field of Object.keys(facts) as GuideField[]) {
-    const row = element('article', '', 'card review-row'); row.dataset.fact = field;
-    const review = profile.reviews.find(item => item.field === field);
-    row.append(element('h3', facts[field]), element('pre', JSON.stringify(profile[field], null, 2), 'review-value'), element('p', review ? `已审核 · ${review.reviewed_by} · ${review.reviewed_at}` : '待核实：不能作为已核实规格'));
-    if (profile[field] === null) { row.append(element('p', '未知值不能审核，请先补齐可靠资料。', 'muted')); root.append(row); continue; }
-    const selected = new Set<string>();
-    for (const source of profile.sources) {
-      const sourceReview = element('div'); sourceReview.append(checkbox(`审核依据：${source.public_label || source.id}`, false, checked => { if (checked) selected.add(source.id); else selected.delete(source.id); }), element('small', `${source.kind} · ${source.reference} · SHA256 ${source.sha256}`)); row.append(sourceReview);
+async function uploadFiles(files: File[], replaceID?: string) {
+  if (busy || uploading || pending || conflict || !files.length) return;
+  if (!replaceID && edit.images.length + files.length > MAX_IMAGES) { notice(`最多添加 ${MAX_IMAGES} 张图片，目前还可以添加 ${MAX_IMAGES - edit.images.length} 张。`, true); uploader.value = ''; return; }
+  uploading = true; lock(); let completed = 0;
+  try {
+    for (const file of files) {
+      $('#upload-status').textContent = `正在上传图片 ${completed + 1} / ${files.length}…`;
+      const media = await uploadImage(file);
+      if (edit.images.some(image => image.media_id === media.media_id && image.media_id !== replaceID)) throw new Error('这张图片已经在产品中，请选择另一张图片。');
+      if (replaceID) {
+        const image = edit.images.find(image => image.media_id === replaceID)!;
+        image.media_id = media.media_id;
+        if (edit.cover_media_id === replaceID) edit.cover_media_id = media.media_id;
+      } else {
+        edit.images.push({ media_id: media.media_id, label: '', description: '' });
+        if (!edit.cover_media_id) edit.cover_media_id = media.media_id;
+      }
+      completed++; mark(); renderImages();
     }
-    const confirmFact = button('确认此事实已核实', async () => {
-      if (busy) return;
-      if (isDirty()) { notice('请先保存本地编辑，再审核当前版本。', true); return; }
-      if (!selected.size) { notice('请勾选支持此事实的来源。', true); return; }
-      if (!confirm(`确认“${facts[field]}”与所选来源一致？审核将记录当前管理身份。`)) return;
-      const sourceHashes = [...new Set(profile.sources.filter(source => selected.has(source.id)).map(source => source.sha256))];
-      await mutate(async () => {
-        const body: GuideReviewInput = { version: saved!.version, facts: [{ field, fact_sha256: await sha256(profile[field]), source_sha256s: sourceHashes }] };
-        const result = await api<ProductEnvelope>(`/api/admin/products/${encodeURIComponent(id!)}/guide-review`, { method: 'POST', headers: { 'If-Match': etag! }, body: JSON.stringify(body) });
-        accept(result.data, result.etag); notice('当前事实已审核；草稿尚未公开。');
-      });
-    });
-    confirmFact.disabled = !profile.sources.length; row.append(confirmFact); root.append(row);
-  }
+    $('#upload-status').textContent = '图片已添加，请保存产品以更新官网。';
+  } catch (error) { $('#upload-status').textContent = `${completed ? `已添加 ${completed} 张。` : ''}${errorMessage(error)}`; }
+  finally { uploading = false; uploader.value = ''; lock(); }
 }
+uploader.addEventListener('change', () => { void uploadFiles([...(uploader.files ?? [])]); });
 function render() {
-  form.hidden = false; renderBasic(); renderImages(); renderGuide(); renderSources(); renderChannels(); renderReviews();
-  $('#product-meta').textContent = saved ? `ID ${saved.id} · v${saved.version} · 更新时间 ${saved.updated_at} · 目标${saved.visibility === 'listed' ? '上架' : '下架'}` : '新草稿：允许资料未完成，创建时目标下架。';
-  $('#delete-product').hidden = !id;
+  form.hidden = false; renderBasic(); renderDisplay(); renderImages(); deleteButton.hidden = !id;
+  $('.delete-area').hidden = !id;
+  $('#product-meta').textContent = saved ? `${saved.name || saved.model || '产品'} · ${categories[saved.category_id]}` : '填写产品资料，保存后自动更新官网。';
+  lock();
 }
 function accept(envelope: ProductEnvelope, strongETag: string | null) {
-  if (!strongETag || strongETag !== `"${envelope.version}"`) throw new Error('服务器未返回当前强 ETag，请重新读取。');
-  saved = envelope.product; id = saved.id; slug = saved.slug; etag = strongETag; edit = editable(saved); conflictVersion = null;
-  setDirty(false); $('#conflict').hidden = true; render();
+  if (!strongETag || strongETag !== `"${envelope.version}"`) throw new TypeError('Missing write acknowledgement');
+  saved = envelope.product; id = saved.id; etag = strongETag; edit = editable(saved);
+  separateModel = !!edit.model && edit.name !== edit.model;
+  conflict = false; $('#conflict').hidden = true; setDirty(false); render();
 }
-function differences(local: unknown, remote: unknown, path = ''): { field: string; local: unknown; remote: unknown }[] {
-  if (JSON.stringify(local) === JSON.stringify(remote)) return [];
-  if (local && remote && typeof local === 'object' && typeof remote === 'object' && !Array.isArray(local) && !Array.isArray(remote)) {
-    return [...new Set([...Object.keys(local), ...Object.keys(remote)])].flatMap(key => differences((local as Record<string, unknown>)[key], (remote as Record<string, unknown>)[key], path ? `${path}.${key}` : key));
-  }
-  return [{ field: path, local, remote }];
+function paintUpdate() {
+  if (!id || trackedVersion === null) return;
+  const update = updates?.find(item => item.product_id === id);
+  renderUpdate($('#site-update'), update, trackedVersion, refreshUpdates, { unavailable: updates === null, deleted });
+}
+function humanValue(key: VisibleField, value: ProductEdit): string {
+  if (key === 'images') return `${value.images.length} 张图片${value.images.length ? `，封面为第 ${value.images.findIndex(item => item.media_id === value.cover_media_id) + 1} 张` : ''}。请核对图片与说明。`;
+  if (key === 'category_id') return categories[value.category_id];
+  if (key === 'scene_ids') return value.scene_ids.map(scene => scenes[scene]).join('、') || '未选择';
+  if (key === 'visibility') return value.visibility === 'listed' ? '上架' : '下架';
+  if (key === 'nail_type') return value.nail_type ? nails[value.nail_type] : '未选择';
+  const field = value[key];
+  if (typeof field === 'boolean') return field ? '是' : '否';
+  return Array.isArray(field) ? field.join('\n') || '未填写' : String(field || '未填写');
 }
 async function showConflict() {
-  const result = await api<ProductEnvelope>(`/api/admin/products/${encodeURIComponent(id!)}`);
-  conflictVersion = result.data.product;
+  conflict = true; lock();
   const root = $('#conflict'); root.hidden = false; root.replaceChildren();
-  const title = element('h2', `版本冲突：本地基于 v${saved?.version}，服务器为 v${conflictVersion.version}`); title.id = 'conflict-title'; root.append(title, element('p', '服务器返回 412。本地表单已保留；未自动重试。请逐项比较后选择如何继续。'));
-  for (const change of differences(edit, editable(conflictVersion))) {
-    const row = element('div', '', 'card'); row.append(element('h3', change.field)); const values = element('div', '', 'diff');
-    const local = element('div'); local.append(element('strong', '本地'), element('pre', JSON.stringify(change.local, null, 2) ?? '无'));
-    const remote = element('div'); remote.append(element('strong', '服务器'), element('pre', JSON.stringify(change.remote, null, 2) ?? '无')); values.append(local, remote); row.append(values); root.append(row);
+  const title = element('h2', '产品有新的修改'); title.id = 'conflict-title';
+  root.append(title, element('p', '你的输入已保留。请比较并选择要保留的内容，或重新读取最新产品。'));
+  try {
+    const result = await api<ProductEnvelope>(`/api/admin/products/${encodeURIComponent(id!)}`);
+    const remote = editable(result.data.product), base = editable(saved!);
+    const { conflicts } = mergeEdits(base, edit, remote);
+    const choices: Partial<Record<VisibleField, 'local' | 'remote'>> = {};
+    for (const key of conflicts) {
+      const section = element('div', '', 'conflict-field'); section.append(element('h3', fieldLabels[key]));
+      const values = element('div', '', 'diff');
+      for (const [label, product] of [['你的修改', edit], ['最新内容', remote]] as const) {
+        const column = element('div'); column.append(element('strong', label), element('p', humanValue(key, product)));
+        if (key === 'images') { const thumbs = element('div', '', 'conflict-images'); for (const image of product.images) thumbs.append(mediaPreview(image.media_id, image.label)); column.append(thumbs); }
+        values.append(column);
+      }
+      section.append(values, select('保留哪一份内容', '', { '': '请选择', local: '保留你的修改', remote: '采用最新内容' }, value => { if (value) choices[key] = value as 'local' | 'remote'; else delete choices[key]; })); root.append(section);
+    }
+    if (!conflicts.length) root.append(element('p', '两份修改没有重叠，可以合并后继续编辑。'));
+    const actions = element('div', '', 'actions');
+    actions.append(button('合并修改，继续编辑', () => {
+      const merged = mergeEdits(base, edit, remote, choices);
+      if (merged.conflicts.length) { notice('请为每个有差异的项目选择要保留的内容。', true); return; }
+      edit = merged.edit; saved = result.data.product; etag = result.etag; conflict = false; root.hidden = true; separateModel = !!edit.model && edit.name !== edit.model;
+      setDirty(true); render(); notice('内容已合并，请检查后点击“保存并更新官网”。');
+    }, 'primary'), button('重新读取最新产品', () => {
+      if (!confirm('重新读取会放弃这次尚未保存的输入。确认重新读取？')) return;
+      accept(result.data, result.etag); trackedVersion = saved!.version; paintUpdate(); notice('已读取最新内容。');
+    })); root.append(actions);
+  } catch (error) {
+    root.append(element('p', errorMessage(error)), button('重新比较最新内容', showConflict));
   }
-  root.append(button('保留本地，继续比较', () => { notice('本地编辑仍保留。可继续修改，明确采用服务器版本后再保存。'); }), button('采用服务器版本并丢弃本地', () => {
-    if (!confirm('确认丢弃本地编辑并读取服务器版本？')) return;
-    accept(result.data, result.etag); notice('已采用服务器版本。');
-  }), button('已比较，将本地编辑转到此服务器版本', () => {
-    if (!confirm('这会保留全部本地字段，包括差异中列出的旧值。请确认已手动合并，需要的服务器修改已录入本地表单。随后仍需点击保存。')) return;
-    saved = result.data.product; etag = result.etag; conflictVersion = null; root.hidden = true; renderReviews(); setDirty(true); notice(`已将本地编辑基线设为 v${saved.version}；请核对后显式保存。`);
-  })); root.focus();
+  root.focus();
 }
-async function mutate(operation: () => Promise<void>) {
-  if (busy) return; busy = true;
-  // Prevent editing during an in-flight mutation, so a response cannot swallow
-  // keystrokes made after the submitted snapshot.
-  const controls = Array.from(form.querySelectorAll<HTMLInputElement | HTMLButtonElement | HTMLSelectElement | HTMLTextAreaElement>('input,button,select,textarea'), control => [control, control.disabled] as const);
-  for (const [control] of controls) control.disabled = true;
-  try { await operation(); } catch (error) {
-    if (error instanceof ApiError && error.status === 412) { setDirty(true); try { await showConflict(); } catch (readError) { showError(readError); } }
-    else showError(error);
-  } finally {
-    busy = false;
-    for (const [control, disabled] of controls) if (control.isConnected) control.disabled = disabled;
-  }
+async function submitPending() {
+  if (!pending || busy) return;
+  const operation = pending; busy = true; lock();
+  try {
+    const headers: Record<string, string> = { 'Idempotency-Key': operation.key };
+    if (operation.etag) headers['If-Match'] = operation.etag;
+    const result = await api<ProductEnvelope>(operation.path, { method: operation.method, headers, ...(operation.body ? { body: operation.body } : {}) });
+    if (operation.method === 'DELETE') {
+      pending = null; deleted = true; trackedVersion = operation.version + 1; setDirty(false); form.hidden = true; $('#deleted-product').hidden = false;
+      $('#conflict').hidden = true; notice('产品已删除，正在更新官网。');
+    } else {
+      const wasNew = !id; accept(result.data, result.etag); pending = null; trackedVersion = result.data.version;
+      if (wasNew) history.replaceState(null, '', `/admin/products/edit/?id=${encodeURIComponent(id!)}`);
+      notice('修改已保存，正在更新官网。');
+    }
+    updates = updates?.filter(item => item.product_id !== id) ?? [];
+    $('#save-recovery')?.remove(); paintUpdate(); await refreshUpdates();
+  } catch (error) {
+    if (error instanceof ApiError && (error.status === 412 || error.detail.code === 'VERSION_CONFLICT')) {
+      pending = null; setDirty(true); await showConflict();
+    } else if (error instanceof ApiError && (error.status === 401 || error.status === 403)) {
+      setDirty(true); showError(error);
+      if (operation.method === 'DELETE' && !$('#save-recovery')) {
+        const retry = button('重试删除', submitPending); retry.id = 'save-recovery'; $('#notice').append(retry);
+      }
+    } else if (error instanceof ApiError && error.status < 500) {
+      pending = null; showError(error);
+    } else {
+      setDirty(true); notice('暂时无法确认保存结果。你的内容已保留，请重试同一次操作。', true);
+      if (operation.method === 'DELETE' && !$('#save-recovery')) {
+        const retry = button('重试删除', submitPending); retry.id = 'save-recovery'; $('#notice').append(retry);
+      }
+    }
+  } finally { busy = false; lock(); }
 }
 form.addEventListener('submit', event => {
-  event.preventDefault();
-  if (conflictVersion) { notice('请先在冲突区域明确选择处理方式。', true); $('#conflict').focus(); return; }
-  mutate(async () => {
-    const body = id ? structuredClone(edit) : { ...structuredClone(edit), slug, visibility: 'unlisted' } satisfies ProductCreate;
+  event.preventDefault(); if (busy || uploading || conflict) return;
+  if (!pending) {
+    const body = id ? structuredClone(edit) : { ...structuredClone(edit), slug };
     try { validateContract(`product.schema.json#/$defs/${id ? 'ProductEdit' : 'ProductCreate'}`, body); }
-    catch (error) { const detail = error as { error?: { fields: string[] } }; throw new Error(`字段不合法，请检查：${detail.error?.fields.join('、') ?? '产品资料'}`); }
-    const result = await api<ProductEnvelope>(id ? `/api/admin/products/${encodeURIComponent(id)}` : '/api/admin/products', { method: id ? 'PUT' : 'POST', headers: id ? { 'If-Match': etag! } : {}, body: JSON.stringify(body) });
-    const wasNew = !id; accept(result.data, result.etag);
-    if (wasNew) history.replaceState(null, '', `/admin/products/edit/?id=${encodeURIComponent(id!)}`);
-    notice('草稿已保存；尚未公开。');
-  });
+    catch (error) { const detail = error as { error?: { fields: string[] } }; showError(new ApiError(422, { code: '', message: '', fields: detail.error?.fields ?? [] })); return; }
+    pending = { path: id ? `/api/admin/products/${encodeURIComponent(id)}` : '/api/admin/products', method: id ? 'PUT' : 'POST', body: JSON.stringify(body), key: crypto.randomUUID(), ...(etag ? { etag } : {}), version: saved?.version ?? 0 };
+  }
+  void submitPending();
 });
-$('#add-source').addEventListener('click', () => {
-  edit.guide_profile.sources.push({ id: `src_${crypto.randomUUID().replaceAll('-', '')}`, kind: 'product_text', reference: '/summary', sha256: '0'.repeat(64), public_label: '', public_url: null }); mark(); renderSources();
-});
-$('#add-channel').addEventListener('click', () => {
-  edit.purchase_options.push({ id: null, platform: '', store_name: '', url: '', match_scope: 'exact_model', sku_hint: '', enabled: false }); mark(); renderChannels();
-});
-$('#delete-product').addEventListener('click', () => {
-  if (!confirm('确认删除此从未公开的草稿？固定路径仍会保留。已公开产品只能下架。')) return;
-  mutate(async () => { await api(`/api/admin/products/${encodeURIComponent(id!)}`, { method: 'DELETE', headers: { 'If-Match': etag! } }); setDirty(false); location.assign('/admin/products/'); });
+deleteButton.addEventListener('click', () => {
+  if (!id || busy || pending || uploading || conflict) return;
+  if (!confirm(`删除“${edit.name || edit.model || '此产品'}”？产品将从官网移除，尚未保存的输入也会丢弃。`)) return;
+  pending = { path: `/api/admin/products/${encodeURIComponent(id)}`, method: 'DELETE', key: crypto.randomUUID(), etag: etag!, version: saved!.version };
+  void submitPending();
 });
 async function initialize() {
   try {
     await getSession();
-    if (id) {
-      const result = await api<ProductEnvelope>(`/api/admin/products/${encodeURIComponent(id)}`); accept(result.data, result.etag);
-      const mediaID = params.get('media_id'); if (mediaID) { addImage({ media_id: mediaID }); params.delete('media_id'); history.replaceState(null, '', `${location.pathname}?${params}`); }
-    } else if (!location.pathname.endsWith('/new/')) { throw new Error('请从产品列表选择要编辑或审核的产品。'); }
-    else render();
-    let pickerInitialized = false;
-    $('#media-picker').addEventListener('toggle', () => { if ((<HTMLDetailsElement>$('#media-picker')).open && !pickerInitialized) { pickerInitialized = true; mediaPicker($('#editor-media'), addImage); } });
-    if (location.pathname.includes('/guide-reviews/')) $('#guide-review').scrollIntoView();
+    if (id) { const result = await api<ProductEnvelope>(`/api/admin/products/${encodeURIComponent(id)}`); accept(result.data, result.etag); trackedVersion = result.data.version; }
+    else if (/\/new\/?$/.test(location.pathname)) render();
+    else throw new Error('请从产品列表选择需要编辑的产品。');
+    refreshUpdates = watchSiteUpdates(items => { updates = items; paintUpdate(); });
   } catch (error) { showError(error); }
 }
-initialize();
+void initialize();

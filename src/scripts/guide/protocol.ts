@@ -82,20 +82,43 @@ export async function currentRelease() {
   return body.release_id;
 }
 
-export function observeResponse(response: Response, fence: GuideStreamFence, signal?: AbortSignal | null) {
+export function observeResponse(response: Response, fence: GuideStreamFence, signal?: AbortSignal | null, onText?: (text: string) => void) {
   if (!response.body || !response.headers.get('content-type')?.startsWith('text/event-stream') || response.headers.get('x-vercel-ai-ui-message-stream') !== 'v1') throw Error('导购消息流协议无效。');
   const reader = response.body.getReader();
+  let closed = false;
+  let detachAbort = () => {};
   const body = new ReadableStream<Uint8Array>({
+    start(controller) {
+      const abort = () => {
+        if (closed) return;
+        closed = true; detachAbort();
+        const error = new DOMException('Aborted', 'AbortError');
+        controller.error(error);
+        void reader.cancel(error).catch(() => {});
+      };
+      detachAbort = () => signal?.removeEventListener('abort', abort);
+      if (signal?.aborted) abort();
+      else signal?.addEventListener('abort', abort, { once: true });
+    },
     async pull(controller) {
       try {
-        if (signal?.aborted) throw new DOMException('Aborted', 'AbortError');
         const chunk = await reader.read();
-        if (signal?.aborted) throw new DOMException('Aborted', 'AbortError');
-        if (chunk.done) { fence.finish(); controller.close(); }
-        else { fence.push(chunk.value); controller.enqueue(chunk.value); }
-      } catch (error) { await reader.cancel(error).catch(() => {}); controller.error(error); }
+        if (closed) return;
+        if (chunk.done) {
+          fence.finish(); closed = true; detachAbort(); controller.close();
+        } else {
+          const previous = fence.text;
+          fence.push(chunk.value);
+          if (fence.text !== previous) onText?.(fence.text);
+          if (!closed) controller.enqueue(chunk.value);
+        }
+      } catch (error) {
+        if (closed) return;
+        closed = true; detachAbort(); controller.error(error);
+        await reader.cancel(error).catch(() => {});
+      }
     },
-    cancel(reason) { return reader.cancel(reason); },
+    cancel(reason) { closed = true; detachAbort(); return reader.cancel(reason); },
   });
   return new Response(body, { status: response.status, statusText: response.statusText, headers: response.headers });
 }

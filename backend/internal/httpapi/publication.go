@@ -12,6 +12,21 @@ import (
 // RegisterPublication contains transport checks only. MCP calls the same service
 // methods with its authenticated Actor; it never receives a confirm tool.
 func RegisterPublication(mux *http.ServeMux, m AuthMiddleware, s *publication.Service) {
+	mux.Handle("GET /api/admin/site-updates", m.Browser(func(w http.ResponseWriter, r *http.Request, session auth.Session) {
+		out, err := s.SiteUpdates(r.Context(), session.Actor)
+		if err != nil {
+			WriteError(w, err)
+			return
+		}
+		WriteJSON(w, 200, out)
+	}))
+	mux.Handle("POST /api/admin/site-updates/retry", m.Browser(func(w http.ResponseWriter, r *http.Request, session auth.Session) {
+		if err := s.RetrySiteUpdate(r.Context(), session.Actor); err != nil {
+			WriteError(w, err)
+			return
+		}
+		WriteJSON(w, 202, map[string]string{"status": "pending"})
+	}))
 	mux.Handle("POST /api/admin/candidates", m.Browser(func(w http.ResponseWriter, r *http.Request, session auth.Session) {
 		input, err := DecodeJSON[contract.CandidateInput](w, r, "admin.schema.json#/$defs/CandidateInput")
 		if err != nil {

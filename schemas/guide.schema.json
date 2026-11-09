@@ -221,6 +221,7 @@
         "intent": {
           "type": "string",
           "enum": [
+            "clarify",
             "consult",
             "select"
           ]
@@ -263,6 +264,22 @@
               "type": "null"
             }
           ]
+        },
+        "reply": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000,
+          "x-trim": true,
+          "description": "简短自然的用户可见回复；普通介绍和追问不追加通用核实清单。"
+        },
+        "cleared_requirements": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/GuideRequirementClearance"
+          },
+          "maxItems": 9,
+          "uniqueItems": true,
+          "description": "仅明确撤销的条件；reference须逐字引用本轮用户消息。未列入的旧条件不会因null而丢失。"
         }
       },
       "required": [
@@ -277,7 +294,10 @@
           "if": {
             "properties": {
               "intent": {
-                "const": "consult"
+                "enum": [
+                  "clarify",
+                  "consult"
+                ]
               }
             }
           },
@@ -304,6 +324,25 @@
                 "minLength": 1,
                 "maxLength": 2000,
                 "pattern": "[^\\x09-\\x0d\\x20\\x85\\xa0  -     　]"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "intent": {
+                "const": "clarify"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "reply"
+            ],
+            "properties": {
+              "candidate_product_ids": {
+                "maxItems": 0
               }
             }
           }
@@ -683,6 +722,13 @@
         "contact_href": {
           "type": "string",
           "pattern": "^tel:[+0-9]+$"
+        },
+        "reply": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000,
+          "x-trim": true,
+          "description": "简短自然的用户可见回复；普通介绍和追问不追加通用核实清单。"
         }
       },
       "required": [
@@ -817,6 +863,25 @@
         "name",
         "phone",
         "contact_href"
+      ]
+    },
+    "GuideRequirementClearance": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "field": {
+          "$ref": "product.schema.json#/$defs/RequirementField"
+        },
+        "reference": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000,
+          "x-trim": true
+        }
+      },
+      "required": [
+        "field",
+        "reference"
       ]
     }
   }

@@ -1,14 +1,13 @@
 ---
 import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
-import { shops, pendingShops } from '../data/site';
+import { shops, telHref } from '../data/site';
 ---
 
 <Base title="网上商城" description="元发官方网上店铺：淘宝直销店、淘宝专营店、天猫旗舰店、天猫严选旗舰店、京东专营店。">
   <PageHead
     title="网上商城"
-    lead="元发官方店铺，在线选购钉枪、枪钉与配件。"
-    text="各型号的参数、价格与库存，以店铺详情页为准。购买后请保留订单记录，作为 6 个月整机质保的凭证。"
+    lead="官方店铺"
   />
 
   <section class="section section--paper">
@@ -20,19 +19,26 @@ import { shops, pendingShops } from '../data/site';
               <span class="shops__platform">{shop.platform}</span>
               <strong>{shop.name}</strong>
               <span class="shops__go">
-                进入店铺
+                查看价格与库存
                 <svg viewBox="0 0 10 10" aria-hidden="true"><path d="M3 1.5 6.5 5 3 8.5" fill="none" stroke="currentColor" stroke-width="1.4" /></svg>
               </span>
             </a>
           </li>
         ))}
       </ul>
-      <p class="note">{pendingShops.join('、')}的链接整理中，需要时可先电话咨询。</p>
+      <nav class="shop-support" aria-label="选型与售后">
+        <a href={telHref()}><span>型号与配件咨询</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 3 3 5-3 3c1 2 3 4 5 5l3-3 5 3v3c0 1-1 2-2 2C10 20 4 14 3 5c0-1 1-2 2-2z" /></svg></a>
+        <a href="/service/"><span>6 个月整机质保</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7" /></svg></a>
+      </nav>
     </div>
   </section>
 </Base>
 
 <style>
+  .shop-support { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin-top: 32px; }
+  .shop-support a { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px 0; border-top: 1px solid var(--line); color: var(--navy); text-decoration: none; }
+  .shop-support a:hover { color: var(--wine); }
+  .shop-support svg { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
   .shops {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -92,6 +98,7 @@ import { shops, pendingShops } from '../data/site';
   }
 
   @media (max-width: 560px) {
+    .shop-support { grid-template-columns: 1fr; gap: 0; }
     .shops {
       grid-template-columns: 1fr;
     }

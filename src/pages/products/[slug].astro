@@ -4,7 +4,7 @@ import Crumbs from '../../components/Crumbs.astro';
 import ProductDetail from '../../components/ProductDetail.astro';
 import ProductImage from '../../components/ProductImage.astro';
 import ItemCard from '../../components/ItemCard.astro';
-import { products, legacySeries, withdrawnRoutes, categoryBySlug, type Product } from '../../data/catalog';
+import { products, legacySeries, withdrawnRoutes, familyHubs, categoryBySlug, type Product } from '../../data/catalog';
 import { telHref } from '../../data/site';
 
 export function getStaticPaths() {
@@ -12,32 +12,33 @@ export function getStaticPaths() {
     ...products.map(product => ({ params: { slug: product.slug }, props: { product } })),
     ...legacySeries.map(series => ({ params: { slug: series.slug }, props: { series } })),
     ...withdrawnRoutes.map(route => ({ params: { slug: route.slug }, props: { withdrawn: route } })),
+    ...familyHubs.map(family => ({ params: { slug: family.slug }, props: { family } })),
   ];
 }
-const { product, series, withdrawn } = Astro.props as {
-  product?: Product; series?: (typeof legacySeries)[number]; withdrawn?: (typeof withdrawnRoutes)[number];
+const { product, series: legacy, family, withdrawn } = Astro.props as {
+  product?: Product; series?: (typeof legacySeries)[number]; family?: (typeof familyHubs)[number]; withdrawn?: (typeof withdrawnRoutes)[number];
 };
+const series = family || legacy;
 const title = withdrawn ? '产品已下架' : product ? `${product.name} ${categoryBySlug(product.category).name}` : series!.name;
 const description = withdrawn ? '该产品已下架，请电话咨询当前在售产品。' : product
   ? `元发 ${product.name}：${product.summary}。查看产品实图、适用枪钉、功能特点与使用说明。`
   : `元发 ${series!.name}，查看当前在售型号与产品资料。`;
 ---
 
-<Base title={title} description={description} robots={withdrawn ? 'noindex, follow' : undefined} contextProductId={product?.id}>
+<Base title={title} description={description} robots={withdrawn || family ? 'noindex, follow' : undefined} contextProductId={product?.id}>
   {withdrawn ? (
     <section class="wrap series" data-withdrawn>
       <Crumbs items={[{ label: '产品中心', href: '/products/' }, { label: '产品已下架' }]} />
       <h1>该产品已下架</h1>
-      <p>此网址曾公开，当前没有在售产品资料。请返回产品中心查看在售型号，或电话咨询。</p>
       <a class="btn btn--solid" href={telHref()}>电话咨询</a>
       <a class="btn" href="/products/">查看在售产品</a>
     </section>
   ) : product ? <ProductDetail product={product} /> : (
-    <div class="wrap series">
+    <div class="wrap series" data-family-owner={family?.id}>
       <Crumbs items={[{ label: '产品中心', href: '/products/' }, { label: series!.name }]} />
       <div class="title-bar"><h1>{series!.name}</h1></div>
       {series!.items.length ? <>
-        <p class="series__lead">本系列共 {series!.items.length} 个在售型号，选择具体产品查看实图、适用枪钉和功能特点。</p>
+        <p class="series__lead">{series!.items.length} 个在售型号</p>
         <div class="series__grid">
           {series!.items.map(item => (
             <ItemCard
@@ -45,14 +46,15 @@ const description = withdrawn ? '该产品已下架，请电话咨询当前在�
               model={item.name}
               subtitle={item.summary}
               badge={item.blower ? '打钉 + 吹尘' : item.longNose ? '加长枪嘴' : undefined}
-              lines={[{ label: '类型', value: categoryBySlug(item.category).name }, { label: '枪钉', value: item.fastener?.replace(/\n/g, ' ') || '请核实具体型号规格' }]}
+              lines={[{ label: '类型', value: categoryBySlug(item.category).name }, ...(item.fastener ? [{ label: '枪钉', value: item.fastener.replace(/\n/g, ' ') }] : [])]}
             >
               <ProductImage product={item} />
             </ItemCard>
           ))}
         </div>
-      </> : <p class="series__lead" data-series-empty>本系列暂无在售型号，请查看其他产品或电话咨询。</p>}
+      </> : <p class="series__lead" data-series-empty>暂无在售型号</p>}
       <a class="btn" href="/products/">返回产品中心</a>
+      {family && <a class="btn" href={telHref()}>电话咨询</a>}
     </div>
   )}
 </Base>

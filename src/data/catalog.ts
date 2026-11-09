@@ -1,5 +1,6 @@
 import type { CategoryID, NailType as ContractNailType, CatalogSnapshot, SnapshotProductImage } from '../generated/contracts';
 import { readSnapshot, listedProducts, mediaFilename } from '../../scripts/audit-build.mjs';
+import { materialFamilies } from './material-families.ts';
 
 export type CategorySlug = CategoryID;
 export type NailType = ContractNailType;
@@ -42,14 +43,34 @@ export function createCatalog(snapshot: CatalogSnapshot) {
     return { id: series.id, slug: series.slug, name: series.name, items: products.filter(product => members.has(product.id)) };
   });
   const listedIDs = new Set(products.map(product => product.id));
-  const withdrawnRoutes = snapshot.previously_published_routes.filter(route => !listedIDs.has(route.product_id));
-  return { products, categories, legacySeries, withdrawnRoutes };
+  const historical = snapshot.previously_published_routes.filter(route => !listedIDs.has(route.product_id));
+  const familyHubs = materialFamilies.filter(family => {
+    const owner = snapshot.products.find(product => product.slug === family.slug);
+    const route = snapshot.previously_published_routes.find(route => route.slug === family.slug);
+    if (snapshot.legacy_series.some(series => series.slug === family.slug) || (owner && owner.id !== family.id) || (route && route.product_id !== family.id)) return false;
+    if (listedIDs.has(family.id)) return false;
+    if (route) return true;
+    // Fresh seed imports may delete an old generic entry before its first
+    // publication. Explicit source mappings keep that family path, but only
+    // once all members exist, and never take a known product/series route.
+    return !owner && family.members.every(slug => products.some(product => product.slug === slug));
+  })
+    .map(family => ({ ...family, items: products.filter(product => family.members.includes(product.slug)) }));
+  const withdrawnRoutes = historical.filter(route => !familyHubs.some(family => family.id === route.product_id && family.slug === route.slug));
+  return { products, categories, legacySeries, withdrawnRoutes, familyHubs };
 }
 
 const snapshot: CatalogSnapshot = readSnapshot(process.env.CATALOG_SNAPSHOT);
 export const releaseId = snapshot.release_id;
-export const { products, categories, legacySeries, withdrawnRoutes } = createCatalog(snapshot);
+export const { products, categories, legacySeries, withdrawnRoutes, familyHubs } = createCatalog(snapshot);
 export const toolProducts = products.filter(product => product.kind === 'tool');
+export const catalogCounts = (items: { kind: Product['kind'] }[]) => ({
+  tools: items.filter(product => product.kind === 'tool').length,
+  parts: items.filter(product => product.kind === 'entry').length,
+  nails: items.filter(product => product.kind === 'consumable').length,
+});
+export const productCounts = catalogCounts(products);
+export const productCountText = `${productCounts.tools} 款工具、${productCounts.parts} 项配件、${productCounts.nails} 类枪钉`;
 export const nailTypes = snapshot.nail_types.map(item => ({ slug: item.id, name: item.name }));
 export const allSceneTags = snapshot.scenes.map(scene => scene.name);
 export function categoryBySlug(slug: CategorySlug) {
@@ -69,5 +90,5 @@ export const imagesOf = (product: Product) => [
 ];
 export const searchTextOf = (product: Product) => [
   product.name, product.model, categoryBySlug(product.category).name, product.series,
-  product.summary, product.fastener, ...product.features,
+  product.summary, product.fastener, ...product.applications, ...product.features, ...product.notes,
 ].filter(Boolean).join(' ');

@@ -1,13 +1,13 @@
-<p>保存仅更新草稿。目标上架仍需后续发布；选型审核只针对当前已保存版本。</p>
-<p id="product-meta" class="muted"></p><p id="unsaved" class="notice" hidden>有未保存内容</p>
-<nav class="section-links" aria-label="编辑章节"><a href="#basic">基础资料</a><a href="#images">图片</a><a href="#guide">选型资料</a><a href="#channels">商城渠道</a><a href="#guide-review">逐事实审核</a></nav>
+<div class="editor-intro"><a class="back-link" href="/admin/products/">‹ 返回产品列表</a><p id="product-meta" class="muted">维护官网上的产品文字与图片。</p></div>
+<div id="site-update" role="status" aria-live="polite" hidden></div>
 <section id="conflict" class="conflict" tabindex="-1" hidden aria-labelledby="conflict-title"></section>
+<div id="deleted-product" class="empty" hidden><h2>产品已删除</h2><p>官网更新进度见上方提示。</p><a class="button" href="/admin/products/">返回产品列表</a></div>
 <form id="product-editor" hidden>
-  <fieldset id="basic"><legend>基础资料</legend><div id="basic-fields"></div></fieldset>
-  <fieldset id="images"><legend>图片、封面与顺序</legend><p class="muted">封面作为列表和图库首图；其余图片按下面的顺序展示。移除关联不会删除原素材。</p><div id="image-fields"></div><details id="media-picker"><summary>上传或选择已有素材</summary><div id="editor-media"></div></details></fieldset>
-  <fieldset id="guide"><legend>选型资料草稿</legend><p class="muted">事实与展示标签独立维护。未知标量保留“未知”；数组每行一项。空集合只在有来源且已确认无适用项时审核。修改事实或其选定来源将使相关审核失效。</p><div id="guide-fields"></div><h2>事实来源</h2><p class="muted">展示文本来源填写 JSON Pointer（例如 /summary、/applications/0）；图片填写素材 ID；文档填写已核验归档来源 ID 和 SHA256。文本、图片摘要由服务端重算。</p><div id="source-fields"></div><button id="add-source" type="button">添加来源</button></fieldset>
-  <fieldset id="channels"><legend>商城购买渠道</legend><p class="muted">配置客户核实的 HTTPS 商品详情地址，主机必须符合部署白名单。多规格入口需要明确 SKU 提示；启停和顺序会随草稿保存。</p><p id="channel-empty" class="empty">暂无对应商城链接。公开后仍可通过详情和电话咨询。</p><div id="channel-fields"></div><button id="add-channel" type="button">添加购买渠道</button></fieldset>
-  <div class="actions sticky"><button id="save-product" class="primary" type="submit">保存草稿</button><button id="delete-product" class="danger" type="button" hidden>删除未公开草稿</button></div>
+  <div class="editor-layout"><nav class="section-links" aria-label="编辑章节"><a href="#basic">基本信息</a><a href="#display">展示资料</a><a href="#images">产品图片 <span id="image-count">0 / 20</span></a></nav>
+  <div class="editor-sections"><section id="basic" class="editor-section"><h2>基本信息</h2><div id="basic-fields"></div></section>
+  <section id="display" class="editor-section"><h2>展示资料</h2><p class="section-help">有资料的部分会展示在官网，暂时没有的内容可以留空。</p><div id="display-fields"></div></section>
+  <section id="images" class="editor-section"><div class="section-heading"><h2>产品图片</h2><label class="button" id="upload-button">添加图片<input id="upload-images" class="visually-hidden" type="file" accept="image/jpeg,image/png,image/webp" multiple /></label></div><p class="section-help">最多 20 张，单张不超过 10 MB。拖动图片或用移动按钮调整顺序。</p><p id="upload-status" role="status" aria-live="polite"></p><div id="image-fields" class="image-grid"></div></section></div></div>
+  <div class="save-bar"><div class="save-state"><span id="unsaved" hidden>有未保存的修改</span><span id="save-hint" class="muted">保存后自动更新官网</span></div><div class="actions"><a class="button" href="/admin/products/">取消</a><button id="save-product" class="primary" type="submit">保存并更新官网</button></div></div>
+  <div class="delete-area"><p class="muted">删除后，产品也将从官网移除。</p><button id="delete-product" class="text-button danger" type="button" hidden>删除产品</button></div>
 </form>
-<section id="guide-review" aria-labelledby="review-heading"><h2 id="review-heading">当前保存版本的逐事实审核</h2><p>先保存资料，再核对每个事实及其来源。未审核值和未知值不能当作已核实规格用于推荐；审核身份与时间由服务端记录。</p><div id="review-fields"></div></section>
 <script>import '../lib/editor';</script>

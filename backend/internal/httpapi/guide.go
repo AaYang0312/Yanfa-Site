@@ -20,7 +20,8 @@ type GuideOptions struct {
 }
 
 // RegisterGuide uses a single captured public handle and commits JSON/SSE
-// headers only through BeginResponse after complete business computation.
+// headers only through BeginResponse. Streamed text remains provisional until
+// the final result passes the complete business and active-release checks.
 func RegisterGuide(mux *http.ServeMux, releases *release.Manager, service *guide.Service, options ...GuideOptions) {
 	var config GuideOptions
 	if len(options) > 0 {
@@ -74,6 +75,13 @@ func RegisterGuide(mux *http.ServeMux, releases *release.Manager, service *guide
 						return
 					}
 				}
+				if acceptsGuideStream(r.Header.Get("Accept")) {
+					if releaseSlot != nil {
+						defer releaseSlot()
+					}
+					guideStream(w, r, releases, h, config.Agent, consultation)
+					return
+				}
 				func() {
 					if releaseSlot != nil {
 						defer releaseSlot()
@@ -92,28 +100,53 @@ func RegisterGuide(mux *http.ServeMux, releases *release.Manager, service *guide
 			WriteError(w, err)
 			return
 		}
-		if req.SelectedProductID == nil && status == http.StatusOK && acceptsGuideStream(r.Header.Get("Accept")) {
-			send, e := guide.PrepareUIMessageStream(result)
-			if e != nil {
-				WriteError(w, e)
-				return
-			}
-			if e = releases.BeginResponse(h.ID(), func() error {
-				w.Header().Set("Content-Type", "text/event-stream")
-				w.Header().Set("x-vercel-ai-ui-message-stream", "v1")
-				w.Header().Set("Cache-Control", "no-store")
-				w.Header().Set("X-Content-Type-Options", "nosniff")
-				w.WriteHeader(http.StatusOK)
-				return nil
-			}); e != nil {
-				WriteError(w, e)
-				return
-			}
-			_ = send(r.Context(), w)
-			return
-		}
 		guideJSON(w, r, releases, h, status, result)
 	})
+}
+
+func guideStream(w http.ResponseWriter, r *http.Request, releases *release.Manager, h *release.Handle, agent *guide.Agent, req contract.ConsultRequest) {
+	stream := guide.NewLiveUIMessageStream(r.Context(), w, func() error {
+		return releases.BeginResponse(h.ID(), func() error {
+			w.Header().Set("Content-Type", "text/event-stream; charset=utf-8")
+			w.Header().Set("x-vercel-ai-ui-message-stream", "v1")
+			w.Header().Set("Cache-Control", "no-store")
+			w.Header().Set("X-Accel-Buffering", "no")
+			w.Header().Set("X-Content-Type-Options", "nosniff")
+			w.WriteHeader(http.StatusOK)
+			return nil
+		})
+	})
+	defer stream.Close()
+	result, err := agent.ConsultStream(r.Context(), h, req, func(delta string) error {
+		if _, e := releases.Capture(h.ID()); e != nil {
+			return e
+		}
+		return stream.Append(delta)
+	})
+	if r.Context().Err() != nil {
+		return
+	}
+	// A publication switch during generation cannot commit old product cards.
+	if _, e := releases.Capture(h.ID()); e != nil {
+		err = e
+	}
+	if err != nil || result.State == "unavailable" {
+		if stream.Started() {
+			stream.Fail()
+		} else if err != nil {
+			WriteError(w, err)
+		} else {
+			guideJSON(w, r, releases, h, http.StatusServiceUnavailable, result)
+		}
+		return
+	}
+	if err = stream.Finish(result); err != nil {
+		if stream.Started() {
+			stream.Fail()
+		} else {
+			WriteError(w, err)
+		}
+	}
 }
 
 func acceptsGuideStream(accept string) bool {

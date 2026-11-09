@@ -84,7 +84,7 @@ func RegisterContent(mux *http.ServeMux, m AuthMiddleware, service *content.Serv
 			WriteError(w, err)
 			return
 		}
-		out, err := service.Create(r.Context(), s.Actor, input)
+		out, err := service.Create(content.WithRequestKey(r.Context(), r.Header.Get("Idempotency-Key")), s.Actor, input)
 		if err != nil {
 			WriteError(w, err)
 			return
@@ -111,7 +111,7 @@ func RegisterContent(mux *http.ServeMux, m AuthMiddleware, service *content.Serv
 			WriteError(w, err)
 			return
 		}
-		out, err := service.Replace(r.Context(), s.Actor, r.PathValue("id"), version, input)
+		out, err := service.Replace(content.WithRequestKey(r.Context(), r.Header.Get("Idempotency-Key")), s.Actor, r.PathValue("id"), version, input)
 		if err != nil {
 			WriteError(w, err)
 			return
@@ -124,7 +124,7 @@ func RegisterContent(mux *http.ServeMux, m AuthMiddleware, service *content.Serv
 			WriteError(w, err)
 			return
 		}
-		out, err := service.Delete(r.Context(), s.Actor, r.PathValue("id"), version)
+		out, err := service.Delete(content.WithRequestKey(r.Context(), r.Header.Get("Idempotency-Key")), s.Actor, r.PathValue("id"), version)
 		if err != nil {
 			WriteError(w, err)
 			return

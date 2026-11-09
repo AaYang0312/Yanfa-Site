@@ -709,7 +709,7 @@
           "items": {
             "$ref": "#/$defs/SnapshotProductImage"
           },
-          "maxItems": 12,
+          "maxItems": 20,
           "x-unique-by": "media_id"
         },
         "cover_media_id": {
@@ -805,7 +805,7 @@
                 "type": "string",
                 "minLength": 1,
                 "maxLength": 120,
-                "pattern": "[^\\x09-\\x0d\\x20\\x85\\xa0  -     　]"
+                "pattern": "[^\\x09-\\x0d\\x20\\x85\\xa0  - \u2028\u2029  　]"
               },
               "purchase_options": {
                 "type": "array",
@@ -825,7 +825,7 @@
                             "type": "string",
                             "minLength": 1,
                             "maxLength": 500,
-                            "pattern": "[^\\x09-\\x0d\\x20\\x85\\xa0  -     　]"
+                            "pattern": "[^\\x09-\\x0d\\x20\\x85\\xa0  - \u2028\u2029  　]"
                           }
                         }
                       }
@@ -866,26 +866,16 @@
                       "type": "string",
                       "minLength": 1,
                       "maxLength": 80,
-                      "pattern": "[^\\x09-\\x0d\\x20\\x85\\xa0  -     　]"
+                      "pattern": "[^\\x09-\\x0d\\x20\\x85\\xa0  - \u2028\u2029  　]"
                     },
                     "summary": {
                       "type": "string",
                       "minLength": 1,
                       "maxLength": 500,
-                      "pattern": "[^\\x09-\\x0d\\x20\\x85\\xa0  -     　]"
+                      "pattern": "[^\\x09-\\x0d\\x20\\x85\\xa0  - \u2028\u2029  　]"
                     },
                     "applications": {
                       "$ref": "product.schema.json#/$defs/PublishedToolApplications"
-                    },
-                    "images": {
-                      "type": "array",
-                      "minItems": 1
-                    },
-                    "cover_media_id": {
-                      "type": "string",
-                      "minLength": 1,
-                      "maxLength": 120,
-                      "pattern": "^[A-Za-z0-9_-]+$"
                     }
                   }
                 }

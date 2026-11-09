@@ -461,6 +461,14 @@ func (s *Service) Delete(ctx context.Context, actor auth.Actor, id string) error
 	if used != 0 {
 		return contract.NewBusinessError(409, "MEDIA_REFERENCED", "素材仍被工作区或保留版本引用。")
 	}
+	// A later machine draft may remove an image still needed by a confirmed save.
+	err = tx.QueryRowContext(ctx, `SELECT EXISTS(SELECT 1 FROM product_confirmations p WHERE p.deleted=0 AND (EXISTS(SELECT 1 FROM json_each(p.document_json,'$.images') i WHERE json_extract(i.value,'$.media_id')=?) OR EXISTS(SELECT 1 FROM json_each(p.document_json,'$.guide_profile.sources') s WHERE json_extract(s.value,'$.kind')='media' AND json_extract(s.value,'$.reference')=?)))`, id, id).Scan(&used)
+	if err != nil {
+		return err
+	}
+	if used != 0 {
+		return contract.NewBusinessError(409, "MEDIA_REFERENCED", "图片仍用于待更新的产品。")
+	}
 	// active.json remains authoritative even if a crash left task rows incomplete.
 	active, err := os.ReadFile(filepath.Join(s.dir, "state", "active.json"))
 	if err == nil {

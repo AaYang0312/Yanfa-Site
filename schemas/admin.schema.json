@@ -1258,6 +1258,57 @@
         "model",
         "release_id"
       ]
+    },
+    "SiteUpdate": {
+      "required": [
+        "product_id",
+        "version",
+        "state",
+        "message",
+        "public_url"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "message": {
+          "type": "string"
+        },
+        "version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "state": {
+          "enum": [
+            "pending",
+            "updating",
+            "succeeded",
+            "failed",
+            "draft"
+          ],
+          "type": "string"
+        },
+        "public_url": {
+          "type": "string"
+        },
+        "product_id": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "SiteUpdateList": {
+      "required": [
+        "items"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SiteUpdate"
+          }
+        }
+      },
+      "type": "object"
     }
   }
 }
