@@ -132,7 +132,7 @@ Service方法用指针接收器，Actor仅认证层构造；Handle不可变且�
 
 JSON 与 SSE 的 data-guide-result 严格消费同一必填 conflicts 数组。no_match 的说明由服务端决策提供，下游逐项以纯文本展示并保留咨询入口，清除旧选择/购买；未知证据显示真实缺口与无法确认。旧 sessionStorage 完整结果缺 conflicts 时拒绝恢复为当前结果；可分别校验保留纯文本历史和九字段需求，清除操作卡并提示重新咨询/选择，不补[]，不更改 yuanfa.guide.v1/version1。
 
-部署至少配置 SITE_URL/DATA_DIR/HTTP_ADDR/TRUSTED_PROXIES/MODEL_PROVIDER/MODEL_BASE_URL/MODEL_MODEL/MODEL_API_KEY/PURCHASE_ALLOWED_HOSTS/TEMPLATE_DIR/ADMIN_STATIC_DIR/SITE_CONFIG_PATH。MODEL_PROVIDER=openai；未配置模型时咨询unavailable，独立目录和显式选择仍可运行。模型20s/8轮、IP10次每分钟、并发4；无自动重试/failover。真实客户模型、WorkBuddy、商城和OpenResty须在各自运行环境验证。
+部署至少配置 SITE_URL/DATA_DIR/HTTP_ADDR/TRUSTED_PROXIES/MODEL_PROVIDER/MODEL_BASE_URL/MODEL_MODEL/MODEL_API_KEY/PURCHASE_ALLOWED_HOSTS/TEMPLATE_DIR/ADMIN_STATIC_DIR/SITE_CONFIG_PATH。MODEL_PROVIDER=openai；未配置模型时咨询unavailable，独立目录和显式选择仍可运行。模型总时限45s/8轮、IP10次每分钟、并发4；无自动重试/failover。真实客户模型、WorkBuddy、商城和OpenResty须在各自运行环境验证。
 
 ## 契约验证入口
 

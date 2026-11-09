@@ -20,7 +20,7 @@ import (
 	"yuanfa-official/backend/internal/release"
 )
 
-const inferenceTimeout = 20 * time.Second
+const inferenceTimeout = 45 * time.Second
 
 // Agent owns consultation only. The embedded deterministic Service remains the
 // selection authority; no model dependency or semaphore is added to Service.

@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"encoding/json"
 	"errors"
+	"log"
 	"time"
 
 	"yuanfa-official/backend/internal/auth"
@@ -17,12 +18,20 @@ import (
 func (s *Service) automaticLoop() {
 	tick := time.NewTicker(time.Second)
 	defer tick.Stop()
+	lastError := ""
 	for {
 		select {
 		case <-s.ctx.Done():
 			return
 		case <-tick.C:
-			_ = s.automaticStep(s.ctx)
+			if err := s.automaticStep(s.ctx); err != nil {
+				if message := err.Error(); message != lastError {
+					log.Printf("AUTOMATIC_UPDATE_FAILED: %s", message)
+					lastError = message
+				}
+			} else {
+				lastError = ""
+			}
 		}
 	}
 }

@@ -39,6 +39,11 @@ func open(ctx context.Context, lock *coordination.DataDirLock, files fs.FS) (*St
 	if err != nil {
 		return nil, err
 	}
+	// Read-only containers configure TMPDIR under the writable data volume.
+	// Create it before SQLite can spill temporary tables or sort results to disk.
+	if err = os.MkdirAll(os.TempDir(), 0700); err != nil {
+		return nil, fmt.Errorf("create temporary directory: %w", err)
+	}
 	dbDir := filepath.Join(dir, "db")
 	if err = os.MkdirAll(dbDir, 0700); err != nil {
 		return nil, err

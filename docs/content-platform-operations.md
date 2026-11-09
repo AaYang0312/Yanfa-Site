@@ -46,7 +46,7 @@ node scripts/package-runtime.mjs --root "$PWD" --out .work/runtime
 - `MODEL_PROVIDER=openai`、`MODEL_BASE_URL`、`MODEL_MODEL`、`MODEL_API_KEY`：客户授权模型配置，仅经受保护的环境文件或 1Panel 变量注入 Go，不写源码、镜像层、命令行或日志。
 - `YUANFA_IMAGE`：构建和审查时使用有版本的 tag；投产前记录仓库推送/拉取获得的实际 `repository:version@sha256:...` 并以该引用部署。不要以本地未构建 tag 代替镜像 digest 证据。
 
-BigModel 的 GLM-5.3-Flash 使用兼容接口：`MODEL_PROVIDER=openai`、`MODEL_BASE_URL=https://open.bigmodel.cn/api/paas/v4`、`MODEL_MODEL=glm-5.3-flash`，密钥放在受保护环境文件的 `MODEL_API_KEY` 中。模型标识和推理参数见[官方模型说明](https://docs.bigmodel.cn/cn/guide/models/vlm/glm-5.3-flash)。适配器对该型号使用 `reasoning_effort=low`，不叠加会干扰工具调用的 `response_format=json_object`；最终输出仍须通过 Go 的严格 JSON Schema 校验，原有 20 秒总时限、取消和无自动重试规则保留。配置后重启服务，除检查 `/health/ready` 的 `model=configured`，还须在网页实际发送产品查询并验证选型卡片；健康状态只代表配置齐全，不代表供应商调用已通过。
+BigModel 的 GLM-5.3-Flash 使用兼容接口：`MODEL_PROVIDER=openai`、`MODEL_BASE_URL=https://open.bigmodel.cn/api/paas/v4`、`MODEL_MODEL=glm-5.3-flash`，密钥放在受保护环境文件的 `MODEL_API_KEY` 中。模型标识和推理参数见[官方模型说明](https://docs.bigmodel.cn/cn/guide/models/vlm/glm-5.3-flash)。适配器对该型号使用 `reasoning_effort=low`，不叠加会干扰工具调用的 `response_format=json_object`；最终输出仍须通过 Go 的严格 JSON Schema 校验，总时限为 45 秒，取消和无自动重试规则保留。配置后重启服务，除检查 `/health/ready` 的 `model=configured`，还须在网页实际发送产品查询并验证选型卡片；健康状态只代表配置齐全，不代表供应商调用已通过。
 
 授权环境中的构建/启动示例，仅引用由运维预备的受保护环境文件（权限0600），不创建、打印或复制现有秘密；模型 Key 等只放在该文件或受保护的面板变量中。先用同一项目、文件和环境执行 `config --quiet`，不要把可能含秘密的完整 Compose config 写入日志：
 
@@ -83,6 +83,8 @@ YUANFA_DATA_DIR=/srv/yuanfa-b/data YUANFA_HTTP_PORT=18082 SITE_URL=https://b.exa
 通过面板支持的配置入口加入 `deploy/1panel-openresty.conf` 的 SSE 精确 location，并在常规代理上使用同一实例的回环上游和上述转发头，保留 Go 的 Cache-Control/Set-Cookie。`/api/guide/messages` 关闭 response/request buffering、proxy cache、gzip/上游压缩、自动重试；如面板启用 Brotli，同样在面板支持的入口关闭该路由压缩。HTTP/1.1，5秒连接及60秒读写/发送期限，断连传 Go context。常规代理也关闭共享 `proxy_cache`；常规 HTML 重新验证；哈希资源 immutable；带会话/预览的 HTML、后台和 API 不共享缓存。禁止为 `/data`、私有媒体、catalog.json、构建日志或备份设置静态公开目录。
 
 生产配置应经实际 TLS/OpenResty 的真实浏览器检查 SSE 分块、中文/多行、finish/DONE、取消释放和 JSON 错误；还应通过 inspect/top 检查非root、镜像 digest、挂载及构建结束后仅 Go 常驻。无 Docker/1Panel 权限时这些项目仍需在部署环境验证，不能以本地产物替代。
+
+SQLite 打开前会创建配置的临时目录，Compose 使用 `/data/tmp`（0700）。只读容器中的排序或大批量资料处理需要该目录可写；目录无法创建时启动会明确报错。自动更新的其他运行错误会记录 `AUTOMATIC_UPDATE_FAILED`，连续相同错误仅记录一次，方便定位后台一直等待更新的原因。
 
 ## 初始化、发布及恢复边界
 

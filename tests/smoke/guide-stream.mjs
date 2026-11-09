@@ -9,8 +9,9 @@ import {decodeContract} from '../../src/generated/validate-contract.mjs';
 import {DefaultChatTransport,readUIMessageStream} from 'ai';
 import {editable,command,initialize,startServer,stopServer,live} from './publication.mjs';
 
-const {values}=parseArgs({options:{go:{type:'string'},root:{type:'string'},'task-number':{type:'string'},out:{type:'string'}}});
+const {values}=parseArgs({options:{go:{type:'string'},root:{type:'string'},'task-number':{type:'string'},out:{type:'string'},scenario:{type:'string',multiple:true}}});
 assert.ok(values.go&&values.root&&values['task-number']&&values.out,'--go --root --task-number --out required');
+const selectedScenarios=new Set(values.scenario??[]);
 const out=resolve(values.out);await mkdir(out,{recursive:true});
 const report={success:false,scope:'Integration-only controlled Eino execution, not a customer provider',scenarios:[],results:[],checks:[]};
 const harness=await createGuideHarness({go:values.go,root:values.root,taskNumber:Number(values['task-number']),out:join(out,'processes'),withAdmin:false});
@@ -36,8 +37,26 @@ function complete(stream){
 }
 async function both(ctx,body){const json=await request(ctx,body);const stream=await request(ctx,body,{stream:true});complete(stream);assert.deepEqual(stream.result,json.result,'same controlled Go business result must survive JSON and SSE');return stream.result}
 async function scenario(name,callback){
+ if(selectedScenarios.size&&!selectedScenarios.has(name))return;
  const entry={name,http:[]};report.scenarios.push(entry);
- await harness.runScenario(name,async ctx=>{const fixture=await setupGuideFixture(ctx.baseURL,entry);await callback(ctx,fixture,entry);entry.stats=await ctx.readStats()});
+ await harness.runScenario(name,async ctx=>{
+  const fixture=await setupGuideFixture(ctx.baseURL,entry);
+  if(name==='deadline-45-seconds'||name==='cancel-block'||name==='cancel-tool-block'){
+   // Guide-review creates a newer draft that hides the older confirmation's
+   // pending state. Confirm this final reviewed version, then await that exact
+   // version; merely checking for no pending items can race a publication.
+   fixture.product=await fixture.save(fixture.product,editable(fixture.product));
+   await waitGuide(async()=>{
+    const updates=(await fixture.api.expect('/api/admin/site-updates',{},200,'wait for fixture publication')).json.items;
+    const update=updates.find(item=>item.product_id===fixture.product.id);
+    assert.ok(update?.state!=='failed','fixture publication failed');
+    return update?.version===fixture.product.version&&update.state==='succeeded';
+   },'fixture automatic publication settled',180000);
+   fixture.candidate.id=(await fixture.api.expect('/api/catalog/release',{anonymous:true},200,'capture settled fixture release')).json.release_id;
+   entry.settled_release_id=fixture.candidate.id;
+  }
+  await callback(ctx,fixture,entry);entry.stats=await ctx.readStats();
+ });
 }
 async function reached(ctx,name){return waitGuide(async()=>{try{const s=JSON.parse(await readFile(join(ctx.controlDir,'reached.json'),'utf8'));return s.barrier===name&&s}catch(error){if(error.code!=='ENOENT')throw error}},name)}
 async function productionNoModel(){
@@ -101,8 +120,8 @@ try{
  await scenario('iteration-bound',async(ctx,f)=>{
   await configure(ctx,{model_error:'loop'});const r=await request(ctx,{release_id:f.candidate.id,message:'连续查询直到超过限制'},{stream:true,status:503});assert.equal(r.result.state,'unavailable');const stats=await ctx.readStats();assert.equal(stats.agent_runs,1);assert.equal(stats.model_calls,8);assert.ok(stats.tool_calls<=8);assert.equal(stats.active_model_calls,0);pass('real Eino loop ends after eight model generations, without retry or fallback');
  });
- await scenario('deadline-20-seconds',async(ctx,f,entry)=>{
-  await configure(ctx,{model_error:'block'});const start=Date.now();const r=await request(ctx,{release_id:f.candidate.id,message:'等待模型至总期限'},{stream:true,status:503});entry.elapsed_ms=Date.now()-start;assert.ok(entry.elapsed_ms>=19500&&entry.elapsed_ms<24000);assert.equal(r.result.state,'unavailable');assert.equal((await ctx.readStats()).active_model_calls,0);pass('actual 20-second inference deadline cancels provider and returns JSON503');
+ await scenario('deadline-45-seconds',async(ctx,f,entry)=>{
+  await configure(ctx,{model_error:'block'});const start=Date.now();const r=await request(ctx,{release_id:f.candidate.id,message:'等待模型至总期限'},{stream:true,status:503});entry.elapsed_ms=Date.now()-start;assert.ok(entry.elapsed_ms>=44500&&entry.elapsed_ms<49000);assert.equal(r.result.state,'unavailable');assert.equal((await ctx.readStats()).active_model_calls,0);pass('actual 45-second inference deadline cancels provider and returns JSON503');
  });
  for(const mode of ['block','tool-block'])await scenario('cancel-'+mode,async(ctx,f)=>{
   await configure(ctx,{model_error:mode});const abort=new AbortController();let rejected=false;
@@ -168,6 +187,7 @@ try{
   unknown=await f.get('p_f30cl');ue=editable(unknown);ue.visibility='unlisted';await f.save(unknown,ue);release=await f.publish();await configure(ctx,{model_proposal:proposal(req,{ids:[]})});result=await both(ctx,body());assert.equal(result.state,'no_match');assert.deepEqual(result.conflicts,['当前已发布目录暂无可供导购的上架商品，请联系咨询。']);
   pass('actual Export/Evaluate empty catalogue, all conflicts with stable deduplication, mixed unknown, filtered empty page, unreviewed power and omitted matched proposal; Go JSON/SSE decoded by shared JS validator');
  });
- await productionNoModel();
+ if(!selectedScenarios.size||selectedScenarios.has('production-no-model'))await productionNoModel();
+ for(const name of selectedScenarios)assert.ok(name==='production-no-model'?report.production?.success:report.scenarios.some(entry=>entry.name===name),'unknown scenario: '+name);
  report.success=true;
 } catch(error){report.error=error.stack;throw error}finally{try{await harness.close()}finally{await writeFile(join(out,'guide-stream-smoke.json'),JSON.stringify(report,null,2))}}

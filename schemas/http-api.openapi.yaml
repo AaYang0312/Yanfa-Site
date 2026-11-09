@@ -5102,7 +5102,7 @@
             }
           }
         },
-        "description": "选择始终JSON、零模型。咨询可Accept:text/event-stream；20s/8轮/IP10每分钟/模型并发4，无自动重试。BeginResponse短读锁核release后开始；开流前真实409/422/429错误JSON，模型不可用503 GuideResult。不得提前200。JSON与SSE data-guide-result使用同一GuideResult：conflicts必填，no_match为1–100条服务端确定性说明，每条Unicode空白trim后1–1000字符，其他状态显式[]；no_match保持question=null、selection=null、recommendations=[]，无购买。",
+        "description": "选择始终JSON、零模型。咨询可Accept:text/event-stream；45s/8轮/IP10每分钟/模型并发4，无自动重试。BeginResponse短读锁核release后开始；开流前真实409/422/429错误JSON，模型不可用503 GuideResult。不得提前200。JSON与SSE data-guide-result使用同一GuideResult：conflicts必填，no_match为1–100条服务端确定性说明，每条Unicode空白trim后1–1000字符，其他状态显式[]；no_match保持question=null、selection=null、recommendations=[]，无购买。",
         "x-stream-commit": "模型原生流式输出，元数据先校验，末尾reply逐段显示；临时文字不写历史。完成data+finish+DONE且无error/abort/EOF缺口后，复核/api/catalog/release，原子提交。取消或失败丢弃预览。开流后错误仅sanitized error并终止，不finish。UTF8/多行用JSON编码，charset=utf-8，X-Accel-Buffering:no。"
       }
     },

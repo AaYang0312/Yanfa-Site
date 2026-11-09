@@ -25,7 +25,7 @@ func NewModel(ctx context.Context, baseURL, name, key string) (model.ToolCalling
 		// The agent still requires JSON and strictly validates its final proposal.
 		config.ResponseFormat = nil
 		// This model cannot disable thinking. Bound its reasoning effort for the
-		// interactive guide's existing 20-second total inference deadline.
+		// interactive guide's bounded 45-second total inference deadline.
 		config.ReasoningEffort = "low"
 	}
 	return openai.NewChatModel(ctx, config)
