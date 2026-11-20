@@ -1,0 +1,184 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import { technicalPage } from '../data/site';
+import certificate from '../assets/technical/patent-certificate.png';
+import certificateReverse from '../assets/technical/patent-certificate-reverse.png';
+import patentDetails from '../assets/technical/patent-details.png';
+import patentDrawing from '../assets/technical/patent-drawing.png';
+
+const patentImages = [
+  { image: certificate, label: '专利证书正面' },
+  { image: certificateReverse, label: '专利证书背面' },
+  { image: patentDetails, label: '专利公告信息' },
+  { image: patentDrawing, label: '专利摘要及附图' },
+];
+const documents = [
+  {
+    id: 'reports',
+    title: '主要产品检测报告',
+    name: '检测报告',
+    files: ['ST64GL 钢钉枪', 'F30M 直钉枪', '1013JG 码钉枪', 'ST64 钢钉枪'],
+  },
+  {
+    id: 'manuals',
+    title: '产品说明书',
+    name: '说明书',
+    files: [
+      'F30G', 'T50G', 'ST64GL', 'ST64G', 'ST38LG', '416KG', '440KG', '422JG', '1013JG',
+      '1022JG', 'BD70G', 'BW120G', 'BW160G', 'N838G', 'NP70G', 'P625G', 'T50SCG', 'P515G',
+    ],
+  },
+];
+const description = '查看元发加长枪嘴气动钉枪的专利资料，下载主要产品的检测报告及使用说明书。';
+---
+
+<Base title={technicalPage.label} description={description}>
+  <PageHead title={technicalPage.label} lead={description} />
+
+  <div class="wrap">
+    <nav class="contents" aria-label="技术资料目录">
+      <a href="#patent">专利资料</a>
+      {documents.map(({ id, title }) => <a href={`#${id}`}>{title}</a>)}
+    </nav>
+
+    <section class="resources" aria-labelledby="patent">
+      <h2 id="patent">专利资料</h2>
+      <p class="patent-name">加长枪嘴气动钉枪（实用新型专利「一种尖嘴气动钢钉枪」，授权公告号 CN219170797U）</p>
+      <ul class="patent-grid">
+        {patentImages.map(({ image, label }) => (
+          <li>
+            <a href={image.src} data-astro-prefetch="false">
+              <Image
+                src={image}
+                alt=""
+                width={640}
+                widths={[320, 640, Math.min(image.width, 1280)]}
+                sizes="(max-width: 960px) calc(50vw - 28px), calc(min(23vw, 720px) - 28px)"
+                format="webp"
+              />
+              <span>{label}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    {documents.map(({ id, title, name, files }) => (
+      <section class="resources" aria-labelledby={id}>
+        <h2 id={id}>{title}</h2>
+        <ul class="file-grid">
+          {files.map((file) => (
+            <li>
+              <a href={`/technical-docs/${id}/${file.split(' ', 1)[0].toLowerCase()}.pdf`} data-astro-prefetch="false" download={`${file} ${name}.pdf`} aria-label={`下载 ${file} ${name}（PDF）`}>
+                {file}
+                <span aria-hidden="true">下载 PDF</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))}
+  </div>
+</Base>
+
+<style>
+  .contents {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 24px;
+    margin-bottom: 12px;
+    border-block: 1px solid var(--line);
+  }
+
+  .contents a {
+    padding: 10px 0;
+    color: var(--wine);
+    text-underline-offset: 4px;
+  }
+
+  .resources {
+    padding: clamp(32px, 5vw, 56px) 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .resources:last-child {
+    margin-bottom: 32px;
+    border-bottom: 0;
+  }
+
+  .resources h2 {
+    margin-bottom: 20px;
+    font-size: clamp(23px, 2.7vw, 30px);
+  }
+
+  .patent-name {
+    margin-bottom: 20px;
+  }
+
+  .patent-grid,
+  .file-grid {
+    display: grid;
+    gap: 16px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .patent-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .file-grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 245px), 1fr));
+  }
+
+  .patent-grid a,
+  .file-grid a {
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .patent-grid a:hover span,
+  .file-grid a:hover {
+    color: var(--wine);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  .patent-grid a {
+    display: grid;
+    gap: 8px;
+  }
+
+  .patent-grid img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: contain;
+    border: 1px solid var(--line);
+    background: var(--paper);
+  }
+
+  .file-grid a {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4px 16px;
+    padding: 12px 16px;
+    border: 1px solid var(--line);
+  }
+
+  .file-grid span {
+    color: var(--wine);
+    font-size: 14px;
+  }
+
+  @media (max-width: 960px) {
+    .patent-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>

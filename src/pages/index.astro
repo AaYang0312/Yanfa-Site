@@ -16,7 +16,7 @@ const shopPlatforms = [...new Set(shops.map((shop) => shop.platform))].map((plat
 const intro = [
   {
     title: '深耕气动工具',
-    text: `元发创立于 ${site.founded} 年，深耕气动工具领域十余年，提供全系列气动钉枪及配套产品，形成完整产品生态。`,
+    text: `元发创立于 ${site.founded} 年，专注研发气动钉枪，提供配套工具、枪钉和配件。`,
   },
   {
     title: '注重产品创新',
@@ -25,7 +25,7 @@ const intro = [
 ];
 ---
 
-<Base bodyClass="home">
+<Base>
   <section class="hero" aria-labelledby="hero-title">
     <div class="hero__photo">
       <Image src={homeHero} alt="元发 1013J 码钉枪木工作业实景" format="webp" widths={[480, 800, 1200, 1530]} sizes="(max-width: 960px) 140vh, 100vw" loading="eager" fetchpriority="high" />
@@ -37,7 +37,8 @@ const intro = [
         <h1 id="hero-title">专注气动工具的<br />创新品牌</h1>
         <p class="hero__lead">从首创加长枪嘴，到首创带吹尘功能，让工具更懂现场</p>
         <div class="hero__actions">
-          <a class="btn btn--light" href="/products/">产品中心</a>
+          <a class="btn btn--solid" href="/products/">产品中心</a>
+          <button type="button" class="btn btn--light" data-guide-open>帮我选工具</button>
           <a class="btn btn--light" href="/about/">我们是谁</a>
         </div>
       </div>
@@ -642,11 +643,6 @@ const intro = [
   }
 
   .channels__shops a { white-space: nowrap; }
-
-  @media (min-width: 961px) {
-    :global(body.home) { --wrap: min(92vw, 2880px); }
-    :global(body.home .site-header .wrap) { max-width: none; padding-inline: clamp(32px, 4vw, 160px); }
-  }
 
   @media (min-width: 1600px) {
     .section { padding-block: clamp(112px, 5vw, 192px); }

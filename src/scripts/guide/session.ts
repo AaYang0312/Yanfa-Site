@@ -18,10 +18,23 @@ export function plainHistory(messages: GuideMessage[]): GuideMessage[] {
   return out;
 }
 export type PendingTurn = { request_id: string; kind: 'consult' | 'select'; text: string; selected_product_id: string | null; correcting: true };
-export type GuideState = { version: 1; messages: GuideMessage[]; result: GuideResult | null; requirements: GuideRequirements; release_id: string; pending_turn: PendingTurn | null; busy: boolean; checked: boolean; stale: boolean; storageLimited: boolean; notice: string };
+export type GuideState = { version: 1; messages: GuideMessage[]; result: GuideResult | null; requirements: GuideRequirements; release_id: string; pending_turn: PendingTurn | null; busy: boolean; checked: boolean; stale: boolean; storageLimited: boolean; notice: string; unavailable: boolean };
 type StoragePort = Pick<Storage, 'getItem' | 'setItem' | 'removeItem'>;
 export type Ticket = { id: string; epoch: number };
 const keysOnly = (value: object, keys: string[]) => Object.keys(value).every(key => keys.includes(key));
+// HTTP pages are not secure contexts, where crypto.randomUUID is unavailable.
+// Request correlation needs uniqueness, not cryptographic randomness.
+export function requestId(): string {
+  const source = globalThis.crypto;
+  if (source && typeof source.randomUUID === 'function') return source.randomUUID();
+  const bytes = new Uint8Array(16);
+  if (source && typeof source.getRandomValues === 'function') source.getRandomValues(bytes);
+  else for (let index = 0; index < bytes.length; index++) bytes[index] = Math.floor(Math.random() * 256);
+  bytes[6] = (bytes[6] & 0x0f) | 0x40;
+  bytes[8] = (bytes[8] & 0x3f) | 0x80;
+  const hex = Array.from(bytes, byte => byte.toString(16).padStart(2, '0')).join('');
+  return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20)}`;
+}
 
 /** One transaction boundary for button JSON, complete SSE and session restore. */
 export class GuideSession {
@@ -32,7 +45,7 @@ export class GuideSession {
   readonly pageRelease: string;
   constructor(pageRelease: string) {
     this.pageRelease = pageRelease;
-    this.state = { version: 1, messages: [], result: null, requirements: unknownRequirements(), release_id: pageRelease, pending_turn: null, busy: false, checked: false, stale: false, storageLimited: false, notice: '' };
+    this.state = { version: 1, messages: [], result: null, requirements: unknownRequirements(), release_id: pageRelease, pending_turn: null, busy: false, checked: false, stale: false, storageLimited: false, notice: '', unavailable: false };
   }
   subscribe = (listener: () => void) => { this.listeners.add(listener); return () => { this.listeners.delete(listener); }; };
   snapshot = () => this.state;
@@ -64,7 +77,7 @@ export class GuideSession {
           result = checkedResult(saved.result);
           if (JSON.stringify(result.confirmed_requirements) !== JSON.stringify(requirements)) throw Error('conditions differ');
         }
-      } catch { result = null; notice = '已保存的结果不完整，请重新咨询或选择。'; }
+      } catch { result = null; notice = '已保存的结果不完整，请重新咨询。'; }
       let pending: PendingTurn | null = null;
       if (saved.pending_turn !== null) {
         const p = saved.pending_turn;
@@ -90,18 +103,18 @@ export class GuideSession {
     if (!this.state.checked || this.state.stale || this.state.busy || (this.state.pending_turn && !retry)) throw Error('请先处理未完成请求并复核目录。');
     const retryingSelection = retry && this.state.pending_turn?.kind === 'select' && this.state.pending_turn.selected_product_id === input.selected_product_id;
     if (input.kind === 'select' && !retryingSelection && (!this.state.result || !['recommendations', 'clarifying', 'selected'].includes(this.state.result.state))) throw Error('请重新咨询后选择。');
-    const id = crypto.randomUUID();
+    const id = requestId();
     const ticket = { id, epoch: ++this.epoch };
-    this.update({ pending_turn: { ...input, request_id: id, correcting: true }, busy: true, notice: '', messages: input.kind === 'consult' && !retry ? plainHistory([...this.state.messages, { role: 'user', content: input.text }]) : this.state.messages });
+    this.update({ pending_turn: { ...input, request_id: id, correcting: true }, busy: true, notice: '', unavailable: false, messages: input.kind === 'consult' && !retry ? plainHistory([...this.state.messages, { role: 'user', content: input.text }]) : this.state.messages });
     return ticket;
   }
   private owns(ticket: Ticket) { return ticket.epoch === this.epoch && this.state.pending_turn?.request_id === ticket.id && this.state.busy; }
-  fail(ticket: Ticket, notice: string) {
+  fail(ticket: Ticket, notice: string, unavailable = false) {
     if (!this.owns(ticket)) return;
     ++this.epoch;
-    this.update({ busy: false, notice });
+    this.update({ busy: false, notice, unavailable });
   }
-  changed() { ++this.epoch; this.update({ busy: false, checked: false, stale: true, result: null, notice: '目录已更新，请刷新资料后重新提交。' }); }
+  changed() { ++this.epoch; this.update({ busy: false, checked: false, stale: true, result: null, notice: '目录已更新，请刷新资料后重新提交。', unavailable: false }); }
   async commit(ticket: Ticket, value: unknown, text: string, currentRelease: () => Promise<string>) {
     if (!this.owns(ticket)) return false;
     const result = checkedResult(value);
@@ -110,19 +123,19 @@ export class GuideSession {
     if (!this.owns(ticket)) return false;
     if (current !== this.pageRelease) { this.changed(); return false; }
     const messages = text ? plainHistory([...this.state.messages, { role: 'assistant', content: text }]) : this.state.messages;
-    this.update({ result, requirements: result.confirmed_requirements, release_id: result.release_id, pending_turn: null, busy: false, checked: true, messages, notice: '' });
+    this.update({ result, requirements: result.confirmed_requirements, release_id: result.release_id, pending_turn: null, busy: false, checked: true, messages, notice: '', unavailable: false });
     return true;
   }
   async discard(currentRelease: () => Promise<string>) {
     if (this.state.busy) return;
     ++this.epoch;
-    this.update({ pending_turn: null, checked: false, notice: '已撤销未完成请求，正在复核目录。' });
+    this.update({ pending_turn: null, checked: false, notice: '已撤销未完成请求，正在复核目录。', unavailable: false });
     await this.recheck(currentRelease);
     if (this.state.checked) this.update({ notice: '已明确撤销未完成请求，保留上次完整条件。' });
   }
   clear() {
     ++this.epoch;
-    this.update({ messages: [], result: null, requirements: unknownRequirements(), pending_turn: null, busy: false, notice: '' }, false);
+    this.update({ messages: [], result: null, requirements: unknownRequirements(), pending_turn: null, busy: false, notice: '', unavailable: false }, false);
     try { this.storage?.removeItem(SESSION_KEY); } catch { this.update({ storageLimited: true }, false); }
   }
 }

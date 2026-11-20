@@ -1,5 +1,5 @@
 ---
-import '@fontsource/jost/300.css';
+import { getImage } from 'astro:assets';
 import '@fontsource/jost/400.css';
 import '@fontsource/jost/500.css';
 import '@fontsource/jost/600.css';
@@ -10,6 +10,7 @@ import ContactStrip from '../components/ContactStrip.astro';
 import { site, telHref } from '../data/site';
 import { releaseId } from '../data/catalog';
 import GuideWidget from '../components/guide/chat-widget';
+import shareImage from '../assets/client-1101/home-hero.png';
 
 interface Props {
   title?: string;
@@ -18,11 +19,24 @@ interface Props {
   bodyClass?: string;
   robots?: string;
   contextProductId?: string;
+  redirectTo?: string;
 }
 
-const { title, description = site.description, contactStrip = true, bodyClass, robots, contextProductId } = Astro.props;
+const { title, description = site.description, contactStrip = true, bodyClass, robots, contextProductId, redirectTo } = Astro.props;
 const fullTitle = title ? `${title} | ${site.name}` : `${site.name} | ${site.tagline}`;
-const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
+const canonical = Astro.site ? new URL(redirectTo ?? Astro.url.pathname, Astro.site).href : undefined;
+const share = Astro.site ? await getImage({ src: shareImage, width: 1200, height: 630, fit: 'cover', position: 'center', format: 'jpg', quality: 80 }) : undefined;
+const shareUrl = share && Astro.site ? new URL(share.src, Astro.site).href : undefined;
+const organization = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: site.legalName,
+  alternateName: [site.name, site.brandEn],
+  url: Astro.site?.href,
+  foundingDate: String(site.founded),
+  telephone: site.phone.replace(/\s/g, ''),
+  description: site.description,
+};
 ---
 
 <!doctype html>
@@ -35,11 +49,18 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : un
     <meta name="release-id" content={releaseId} />
     {robots && <meta name="robots" content={robots} />}
     {canonical && <link rel="canonical" href={canonical} />}
+    {redirectTo && <meta http-equiv="refresh" content={`0;url=${redirectTo}`} />}
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:locale" content="zh_CN" />
+    {canonical && <meta property="og:url" content={canonical} />}
+    {shareUrl && <meta property="og:image" content={shareUrl} />}
+    <meta name="twitter:card" content={shareUrl ? 'summary_large_image' : 'summary'} />
     <meta name="theme-color" content="#8f0026" />
+    {Astro.site && <script type="application/ld+json" set:html={JSON.stringify(organization)} />}
   </head>
   <body id="top" class={bodyClass}>
     <a class="skip" href="#main">跳到正文</a>
@@ -48,7 +69,7 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : un
       <slot />
     </main>
     <slot name="guide" />
-    <GuideWidget client:load releaseId={releaseId} contextProductId={contextProductId} contactHref={telHref()} />
+    <GuideWidget client:idle releaseId={releaseId} contextProductId={contextProductId} contactHref={telHref()} />
     {contactStrip && <ContactStrip />}
     <Footer />
     <script>

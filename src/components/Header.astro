@@ -2,7 +2,7 @@
 import Logo from './Logo.astro';
 import ProductPlaceholder from './ProductPlaceholder.astro';
 import ProductImage from './ProductImage.astro';
-import { topNav } from '../data/site';
+import { technicalPage, topNav } from '../data/site';
 import { categories, representativeProduct } from '../data/catalog';
 
 const path = Astro.url.pathname;
@@ -27,13 +27,13 @@ const menus = [
 const plainLinks = [
   { label: '枪钉', href: '/products/?type=nails' },
   { label: '配件与其他', href: '/products/?type=other' },
+  technicalPage,
 ];
 ---
 
 <header class="site-header" data-header>
   <div class="topbar">
     <div class="wrap topbar__inner">
-      <span class="topbar__lang"><span aria-current="true">中文</span></span>
       <nav aria-label="站点导航">
         <ul class="topbar__nav">
           {topNav.map((item) => (
@@ -49,7 +49,7 @@ const plainLinks = [
   <div class="mainbar">
     <div class="wrap mainbar__inner">
       <Logo />
-      <nav aria-label="产品导航" class="mainnav">
+      <nav aria-label="主导航" class="mainnav">
         <ul>
           {menus.map((menu) => (
             <li class="mainnav__item" data-mega-item>
@@ -93,7 +93,7 @@ const plainLinks = [
           ))}
           {plainLinks.map((item) => (
             <li class="mainnav__item">
-              <a class:list={['mainnav__link', { active: isActive(item.href) }]} href={item.href}>{item.label}</a>
+              <a class:list={['mainnav__link', { active: isActive(item.href) }]} aria-current={isActive(item.href) ? 'page' : undefined} href={item.href}>{item.label}</a>
             </li>
           ))}
         </ul>
@@ -106,7 +106,7 @@ const plainLinks = [
   </div>
 
   <div class="drawer" id="drawer" data-drawer hidden>
-    <div class="drawer__inner">
+    <nav class="drawer__inner" aria-label="移动端导航">
       <p class="drawer__title">产品</p>
       {menus.map((menu) => (
         <details class="drawer__group">
@@ -121,7 +121,7 @@ const plainLinks = [
       ))}
       <ul class="drawer__list">
         {plainLinks.map((item) => (
-          <li><a href={item.href}>{item.label}</a></li>
+          <li><a href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>{item.label}</a></li>
         ))}
       </ul>
       <p class="drawer__title">站点</p>
@@ -130,7 +130,7 @@ const plainLinks = [
           <li><a href={item.href}>{item.label}</a></li>
         ))}
       </ul>
-    </div>
+    </nav>
   </div>
 </header>
 
@@ -141,23 +141,25 @@ const plainLinks = [
     z-index: 100;
   }
 
+  @media (width > 960px) {
+    .site-header .wrap {
+      max-width: none;
+      padding-inline: clamp(32px, 4vw, 160px);
+    }
+  }
+
   .topbar {
     height: var(--top-h);
     background: var(--black);
     color: #9a9a9a;
     font-size: 13px;
-    font-weight: 300;
   }
 
   .topbar__inner {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-end;
     height: 100%;
-  }
-
-  .topbar__lang [aria-current] {
-    color: #fff;
   }
 
   .topbar__nav {
@@ -252,7 +254,7 @@ const plainLinks = [
 
   .mega__inner {
     display: grid;
-    grid-template-columns: 140px 1fr 170px;
+    grid-template-columns: 120px 1fr 160px;
     gap: 32px;
     padding-top: 36px;
     padding-bottom: 40px;
@@ -262,10 +264,10 @@ const plainLinks = [
     font-size: 22px;
   }
 
-  .mega__grid {
-    display: grid !important;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 14px 20px !important;
+  .mainnav .mega__grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 14px 20px;
   }
 
   .mega__grid a {
@@ -303,6 +305,7 @@ const plainLinks = [
     color: var(--muted);
     font-size: 12px;
     line-height: 1.4;
+    text-wrap: balance;
   }
 
   .mega__grid a:hover strong {
@@ -372,6 +375,10 @@ const plainLinks = [
     margin: 0;
     padding: 0;
     list-style: none;
+  }
+
+  .drawer__list a[aria-current='page'] {
+    color: var(--wine);
   }
 
   .drawer__group li a {

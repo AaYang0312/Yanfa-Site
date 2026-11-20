@@ -71,11 +71,13 @@ GuideRequirements 恰九个必填字段：scene_ids、material、substrate、nai
 
 ConsultRequest 为 release_id/message，附 messages?/requirements?/context_product_id?。当前纯文本最多2000字符，历史仅 user/assistant，最多12条、总计16000字符；禁止system/tool和派生内容。只有首轮未传 requirements 才由业务调用 UnknownRequirements() 初始化；传了不完整对象则422。SelectionRequest 必须 release_id/selected_product_id/requirements，不接收 message/messages/context_product_id/match_level/missing_fields/URL；完整条件由最新成功结果回传，显式选择绕过模型。
 
-内部 GuideModelProposal 保留 intent/requirements/candidate_product_ids/selected_product_id/selection_reference，增加可选 `reply`（Unicode trim 后1–2000字符）供自然介绍和追问。intent 为 clarify/consult/select；clarify 必须有 reply、候选为空，可不查询目录先追问用途，避免泛泛咨询时直接堆产品。clarify/consult 时后两项必须null；select 时二者非空，selection_reference 是当前消息中明确型号/稳定ID的原文引用。介绍/比较/推荐具体型号仍必须通过本轮公开工具读取目录。schema 校验形状与互斥；导购服务还必须验证引用实际存在于当前消息、对应同版目录唯一稳定ID且表达明确选择。仅询问/比较型号保持consult；“第二款”等含糊引用、context 或仅剩一候选均不能当作选定。歧义返回 question.field=null、text=“请点击要选择的商品卡片”、options=[]，不能伪造 requirements 缺口。
+内部 GuideModelProposal 的 intent 为 clarify/consult/recommend/select。clarify 必须有 reply、候选为空，可先追问用途；consult 用于介绍或比较指定型号，仍从本轮公开工具读取资料；recommend 用于按需求推荐，候选为空，可提交至多六个 `discovery_terms`，由服务端选择和说明推荐结果。前三种意图的 selected_product_id 和 selection_reference 必须为 null。select 必须有本轮原文中明确的型号或稳定 ID，并由服务端对照同版公开目录验证唯一性。序号、页面上下文或仅剩一款均不算明确选择；歧义提示访客提供型号。
 
 同次 Eino 提议先在已有条件上合并当前明确更正，保留未改字段和 null，再送同一校验；解析后直接调用导购服务的 Select，不追加模型调用。提议不接收匹配等级、缺口、购买渠道或 URL；它不是浏览器请求分支。
 
 模型将旧条件返回为 null/空场景时，服务端默认保留已有值；明确撤销通过可选 `cleared_requirements:[{field,reference}]` 表达，reference 必须逐字存在于本轮用户消息，且被撤销字段必须为空。非空明确更正正常生效。带自然 reply 时保留有效候选的模型顺序；服务端剔除冲突候选或截成最多三款后，不沿用可能引用其他卡片的回复。
+
+按需求推荐时，服务端对同一发布版本的全部上架商品执行适配判断，剔除明确冲突和公开说明中明确禁止用于所述材料的商品，再用场景、公开产品说明、钉型和检索词判断用途相关性。已核实适配的相关产品优先，资料缺项仍保留在备选卡上。前三款放入 `recommendations`，其余最多九款放入可选 `additional_recommendations`，由前端折叠显示。卡片包含已发布的 `purchase_options`（无渠道时为空数组），可带服务端生成的 `recommendation_reason`。访客可从卡片直接查看详情或商城，无可用购买链接时提供电话咨询。商城仍走原有 release 复核与 `/go/products/...` 跳转。按需求推荐的模型原文不直接显示。旧会话如果缺少渠道数据，保留对话与需求并提示重新咨询。
 
 导购内部 `search_products` 默认 `include_unknown=true`、`limit=5`，用于从已发布说明中发现产品，避免因结构化选型资料尚未完善而反复空搜；显式指定的筛选开关保持原值。公开目录 API 的默认筛选规则不变，最终确定性冲突判断也不变。模型优先按简短用途词搜索，通常一次搜索、必要时一次详情即可回复，不为补齐缺项反复检索。
 

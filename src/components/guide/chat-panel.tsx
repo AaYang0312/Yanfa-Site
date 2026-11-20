@@ -66,6 +66,7 @@ export function ChatPanel({ session, open, onClose, contextProductId, contactHre
     if (flight.current !== active || !session.state.busy || session.state.pending_turn?.request_id !== active.ticket.id) return;
     setDraft(null);
     if (error instanceof GuideHTTPError && error.status === 409 && error.code === 'CATALOG_CHANGED') session.changed();
+    else if (error instanceof GuideHTTPError && (error.status === 503 || error.code === 'UNAVAILABLE')) session.fail(active.ticket, '', true);
     else session.fail(active.ticket, error instanceof GuideHTTPError ? `HTTP ${error.status} · ${error.code}：${error.message}${error.fields.length ? '（' + error.fields.join('、') + '）' : ''}` : '回复未完成或数据无效，条件未更新。请重新提交或明确撤销。');
   };
   const consult = async (text: string, retry = false) => {
@@ -117,14 +118,14 @@ export function ChatPanel({ session, open, onClose, contextProductId, contactHre
     <aside ref={conditionsPanel} id="guide-conditions" className="yg-conditions-popover" data-open={conditionsOpen} aria-hidden={!conditionsOpen} inert={!conditionsOpen} aria-labelledby="guide-conditions-heading"><h3 id="guide-conditions-heading">需求条件</h3><Requirements requirements={state.requirements} /></aside>
     <div className="yg-scroll">
       {state.storageLimited && <p role="status" className="yg-warning">浏览器存储不可用：会话仅保留在当前页面，跨页不会保留。</p>}
-      <MessageList messages={state.messages} busy={state.busy} draft={preview} />
+      <MessageList messages={state.messages} busy={state.busy} draft={preview} unavailable={state.unavailable} />
       {state.notice && <p role="status" className="yg-warning" data-guide-notice>{state.notice}</p>}
       {state.stale && <a href={typeof window === 'undefined' ? '/products/' : window.location.href}>刷新当前资料</a>}
       {!state.checked && !state.busy && !state.stale && <button type="button" onClick={() => void session.recheck(currentRelease)}>重试复核目录</button>}
       {pending && !state.busy && <div className="yg-pending" role="status"><p>本轮尚未完成，请重试或撤销。</p><div className="yg-recovery-actions">
         <button className="yg-icon-button" type="button" aria-label="重新提交" title="重新提交" disabled={stopping || !state.checked || state.stale} onClick={() => pending.kind === 'consult' ? void consult(pending.text, true) : void select(pending.selected_product_id!, true)}><GuideIcon name="retry" /></button><button className="yg-icon-button" type="button" aria-label="明确撤销未完成请求" title="撤销未完成请求" disabled={stopping} onClick={() => void session.discard(currentRelease)}><GuideIcon name="close" /></button></div>
       </div>}
-      {session.operable && state.result && <GuideResultView result={state.result} onSelect={id => void select(id)} onAnswer={text => void consult(text)} onPurchase={async href => { await session.recheck(currentRelease); if (session.operable) window.location.assign(href); }} />}
+      {session.operable && state.result && <GuideResultView result={state.result} onAnswer={text => void consult(text)} onPurchase={async href => { await session.recheck(currentRelease); if (session.operable) window.location.assign(href); }} />}
     </div>
     <MessageInput onSend={text => void consult(text)} disabled={!session.operable || stopping} busy={state.busy} onCancel={() => void cancel()} />
   </section>;

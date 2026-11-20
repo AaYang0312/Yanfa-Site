@@ -35,6 +35,28 @@ test('product totals distinguish tools, accessory entries and consumables',()=>{
   assert.deepEqual(catalogCounts([{kind:'tool'},{kind:'entry'},{kind:'consumable'},{kind:'tool'}]),{tools:2,parts:1,nails:1});
 });
 
+test('SR40C has one listed short URL and retains both addresses after withdrawal', () => {
+  const snapshot = structuredClone(source);
+  const item = {
+    ...snapshot.products[0],
+    id: 'p_7cfc5ab6236e2a90458d68b24dde0423',
+    slug: 'product-78ef705cdffb4cfe82e40e4ff642dd5d',
+    visibility: 'listed',
+  };
+  snapshot.products = [item];
+  snapshot.previously_published_routes = [{ product_id: item.id, slug: item.slug }];
+  assert.deepEqual(createCatalog(snapshot).products.map(p => p.slug), ['sr40c']);
+  assert.deepEqual(createCatalog(snapshot).shortLink, { from: item.slug, to: 'sr40c' });
+  item.visibility = 'unlisted';
+  assert.deepEqual(createCatalog(snapshot).withdrawnRoutes.map(r => r.slug), [item.slug, 'sr40c']);
+  snapshot.previously_published_routes = [];
+  assert.deepEqual(createCatalog(snapshot).withdrawnRoutes, []);
+  item.visibility = 'listed';
+  snapshot.products.push({ ...item, id: 'another-owner', slug: 'sr40c' });
+  assert.equal(createCatalog(snapshot).shortLink, undefined);
+  assert.deepEqual(createCatalog(snapshot).products.map(p => p.slug).sort(), [item.slug, 'sr40c'].sort());
+});
+
 test('search finds applications and notes on consumables and accessories',()=>{
   const product=createCatalog(source).products[0];
   product.kind='consumable';product.applications=['适用钉枪：目录外FST型号'];product.notes=['操作前确认作业条件'];

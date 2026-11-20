@@ -45,7 +45,7 @@ const result = overrides => ({
   conflicts: [], question: null, recommendations: [product()], selection: null,
   missing_fields: ['material', 'guide_profile.required_requirements'], contact_href: 'tel:123456', ...overrides
 });
-const props = value => ({ result: value, onSelect() {}, async onPurchase() {}, onAnswer() {} });
+const props = value => ({ result: value, async onPurchase() {}, onAnswer() {} });
 const resultHTML = value => render(h(GuideResultView, props(value)));
 
 // Expand the hook-free result tree to exercise its action callbacks as well as its markup.
@@ -66,7 +66,8 @@ test('browsing shows one chat reply and compact cards without a verification che
   assert.equal(html.split(reply).length - 1, 1);
   assert.match(html, /F30 产品图/);
   assert.match(html, /href="\/products\/fixture-f30\/"[^>]*aria-label="查看详情"/);
-  assert.match(html, /aria-label="选这款"/);
+  assert.doesNotMatch(html, /aria-label="选这款"/);
+  assert.match(html, /href="tel:123456"[^>]*>联系咨询/);
   assert.match(html, /<summary>资料来源<\/summary>/);
   assert.match(html, /href="\/catalog\/"/);
   assert.doesNotMatch(html, /guide_profile|materials|required_requirements|缺口|还需确认|尚缺|已审核条件匹配|简介：机身小巧|用途说明：木工作业|请补充或核实条件|已审核动力/);
@@ -142,19 +143,35 @@ test('clarification can have no cards; repeated question text is omitted but ans
   assert.equal(answered, '木材');
 });
 
-test('a natural reply replaces the card fact checklist while the select action remains', () => {
+test('a recommendation offers its verified shopping link directly without a select action', () => {
   const material = { field: 'materials', text: '适用于木材。', sources: [] };
   const length = { field: 'fastener_length_mm', text: '钉长 20 mm 在范围内。', sources: [] };
   const value = result({
     reply: '适用于木材。', confirmed_requirements: requirements({ material: '木材', fastener_length_mm: 20 }),
-    recommendations: [product({ matched_facts: [material, length], missing_fields: [] })]
+    recommendations: [product({ matched_facts: [material, length], missing_fields: [], purchase_options: [{
+      purchase_option_id: 'variant', platform: '测试商城', store_name: '工具店', match_scope: 'listing_with_variants',
+      sku_hint: '请选择 F30 / 20 mm', destination_host: 'example.test', handoff_url: '/go/products/fixture-f30/variant?release_id=fixture-release'
+    }] })]
   });
   assert.doesNotMatch(resultHTML(value), /适用于木材/);
   assert.doesNotMatch(resultHTML(value), /钉长 20 mm 在范围内。/);
-  let selected;
-  const tree = GuideResultView({ ...props(value), onSelect: id => { selected = id; } });
-  [...elements(tree)].find(node => node.type === 'button' && node.props['aria-label'] === '选这款').props.onClick();
-  assert.equal(selected, 'fixture-f30');
+  let purchase;
+  const tree = GuideResultView({ ...props(value), onPurchase: async href => { purchase = href; } });
+  const link = [...elements(tree)].find(node => node.type === 'a' && node.props['data-guide-purchase']);
+  assert.ok(link, 'purchase link is directly available on a recommendation');
+  link.props.onClick({ preventDefault() {} });
+  assert.equal(purchase, '/go/products/fixture-f30/variant?release_id=fixture-release');
+  assert.match(resultHTML(value), /请选择 F30 \/ 20 mm/);
+  assert.doesNotMatch(resultHTML(value), /选这款|联系咨询/);
+});
+
+test('additional matches are available in a collapsed group below the main recommendations', () => {
+  const html = resultHTML(result({ additional_recommendations: [
+    product({ product_id: 'extra', model: 'EXTRA', detail_url: '/products/extra/', recommendation_reason: '公开用途：木工作业' })
+  ] }));
+  assert.match(html, /<details[^>]*><summary>查看更多匹配（1 款）<\/summary>[\s\S]*href="\/products\/extra\/"/);
+  assert.match(html, /公开用途：木工作业/);
+  assert.match(html, /适用条件待核实。/);
 });
 
 test('busy copy is conversational while the live log and explicit false conditions remain accessible', () => {

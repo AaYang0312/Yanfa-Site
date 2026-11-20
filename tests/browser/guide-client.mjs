@@ -27,7 +27,7 @@ const actualSelect = async (release, id, requirements, name) => {
   const response = await api.expect('/api/guide/messages', { method: 'POST', anonymous: true, headers: { Accept: 'application/json' }, body: { release_id: release, selected_product_id: id, requirements } }, 200, name);
   const value = decodeContract('guide.schema.json#/$defs/GuideResult', response.bytes.toString()); report.results[name] = value; return value;
 };
-const recommendation = selected => { const { purchase_options, purchase_status, ...card } = selected.selection; return { ...structuredClone(selected), state: 'recommendations', recommendations: [card], selection: null }; };
+const recommendation = selected => { const { purchase_status, ...card } = selected.selection; return { ...structuredClone(selected), state: 'recommendations', recommendations: [card], selection: null }; };
 const stored = page => page.evaluate(key => JSON.parse(sessionStorage.getItem(key)), KEY);
 const pendingDone = page => page.waitForFunction(key => { const s = JSON.parse(sessionStorage.getItem(key)); return s && s.pending_turn === null; }, KEY);
 async function screenshot(page, name) { await page.screenshot({ path: join(out, name), fullPage: false }); report.screenshots.push(name); }
@@ -103,28 +103,28 @@ try {
   const page = await makePage();
   await pass('production 503 preserves pending correction and compact contact action', async () => {
     await open(page); await send(page, '真实无模型咨询'); await waitFailure(page);
-    assert.match(await page.locator('[data-guide-notice]').innerText(), /HTTP 503.*UNAVAILABLE/);
+    const busy = page.locator('[data-guide-busy]');
+    assert.match(await busy.innerText(), /助手暂时繁忙/);
+    assert.match(await busy.innerText(), /淘宝直销店/);
+    assert.ok(await busy.locator('a[href^="https://"]').count() >= 1);
+    assert.equal(await busy.getByRole('link', { name: '查看全部官方店铺' }).getAttribute('href'), '/shop/');
     assert.equal(await page.getByRole('navigation', { name: '导购备用入口' }).count(), 0);
     assert.equal(await page.getByRole('dialog', { name: '工具选型导购' }).getByRole('link', { name: '电话咨询', exact: true }).getAttribute('href'), site.contact_href);
     await page.getByRole('button', { name: '明确撤销未完成请求' }).click(); await page.waitForFunction(() => !document.querySelector('#guide-message').disabled);
   });
-  let buttonSelection;
-  await pass('G12 button JSON uses complete requirements; air gap and both store channels remain visible', async () => {
+  await pass('recommendation exposes both store channels and air gap without a selection request', async () => {
     fixture = { result: rec }; await send(page, '木材木方20mm，气源未知'); await waitResult(page, 'recommendations');
-    assert.equal(await page.locator('[data-guide-product]').count(), 1); assert.equal(await page.locator('[data-guide-purchase]').count(), 0);
-    await page.getByRole('button', { name: '选这款', exact: true }).click(); await waitResult(page, 'selected');
-    assert.deepEqual((await stored(page)).result, selected); assert.equal(await page.locator('[data-guide-purchase]').count(), 2);
-    assert.match(await page.locator('[data-guide-selection]').innerText(), /压缩空气/); assert.match(await page.locator('[data-guide-selection]').innerText(), /进入商城后选择/);
-    assert.equal(await page.locator('.yg-contact').getAttribute('href'), site.contact_href);
-    buttonSelection = await page.locator('[data-guide-selection]').innerText();
-    const request = report.requests.filter(x => x.kind === 'production-JSON').at(-1); assert.deepEqual(request.body.requirements, scenario.requirements); assert.deepEqual(Object.keys(request.body).sort(), ['release_id', 'requirements', 'selected_product_id']);
-    assert.equal(request.accept, 'application/json');
-    await page.locator('.yg-scroll').evaluate(element => { element.scrollTop = element.scrollHeight; }); await screenshot(page, 'selected-390.png');
+    assert.equal(await page.locator('[data-guide-product]').count(), 1); assert.equal(await page.locator('[data-guide-purchase]').count(), 2);
+    assert.equal(await page.getByRole('button', { name: '选这款', exact: true }).count(), 0);
+    assert.deepEqual((await stored(page)).result, rec);
+    assert.match(await page.locator('.yg-question').innerText(), /压缩空气/); assert.match(await page.locator('[data-guide-product]').innerText(), /进入商城后选择/);
+    assert.equal(report.requests.filter(x => x.kind === 'production-JSON').length, 0);
+    await page.locator('.yg-scroll').evaluate(element => { element.scrollTop = element.scrollHeight; }); await screenshot(page, 'recommendations-390.png');
     await page.setViewportSize({ width: 320, height: 844 });
     const scroll = page.locator('.yg-scroll'); await scroll.evaluate(element => { element.scrollTop = element.scrollHeight; });
-    const gap = await page.locator('.yg-confirmation').first().boundingBox(), shop = await page.locator('[data-guide-purchase]').last().boundingBox();
+    const gap = await page.locator('.yg-question').first().boundingBox(), shop = await page.locator('[data-guide-purchase]').last().boundingBox();
     report.observations.mobile_same_screen = { gap, shop, viewport: page.viewportSize() }; assert.ok(gap.y >= 0 && shop.y + shop.height < 844);
-    await screenshot(page, 'selected-320.png');
+    await screenshot(page, 'recommendations-320.png');
     await page.setViewportSize({ width: 390, height: 480 }); await page.getByLabel('作业需求或条件更正').focus(); await screenshot(page, 'keyboard-focused-390.png');
     const input = await page.locator('#guide-message').boundingBox(), close = await page.getByRole('button', { name: '关闭导购', exact: true }).boundingBox(); assert.ok(input.y + input.height < 480 && close.y >= 0);
     report.observations.keyboard = { viewport: page.viewportSize(), input, close, method: 'Native keyboard focus and reduced visual viewport; no OS virtual keyboard is present in headless Chromium.' };
@@ -132,7 +132,7 @@ try {
   });
   await pass('complete SSE selected shares selection renderer and never auto-navigates', async () => {
     fixture = { result: selected }; const before = page.url(); await page.getByLabel('作业需求或条件更正').fill('我就选F30M'); await page.keyboard.press('Enter'); await waitResult(page, 'selected');
-    assert.equal(await page.locator('[data-guide-selection]').innerText(), buttonSelection); assert.equal(page.url(), before); assert.equal(report.requests.filter(x => x.kind === 'purchase-navigation').length, 0);
+    assert.equal(await page.locator('[data-guide-purchase]').count(), 2); assert.equal(page.url(), before); assert.equal(report.requests.filter(x => x.kind === 'purchase-navigation').length, 0);
     assert.match(await page.locator('.yg-messages').innerText(), /中文第一行\n第二行/); assert.match(await page.locator('.yg-messages').innerText(), /::document/); assert.equal(await page.locator('[data-guide-product]').count(), 1);
     const sent = report.requests.filter(x => x.kind === 'browser-SSE-fixture').at(-1).body; assert.equal(sent.context_product_id, 'p_f30m'); assert.deepEqual(sent.requirements, selected.confirmed_requirements); assert.ok(sent.messages.every(x => ['user', 'assistant'].includes(x.role) && typeof x.content === 'string')); assert.ok(!('parts' in sent));
     await page.locator('.yg-scroll').evaluate(element => { element.scrollTop = element.scrollHeight; }); await screenshot(page, 'text-selected-390.png');
@@ -146,19 +146,17 @@ try {
     await page.goto(base + '/products/'); await open(page); fixture = { result: rec }; await send(page, '仅询问F30M适合什么材料'); await waitResult(page, 'recommendations');
     assert.equal(await page.locator('[data-guide-selection]').count(), 0); assert.equal('context_product_id' in report.requests.filter(x => x.kind === 'browser-SSE-fixture').at(-1).body, false);
   });
-  await pass('G13 real T11 air=false reasons and complete SSE no_match render identically without old actions', async () => {
-    // Deliberately stale protocol candidate: Select must recompute the full
-    // current conditions, rather than trusting the candidate's previous grade.
-    const staleCandidate = { ...structuredClone(rec), confirmed_requirements: denied.confirmed_requirements };
-    fixture = { result: staleCandidate }; await send(page, '更正：没有气源'); await waitResult(page, 'recommendations'); await page.getByRole('button', { name: '选这款', exact: true }).click(); await waitResult(page, 'no_match');
+  await pass('air=false replaces previous recommendations with the server conflict and no purchase links', async () => {
+    await seedSession(page, rec);
+    fixture = { result: denied }; await send(page, '更正：没有气源'); await waitResult(page, 'no_match');
     assert.deepEqual((await stored(page)).result, denied); const reasons = await page.locator('.yg-conflicts').innerText(); assert.match(reasons, /需要压缩空气.*没有可用气源/); await noActions(page); assert.equal(await page.locator('.yg-contact').getAttribute('href'), site.contact_href);
-    await page.locator('.yg-scroll').evaluate(element => { element.scrollTop = element.scrollHeight; }); await screenshot(page, 'no-match-json-390.png');
+    await page.locator('.yg-scroll').evaluate(element => { element.scrollTop = element.scrollHeight; }); await screenshot(page, 'no-match-390.png');
     fixture = { result: denied }; await send(page, '我就选F30M，现场没有气源'); await waitResult(page, 'no_match'); assert.equal(await page.locator('.yg-conflicts').innerText(), reasons); await noActions(page);
     await page.setViewportSize({ width: 320, height: 844 }); await page.locator('.yg-scroll').evaluate(element => { element.scrollTop = element.scrollHeight; }); await screenshot(page, 'no-match-sse-320.png'); await page.setViewportSize({ width: 390, height: 480 }); await page.getByLabel('作业需求或条件更正').focus(); await page.locator('.yg-scroll').evaluate(element => { element.scrollTop = element.scrollHeight; }); await screenshot(page, 'no-match-keyboard-390.png'); await page.setViewportSize({ width: 390, height: 844 });
   });
   await pass('unknown facts and true air retain real independent gaps; missing mappings retain detail and consultation', async () => {
-    fixture = { result: recommendation(materialGap) }; await send(page, '气源有，材料不清楚'); await waitResult(page, 'recommendations'); await page.getByRole('button', { name: '选这款', exact: true }).click(); await waitResult(page, 'selected'); assert.deepEqual((await stored(page)).result, materialGap); assert.deepEqual((await stored(page)).result.missing_fields, ['material']); assert.equal(await page.locator('[data-guide-purchase]').count(), 2);
-    fixture = { result: recommendation(noMapping) }; await send(page, '比较另一型号'); await waitResult(page, 'recommendations'); await page.getByRole('button', { name: '选这款', exact: true }).click(); await waitResult(page, 'selected'); assert.deepEqual((await stored(page)).result, noMapping); assert.match(await page.locator('[data-guide-selection]').innerText(), /无法确认|待核实/); assert.match(await page.locator('[data-guide-selection]').innerText(), /暂无可用商城映射/); assert.equal(await page.locator('[data-guide-purchase]').count(), 0); assert.equal(await page.locator('.yg-contact').getAttribute('href'), site.contact_href);
+    fixture = { result: recommendation(materialGap) }; await send(page, '气源有，材料不清楚'); await waitResult(page, 'recommendations'); assert.deepEqual((await stored(page)).result, fixture.result); assert.deepEqual((await stored(page)).result.missing_fields, ['material']); assert.equal(await page.locator('[data-guide-purchase]').count(), 2);
+    fixture = { result: recommendation(noMapping) }; await send(page, '比较另一型号'); await waitResult(page, 'recommendations'); assert.deepEqual((await stored(page)).result, fixture.result); assert.equal(await page.locator('[data-guide-purchase]').count(), 0); assert.equal(await page.locator('.yg-contact').getAttribute('href'), site.contact_href); assert.equal(await page.getByRole('link', { name: '查看详情', exact: true }).count(), 1);
     const empty = { ...structuredClone(denied), conflicts: ['当前已发布目录暂无可供导购的上架商品，请联系咨询。'] }; fixture = { result: empty }; await send(page, '受控空目录协议'); await waitResult(page, 'no_match'); assert.equal(await page.locator('.yg-conflicts').innerText(), empty.conflicts[0]); await noActions(page);
   });
   await pass('all malformed results and incomplete/error streams retain pending correction across reload and prevent old purchases', async () => {
@@ -182,7 +180,7 @@ try {
   await pass('malformed JSON selections use the same strict result boundary and keep old actions disabled', async () => {
     const missing = structuredClone(denied); delete missing.conflicts;
     for (const invalid of [missing, { ...denied, conflicts: [] }, { ...selected, conflicts: ['非法冲突'] }, { ...selected, state: 'clarifying', selection: null, conflicts: ['非法冲突'] }]) {
-      await seedSession(page, rec); fixture = { jsonResult: invalid }; await page.getByRole('button', { name: '选这款', exact: true }).click(); await waitFailure(page);
+      await seedSession(page, rec, { request_id: 'legacy-selection', kind: 'select', text: '', selected_product_id: product.id, correcting: true }); fixture = { jsonResult: invalid }; await page.getByRole('button', { name: '重新提交', exact: true }).click(); await waitFailure(page);
       assert.deepEqual((await stored(page)).requirements, selected.confirmed_requirements); assert.equal((await stored(page)).pending_turn.kind, 'select');
       fixture = {}; await page.getByRole('button', { name: '重新提交', exact: true }).click(); await waitResult(page, 'selected'); assert.deepEqual((await stored(page)).result, selected);
     }

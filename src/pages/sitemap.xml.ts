@@ -1,8 +1,9 @@
 import type { APIRoute } from 'astro';
 import { products, legacySeries } from '../data/catalog';
+import { technicalPage } from '../data/site';
 
 export const GET: APIRoute = ({ site }) => {
-  const paths = ['/', '/products/', '/about/', '/service/', '/media/', '/shop/', '/contact/', '/privacy/',
+  const paths = ['/', '/products/', '/about/', '/service/', '/media/', '/shop/', '/contact/', '/privacy/', technicalPage.href,
     ...products.map(product => `/products/${product.slug}/`),
     ...legacySeries.filter(series => series.items.length).map(series => `/products/${series.slug}/`)];
   const escapeXML = (text: string) => text.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('"', '&quot;');

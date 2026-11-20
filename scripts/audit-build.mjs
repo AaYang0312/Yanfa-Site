@@ -53,7 +53,8 @@ export async function auditSite(snapshotPath, sitePath) {
   const root = resolve(sitePath);
   const files = await walkFiles(root);
   const htmlFiles = files.filter(file => file.endsWith('.html'));
-  const htmlByPath = new Map(await Promise.all(htmlFiles.map(async file => [file, await readFile(file, 'utf8')])));
+  const htmlByPath = new Map();
+  for (const file of htmlFiles) htmlByPath.set(file, await readFile(file, 'utf8'));
   const failures = [];
   let references = 0;
   const unescape = text => text.replaceAll('&amp;', '&').replaceAll('&#38;', '&').replaceAll('&#39;', "'").replaceAll('&quot;', '"');
@@ -108,10 +109,11 @@ export async function auditSite(snapshotPath, sitePath) {
   for (const file of files) assert.ok(!/\.(?:json|map)$/.test(file), `Private data or source map emitted: ${relative(root, file)}`);
   assert.deepEqual(failures, [], failures.join('\n'));
   const routes = htmlFiles.map(file => relative(root, file).split(sep).join('/'));
-  const resources = await Promise.all(files.filter(file => !file.endsWith('.html')).map(async file => {
+  const resources = [];
+  for (const file of files.filter(file => !file.endsWith('.html'))) {
     const bytes = await readFile(file);
-    return { path: relative(root, file).split(sep).join('/'), sha256: sha256(bytes), bytes: bytes.length };
-  }));
+    resources.push({ path: relative(root, file).split(sep).join('/'), sha256: sha256(bytes), bytes: bytes.length });
+  }
   return { pages: htmlFiles.length, checkedLocalReferences: references, listedProducts: listed.length, originals: allowedOriginals.size, failures: 0, routes, resources };
 }
 if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {

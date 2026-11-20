@@ -2,11 +2,19 @@
 import Crumbs from './Crumbs.astro';
 import ProductImage from './ProductImage.astro';
 import ProductGallery from './ProductGallery.astro';
+import CopyText from './CopyText.astro';
 import { products, categories, categoryBySlug, productsIn, nailOf, nailName, scenesOf, type Product } from '../data/catalog';
-import { telHref } from '../data/site';
+import { shops, telHref, site } from '../data/site';
 
 interface Props { product: Product }
 const { product } = Astro.props;
+const keyword = product.model.trim() || product.name;
+const storeLinks = shops.map(shop => {
+  if (shop.platform !== '淘宝' && shop.platform !== '天猫') return { ...shop, action: '进入店铺' };
+  const search = new URL('/search.htm', shop.url);
+  search.searchParams.set('keyword', keyword);
+  return { ...shop, url: search.href, action: '店内搜索' };
+});
 const category = categoryBySlug(product.category);
 const nail = nailOf(product);
 const isTool = product.kind === 'tool';
@@ -22,8 +30,30 @@ const matchedGuns = matchingCategory ? productsIn(matchingCategory.slug) : [];
 const nailItem = isTool ? products.find((item) => item.category === 'nails' && item.nail === nail) : undefined;
 const siblings = productsIn(product.category).filter((item) => item.slug !== product.slug);
 const related = (siblings.length ? siblings : products.filter((item) => item.kind === 'tool' && item.category !== product.category)).slice(0, 4);
+const origin = Astro.site;
+const structured = origin ? [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { name: '产品中心', path: '/products/' },
+      { name: category.name, path: `/products/?type=${category.slug}` },
+      { name: product.name, path: `/products/${product.slug}/` },
+    ].map((item, index) => ({ '@type': 'ListItem', position: index + 1, name: item.name, item: new URL(item.path, origin).href })),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: product.name,
+    description: product.summary,
+    category: category.name,
+    brand: { '@type': 'Brand', name: site.brand },
+    url: new URL(`/products/${product.slug}/`, origin).href,
+  },
+] : [];
 ---
 
+{structured.map((item) => <script type="application/ld+json" set:html={JSON.stringify(item)} />)}
 <div class="wrap detail">
   <div class="detail__crumbs">
     <Crumbs items={[{ label: '产品中心', href: '/products/' }, { label: category.name, href: `/products/?type=${category.slug}` }, { label: product.name }]} />
@@ -52,10 +82,28 @@ const related = (siblings.length ? siblings : products.filter((item) => item.kin
       )}
       <nav class="detail__actions" aria-label="购买与咨询">
         <a class="btn btn--solid" href={telHref()}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 3 3 5-3 3c1 2 3 4 5 5l3-3 5 3v3c0 1-1 2-2 2C10 20 4 14 3 5c0-1 1-2 2-2z" /></svg>型号与配件咨询</a>
-        <a class="btn" href="/shop/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l1 12H4L5 8Zm3 0V6a4 4 0 0 1 8 0v2" /></svg>价格与库存</a>
+        <a class="btn" href="#buy"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l1 12H4L5 8Zm3 0V6a4 4 0 0 1 8 0v2" /></svg>去官方店铺选购</a>
       </nav>
+      <p class="detail__phone">咨询电话 <a id="detail-phone" href={telHref()}>{site.phone}</a>
+        <CopyText target="detail-phone" label="复制号码" />
+        <button type="button" class="detail__guide" data-guide-open>不确定选哪款？让导购帮你选</button>
+      </p>
     </div>
   </div>
+  <section id="buy" class="buy" aria-labelledby="buy-title">
+    <h2 id="buy-title">在官方店铺查找这款产品</h2>
+    <p class="buy__keyword">店内搜索词 <strong id="buy-keyword">{keyword}</strong>
+      <CopyText target="buy-keyword" label={product.model.trim() ? '复制型号' : '复制品名'} />
+    </p>
+    <ul>
+      {storeLinks.map(shop => <li>
+        <a href={shop.url} target="_blank" rel="noopener noreferrer">
+          <strong>{shop.name}</strong><span>{shop.action} ↗</span>
+        </a>
+      </li>)}
+    </ul>
+    <p class="buy__help">售价、规格和库存请以店铺页面为准。也可从<a href="/shop/">官方店铺首页</a>进入后粘贴搜索词。</p>
+  </section>
 </div>
 
 {(product.features.length > 0 || product.applications.length > 0 || product.notes.length > 0 || related.length > 0) && (
@@ -136,9 +184,21 @@ const related = (siblings.length ? siblings : products.filter((item) => item.kin
 </section>}
 
 <style>
+  .buy { margin-top: 40px; padding: 24px 0; border-top: 1px solid var(--line); scroll-margin-top: calc(var(--header-h) + 16px); }
+  .buy h2 { margin-bottom: 12px; font-size: 22px; }
+  .buy__keyword { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 12px; font-size: 15px; }
+  .buy ul { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 170px), 1fr)); gap: 8px 16px; padding: 0; list-style: none; }
+  .buy li a { display: flex; flex-direction: column; gap: 4px; padding: 12px 0; border-top: 1px solid var(--line); color: var(--ink); text-decoration: none; }
+  .buy li a:hover strong { text-decoration: underline; }
+  .buy li span, .buy__help a { color: var(--wine); }
+  .buy li span, .buy__help { font-size: 14px; }
+  .buy__help { margin: 12px 0 0; }
   .detail__actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
   .detail__actions .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding-right: 16px; padding-left: 16px; }
   .detail__actions svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+  .detail__phone { display: flex; align-items: center; flex-wrap: wrap; gap: 6px 12px; margin: 16px 0 0; color: var(--text); font-size: 14px; }
+  .detail__phone a { color: var(--ink); font-weight: 500; text-decoration: none; }
+  .detail__guide { padding: 0; border: 0; background: none; color: var(--wine); font: inherit; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
   .matched { min-width: 0; }
   .matched__item { min-width: 0; gap: 16px; }
   .matched__item > span:last-child { min-width: 0; overflow-wrap: anywhere; }

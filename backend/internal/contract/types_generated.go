@@ -405,6 +405,7 @@ type GuideModelProposal struct {
 	Intent              string                      `json:"intent"`
 	Requirements        GuideRequirements           `json:"requirements"`
 	CandidateProductIDs []string                    `json:"candidate_product_ids"`
+	DiscoveryTerms      []string                    `json:"discovery_terms,omitempty"`
 	SelectedProductID   *string                     `json:"selected_product_id"`
 	SelectionReference  *string                     `json:"selection_reference"`
 	Reply               *string                     `json:"reply,omitempty"`
@@ -418,15 +419,17 @@ type GuideQuestion struct {
 }
 
 type GuideRecommendation struct {
-	ProductID         string         `json:"product_id"`
-	Model             string         `json:"model"`
-	Name              string         `json:"name"`
-	DetailURL         string         `json:"detail_url"`
-	Image             *PublicImage   `json:"image"`
-	MatchLevel        string         `json:"match_level"`
-	MatchedFacts      []MatchedFact  `json:"matched_facts"`
-	MissingFields     []MissingField `json:"missing_fields"`
-	ConfirmationNotes []string       `json:"confirmation_notes"`
+	ProductID            string                 `json:"product_id"`
+	Model                string                 `json:"model"`
+	Name                 string                 `json:"name"`
+	DetailURL            string                 `json:"detail_url"`
+	Image                *PublicImage           `json:"image"`
+	MatchLevel           string                 `json:"match_level"`
+	MatchedFacts         []MatchedFact          `json:"matched_facts"`
+	MissingFields        []MissingField         `json:"missing_fields"`
+	ConfirmationNotes    []string               `json:"confirmation_notes"`
+	PurchaseOptions      []PublicPurchaseOption `json:"purchase_options"`
+	RecommendationReason *string                `json:"recommendation_reason,omitempty"`
 }
 
 type GuideSelection struct {
@@ -444,16 +447,17 @@ type GuideSelection struct {
 }
 
 type GuideResult struct {
-	ReleaseID             string                `json:"release_id"`
-	State                 string                `json:"state"`
-	ConfirmedRequirements GuideRequirements     `json:"confirmed_requirements"`
-	Conflicts             []string              `json:"conflicts"`
-	Question              *GuideQuestion        `json:"question"`
-	Recommendations       []GuideRecommendation `json:"recommendations"`
-	Selection             *GuideSelection       `json:"selection"`
-	MissingFields         []MissingField        `json:"missing_fields"`
-	ContactHref           string                `json:"contact_href"`
-	Reply                 *string               `json:"reply,omitempty"`
+	ReleaseID                 string                `json:"release_id"`
+	State                     string                `json:"state"`
+	ConfirmedRequirements     GuideRequirements     `json:"confirmed_requirements"`
+	Conflicts                 []string              `json:"conflicts"`
+	Question                  *GuideQuestion        `json:"question"`
+	Recommendations           []GuideRecommendation `json:"recommendations"`
+	AdditionalRecommendations []GuideRecommendation `json:"additional_recommendations,omitempty"`
+	Selection                 *GuideSelection       `json:"selection"`
+	MissingFields             []MissingField        `json:"missing_fields"`
+	ContactHref               string                `json:"contact_href"`
+	Reply                     *string               `json:"reply,omitempty"`
 }
 
 type SiteConfig struct {

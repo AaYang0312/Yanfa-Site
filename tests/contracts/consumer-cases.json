@@ -1922,7 +1922,7 @@
   {
     "name": "GuideResult recommendations carries its legal conflicts array",
     "schema": "guide.schema.json#/$defs/GuideResult",
-    "raw": "{\"release_id\":\"r_test\",\"state\":\"recommendations\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"conflicts\":[],\"question\":null,\"recommendations\":[{\"product_id\":\"p_test\",\"model\":\"TEST\",\"name\":\"测试工具\",\"detail_url\":\"/products/test/\",\"image\":null,\"match_level\":\"needs_confirmation\",\"matched_facts\":[],\"missing_fields\":[\"air_supply\"],\"confirmation_notes\":[\"请确认压缩空气气源\"]}],\"selection\":null,\"missing_fields\":[],\"contact_href\":\"tel:10000\"}",
+    "raw": "{\"release_id\":\"r_test\",\"state\":\"recommendations\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"conflicts\":[],\"question\":null,\"recommendations\":[{\"product_id\":\"p_test\",\"model\":\"TEST\",\"name\":\"测试工具\",\"detail_url\":\"/products/test/\",\"image\":null,\"match_level\":\"needs_confirmation\",\"matched_facts\":[],\"missing_fields\":[\"air_supply\"],\"confirmation_notes\":[\"请确认压缩空气气源\"],\"purchase_options\":[]}],\"selection\":null,\"missing_fields\":[],\"contact_href\":\"tel:10000\"}",
     "valid": true,
     "fields": [],
     "expected": {
@@ -1955,7 +1955,8 @@
           ],
           "confirmation_notes": [
             "请确认压缩空气气源"
-          ]
+          ],
+          "purchase_options": []
         }
       ],
       "selection": null,
@@ -1966,7 +1967,7 @@
   {
     "name": "GuideResult recommendations rejects missing conflicts",
     "schema": "guide.schema.json#/$defs/GuideResult",
-    "raw": "{\"release_id\":\"r_test\",\"state\":\"recommendations\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"question\":null,\"recommendations\":[{\"product_id\":\"p_test\",\"model\":\"TEST\",\"name\":\"测试工具\",\"detail_url\":\"/products/test/\",\"image\":null,\"match_level\":\"needs_confirmation\",\"matched_facts\":[],\"missing_fields\":[\"air_supply\"],\"confirmation_notes\":[\"请确认压缩空气气源\"]}],\"selection\":null,\"missing_fields\":[],\"contact_href\":\"tel:10000\"}",
+    "raw": "{\"release_id\":\"r_test\",\"state\":\"recommendations\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"question\":null,\"recommendations\":[{\"product_id\":\"p_test\",\"model\":\"TEST\",\"name\":\"测试工具\",\"detail_url\":\"/products/test/\",\"image\":null,\"match_level\":\"needs_confirmation\",\"matched_facts\":[],\"missing_fields\":[\"air_supply\"],\"confirmation_notes\":[\"请确认压缩空气气源\"],\"purchase_options\":[]}],\"selection\":null,\"missing_fields\":[],\"contact_href\":\"tel:10000\"}",
     "valid": false,
     "fields": [
       "conflicts"
@@ -1975,7 +1976,7 @@
   {
     "name": "GuideResult recommendations rejects null conflicts",
     "schema": "guide.schema.json#/$defs/GuideResult",
-    "raw": "{\"release_id\":\"r_test\",\"state\":\"recommendations\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"conflicts\":null,\"question\":null,\"recommendations\":[{\"product_id\":\"p_test\",\"model\":\"TEST\",\"name\":\"测试工具\",\"detail_url\":\"/products/test/\",\"image\":null,\"match_level\":\"needs_confirmation\",\"matched_facts\":[],\"missing_fields\":[\"air_supply\"],\"confirmation_notes\":[\"请确认压缩空气气源\"]}],\"selection\":null,\"missing_fields\":[],\"contact_href\":\"tel:10000\"}",
+    "raw": "{\"release_id\":\"r_test\",\"state\":\"recommendations\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"conflicts\":null,\"question\":null,\"recommendations\":[{\"product_id\":\"p_test\",\"model\":\"TEST\",\"name\":\"测试工具\",\"detail_url\":\"/products/test/\",\"image\":null,\"match_level\":\"needs_confirmation\",\"matched_facts\":[],\"missing_fields\":[\"air_supply\"],\"confirmation_notes\":[\"请确认压缩空气气源\"],\"purchase_options\":[]}],\"selection\":null,\"missing_fields\":[],\"contact_href\":\"tel:10000\"}",
     "valid": false,
     "fields": [
       "conflicts"
@@ -1984,7 +1985,7 @@
   {
     "name": "GuideResult recommendations rejects string conflicts",
     "schema": "guide.schema.json#/$defs/GuideResult",
-    "raw": "{\"release_id\":\"r_test\",\"state\":\"recommendations\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"conflicts\":\"该工具需要压缩空气，现场明确没有可用气源。\",\"question\":null,\"recommendations\":[{\"product_id\":\"p_test\",\"model\":\"TEST\",\"name\":\"测试工具\",\"detail_url\":\"/products/test/\",\"image\":null,\"match_level\":\"needs_confirmation\",\"matched_facts\":[],\"missing_fields\":[\"air_supply\"],\"confirmation_notes\":[\"请确认压缩空气气源\"]}],\"selection\":null,\"missing_fields\":[],\"contact_href\":\"tel:10000\"}",
+    "raw": "{\"release_id\":\"r_test\",\"state\":\"recommendations\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"conflicts\":\"该工具需要压缩空气，现场明确没有可用气源。\",\"question\":null,\"recommendations\":[{\"product_id\":\"p_test\",\"model\":\"TEST\",\"name\":\"测试工具\",\"detail_url\":\"/products/test/\",\"image\":null,\"match_level\":\"needs_confirmation\",\"matched_facts\":[],\"missing_fields\":[\"air_supply\"],\"confirmation_notes\":[\"请确认压缩空气气源\"],\"purchase_options\":[]}],\"selection\":null,\"missing_fields\":[],\"contact_href\":\"tel:10000\"}",
     "valid": false,
     "fields": [
       "conflicts"
@@ -1993,7 +1994,7 @@
   {
     "name": "GuideResult recommendations rejects object conflicts",
     "schema": "guide.schema.json#/$defs/GuideResult",
-    "raw": "{\"release_id\":\"r_test\",\"state\":\"recommendations\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"conflicts\":{},\"question\":null,\"recommendations\":[{\"product_id\":\"p_test\",\"model\":\"TEST\",\"name\":\"测试工具\",\"detail_url\":\"/products/test/\",\"image\":null,\"match_level\":\"needs_confirmation\",\"matched_facts\":[],\"missing_fields\":[\"air_supply\"],\"confirmation_notes\":[\"请确认压缩空气气源\"]}],\"selection\":null,\"missing_fields\":[],\"contact_href\":\"tel:10000\"}",
+    "raw": "{\"release_id\":\"r_test\",\"state\":\"recommendations\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"conflicts\":{},\"question\":null,\"recommendations\":[{\"product_id\":\"p_test\",\"model\":\"TEST\",\"name\":\"测试工具\",\"detail_url\":\"/products/test/\",\"image\":null,\"match_level\":\"needs_confirmation\",\"matched_facts\":[],\"missing_fields\":[\"air_supply\"],\"confirmation_notes\":[\"请确认压缩空气气源\"],\"purchase_options\":[]}],\"selection\":null,\"missing_fields\":[],\"contact_href\":\"tel:10000\"}",
     "valid": false,
     "fields": [
       "conflicts"
@@ -2002,7 +2003,7 @@
   {
     "name": "GuideResult recommendations rejects a conflict reason",
     "schema": "guide.schema.json#/$defs/GuideResult",
-    "raw": "{\"release_id\":\"r_test\",\"state\":\"recommendations\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"conflicts\":[\"该工具需要压缩空气，现场明确没有可用气源。\"],\"question\":null,\"recommendations\":[{\"product_id\":\"p_test\",\"model\":\"TEST\",\"name\":\"测试工具\",\"detail_url\":\"/products/test/\",\"image\":null,\"match_level\":\"needs_confirmation\",\"matched_facts\":[],\"missing_fields\":[\"air_supply\"],\"confirmation_notes\":[\"请确认压缩空气气源\"]}],\"selection\":null,\"missing_fields\":[],\"contact_href\":\"tel:10000\"}",
+    "raw": "{\"release_id\":\"r_test\",\"state\":\"recommendations\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":null,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"conflicts\":[\"该工具需要压缩空气，现场明确没有可用气源。\"],\"question\":null,\"recommendations\":[{\"product_id\":\"p_test\",\"model\":\"TEST\",\"name\":\"测试工具\",\"detail_url\":\"/products/test/\",\"image\":null,\"match_level\":\"needs_confirmation\",\"matched_facts\":[],\"missing_fields\":[\"air_supply\"],\"confirmation_notes\":[\"请确认压缩空气气源\"],\"purchase_options\":[]}],\"selection\":null,\"missing_fields\":[],\"contact_href\":\"tel:10000\"}",
     "valid": false,
     "fields": [
       "conflicts"
@@ -2593,7 +2594,7 @@
   {
     "name": "GuideResult no_match still rejects recommendations",
     "schema": "guide.schema.json#/$defs/GuideResult",
-    "raw": "{\"release_id\":\"r_test\",\"state\":\"no_match\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":false,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"conflicts\":[\"该工具需要压缩空气，现场明确没有可用气源。\"],\"question\":null,\"recommendations\":[{\"product_id\":\"p_test\",\"model\":\"TEST\",\"name\":\"测试工具\",\"detail_url\":\"/products/test/\",\"image\":null,\"match_level\":\"needs_confirmation\",\"matched_facts\":[],\"missing_fields\":[\"air_supply\"],\"confirmation_notes\":[\"请确认压缩空气气源\"]}],\"selection\":null,\"missing_fields\":[\"material\"],\"contact_href\":\"tel:10000\"}",
+    "raw": "{\"release_id\":\"r_test\",\"state\":\"no_match\",\"confirmed_requirements\":{\"scene_ids\":[],\"material\":null,\"substrate\":null,\"nail_type\":null,\"fastener_length_mm\":null,\"air_supply\":false,\"load_bearing\":null,\"long_nose\":null,\"blower\":null},\"conflicts\":[\"该工具需要压缩空气，现场明确没有可用气源。\"],\"question\":null,\"recommendations\":[{\"product_id\":\"p_test\",\"model\":\"TEST\",\"name\":\"测试工具\",\"detail_url\":\"/products/test/\",\"image\":null,\"match_level\":\"needs_confirmation\",\"matched_facts\":[],\"missing_fields\":[\"air_supply\"],\"confirmation_notes\":[\"请确认压缩空气气源\"],\"purchase_options\":[]}],\"selection\":null,\"missing_fields\":[\"material\"],\"contact_href\":\"tel:10000\"}",
     "valid": false,
     "fields": [
       "recommendations"

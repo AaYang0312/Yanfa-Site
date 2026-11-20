@@ -16,6 +16,8 @@ try {
     assert.equal(product.product.visibility, 'listed'); assert.equal(product.product.model, `QA-${h.suffix}`);
     assert.match(product.product.slug, /^[a-z0-9][a-z0-9-]{0,79}$/);
     assert.deepEqual(product.product.images, []);
+    assert.match(await page.locator('#notice').innerText(), /保存成功/);
+    await page.goto(new URL(`/admin/products/edit/?id=${encodeURIComponent(product.product.id)}`, h.base).href);
     await page.getByText('未添加图片', { exact: true }).waitFor();
     assert.equal(await page.getByLabel(/slug|数据库|排序值|来源 ID|选型/).count(), 0);
   });
@@ -43,6 +45,7 @@ try {
     for (const field of ['kind', 'legacy_series_ids', 'sort_order', 'guide_profile', 'purchase_options']) assert.deepEqual(p[field], hidden[field], `hidden ${field} changed`);
   });
   await h.check('20 image gallery uploads, replaces, reorders, selects cover and persists captions', async () => {
+    await page.goto(new URL(`/admin/products/edit/?id=${encodeURIComponent(id)}`, h.base).href);
     const generated = await page.evaluate(() => Array.from({ length: 20 }, (_, index) => {
       const canvas = document.createElement('canvas'); canvas.width = 40; canvas.height = 30;
       const context = canvas.getContext('2d'); context.fillStyle = `hsl(${index * 17} 60% 40%)`; context.fillRect(0, 0, 40, 30); context.fillStyle = '#fff'; context.fillText(String(index), 5, 20);
@@ -61,11 +64,13 @@ try {
     await page.waitForFunction(() => !document.querySelector('#save-product').disabled);
     product = await h.save(page, id); assert.equal(product.product.images.length, 20); assert.equal(product.product.cover_media_id, replacement.media_id); assert.equal(product.product.images[0].media_id, replacement.media_id);
     assert.equal(product.product.images[1].label, '正面图'); assert.equal(product.product.images[1].description, '正面说明');
-    await page.reload(); await cards.nth(19).waitFor(); assert.equal(await cards.count(), 20);
+    await page.goto(new URL(`/admin/products/edit/?id=${encodeURIComponent(id)}`, h.base).href);
+    await cards.nth(19).waitFor(); assert.equal(await cards.count(), 20);
     await cards.nth(0).getByRole('button', { name: '移除', exact: true }).click();
     product = await h.save(page, id); assert.equal(product.product.images.length, 19); assert.equal(product.product.cover_media_id, product.product.images[0].media_id);
   });
   await h.check('invalid and oversized uploads leave saved gallery intact', async () => {
+    await page.goto(new URL(`/admin/products/edit/?id=${encodeURIComponent(id)}`, h.base).href);
     const before = product.product.images;
     const denied = h.response(page, 'POST', '/api/admin/media', 422);
     await page.locator('#upload-images').setInputFiles({ name: 'broken.png', mimeType: 'image/png', buffer: Buffer.from('not an image') }); await denied;
@@ -87,6 +92,7 @@ try {
     await other.getByRole('button', { name: '合并修改，继续编辑', exact: true }).click();
     assert.equal((await h.readProduct(other, id)).product.summary, '第一会话已保存内容', 'merge must not write without save');
     product = await h.save(other, id); assert.equal(product.product.summary, '第二会话本地输入');
+    await page.goto(new URL(`/admin/products/edit/?id=${encodeURIComponent(id)}`, h.base).href);
     await page.getByLabel('产品简介', { exact: true }).fill('过时的本地输入'); await h.save(page, id, 412);
     await page.getByRole('button', { name: '重新读取最新产品', exact: true }).click();
     assert.equal(await page.getByLabel('产品简介', { exact: true }).inputValue(), '第二会话本地输入'); await other.close();
@@ -97,14 +103,16 @@ try {
     await list.locator('.product-row img').evaluate(async image => { await image.decode(); }); assert(await list.locator('.product-row img').evaluate(image => image.naturalWidth > 0));
     await h.screenshot(list, 'product-list-desktop.png'); await list.close();
     for (const width of [390, 320]) {
+      await page.goto(new URL(`/admin/products/edit/?id=${encodeURIComponent(id)}`, h.base).href);
       await page.setViewportSize({ width, height: 900 }); await page.getByLabel('系列（可留空）', { exact: true }).focus();
       await page.keyboard.press('ControlOrMeta+A'); await page.keyboard.type(`Keyboard-${width}`);
-      const saved = h.response(page, 'PUT', `/api/admin/products/${id}`); await page.getByRole('button', { name: '保存并更新官网', exact: true }).focus(); await page.keyboard.press('Enter');
-      assert.equal((await (await saved).json()).product.series, `Keyboard-${width}`); await page.waitForFunction(() => !document.querySelector('#save-product').disabled);
       assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)); await h.screenshot(page, `editor-${width}.png`);
+      const saved = h.response(page, 'PUT', `/api/admin/products/${id}`); await page.getByRole('button', { name: '保存并更新官网', exact: true }).focus(); await page.keyboard.press('Enter');
+      assert.equal((await (await saved).json()).product.series, `Keyboard-${width}`);
     }
   });
   await h.check('unsaved navigation and expired-session retry preserve the original save', async () => {
+    await page.goto(new URL(`/admin/products/edit/?id=${encodeURIComponent(id)}`, h.base).href);
     await page.getByLabel('产品简介', { exact: true }).fill('重新登录后保留此内容');
     page.removeAllListeners('dialog'); const dialog = page.waitForEvent('dialog'); const navigate = page.getByRole('link', { name: '返回产品列表', exact: false }).click(); await (await dialog).dismiss(); await navigate;
     assert.equal(new URL(page.url()).pathname, '/admin/products/edit/'); page.on('dialog', dialog => dialog.accept());
@@ -117,7 +125,9 @@ try {
     await h.login(sibling); const retry = h.response(page, 'PUT', `/api/admin/products/${id}`); await page.getByRole('button', { name: '重试保存', exact: true }).click(); const retried = await retry;
     if (first.request().method() === 'PUT') assert.equal(retried.request().headers()['idempotency-key'], first.request().headers()['idempotency-key']);
     assert(retried.request().headers()['idempotency-key']); assert.equal((await retried.json()).product.summary, '重新登录后保留此内容');
-    await sibling.close(); await page.waitForFunction(() => !document.querySelector('#save-product').disabled);
+    await sibling.close();
+    await page.waitForURL(url => url.pathname === '/admin/products/' && url.searchParams.get('saved') === id);
+    assert.match(await page.locator('#notice').innerText(), /保存成功/);
   });
   await h.check('business deletion removes the record and remains observable until updated', async () => {
     const version = await h.remove(page, id); await h.waitForUpdate(page, id, version); await page.locator('#site-update').filter({ hasText: '产品已删除，官网已更新' }).waitFor();

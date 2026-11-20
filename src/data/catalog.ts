@@ -19,6 +19,15 @@ export type Product = {
 };
 
 export function createCatalog(snapshot: CatalogSnapshot) {
+  // SR40C was first published under an automatically assigned address.
+  const oldSlug = 'product-78ef705cdffb4cfe82e40e4ff642dd5d';
+  const shortSlug = 'sr40c';
+  const ownerID = 'p_7cfc5ab6236e2a90458d68b24dde0423';
+  const original = snapshot.products.find(item => item.slug === oldSlug && item.id === ownerID);
+  const shortSlugReserved = snapshot.products.some(item => item.slug === shortSlug)
+    || snapshot.legacy_series.some(item => item.slug === shortSlug)
+    || snapshot.previously_published_routes.some(route => route.slug === shortSlug);
+  const shortLink = original?.visibility === 'listed' && !shortSlugReserved ? { from: oldSlug, to: shortSlug } : undefined;
   const scenes = new Map(snapshot.scenes.map(scene => [scene.id, scene.name]));
   const names = (ids: string[]) => ids.map(id => {
     const name = scenes.get(id);
@@ -26,7 +35,8 @@ export function createCatalog(snapshot: CatalogSnapshot) {
     return name;
   });
   const products: Product[] = listedProducts(snapshot).map(item => ({
-    id: item.id, slug: item.slug, kind: item.kind, name: item.name, model: item.model,
+    id: item.id, slug: shortLink && item.slug === oldSlug ? shortLink.to : item.slug,
+    kind: item.kind, name: item.name, model: item.model,
     category: item.category_id, series: item.series, summary: item.summary, nail: item.nail_type ?? undefined,
     fastener: item.fastener_text, applications: item.applications, features: item.features, notes: item.notes,
     scenes: names(item.scene_ids), longNose: item.long_nose, blower: item.blower,
@@ -57,12 +67,15 @@ export function createCatalog(snapshot: CatalogSnapshot) {
   })
     .map(family => ({ ...family, items: products.filter(product => family.members.includes(product.slug)) }));
   const withdrawnRoutes = historical.filter(route => !familyHubs.some(family => family.id === route.product_id && family.slug === route.slug));
-  return { products, categories, legacySeries, withdrawnRoutes, familyHubs };
+  if (!shortSlugReserved && historical.some(route => route.product_id === ownerID && route.slug === oldSlug)) {
+    withdrawnRoutes.push({ product_id: ownerID, slug: shortSlug });
+  }
+  return { products, categories, legacySeries, withdrawnRoutes, familyHubs, shortLink };
 }
 
 const snapshot: CatalogSnapshot = readSnapshot(process.env.CATALOG_SNAPSHOT);
 export const releaseId = snapshot.release_id;
-export const { products, categories, legacySeries, withdrawnRoutes, familyHubs } = createCatalog(snapshot);
+export const { products, categories, legacySeries, withdrawnRoutes, familyHubs, shortLink } = createCatalog(snapshot);
 export const toolProducts = products.filter(product => product.kind === 'tool');
 export const catalogCounts = (items: { kind: Product['kind'] }[]) => ({
   tools: items.filter(product => product.kind === 'tool').length,

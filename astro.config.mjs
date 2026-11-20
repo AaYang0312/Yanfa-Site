@@ -14,6 +14,7 @@ export default defineConfig({
   cacheDir: './.build-cache',
   integrations: [react()],
   trailingSlash: 'always',
+  prefetch: { prefetchAll: true, defaultStrategy: 'hover' },
   compressHTML: true,
   build: {
     format: 'directory',

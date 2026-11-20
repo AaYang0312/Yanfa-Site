@@ -20,8 +20,14 @@ const { title, groups, typeNames } = Astro.props;
 ---
 
 <div class="catalog" data-catalog data-type-names={JSON.stringify(typeNames)}>
-  <aside class="catalog__side">
-    <h2 class="catalog__side-title">筛选</h2>
+  <div class="catalog__backdrop" data-filter-backdrop hidden></div>
+  <aside class="catalog__side" id="catalog-side" data-filter-side>
+    <div class="catalog__side-head">
+      <h2 class="catalog__side-title">筛选</h2>
+      <button type="button" class="catalog__sheet-close" data-filter-close aria-label="关闭筛选">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m3 3 10 10M13 3 3 13" stroke="currentColor" stroke-width="1.4" fill="none" /></svg>
+      </button>
+    </div>
     <form data-filter-form id="catalog-filters">
       {groups.map((group, index) => (
         <details open={index === 0}>
@@ -38,7 +44,10 @@ const { title, groups, typeNames } = Astro.props;
           </ul>
         </details>
       ))}
-      <button class="btn catalog__reset" type="reset">清除筛选（<span data-filter-count>0</span>）</button>
+      <div class="catalog__sheet-actions">
+        <button class="btn catalog__reset" type="reset">清除筛选（<span data-filter-count>0</span>）</button>
+        <button class="btn btn--solid catalog__done" type="button" data-filter-close>查看 <span data-result-count-sheet>0</span> 项产品</button>
+      </div>
     </form>
   </aside>
 
@@ -50,6 +59,10 @@ const { title, groups, typeNames } = Astro.props;
         <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5" fill="none" stroke="currentColor" stroke-width="1.4" /><path d="m13 13 4 4" stroke="currentColor" stroke-width="1.4" /></svg>
         <input type="search" name="q" form="catalog-filters" placeholder="搜索型号、系列或功能" autocomplete="off" data-catalog-search />
       </label>
+      <button type="button" class="catalog__filter-toggle" data-filter-open aria-controls="catalog-side" aria-expanded="false">
+        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 5h14M6 10h8M8.5 15h3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" fill="none" /></svg>
+        筛选<span class="catalog__filter-badge" data-filter-count-toggle hidden>0</span>
+      </button>
       <p class="catalog__result" role="status" aria-live="polite">找到 <strong data-result-count>0</strong> 项产品</p>
     </div>
     <div class="catalog__grid">
@@ -57,7 +70,10 @@ const { title, groups, typeNames } = Astro.props;
     </div>
     <div class="catalog__empty" data-empty hidden>
       <p>暂无匹配产品</p>
-      <button type="reset" form="catalog-filters" class="btn">清除全部条件</button>
+      <div class="catalog__empty-actions">
+        <button type="reset" form="catalog-filters" class="btn">清除全部条件</button>
+        <button type="button" class="btn btn--solid" data-guide-open>让导购帮我选</button>
+      </div>
     </div>
     <slot name="after" />
   </div>
@@ -184,6 +200,35 @@ const { title, groups, typeNames } = Astro.props;
     color: var(--muted);
   }
 
+  .catalog__empty-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+
+  .catalog__side-head { display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid var(--wine); }
+  .catalog__side-head .catalog__side-title { border-bottom: 0; }
+  .catalog__sheet-close,
+  .catalog__filter-toggle,
+  .catalog__done,
+  .catalog__backdrop { display: none; }
+
+  .catalog__sheet-actions { display: grid; gap: 10px; margin-top: 28px; }
+  .catalog__sheet-actions .catalog__reset { margin-top: 0; }
+
+  .catalog__filter-toggle {
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 0 16px;
+    border: 1px solid var(--ink);
+    background: #fff;
+    color: var(--ink);
+    font: inherit;
+    font-size: 14px;
+    cursor: pointer;
+  }
+
+  .catalog__filter-toggle svg { width: 18px; height: 18px; }
+  .catalog__filter-badge { min-width: 20px; padding: 0 6px; background: var(--wine); color: #fff; font-size: 12px; line-height: 20px; text-align: center; }
+  .catalog__filter-badge[hidden] { display: none; }
+
   @media (max-width: 1100px) {
     .catalog__grid {
       grid-template-columns: repeat(2, 1fr);
@@ -193,12 +238,63 @@ const { title, groups, typeNames } = Astro.props;
   @media (max-width: 960px) {
     .catalog {
       grid-template-columns: 1fr;
-      gap: 32px;
+      gap: 0;
     }
 
-    .catalog__side {
-      position: static;
+    .catalog__tools { flex-wrap: wrap; margin-top: 0; }
+    .catalog__search { flex: 1 1 auto; width: auto; }
+    .catalog__filter-toggle { display: inline-flex; flex: none; }
+    .catalog__result { flex-basis: 100%; order: 3; }
+
+    .catalog__backdrop {
+      display: block;
+      position: fixed;
+      inset: 0;
+      z-index: 1003;
+      background: rgb(14 19 27 / 0.5);
     }
+
+    .catalog__backdrop[hidden] { display: none; }
+
+    .catalog__side {
+      position: fixed;
+      inset: auto 0 0;
+      z-index: 1004;
+      max-height: 86dvh;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      padding: 8px 20px max(24px, env(safe-area-inset-bottom));
+      background: #fff;
+      box-shadow: 0 -12px 40px rgb(0 0 0 / 0.18);
+      transform: translateY(100%);
+      visibility: hidden;
+      transition: transform 0.25s ease, visibility 0s 0.25s;
+    }
+
+    .catalog__side[data-open='true'] {
+      transform: none;
+      visibility: visible;
+      transition-delay: 0s;
+    }
+
+    .catalog__sheet-close {
+      display: inline-grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: 0;
+      background: none;
+      color: var(--ink);
+      cursor: pointer;
+    }
+
+    .catalog__sheet-close svg { width: 16px; height: 16px; }
+    .catalog__done { display: inline-flex; }
+    .catalog__side-title { padding: 10px 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .catalog__side { transition: none; }
   }
 
   @media (max-width: 560px) {

@@ -1,0 +1,35 @@
+---
+interface Props {
+  target: string;
+  label: string;
+}
+const { target, label } = Astro.props;
+---
+
+<span class="copy-text">
+  <button type="button" data-copy-target={target} hidden>{label}</button>
+  <span role="status"></span>
+</span>
+
+<script>
+  for (const button of document.querySelectorAll<HTMLButtonElement>('[data-copy-target]')) {
+    const target = document.getElementById(button.dataset.copyTarget!);
+    const status = button.nextElementSibling;
+    if (!target || !status || !navigator.clipboard?.writeText) continue;
+    button.hidden = false;
+    button.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(target.innerText.trim());
+        status.textContent = '已复制';
+      } catch {
+        status.textContent = '请选中文字手动复制';
+      }
+    });
+  }
+</script>
+
+<style>
+  .copy-text { display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  button { padding: 5px 8px; border: 1px solid var(--line); background: #fff; color: var(--wine); font: inherit; font-size: 14px; cursor: pointer; }
+  [role="status"] { font-size: 14px; }
+</style>

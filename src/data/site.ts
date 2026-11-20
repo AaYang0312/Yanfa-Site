@@ -1,3 +1,7 @@
+const founded = 2019;
+
+export const technicalPage = { label: '技术资料', href: '/technical/' };
+
 export const site = {
   name: '元发工具',
   brand: '元发',
@@ -5,13 +9,13 @@ export const site = {
   brandSub: 'PNEUMATIC TOOLS',
   legalName: '元发工具（武汉）有限公司',
   city: '湖北武汉',
-  founded: 2011,
+  founded,
   tagline: '专注气动工具的创新品牌',
   description:
-    '元发创立于 2011 年，隶属元发工具（武汉）有限公司，提供全系列气动钉枪、枪钉及配套产品，首创加长枪嘴系列与带吹尘功能钉枪，整机享 6 个月免费质保。',
+    `元发创立于 ${founded} 年，隶属元发工具（武汉）有限公司，提供全系列气动钉枪、枪钉及配套产品，首创加长枪嘴系列与带吹尘功能钉枪，整机享 6 个月免费质保。`,
   phone: '189 6212 8286',
   address: '',
-  icp: '',
+  icp: '鄂ICP备2026067678号-1',
   copyrightYear: 2026,
 };
 
@@ -32,6 +36,7 @@ export const topNav = [
 
 export const footerPages = [
   { label: '产品中心', href: '/products/' },
+  technicalPage,
   { label: '公司概况', href: '/about/' },
   { label: '官方媒体', href: '/media/' },
   { label: '网上商城', href: '/shop/' },

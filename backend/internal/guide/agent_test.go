@@ -23,6 +23,7 @@ type consultModel struct {
 	toolName string
 	toolText string
 	block    bool
+	direct   bool
 	calls    atomic.Int64
 	active   atomic.Int64
 }
@@ -37,6 +38,9 @@ func (m *consultModel) Generate(ctx context.Context, input []*schema.Message, _ 
 	if m.block {
 		<-ctx.Done()
 		return nil, ctx.Err()
+	}
+	if m.direct {
+		return schema.AssistantMessage(m.proposal, nil), nil
 	}
 	hasTool := false
 	for _, msg := range input {
@@ -130,7 +134,7 @@ func TestConsultTextSelectCorrectionAndReference(t *testing.T) {
 			f := selectionSetup(t)
 			m := &consultModel{proposal: proposal(t, f.requirements, []string{}, new("SELECTION"))}
 			out := consult(t, f, m, message)
-			if out.State != "clarifying" || out.Selection != nil || out.Question == nil || out.Question.Field != nil || out.Question.Text != "请点击要选择的商品卡片" {
+			if out.State != "clarifying" || out.Selection != nil || out.Question == nil || out.Question.Field != nil || out.Question.Text != "请告诉我具体型号，也可以直接在商品卡片上查看详情。" {
 				t.Fatalf("ambiguous reference: %+v", out)
 			}
 		})
@@ -313,4 +317,140 @@ func TestConsultCandidateEvidenceRanking(t *testing.T) {
 	if out.State != "recommendations" || !slices.Equal(got, []string{"p_rank1", "p_rank2", "p_rank0"}) || out.Selection != nil {
 		t.Fatalf("fact-count/display-order/stable-ID top three: %+v", out)
 	}
+}
+
+func TestRecommendationConsidersProductsBeyondKeywordSearch(t *testing.T) {
+	f := selectionSetup(t)
+	p := f.snapshot.Products[0]
+	f.snapshot.Products = nil
+	for i := range 6 {
+		item := p
+		item.ID, item.Slug, item.Model = fmt.Sprintf("p_late%d", i), fmt.Sprintf("late-%d", i), fmt.Sprintf("LATE%d", i)
+		item.SortOrder = int64(i)
+		if i < 5 {
+			item.Summary = "家装木工工具"
+			item.GuideProfile.Reviews = []contract.GuideReview{}
+			item.PurchaseOptions = []contract.PurchaseOption{}
+		} else {
+			item.Summary, item.Applications, item.Features, item.Notes = "板材钉合", []string{}, []string{}, []string{}
+		}
+		f.snapshot.Products = append(f.snapshot.Products, item)
+	}
+	hidden := p
+	hidden.ID, hidden.Slug, hidden.Visibility = "p_hidden", "hidden", "unlisted"
+	unrelated := p
+	unrelated.ID, unrelated.Slug, unrelated.Model = "p_other", "other", "OTHER"
+	unrelated.Summary, unrelated.Applications, unrelated.Features, unrelated.Notes = "气动配件", []string{}, []string{}, []string{}
+	unrelated.SceneIDs = []contract.SceneID{}
+	unrelated.GuideProfile.Reviews = []contract.GuideReview{}
+	f.snapshot.Products = append(f.snapshot.Products, hidden, unrelated)
+	f.h = f.load(t, "consult_full_catalog")
+	f.activate(t, f.h, "full_catalog_operation")
+	req := f.requirements
+	req.AirSupply = new(true)
+	raw := catalogProposal(t, req, "家装木工")
+	out := consult(t, f, &consultModel{proposal: raw, query: `{"q":"家装木工"}`}, "家装木工，气源有，推荐合适工具")
+	if out.State != "recommendations" || len(out.Recommendations) != 3 || out.Recommendations[0].ProductID != "p_late5" || out.Recommendations[0].MatchLevel != "matched" {
+		t.Fatalf("expected the verified product absent from the search on top: %+v", out)
+	}
+	b, err := json.Marshal(out)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var view struct {
+		Recommendations []struct {
+			PurchaseOptions []contract.PublicPurchaseOption `json:"purchase_options"`
+		}
+		Additional []struct {
+			ProductID string `json:"product_id"`
+		} `json:"additional_recommendations"`
+	}
+	if err := json.Unmarshal(b, &view); err != nil {
+		t.Fatal(err)
+	}
+	if options := view.Recommendations[0].PurchaseOptions; len(options) != 1 || !strings.HasPrefix(options[0].HandoffURL, "/go/products/p_late5/") {
+		t.Fatalf("first card is missing its published purchase link: %+v", options)
+	}
+	if len(view.Additional) != 3 || view.Additional[0].ProductID != "p_late2" || view.Additional[2].ProductID != "p_late4" {
+		t.Fatalf("expected remaining related products in order, no hidden or unrelated entries: %+v", view.Additional)
+	}
+	if strings.Contains(guide.ResultText(out), "模型随意写的型号") {
+		t.Fatal("reply must describe the server's shortlist")
+	}
+}
+
+func TestRecommendationDoesNotOfferKnownConflict(t *testing.T) {
+	f := selectionSetup(t)
+	req := f.requirements
+	req.AirSupply = new(false)
+	out := consult(t, f, &consultModel{proposal: catalogProposal(t, req, "家装木工"), direct: true}, "没有气源，推荐家装木工工具")
+	for _, card := range out.Recommendations {
+		if card.ProductID == "p_selection" {
+			t.Fatalf("known pneumatic conflict recommended: %+v", out)
+		}
+	}
+	if out.State == "unavailable" {
+		t.Fatal("missing catalog evidence is not service unavailability")
+	}
+}
+
+func TestRecommendationStreamKeepsModelWrittenProductClaimsPrivate(t *testing.T) {
+	f := selectionSetup(t)
+	req := f.requirements
+	req.AirSupply = new(true)
+	m := &consultModel{proposal: catalogProposal(t, req, "家装木工"), direct: true}
+	var visible string
+	result, err := guide.NewAgent(f.service, m).ConsultStream(context.Background(), f.h, contract.ConsultRequest{
+		ReleaseID: f.h.ID(), Requirements: &req, Message: "推荐家装木工工具",
+	}, func(delta string) error { visible += delta; return nil })
+	if err != nil || result.State != "recommendations" || len(result.Recommendations) == 0 || result.Recommendations[0].ProductID != "p_selection" {
+		t.Fatalf("stream did not resolve the catalogue result: %+v, %v", result, err)
+	}
+	if strings.Contains(visible+guide.ResultText(result), "模型随意写的型号") {
+		t.Fatal("unverified provider prose leaked into the response")
+	}
+}
+
+func TestRecommendationRespectsPublishedMaterialProhibition(t *testing.T) {
+	f := selectionSetup(t)
+	limited, alternative := f.snapshot.Products[0], f.snapshot.Products[2]
+	limited.GuideProfile.Reviews = []contract.GuideReview{}
+	limited.Notes = []string{"F30钉枪只打木材、板材；水泥、砖墙、钢材、瓷砖、玻璃一律不用。"}
+	alternative.Notes = []string{"可打普通混凝土，打混凝土时避开钢筋。"}
+	f.snapshot.Products = []contract.SnapshotProduct{limited, alternative}
+	f.h = f.load(t, "consult_published_limits")
+	f.activate(t, f.h, "published_limits_operation")
+	req := contract.UnknownRequirements()
+	req.SceneIDs = []contract.SceneID{"home-woodworking"}
+	req.Substrate = new("水泥墙")
+	out := consult(t, f, &consultModel{proposal: catalogProposal(t, req, "家装木工"), direct: true}, "固定到水泥墙")
+	if len(out.Recommendations) != 1 || out.Recommendations[0].ProductID != "p_unknown" {
+		t.Fatalf("explicit prohibition should exclude only the limited tool: %+v", out.Recommendations)
+	}
+}
+
+func TestRecommendationFindsToolsUsingTheRequestedNailType(t *testing.T) {
+	f := selectionSetup(t)
+	item := f.snapshot.Products[0]
+	item.Kind, item.NailType = "tool", new(contract.NailType("brad"))
+	item.Summary, item.Applications, item.Features = "板材钉合", []string{"薄板拼接"}, []string{"轻便机身"}
+	item.GuideProfile.Reviews = []contract.GuideReview{}
+	f.snapshot.Products = []contract.SnapshotProduct{item}
+	f.h = f.load(t, "consult_nail_tools")
+	f.activate(t, f.h, "nail_tools_operation")
+	req := contract.UnknownRequirements()
+	req.NailType = new(contract.NailType("brad"))
+	out := consult(t, f, &consultModel{proposal: catalogProposal(t, req, "直排钉"), direct: true}, "推荐能用直排钉的工具")
+	if len(out.Recommendations) != 1 || out.Recommendations[0].ProductID != "p_selection" || out.Recommendations[0].MatchLevel != "needs_confirmation" {
+		t.Fatalf("public nail type should discover the tool without verifying it: %+v", out.Recommendations)
+	}
+}
+
+func catalogProposal(t *testing.T, req contract.GuideRequirements, term string) string {
+	t.Helper()
+	b, err := json.Marshal(req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return fmt.Sprintf(`{"intent":"recommend","requirements":%s,"candidate_product_ids":[],"selected_product_id":null,"selection_reference":null,"discovery_terms":[%q],"cleared_requirements":[],"reply":"模型随意写的型号"}`, b, term)
 }

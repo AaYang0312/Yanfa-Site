@@ -2,12 +2,13 @@
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
-import aboutF30m from '../assets/client-1101/about-f30m.png';
-import { site } from '../data/site';
+import homeHero from '../assets/client-1101/home-hero.png';
+import { site, shops } from '../data/site';
+import { productCounts } from '../data/catalog';
 
 const facts = [
   { value: `${site.founded}年`, label: '品牌创立' },
-  { value: '40款', label: '气动钉枪' },
+  { value: `${productCounts.tools} 款`, label: '在售工具' },
   { value: '6个月', label: '免费整机质保' },
 ];
 
@@ -54,8 +55,9 @@ const channels = ['淘宝', '天猫', '抖店', '拼多多', '京东', '1688'];
   <div class="wrap">
     <div class="banner">
       <Image
-        src={aboutF30m}
-        alt="元发 F30M 长嘴直钉枪实景海报"
+        src={homeHero}
+        alt="元发 1013J 码钉枪木工作业实景"
+        width={800}
         widths={[400, 640, 800]}
         sizes="(max-width: 800px) 100vw, 800px"
         format="webp"
@@ -94,7 +96,7 @@ const channels = ['淘宝', '天猫', '抖店', '拼多多', '京东', '1688'];
         <div>
           <h3>线上渠道</h3>
           <ul class="tags">{channels.map((item) => <li>{item}</li>)}</ul>
-          <a class="where__link" href="/shop/">查看官方店铺</a>
+          <a class="where__link" href="/shop/">前往{[...new Set(shops.map(shop => shop.platform))].join('、')}官方店铺</a>
         </div>
       </div>
     </div>

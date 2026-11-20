@@ -84,7 +84,8 @@ func (p *replyPreview) append(chunk *schema.Message) error {
 		if e != nil {
 			return nil
 		}
-		if proposal.Intent != "clarify" && p.counts.tools.Load() == 0 {
+		// Recommendation text comes from the ranked catalog, not the provider.
+		if proposal.Intent == "recommend" || (proposal.Intent != "clarify" && p.counts.tools.Load() == 0) {
 			return nil
 		}
 		proposal.Requirements, e = mergeConversationRequirements(p.request, proposal)

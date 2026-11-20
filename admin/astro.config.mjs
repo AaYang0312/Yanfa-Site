@@ -1,4 +1,5 @@
 import http from 'node:http';
+import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'astro/config';
 
 const target = process.env.ADMIN_API_TARGET;
@@ -41,14 +42,14 @@ const apiProxy = {
 };
 export default defineConfig({
   base: '/admin',
-  outDir: new URL('./dist/', import.meta.url).pathname,
-  cacheDir: new URL('../.work/admin-cache/', import.meta.url).pathname,
+  outDir: fileURLToPath(new URL('./dist/', import.meta.url)),
+  cacheDir: fileURLToPath(new URL('../.work/admin-cache/', import.meta.url)),
   output: 'static',
   trailingSlash: 'always',
   vite: {
     plugins: [apiProxy],
     server: {
-      fs: { allow: [new URL('../', import.meta.url).pathname] },
+      fs: { allow: [fileURLToPath(new URL('../', import.meta.url))] },
     },
   },
 });

@@ -89,8 +89,8 @@ export async function openHarness(name) {
     const value = await result.json();
     if (status < 300) {
       assert.match(result.headers().etag, /^"\d+"$/); assert.equal(result.headers().etag, `"${value.version}"`);
-      await page.getByRole('button', { name: '保存并更新官网', exact: true }).waitFor();
-      await page.waitForFunction(() => !document.querySelector('#save-product').disabled);
+      // Successful saves return to the product list with a saved flash parameter.
+      await page.waitForURL(url => url.pathname === '/admin/products/' && url.searchParams.get('saved') === value.product.id);
       if (!id) createdProducts.add(value.product.id);
     }
     return value;

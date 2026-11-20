@@ -90,7 +90,7 @@ try{
   await configure(ctx,{model_proposal:proposal(body.requirements),get_product_id:'p_f30m'});
   const inquiry=await both(ctx,{...body,message:'F30M适合什么材料？'});assert.equal(inquiry.selection,null);assert.ok(inquiry.recommendations.some(r=>r.product_id==='p_f30m'));assert.deepEqual(inquiry.conflicts,[]);
   await configure(ctx,{model_proposal:proposal(body.requirements,{intent:'select',id:'p_f30m',reference:'第二款',ids:[]})});
-  const ambiguous=await both(ctx,{...body,message:'就第二款',context_product_id:'p_f30m'});assert.equal(ambiguous.state,'clarifying');assert.equal(ambiguous.selection,null);assert.equal(ambiguous.question.field,null);assert.equal(ambiguous.question.text,'请点击要选择的商品卡片');
+  const ambiguous=await both(ctx,{...body,message:'就第二款',context_product_id:'p_f30m'});assert.equal(ambiguous.state,'clarifying');assert.equal(ambiguous.selection,null);assert.equal(ambiguous.question.field,null);assert.match(ambiguous.question.text,/请告诉我具体型号/);
   const merged={...body.requirements,air_supply:false};await configure(ctx,{model_proposal:proposal(merged,{intent:'select',id:'p_f30m',reference:'F30M',ids:[]})});
   const corrected=await both(ctx,{...body,message:'我就选F30M，刚才说错了，现场没有气源'});assert.equal(corrected.state,'no_match');assert.deepEqual(corrected.confirmed_requirements,merged);noPurchase(corrected);assert.ok(corrected.conflicts.some(x=>x.includes('压缩空气')&&x.includes('没有可用气源')));
   stats=await ctx.readStats();assert.equal(stats.agent_runs,8);assert.equal(stats.model_calls,16);assert.equal(stats.select_calls,4);assert.equal(stats.active_model_calls,0);

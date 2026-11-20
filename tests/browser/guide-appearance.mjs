@@ -37,20 +37,27 @@ try {
   const source = { public_label: '隔离测试资料', public_url: 'https://example.test/guide-ui' };
   result.selection.matched_facts = [{ field: 'materials', text: '受控夹具中的材料说明', sources: [source] }, { field: 'substrates', text: '受控夹具中的基材说明', sources: [source] }];
   const recommendation = structuredClone(result); recommendation.state = 'recommendations';
-  const { purchase_options, purchase_status, ...card } = recommendation.selection;
+  const { purchase_status, ...card } = recommendation.selection;
+  card.purchase_options = [{
+    purchase_option_id: 'o_fixture', platform: '测试商城', store_name: '工具店', match_scope: 'listing_with_variants',
+    sku_hint: '进入商城后选择对应规格。', destination_host: 'example.test',
+    handoff_url: `/go/products/${card.product_id}/o_fixture?release_id=${release}`
+  }];
   recommendation.recommendations = [card]; recommendation.selection = null;
+  recommendation.additional_recommendations = [{ ...card, product_id: 'p_more', model: 'MORE', purchase_options: [], matched_facts: [] }];
   browser = await chromium.launch({ headless: true, ...(process.env.BROWSER_PATH ? { executablePath: process.env.BROWSER_PATH } : { channel: 'chrome' }) });
   const context = await browser.newContext({ viewport: { width: 1440, height: 1000 } });
   const page = await context.newPage(); page.setDefaultTimeout(15000);
   page.on('pageerror', error => report.page_errors.push(error.message));
-  await page.route('**/api/catalog/release', route => route.fulfill({ contentType: 'application/json', body: JSON.stringify({ schema_version: 1, release_id: release }) }));
+  let activeRelease = release;
+  await page.route('**/api/catalog/release', route => route.fulfill({ contentType: 'application/json', body: JSON.stringify({ schema_version: 1, release_id: activeRelease }) }));
   let mode = 'success', requests = [];
+  await page.route('**/go/products/**', route => route.fulfill({ status: 204 }));
   await page.route('**/api/guide/messages', async route => {
     const body = route.request().postDataJSON(); requests.push(body);
     if (mode === 'hold') await new Promise(done => { releaseGate = done; });
     try {
       if (mode === 'failure') { await route.fulfill({ status: 503, contentType: 'application/json', body: JSON.stringify({ error: { code: 'UNAVAILABLE', message: '服务暂时不可用', fields: [] } }) }); return; }
-      if (body.selected_product_id) { await route.fulfill({ contentType: 'application/json', body: JSON.stringify(result) }); return; }
       await route.fulfill({ headers: { 'content-type': 'text/event-stream; charset=utf-8', 'x-vercel-ai-ui-message-stream': 'v1' }, body: encodeFrames(streamFrames(recommendation, '已收到你的需求，请核对型号资料。')) });
     } catch { /* cancellation can close the request */ }
   });
@@ -96,22 +103,32 @@ try {
   await page.locator('[data-guide-state="recommendations"]').waitFor();
   assert.equal(requests.at(-1).context_product_id, 'p_bw120g');
   assert.equal(await page.locator('.yg-sources[open]').count(), 0);
-  await page.locator('.yg-sources summary').click();
-  assert.equal(await page.locator('.yg-sources a').count(), 1);
-  assert.equal(await page.locator('.yg-sources a').getAttribute('href'), source.public_url);
-  await page.locator('.yg-sources summary').click();
+  const sources = page.locator('.yg-sources').first();
+  await sources.locator('summary').click();
+  assert.equal(await sources.locator('a').count(), 1);
+  assert.equal(await sources.locator('a').getAttribute('href'), source.public_url);
+  await sources.locator('summary').click();
   await conditions.click();
   await page.waitForFunction(() => getComputedStyle(document.querySelector('#guide-conditions')).opacity === '1');
   assert.match(await page.locator('#guide-conditions').innerText(), /木材/);
   assert.doesNotMatch(await page.locator('#guide-conditions').innerText(), /未知/);
   await panel.screenshot({ path: join(out, 'assistant-conditions.png') });
   await conditions.press('Escape');
-  await panel.getByRole('button', { name: '选这款', exact: true }).click(); await page.locator('[data-guide-state="selected"]').waitFor();
-  assert.deepEqual(requests.at(-1).requirements, result.confirmed_requirements);
+  assert.equal(await panel.getByRole('button', { name: '选这款', exact: true }).count(), 0);
+  const direct = panel.locator('[data-guide-purchase]').first();
+  const expectedPurchase = new URL(await direct.getAttribute('href'), base).pathname;
+  const [handoff] = await Promise.all([page.waitForResponse(response => new URL(response.url()).pathname === expectedPurchase), direct.click()]);
+  assert.equal(handoff.status(), 204);
+  assert.equal(requests.length, 1, 'direct navigation needs no selection request');
+  const more = panel.getByText('查看更多匹配（1 款）', { exact: true });
+  const extra = panel.locator('[data-guide-product="p_more"]');
+  assert.equal(await extra.isVisible(), false);
+  await more.click();
+  await extra.getByRole('link', { name: '联系咨询' }).waitFor();
   assert.match(await page.locator('.yg-question').innerText(), /气源/);
   assert.equal(await panel.getByRole('link', { name: '电话咨询', exact: true }).count(), 1);
   await panel.screenshot({ path: join(out, 'assistant-result.png') });
-  report.checks.push('fixture conversation and icon selection keep conditions and suitability gaps');
+  report.checks.push('recommendation opens the purchase handoff directly, expands extra matches, and retains suitability gaps');
   mode = 'hold'; await input.fill('更正条件'); await panel.getByRole('button', { name: '发送', exact: true }).click();
   await panel.getByRole('button', { name: '取消本轮' }).click();
   await panel.getByRole('button', { name: '明确撤销未完成请求' }).waitFor();
@@ -124,13 +141,41 @@ try {
   mode = 'success'; await panel.getByRole('button', { name: '重新提交', exact: true }).click(); await page.locator('[data-guide-state="recommendations"]').waitFor();
   await panel.getByRole('button', { name: '清空本标签页会话', exact: true }).click(); await page.locator('.yg-welcome').waitFor();
   report.checks.push('stop, discard, failed request retry, clear remain functional');
-  await page.goto(base + '/products/yf1206/');
-  const placeholder = page.locator('.detail__media .product-placeholder');
-  assert.equal((await placeholder.innerText()).trim(), ''); assert.equal(await placeholder.locator('circle').count(), 3);
-  assert.match(await placeholder.getAttribute('aria-label'), /暂无实物图/);
-  assert.equal(await placeholder.evaluate(el => getComputedStyle(el).animationName), 'none');
-  await page.screenshot({ path: join(out, 'other-product.png') });
-  report.checks.push('static three-dot image placeholder with accessible meaning');
+  // The material preview contains this model; the original seed does not.
+  if ((await page.request.get(base + '/products/yf1206/')).ok()) {
+    await page.goto(base + '/products/yf1206/');
+    const placeholder = page.locator('.detail__media .product-placeholder');
+    assert.equal((await placeholder.innerText()).trim(), ''); assert.equal(await placeholder.locator('circle').count(), 3);
+    assert.match(await placeholder.getAttribute('aria-label'), /暂无实物图/);
+    assert.equal(await placeholder.evaluate(el => getComputedStyle(el).animationName), 'none');
+    await page.screenshot({ path: join(out, 'other-product.png') });
+    report.checks.push('static three-dot image placeholder with accessible meaning');
+  }
+  await page.goto(base + '/');
+  const homeHero = await page.locator('.hero__photo img').getAttribute('src');
+  for (const width of [1440, 390]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto(base + '/about/');
+    const banner = page.locator('.banner img');
+    await banner.evaluate(img => img.decode());
+    assert.equal(await page.getByRole('heading', { name: '公司概况', exact: true }).count(), 1);
+    const assetName = src => new URL(src, base).pathname.split('/').at(-1).split('_')[0];
+    assert.equal(assetName(await banner.getAttribute('src')), assetName(homeHero));
+    assert.equal(await banner.evaluate(img => img.naturalWidth > 0 && img.getBoundingClientRect().width <= innerWidth), true);
+    await banner.screenshot({ path: join(out, `about-banner-${width}.png`) });
+  }
+  report.checks.push('About banner loads the homepage asset at desktop and mobile widths');
+  await page.goto(base + '/products/bw120g/'); await open();
+  await input.fill('推荐工具'); await panel.getByRole('button', { name: '发送', exact: true }).click();
+  await panel.locator('[data-guide-purchase]').first().waitFor();
+  let staleHandoffs = 0;
+  page.on('request', request => { if (new URL(request.url()).pathname.startsWith('/go/products/')) staleHandoffs++; });
+  activeRelease = 'new_release';
+  await panel.locator('[data-guide-purchase]').first().click();
+  await panel.getByRole('link', { name: '刷新当前资料' }).waitFor();
+  assert.equal(staleHandoffs, 0);
+  assert.equal(await panel.locator('[data-guide-purchase]').count(), 0);
+  report.checks.push('purchase rechecks the release and stops when the catalog changed');
   assert.deepEqual(report.page_errors, []); report.passed = true;
   console.log(JSON.stringify(report));
 } finally {

@@ -14,7 +14,11 @@ export default function GuideWidget({ releaseId, contextProductId, contactHref }
   useEffect(() => {
     const click = (event: MouseEvent) => { const button = event.target instanceof Element ? event.target.closest<HTMLElement>('[data-guide-open]') : null; if (button) { returnFocus.current = button; setIsOpen(true); } };
     document.addEventListener('click', click);
-    return () => document.removeEventListener('click', click);
+    // The widget hydrates when the browser is idle; honour a click that happened before that.
+    const early = window as unknown as { __guideReady?: boolean; __guidePending?: HTMLElement };
+    early.__guideReady = true;
+    if (early.__guidePending) { returnFocus.current = early.__guidePending; early.__guidePending = undefined; setIsOpen(true); }
+    return () => { early.__guideReady = false; document.removeEventListener('click', click); };
   }, []);
   useEffect(() => {
     const viewport = window.visualViewport;

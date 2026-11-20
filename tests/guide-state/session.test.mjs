@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { GuideSession, SESSION_KEY, unknownRequirements, checkedResult } from '../../src/scripts/guide/session.ts';
+import { GuideSession, SESSION_KEY, unknownRequirements, checkedResult, requestId } from '../../src/scripts/guide/session.ts';
 import { GuideStreamFence, GuideHTTPError, observeResponse, responseError } from '../../src/scripts/guide/protocol.ts';
 import { selected, streamFrames, encodeFrames, memoryStorage } from './fixtures.mjs';
 const consult = { kind: 'consult', text: '现场没有气源，更正之前条件', selected_product_id: null };
@@ -64,6 +64,19 @@ test('old malformed results preserve validated text/conditions but never restore
   source.clear(); assert.equal(storage.getItem(SESSION_KEY), null);
 });
 
+test('legacy recommendation cards without channel data are refreshed by consulting again', async () => {
+  const storage = memoryStorage();
+  const { purchase_options, purchase_status, ...legacyCard } = selected.selection;
+  const result = { ...selected, state: 'recommendations', selection: null, recommendations: [legacyCard] };
+  storage.setItem(SESSION_KEY, JSON.stringify({ version: 1, messages: [{ role: 'assistant', content: '原来的推荐' }], result,
+    requirements: selected.confirmed_requirements, release_id: selected.release_id, pending_turn: null }));
+  const session = await ready(storage);
+  assert.equal(session.state.result, null);
+  assert.equal(session.state.messages.at(-1).content, '原来的推荐');
+  assert.deepEqual(session.state.requirements, selected.confirmed_requirements);
+  assert.match(session.state.notice, /重新咨询/);
+});
+
 test('HTTP identity and abort remain failures after a complete candidate was seen', async () => {
   const error = await responseError(new Response(JSON.stringify({ error: { code: 'CATALOG_CHANGED', message: '目录更新', fields: ['release_id'] } }), { status: 409 }));
   assert.ok(error instanceof GuideHTTPError); assert.equal(error.status, 409); assert.equal(error.code, 'CATALOG_CHANGED'); assert.deepEqual(error.fields, ['release_id']);
@@ -81,4 +94,33 @@ test('an explicitly retried selection can be revalidated after navigation to the
   const retry = current.begin({ kind: 'select', text: '', selected_product_id: 'p_test' }, true);
   await current.commit(retry, { ...structuredClone(selected), release_id: 'r_current' }, '', async () => 'r_current');
   assert.equal(current.operable, true); assert.equal(current.state.result.release_id, 'r_current');
+});
+
+test('model unavailability is a busy failure that clears on retry and explicit withdrawal', async () => {
+  const session = await ready();
+  const unavailable = session.begin(consult);
+  session.fail(unavailable, '', true);
+  assert.equal(session.state.unavailable, true);
+  assert.equal(session.state.busy, false);
+  assert.equal(session.operable, false);
+  const retry = session.begin({ ...consult, text: '稍后重试' }, true);
+  assert.equal(session.state.unavailable, false);
+  session.fail(retry, '', true);
+  assert.equal(session.state.unavailable, true);
+  await session.discard(async () => 'r_test');
+  assert.equal(session.state.unavailable, false);
+  assert.equal(session.operable, true);
+});
+
+test('request ids stay available when insecure HTTP pages lack crypto.randomUUID', () => {
+  const original = Object.getOwnPropertyDescriptor(globalThis.crypto, 'randomUUID');
+  Object.defineProperty(globalThis.crypto, 'randomUUID', { value: undefined, configurable: true });
+  try {
+    const first = requestId(), second = requestId();
+    assert.match(first, /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/);
+    assert.notEqual(first, second);
+  } finally {
+    if (original) Object.defineProperty(globalThis.crypto, 'randomUUID', original);
+    else delete globalThis.crypto.randomUUID;
+  }
 });

@@ -1,4 +1,4 @@
-import { api, getSession, showError } from './api';
+import { api, getSession, notice, showError } from './api';
 import { element } from './dom';
 import { categories } from './labels';
 import { mediaPreview, missingImage } from './media';
@@ -14,6 +14,9 @@ const category = form.elements.namedItem('category') as HTMLSelectElement;
 for (const [id, name] of Object.entries(categories)) { const option = element('option', name); option.value = id; category.append(option); }
 const initial = new URLSearchParams(location.search);
 for (const name of ['q', 'category', 'visibility']) (form.elements.namedItem(name) as HTMLInputElement).value = initial.get(name) ?? '';
+// Editor redirects here with ?saved=<id> after a successful save; the site
+// update progress keeps running through the banner below.
+if (initial.get('saved')) notice('保存成功，正在更新官网。');
 let cursor: string | null = null, count = 0, request = 0;
 let controller: AbortController | null = null;
 let coverController = new AbortController();

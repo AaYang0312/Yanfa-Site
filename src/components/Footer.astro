@@ -1,6 +1,6 @@
 ---
 import Logo from './Logo.astro';
-import { site, show, footerPages, media, telHref } from '../data/site';
+import { site, footerPages, media, telHref } from '../data/site';
 
 const half = Math.ceil(footerPages.length / 2);
 const columns = [footerPages.slice(0, half), footerPages.slice(half)];
@@ -49,7 +49,7 @@ const columns = [footerPages.slice(0, half), footerPages.slice(half)];
     <div class="wrap footer__bar-inner">
       <span>
         © {site.copyrightYear} {site.legalName} 版权所有
-        <span class="sep">|</span> 备案号：{show(site.icp)}
+        <span class="sep">|</span> <a href="https://beian.miit.gov.cn/">{site.icp}</a>
         <span class="sep">|</span> <a href="/privacy/">隐私政策</a>
       </span>
       <span>{site.brandEn} {site.brandSub}</span>

@@ -6,6 +6,7 @@ import wechatVideo from '../assets/ppt/wechat-video.png';
 import douyinNailgun from '../assets/ppt/douyin-nailgun.png';
 import douyinTools from '../assets/ppt/douyin-tools.png';
 import { media } from '../data/site';
+import CopyText from '../components/CopyText.astro';
 
 const shots = {
   'wechat-video': wechatVideo,
@@ -28,7 +29,13 @@ const shots = {
           <li>
             <div class="accounts__identity">
               <p class="accounts__platform">{item.platform}</p>
-              <h2>{item.name}</h2>
+              <h2 id={item.slug}>{item.name}</h2>
+            </div>
+            <div class="accounts__actions">
+              {item.platform === '抖音' ? (
+                <a href={`https://www.douyin.com/search/${encodeURIComponent(item.name)}?type=user`} target="_blank" rel="noopener noreferrer">在抖音搜索账号</a>
+              ) : <span>在微信「搜一搜」中选择「视频号」</span>}
+              <CopyText target={item.slug} label="复制账号名" />
             </div>
             <figure class="accounts__figure">
               <div class="accounts__shot">
@@ -41,7 +48,7 @@ const shots = {
               </div>
               <figcaption>账号主页截图</figcaption>
             </figure>
-            <p class="accounts__bio">{item.bio}</p>
+            <p class="accounts__bio">账号简介引文：{item.bio}</p>
           </li>
         ))}
       </ul>
@@ -67,6 +74,8 @@ const shots = {
 
   .accounts > li { min-width: 0; }
   .accounts__identity { margin-bottom: 20px; }
+  .accounts__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin-bottom: 16px; font-size: 14px; }
+  .accounts__actions a { color: var(--wine); text-underline-offset: 3px; }
   .accounts__figure { margin: 0 0 20px; }
 
   .accounts__shot {

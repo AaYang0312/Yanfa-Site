@@ -42,38 +42,51 @@ export function Requirements({ requirements }: { requirements: GuideRequirements
   const known = Object.entries(requirements).filter(([, value]) => value !== null && (!Array.isArray(value) || value.length));
   return <div className="yg-requirements">{known.length ? <><dl>{known.map(([field, value]) => <div key={field}><dt>{fieldLabels[field]}</dt><dd>{typeof value === 'boolean' ? value ? '是' : '否' : Array.isArray(value) ? value.map(item => valueLabels[item] || item).join('、') : typeof value === 'string' ? valueLabels[value] || value : value}</dd></div>)}</dl><p>可在对话中补充或更正。</p></> : <p>暂无条件，直接在对话中补充即可。</p>}</div>;
 }
-function ProductCard({ product, selection, requirements, reply, askedRequirement, onSelect, onPurchase }: { product: GuideRecommendation | GuideSelection; selection?: GuideSelection; requirements: GuideRequirements; reply: string; askedRequirement?: Requirement; onSelect: (id: string) => void; onPurchase: (href: string) => Promise<void> }) {
+function ProductCard({ product, selected, requirements, reply, askedRequirement, contactHref, onPurchase }: { product: GuideRecommendation | GuideSelection; selected?: boolean; requirements: GuideRequirements; reply: string; askedRequirement?: Requirement; contactHref: string; onPurchase: (href: string) => Promise<void> }) {
   const sources = [...new Map(product.matched_facts.flatMap(fact => fact.sources).map(source => [source.public_url || source.public_label, source])).values()];
-  const gaps = [...new Set(product.missing_fields.map(relatedRequirement).filter((field): field is Requirement => hasRequirement(requirements, field) && field !== askedRequirement))];
+  const reason = 'recommendation_reason' in product ? product.recommendation_reason : undefined;
+  const gaps = [...new Set(product.missing_fields.map(relatedRequirement).filter((field): field is Requirement => field !== undefined && field !== askedRequirement && (hasRequirement(requirements, field) || (field === 'air_supply' && product.missing_fields.includes('air_supply')))))];
   const facts = reply ? [] : product.matched_facts;
-  return <article className="yg-product" data-guide-product={product.product_id} data-guide-selection={selection ? 'true' : undefined}>
-    <div className="yg-product-heading">{product.image && <img src={product.image.url} alt={product.image.label || product.name} width="64" height="64" loading="lazy" />}<div><h3>{selection ? '已选型号：' : ''}{product.model || product.name}</h3>{!selection && product.model && product.model !== product.name && <p>{product.name}</p>}</div></div>
+  const options = product.purchase_options ?? [];
+  return <article className="yg-product" data-guide-product={product.product_id} data-guide-selection={selected ? 'true' : undefined}>
+    <div className="yg-product-heading">{product.image && <img src={product.image.url} alt={product.image.label || product.name} width="64" height="64" loading="lazy" />}<div><h3>{selected ? '已选型号：' : ''}{product.model || product.name}</h3>{!selected && product.model && product.model !== product.name && <p>{product.name}</p>}</div></div>
+    {reason && <p>{publicText(reason)}</p>}
     {!!facts.length && <ul>{facts.map((fact, index) => <li key={index}>{publicText(fact.text)}</li>)}</ul>}
     {!!gaps.length && <p className="yg-gaps">还需确认：{gaps.map(field => compatibilityLabels[field]).join('、')}。</p>}
-    {!selection && !reply && product.confirmation_notes.map((note, index) => <p key={index}>{publicText(note)}</p>)}
-    <div className="yg-product-actions">{!!sources.length && <details className="yg-sources"><summary>资料来源</summary><ul>{sources.map((source, index) => <li key={index}>{source.public_url ? <a href={source.public_url} rel="noreferrer">{source.public_label}</a> : source.public_label}</li>)}</ul></details>}<div className="yg-toolbar"><a className="yg-icon-button" href={product.detail_url} aria-label="查看详情" title="查看详情"><GuideIcon name="external" /></a>{!selection && <button className="yg-icon-button" type="button" aria-label="选这款" title={`选择${product.model || product.name}`} onClick={() => onSelect(product.product_id)}><GuideIcon name="check" /></button>}</div></div>
-    {selection && selection.purchase_options.length > 0 && <div className="yg-purchase" aria-label="所选型号商城入口">
-      {selection.purchase_options.map(option => <div key={option.purchase_option_id}>
-        <a data-guide-purchase href={option.handoff_url} onClick={event => { event.preventDefault(); void onPurchase(option.handoff_url); }}>去{option.platform} · {option.store_name}查看/购买{selection.model || selection.name}{option.match_scope === 'listing_with_variants' ? '（进入商城后选择规格）' : ''}</a>
+    {reason && !gaps.length && product.match_level === 'needs_confirmation' && !product.missing_fields.some(field => relatedRequirement(field) === askedRequirement && askedRequirement !== undefined) && <p className="yg-gaps">适用条件待核实。</p>}
+    {!selected && !reply && !reason && product.confirmation_notes.map((note, index) => <p key={index}>{publicText(note)}</p>)}
+    <div className="yg-product-actions">
+      {!!sources.length && <details className="yg-sources"><summary>资料来源</summary><ul>{sources.map((source, index) => <li key={index}>{source.public_url ? <a href={source.public_url} rel="noreferrer">{source.public_label}</a> : source.public_label}</li>)}</ul></details>}
+      <div className="yg-toolbar"><a className="yg-detail" href={product.detail_url} aria-label="查看详情">查看详情<GuideIcon name="external" /></a>{!options.length && <a className="yg-contact" href={contactHref}>联系咨询</a>}</div>
+    </div>
+    {options.length > 0 && <div className="yg-purchase" aria-label={selected ? '所选型号商城入口' : '推荐型号商城入口'}>
+      {options.map(option => <div key={option.purchase_option_id}>
+        <a data-guide-purchase href={option.handoff_url} onClick={event => { event.preventDefault(); void onPurchase(option.handoff_url); }}>去{option.platform}查看 · {option.store_name}</a>
         {option.match_scope === 'listing_with_variants' && <p>{option.sku_hint || '进入商城后选择对应型号与规格。'}</p>}
       </div>)}
     </div>}
   </article>;
 }
 /** Chat owns the reply; cards also work for selections returned without chat text. */
-export function GuideResultView({ result, onSelect, onPurchase, onAnswer }: { result: GuideResult; onSelect: (id: string) => void; onPurchase: (href: string) => Promise<void>; onAnswer: (text: string) => void }) {
+export function GuideResultView({ result, onPurchase, onAnswer }: { result: GuideResult; onPurchase: (href: string) => Promise<void>; onAnswer: (text: string) => void }) {
   const reply = result.reply?.trim() || '';
   const conflicts = result.conflicts.filter(reason => !repeatedIn(reply, reason));
   const questionText = result.question ? publicText(result.question.text) : '';
   const questionRepeated = repeatedIn(reply, questionText);
   const options = [...new Set(result.question?.options || [])];
+  const more = result.additional_recommendations ?? [];
+  const cardProps = { requirements: result.confirmed_requirements, reply, askedRequirement: result.question?.field ?? undefined, contactHref: result.contact_href, onPurchase };
   return <section className="yg-result" aria-label="导购完整结果" data-guide-state={result.state}>
-    {result.state === 'no_match' && !!conflicts.length && <><h3>选型结果说明</h3><ul className="yg-conflicts">{conflicts.map((reason, index) => <li key={index}>{publicText(reason)}</li>)}</ul></>}
+    {result.state === 'no_match' && <>{!!conflicts.length && <><h3>选型结果说明</h3><ul className="yg-conflicts">{conflicts.map((reason, index) => <li key={index}>{publicText(reason)}</li>)}</ul></>}<a className="yg-contact" href={result.contact_href}>联系咨询</a></>}
     {result.question && (!questionRepeated || !!options.length) && <div className="yg-question" role="group" aria-label={questionText}>
       {!questionRepeated && <p>{questionText}</p>}
       {options.map(option => <button type="button" key={option} onClick={() => onAnswer(option)}>{publicText(option)}</button>)}
     </div>}
-    {result.recommendations.map(product => <ProductCard key={product.product_id} product={product} requirements={result.confirmed_requirements} reply={reply} askedRequirement={result.question?.field ?? undefined} onSelect={onSelect} onPurchase={onPurchase} />)}
-    {result.selection && <ProductCard product={result.selection} selection={result.selection} requirements={result.confirmed_requirements} reply={reply} askedRequirement={result.question?.field ?? undefined} onSelect={onSelect} onPurchase={onPurchase} />}
+    {result.recommendations.map(product => <ProductCard key={product.product_id} product={product} {...cardProps} />)}
+    {!!more.length && <details className="yg-more" key={result.recommendations.map(product => product.product_id).concat(more.map(product => product.product_id)).join(',')}>
+      <summary>查看更多匹配（{more.length} 款）</summary>
+      {more.map(product => <ProductCard key={product.product_id} product={product} {...cardProps} />)}
+    </details>}
+    {result.selection && <ProductCard product={result.selection} selected {...cardProps} />}
   </section>;
 }

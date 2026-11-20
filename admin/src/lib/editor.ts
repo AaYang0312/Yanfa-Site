@@ -219,13 +219,13 @@ async function submitPending() {
     if (operation.method === 'DELETE') {
       pending = null; deleted = true; trackedVersion = operation.version + 1; setDirty(false); form.hidden = true; $('#deleted-product').hidden = false;
       $('#conflict').hidden = true; notice('产品已删除，正在更新官网。');
+      updates = updates?.filter(item => item.product_id !== id) ?? [];
+      $('#save-recovery')?.remove(); paintUpdate(); await refreshUpdates();
     } else {
-      const wasNew = !id; accept(result.data, result.etag); pending = null; trackedVersion = result.data.version;
-      if (wasNew) history.replaceState(null, '', `/admin/products/edit/?id=${encodeURIComponent(id!)}`);
-      notice('修改已保存，正在更新官网。');
+      accept(result.data, result.etag); pending = null;
+      notice('保存成功，正在更新官网。');
+      location.assign(`/admin/products/?saved=${encodeURIComponent(id!)}`);
     }
-    updates = updates?.filter(item => item.product_id !== id) ?? [];
-    $('#save-recovery')?.remove(); paintUpdate(); await refreshUpdates();
   } catch (error) {
     if (error instanceof ApiError && (error.status === 412 || error.detail.code === 'VERSION_CONFLICT')) {
       pending = null; setDirty(true); await showConflict();

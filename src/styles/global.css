@@ -3,7 +3,7 @@
   --wine-dark: #6d001d;
   --ink: #0e131b;
   --navy: #1c3350;
-  --muted: #8c9197;
+  --muted: #6b7178;
   --text: #3d434b;
   --line: #e2e4e7;
   --paper: #f4f4f4;
@@ -13,7 +13,7 @@
   --top-h: 44px;
   --main-h: calc(var(--top-h) * 1.618);
   --header-h: calc(var(--top-h) + var(--main-h));
-  --wrap: 1240px;
+  --wrap: min(92vw, 2880px);
 }
 
 *,
@@ -32,7 +32,7 @@ body {
   margin: 0;
   padding-top: var(--header-h);
   font-family: var(--font);
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.75;
   color: var(--text);
   background: #fff;
@@ -492,12 +492,58 @@ p {
 .matched__art { height: 100px; overflow: hidden; }
 .specs dd { overflow-wrap: anywhere; }
 
+/* Section headings stay in view next to long two-column copy */
+@media (min-width: 961px) {
+  .detail__grid > h2 {
+    position: sticky;
+    top: calc(var(--header-h) + 24px);
+    align-self: start;
+  }
+}
+
+/* The guide launcher must not float over the mobile menu or filter sheet */
+body.has-drawer .yg,
+body.has-sheet .yg {
+  visibility: hidden;
+}
+
+/* Smooth cross-page navigation where supported */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.18s;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
+  @view-transition { navigation: none; }
 }
 
 @media (max-width: 960px) {
+  :root {
+    --top-h: 0px;
+    --main-h: 62px;
+    --wrap: 100%;
+  }
+
+  .wrap {
+    padding: 0 20px;
+  }
+
+  .section {
+    padding: 64px 0;
+  }
+
+  .page-head__grid,
+  .page-head--single .page-head__grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
   .detail__top,
   .detail__grid {
     grid-template-columns: 1fr;
@@ -518,26 +564,5 @@ p {
 
   .related__list {
     grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 960px) {
-  :root {
-    --top-h: 0px;
-    --main-h: 62px;
-  }
-
-  .wrap {
-    padding: 0 20px;
-  }
-
-  .section {
-    padding: 64px 0;
-  }
-
-  .page-head__grid,
-  .page-head--single .page-head__grid {
-    grid-template-columns: 1fr;
-    gap: 18px;
   }
 }

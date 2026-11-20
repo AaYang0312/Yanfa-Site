@@ -670,12 +670,18 @@ selected_product_id: string
 requirements: GuideRequirements
 }
 export interface GuideModelProposal1 {
-intent: ("clarify" | "consult" | "select")
+intent: ("clarify" | "consult" | "recommend" | "select")
 requirements: GuideRequirements
 /**
  * @maxItems 100
  */
 candidate_product_ids: string[]
+/**
+ * 用于全目录检索的短用途或品类词，不作为已核实的适配条件。
+ *
+ * @maxItems 6
+ */
+discovery_terms?: string[]
 selected_product_id: (string | null)
 selection_reference: (string | null)
 /**
@@ -720,6 +726,11 @@ missing_fields: MissingField[]
  * @maxItems 100
  */
 confirmation_notes: string[]
+/**
+ * @maxItems 100
+ */
+purchase_options: PublicPurchaseOption[]
+recommendation_reason?: string
 }
 export interface PublicImage {
 url: string
@@ -739,6 +750,15 @@ sources: PublicSource[]
 export interface PublicSource {
 public_label: string
 public_url: (string | null)
+}
+export interface PublicPurchaseOption {
+purchase_option_id: string
+platform: string
+store_name: string
+match_scope: ("exact_model" | "listing_with_variants")
+sku_hint: string
+destination_host: string
+handoff_url: string
 }
 export interface GuideSelection1 {
 product_id: string
@@ -765,15 +785,6 @@ confirmation_notes: string[]
 purchase_options: PublicPurchaseOption[]
 purchase_status: ("available" | "unavailable")
 }
-export interface PublicPurchaseOption {
-purchase_option_id: string
-platform: string
-store_name: string
-match_scope: ("exact_model" | "listing_with_variants")
-sku_hint: string
-destination_host: string
-handoff_url: string
-}
 export interface GuideResult1 {
 release_id: string
 state: ("clarifying" | "recommendations" | "selected" | "no_match" | "unavailable")
@@ -789,6 +800,12 @@ question: (GuideQuestion | null)
  * @maxItems 3
  */
 recommendations: GuideRecommendation[]
+/**
+ * 同一轮全目录匹配中的后续候选，默认折叠。
+ *
+ * @maxItems 9
+ */
+additional_recommendations?: GuideRecommendation[]
 selection: (GuideSelection | null)
 /**
  * @maxItems 100

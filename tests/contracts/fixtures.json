@@ -1318,7 +1318,8 @@
           ],
           "confirmation_notes": [
             "请确认压缩空气气源"
-          ]
+          ],
+          "purchase_options": []
         },
         {
           "product_id": "p_test",
@@ -1333,7 +1334,8 @@
           ],
           "confirmation_notes": [
             "请确认压缩空气气源"
-          ]
+          ],
+          "purchase_options": []
         },
         {
           "product_id": "p_test",
@@ -1348,7 +1350,8 @@
           ],
           "confirmation_notes": [
             "请确认压缩空气气源"
-          ]
+          ],
+          "purchase_options": []
         },
         {
           "product_id": "p_test",
@@ -1363,7 +1366,8 @@
           ],
           "confirmation_notes": [
             "请确认压缩空气气源"
-          ]
+          ],
+          "purchase_options": []
         }
       ],
       "selection": null,
@@ -3293,6 +3297,7 @@
       "confirmation_notes": [
         "请确认压缩空气气源"
       ],
+      "purchase_options": [],
       "conflicts": [
         "该工具需要压缩空气，现场明确没有可用气源。"
       ]

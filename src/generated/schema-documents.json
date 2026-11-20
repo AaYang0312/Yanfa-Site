@@ -2442,6 +2442,7 @@
             "enum": [
               "clarify",
               "consult",
+              "recommend",
               "select"
             ]
           },
@@ -2457,6 +2458,18 @@
               "pattern": "^[A-Za-z0-9_-]+$"
             },
             "maxItems": 100,
+            "uniqueItems": true
+          },
+          "discovery_terms": {
+            "description": "用于全目录检索的短用途或品类词，不作为已核实的适配条件。",
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 40,
+              "x-trim": true
+            },
+            "maxItems": 6,
             "uniqueItems": true
           },
           "selected_product_id": {
@@ -2515,7 +2528,8 @@
                 "intent": {
                   "enum": [
                     "clarify",
-                    "consult"
+                    "consult",
+                    "recommend"
                   ]
                 }
               }
@@ -2551,6 +2565,25 @@
             "if": {
               "properties": {
                 "intent": {
+                  "enum": [
+                    "clarify",
+                    "recommend"
+                  ]
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "candidate_product_ids": {
+                  "maxItems": 0
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "intent": {
                   "const": "clarify"
                 }
               }
@@ -2558,12 +2591,7 @@
             "then": {
               "required": [
                 "reply"
-              ],
-              "properties": {
-                "candidate_product_ids": {
-                  "maxItems": 0
-                }
-              }
+              ]
             }
           }
         ]
@@ -2614,7 +2642,10 @@
             "then": {
               "properties": {
                 "text": {
-                  "const": "请点击要选择的商品卡片"
+                  "enum": [
+                    "请告诉我具体型号，也可以直接在商品卡片上查看详情。",
+                    "请点击要选择的商品卡片"
+                  ]
                 },
                 "options": {
                   "maxItems": 0
@@ -2688,6 +2719,19 @@
               "maxLength": 1000
             },
             "maxItems": 100
+          },
+          "purchase_options": {
+            "type": "array",
+            "items": {
+              "$ref": "public-catalog.schema.json#/$defs/PublicPurchaseOption"
+            },
+            "maxItems": 100
+          },
+          "recommendation_reason": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000,
+            "x-trim": true
           }
         },
         "required": [
@@ -2699,7 +2743,8 @@
           "match_level",
           "matched_facts",
           "missing_fields",
-          "confirmation_notes"
+          "confirmation_notes",
+          "purchase_options"
         ],
         "allOf": [
           {
@@ -2920,6 +2965,14 @@
             },
             "maxItems": 3
           },
+          "additional_recommendations": {
+            "description": "同一轮全目录匹配中的后续候选，默认折叠。",
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/GuideRecommendation"
+            },
+            "maxItems": 9
+          },
           "selection": {
             "anyOf": [
               {
@@ -3000,6 +3053,13 @@
               "properties": {
                 "recommendations": {
                   "minItems": 1
+                }
+              }
+            },
+            "else": {
+              "properties": {
+                "additional_recommendations": {
+                  "maxItems": 0
                 }
               }
             }
