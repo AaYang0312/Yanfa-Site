@@ -47,10 +47,17 @@ const columns = [footerPages.slice(0, half), footerPages.slice(half)];
 
   <div class="footer__bar">
     <div class="wrap footer__bar-inner">
-      <span>
-        © {site.copyrightYear} {site.legalName} 版权所有
-        <span class="sep">|</span> <a href="https://beian.miit.gov.cn/">{site.icp}</a>
-        <span class="sep">|</span> <a href="/privacy/">隐私政策</a>
+      <span class="footer__legal">
+        <span>© {site.copyrightYear} {site.legalName} 版权所有</span>
+        <span class="sep">|</span>
+        <a href="https://beian.miit.gov.cn/" target="_blank" rel="noreferrer">{site.icp}</a>
+        <span class="sep">|</span>
+        <a class="footer__mps" href={`https://beian.mps.gov.cn/#/query/webSearch?code=${site.mpsBeianCode}`} target="_blank" rel="noreferrer">
+          <img src="/mps-beian.png" alt="" width="14" height="16" aria-hidden="true" />
+          <span>{site.mpsBeian}</span>
+        </a>
+        <span class="sep">|</span>
+        <a href="/privacy/">隐私政策</a>
       </span>
       <span>{site.brandEn} {site.brandSub}</span>
     </div>
@@ -130,6 +137,30 @@ const columns = [footerPages.slice(0, half), footerPages.slice(half)];
     background: var(--black);
     color: #b5b5b5;
     font-size: 12px;
+  }
+
+  .footer__bar a {
+    white-space: nowrap;
+  }
+
+  .footer__legal {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    row-gap: 4px;
+  }
+
+  .footer__mps {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .footer__mps img {
+    display: block;
+    width: 14px;
+    height: 16px;
+    flex: none;
   }
 
   .footer__bar-inner {

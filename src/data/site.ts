@@ -16,6 +16,8 @@ export const site = {
   phone: '189 6212 8286',
   address: '',
   icp: '鄂ICP备2026067678号-1',
+  mpsBeian: '鄂公网安备42011202002868号',
+  mpsBeianCode: '42011202002868',
   copyrightYear: 2026,
 };
 
